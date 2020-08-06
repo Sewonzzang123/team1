@@ -37,7 +37,8 @@ public class HomeController {
 
 		model.addAttribute("bcategoryVO", bcategoryVO);
 
-		return "admin/admin_board";
+		//return "admin/admin_board";
+		return "home";
 	}
 
 }
