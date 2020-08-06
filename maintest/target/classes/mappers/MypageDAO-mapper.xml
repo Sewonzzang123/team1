@@ -8,7 +8,8 @@
 		from bcategory
 	</select>
 
-<!-- 	<delete id="delBoard" parameterType="string">
-
-	</delete> -->
+	<delete id="delBoard" parameterType="string">
+		delete bcategory where
+		catnum=${catnum}
+	</delete>
 </mapper>

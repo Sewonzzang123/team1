@@ -23,9 +23,8 @@ public class AdminDAOImpl implements AdminDAO {
 
 	@Override
 	public int delBoard(int catnum) {
-		// TODO Auto-generated method stub
-		return 0;
-//		return sqlSession.insert("mappers.MypageDAO-mapper.delBoard", catnum);
+
+		return sqlSession.delete("mappers.MypageDAO-mapper.delBoard", catnum);
 	}
 
 	@Override
