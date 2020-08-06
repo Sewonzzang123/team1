@@ -1,7 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!-- 공통모듈 -->
+<%@ include file="/WEB-INF/views/included/common_taglib.jsp"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -166,9 +172,9 @@ li {
 					<form:form id='delBoard'>
 						<input name="catnum" id='catnum' type="hidden">
 						<input type="submit" onclick="addMenu()" value="추가"
-							formaction="/maintest/admin/createBoard">
+							formaction=" 	${contextPath}/admin/createBoard">
 						<input type="submit" onclick="delMenu()" value="제거"
-							formaction="/maintest/admin/delBoard">
+							formaction=" 	${contextPath}/admin/delBoard">
 					</form:form>
 				</div>
 			</div>
@@ -207,7 +213,7 @@ li {
 							</table>
 							<div class="actionBtn">
 								<input type="submit" value="저장"
-									formaction="/maintest/admin/setBoard">
+									formaction=" 	${contextPath}/admin/setBoard">
 							</div>
 						</div>
 					</form:form>
