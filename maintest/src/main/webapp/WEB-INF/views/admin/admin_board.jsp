@@ -153,7 +153,7 @@ li {
 				<div class="b_listSet">
 					<ul id="b_list">
 						<c:forEach var="bcate" items="${requestScope.bcategoryVO }">
-							<button class="b_title_btn" onclick="b_select(this)">${bcate.caname }
+							<button class="b_title_btn" onclick="b_select(this)">${bcate.catname }
 						</c:forEach>
 					</ul>
 				</div>
@@ -170,7 +170,7 @@ li {
 						<tr>
 							<th class="b_title">게시판명</th>
 							<td class="b_title_value"><input id="b_title_input"
-								type=" text" value=${bcate.caname }></td>
+								type=" text" value=${bcate.catname }></td>
 						</tr>
 						<tr>
 							<th class="b_memo">게시판 설명</th>

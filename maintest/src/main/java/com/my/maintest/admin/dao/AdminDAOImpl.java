@@ -7,7 +7,6 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
-import com.my.maintest.board.vo.AnnotationVO;
 import com.my.maintest.board.vo.BcategoryVO;
 
 @Repository
@@ -23,15 +22,10 @@ public class AdminDAOImpl implements AdminDAO {
 	}
 
 	@Override
-	public List<AnnotationVO> getAnn() {
+	public int delBoard(int catnum) {
 		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int delBoard(int canum) {
-		// TODO Auto-generated method stub
-		return sqlSession.insert("mappers.MypageDAO-mapper.delBoard", canum);
+		return 0;
+//		return sqlSession.insert("mappers.MypageDAO-mapper.delBoard", catnum);
 	}
 
 	@Override

@@ -8,7 +8,7 @@
 		from bcategory
 	</select>
 
-	<delete id="delBoard" parameterType="string">
+<!-- 	<delete id="delBoard" parameterType="string">
 
-	</delete>
+	</delete> -->
 </mapper>

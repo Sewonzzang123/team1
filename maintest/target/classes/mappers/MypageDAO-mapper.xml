@@ -4,12 +4,11 @@
 
 	<select id="getCate"
 		resultType="com.my.maintest.board.vo.BcategoryVO">
-		select canum,caname,btype
+		select catnum,catname,btype
 		from bcategory
 	</select>
 
-	<delete id="delBoard" parameterType="string">
-		select CANUM,CANAME,BTYPE
-		from bcategory where canum=#{canum}
-	</delete>
+<!-- 	<delete id="delBoard" parameterType="string">
+
+	</delete> -->
 </mapper>
