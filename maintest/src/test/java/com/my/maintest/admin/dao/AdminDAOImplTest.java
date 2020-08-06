@@ -26,19 +26,18 @@ public class AdminDAOImplTest {
 	AdminDAO adminDAO;
 
 	@Test
-	@Disabled
+//	@Disabled
 	public void getCate() {
 		List<BcategoryVO> bcategoryVO = adminDAO.getCate();
 		logger.info(bcategoryVO.toString());
-		logger.info(bcategoryVO.get(0).getCaname());
+		logger.info(bcategoryVO.get(0).getCatname());
 	}
 
-	@Test
-	public void delBoard() {
-		int canum = 4;
-		int x = adminDAO.delBoard(canum);
-
-		
-	}
+//	@Test
+//	@Disabled
+//	public void delBoard() {
+//		int canum = 4;
+//		int x = adminDAO.delBoard(canum);
+//	}
 
 }
