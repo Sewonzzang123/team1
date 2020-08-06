@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.MypageDAO-mapper">
+
+	<select id="getCate"
+		resultType="com.my.maintest.board.vo.BcategoryVO">
+		select canum,caname,btype
+		from bcategory
+	</select>
+
+	<delete id="delBoard" parameterType="string">
+		select CANUM,CANAME,BTYPE
+		from bcategory where canum=#{canum}
+	</delete>
+</mapper>
