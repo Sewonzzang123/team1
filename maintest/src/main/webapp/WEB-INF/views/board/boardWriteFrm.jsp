@@ -3,6 +3,7 @@
     isELIgnored="false"%>
     <!-- 공통모듈 -->
  	<%@ include file="/WEB-INF/views/included/common_taglib.jsp"  %>
+ 	<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"  %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -25,44 +26,54 @@
 						</a>
 					</h2>
 					<hr>
-					<form id="writeFrm" name="writeFrm" method="POST"
-						action="${contextPath}/board/write">
+					<form:form
+					 id="writeFrm" 
+					name="writeFrm"
+					method="POST"
+					action="${contextPath}/board/write" 
+					enctype="multipart/form-data"
+					modelAttribute="boardVO">
 						
-						<ul>
-						
+						<ul>						
 							<li class="selectGrp">						
 							
-							<select name="bCategory.catNum"
-								id="bCategory.catNum">								
+							<form:select path="bcategory.catnum"	>								
 									<option value="">게시판분류</option>
 									<option value="1">여행팁</option>
-									<option value="2">갤러리</option>
-									<option value="3">Q&A</option>									
-							</select> 
+									<option value="2">Q&A</option>
+									<option value="3">갤러리</option>									
+							</form:select> 
 							
-							<select name="hidCategory.hidNum" id="hidCategory.hidNum">
-									<option value="">말머리선택</option>
-									<option value="1">말머리1</option>
-									<option value="2">말머리2</option>
-									<option value="3">말머리3</option>
-							</select>
+							<form:select path="hidcategory.hidnum">
+									<form:option value="">말머리선택</form:option>
+									<form:option value="1">말머리1</form:option>
+									<form:option value="2">말머리2</form:option>
+									<form:option value="3">말머리3</form:option>
+							</form:select>
 							</li>
 							
-							<li><label for="">제목</label><input type="text" id="bTitle"	name="bTitle" /></li>
-								<li><label for="">아이디</label><input type="text" id="uCode"	name="uCode" /></li>
-					<!-- 		<li><label for="">파일첨부</label><input type="file" id="files" name="files" multiple /></li> -->
+								<li><form:label path="">제목</form:label>
+								<form:input type="text" path="btitle"	 /></li>
+								<form:errors path="btitle" cssClass="error"/>
 								
-							<li><textarea id="bContent" name="bContent" cols="30" rows="5" placeholder="내용 입력"></textarea></li>
-							
+								<li><form:label path="">작성자</form:label>
+								<form:input type="text" path="ucode" /></li>			
+									<form:errors path="ucode" cssClass="error"/>				
+							<li>
+							<form:textarea path="bcontent" cols="30" rows="5" placeholder="내용 입력"></form:textarea>
+								<form:errors path="bcontent" cssClass="error"/>
+								</li>
+							<li><form:label path="">파일첨부</form:label>
+							<form:input type="file" path="files"  multiple="true" /></li>
 							<li>							
 							<div class="btnGrp">
-								<button id="tmpWriteBtn" type="button">임시저장</button>
-								<button id="writeBtn" type="button">등록</button>
+								<form:button id="tmpWriteBtn" type="button">임시저장</form:button>
+								<form:button id="writeBtn" type="button">등록</form:button>
 							</div>							
 							</li>
 							
 						</ul>
-					</form>
+					</form:form>
 				</section>
 			</div>
 		</div>

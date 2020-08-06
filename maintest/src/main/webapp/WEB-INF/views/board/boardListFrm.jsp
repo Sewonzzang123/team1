@@ -34,11 +34,12 @@
             <div class="td cols">${tdt.bcategory.catname}</div>
             <div class="td cols">${tdt.hidcategory.hidname}</div>
             <div class="td cols">${tdt.btitle}</div>
-            <div class="td cols">${tdt.bcontent}</div>
+            <div class="td cols">${tdt.bnickname}</div>
             <div class="td cols">${tdt.bhits}</div>
             <div class="td cols">${tdt.bcdate}</div>
             </c:forEach>
         </div>
+        
         <div class="btnGrp">
             <button type="button" id="writeBtn">글쓰기</button>
 

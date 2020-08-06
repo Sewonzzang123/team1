@@ -19,7 +19,7 @@ public class BoardController {
 	@Inject
 	BoardSVC boardSVC;
 
-	// 보드 메인
+	// 리스트 페이지 
 	@GetMapping("")
 	public String toBoardMain(
 			//@ModelAttribute("boardVO") BoardVO boardVO			
@@ -39,9 +39,6 @@ public class BoardController {
 			return "/board/boardListFrm";
 }
 	
-	
-	
-	
 
 	// 각 보드 메인
 	@GetMapping("/boardtext")
@@ -58,7 +55,6 @@ public class BoardController {
 	}
 
 	// 게시글 등록
-
 	@PostMapping("/write")
 	public String toWrite(
 			//@Valid 
