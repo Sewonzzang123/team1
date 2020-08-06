@@ -34,10 +34,25 @@ public class AdminDAOImplTest {
 	}
 
 	@Test
-//	@Disabled
+	@Disabled
 	public void delBoard() {
-		int catnum = 4;
+		String catnum = "4";
 		int x = adminDAO.delBoard(catnum);
 	}
 
+	@Test
+	@Disabled
+	public void createBoard() {
+		int x = adminDAO.createBoard();
+	}
+
+	@Test
+//	@Disabled
+	public void setBoard() {
+		BcategoryVO bcategorVO = new BcategoryVO();
+		bcategorVO.setBtype("blog");
+		bcategorVO.setCatname("테스트용");
+		bcategorVO.setCatnum("34");
+		int x = adminDAO.setBoard(bcategorVO);
+	}
 }

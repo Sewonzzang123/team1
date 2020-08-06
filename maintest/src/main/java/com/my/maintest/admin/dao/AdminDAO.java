@@ -10,9 +10,15 @@ public interface AdminDAO {
 	public List<BcategoryVO> getCate();
 
 	// 게시판 삭제
-	public int delBoard(int catnum);
+	public int delBoard(String catnum);
 
 	// 게시판 생성
 	public int createBoard();
+
+	// 게시판 저장
+	public int setBoard(BcategoryVO bcategoryVO);
+	
+	// 말머리 읽기
+	
 
 }

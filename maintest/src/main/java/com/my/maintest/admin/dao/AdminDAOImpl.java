@@ -22,15 +22,19 @@ public class AdminDAOImpl implements AdminDAO {
 	}
 
 	@Override
-	public int delBoard(int catnum) {
+	public int delBoard(String catnum) {
 
 		return sqlSession.delete("mappers.MypageDAO-mapper.delBoard", catnum);
 	}
 
 	@Override
 	public int createBoard() {
-		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.insert("mappers.MypageDAO-mapper.createBoard");
+	}
+
+	@Override
+	public int setBoard(BcategoryVO bcategoryVO) {
+		return sqlSession.update("mappers.MypageDAO-mapper.setBoard", bcategoryVO);
 	}
 
 }

@@ -111,7 +111,7 @@ li {
 }
 
 .actionBtn {
-	width: 420px;
+	width: 600px;
 	margin-top: 20px;
 	text-align: center;
 }
@@ -153,6 +153,7 @@ li {
 
 	<main class="content" id="adminBoard">
 		<div class="b_container">
+
 			<div class="b_sidebar">
 				<div class="b_listSet">
 					<ul id="b_list">
@@ -171,53 +172,64 @@ li {
 							formaction="/maintest/admin/delBoard">
 					</form:form>
 				</div>
+
 			</div>
 
 			<div class="b_content" id="b_content">
 				<c:forEach var="bcate" items="${requestScope.bcategoryVO }">
-					<form:form>
-						<div class="set_box hide">
-							<input name="catnum" type="hidden" value="${bcate.catnum }">
-							<table>
-								<tr>
-									<th class="b_title">게시판명</th>
-									<td class="b_title_value"><input id="b_title_input"
-										type="text" value=${bcate.catname } name="catname"></td>
-								</tr>
-								<tr>
-									<th class="b_type">게시판 유형</th>
-									<td class="b_type_value"><select id="b_type_value"
-										name="btype">
-											<option value="blog">자유게시판</option>
-											<option value="album">사진게시판</option>
-									</select></td>
-								</tr>
-								<tr>
-									<th class="b_subject">말머리</th>
-									<td class="b_subject_value"><input class="subInput"
-										id="subInput" type="text"> <input type="button"
-										onclick="addSub()" value="추가">
-										<ul id="b_subject_value" class="b_subject_positon">
-											<li class="b_subject_chd"><span>질문</span> <input
-												type="button" onclick="delSub(this)" value="제거"></li>
-											<li class="b_subject_chd"><span>질문2</span> <input
-												type="button" onclick="delSub(this)" value="제거"></li>
-										</ul></td>
-								</tr>
-							</table>
-							<div class="actionBtn">
-								<input type="submit" value="저장"
-									formaction="/maintest/admin/setBoard">
-							</div>
-						</div>
-					</form:form>
+					<table class="set_box hide">
+						<tr>
+							<th class="b_title">게시판명</th>
+							<td class="b_title_value"><input id="b_title_input"
+								type="text" value=${bcate.catname }></td>
+						</tr>
+						<tr>
+							<th class="b_memo">게시판 설명</th>
+							<td class="b_memo_value"><input id="b_memo_input"
+								type="text"></td>
+						</tr>
+						<tr>
+							<th class="b_type">게시판 유형</th>
+							<td class="b_type_value"><select name="b_type_value"
+								id="b_type_value">
+									<option value="blog">자유게시판</option>
+									<option value="album">사진게시판</option>
+							</select></td>
+						</tr>
+						<tr>
+							<th class="b_subject">말머리</th>
+							<td class="b_subject_value"><input class="subInput"
+								id="subInput" type="text"> <input type="button"
+								onclick="addSub()" value="추가">
+								<ul id="b_subject_value" class="b_subject_positon">
+									<li class="b_subject_chd"><span>질문</span> <input
+										type="button" onclick="delSub(this)" value="제거"></li>
+									<li class="b_subject_chd"><span>질문2</span> <input
+										type="button" onclick="delSub(this)" value="제거"></li>
+								</ul></td>
+						</tr>
+					</table>
 				</c:forEach>
 			</div>
 		</div>
+		<div class="actionBtn">
+			<input type="button" value="저장"> <input type="button"
+				value="취소">
+		</div>
+
 	</main>
+
+
+
 </body>
 
 <script>
+	window.onload = function setPage() {
+		console.log("123");
+		console.log()
+
+	}
+
 	var idx = 1;
 
 	function getIndex(ele) {
@@ -229,6 +241,7 @@ li {
 	}
 
 	function b_select(obj) {
+		// var table = document.getElementsByClassName('set_box');   
 		var btn = $('.b_title_btn');
 		var cur = document.getElementById("catnum");
 		cur.value = obj.value;
@@ -241,11 +254,37 @@ li {
 		$('.set_box').eq(idx - 1).show();
 
 	};
+	// <li id="n" class="selectable">
+	var cnt = 0;
+	function addMenu() {
+		console.info("클릭");
+		var newMenu = document.createElement("table");
+		var b_list = document.getElementById("b_list");
+		;
+		var newMenuTitle = document.createElement("button");
+		var b_content = document.getElementById("b_content");
+		newMenu.setAttribute('class', 'set_box hide');
+		newMenuTitle.setAttribute('class', 'b_title_btn');
+		newMenuTitle.setAttribute('onclick', 'b_select(this)');
+		// newMenuTitle.setAttribute('id', 'n');
+		var str = '<tr><th class="b_title">게시판명</th><td class="b_title_value"><input id="b_title_input" type=" text" value="새로운 게시판"></td></tr>';
+		str += '<tr><th class="b_memo">게시판 설명</th><td class="b_memo_value"><input id="b_memo_input" type=" text" value="새로운 게시판"></td></tr>';
+		str += '<tr><th class="b_type">게시판 유형</th><td class="b_type_value"><select name="b_type_value" id="b_type_value">';
+		str += '<option value="blog">자유게시판</option><option value="balbumlog">사진게시판</option></select></td></tr>';
+		str += '<tr><th class="b_subject">말머리</th><td class="b_subject_value"><input class="subInput" id="subInput" type="text">';
+		str += ' <input type="button" onclick="addSub()" value="추가"><ul id="b_subject_value" class="b_subject_positon"></ul></td></tr>';
+		newMenu.innerHTML = str;
+		newMenuTitle.innerHTML = '게시판 n'
+		b_content.appendChild(newMenu);
+		b_list.appendChild(newMenuTitle);
+	};
 
-	function delSub(obj) {
-		console.log(obj.parentElement);
-		obj.parentElement.remove();
-	}
+	function delMenu(obj) {
+		var b_title_btn = document.getElementsByClassName('b_title_btn');
+		var set_box = document.getElementsByClassName('set_box');
+		b_title_btn[idx - 1].remove();
+		set_box[idx - 1].remove();
+	};
 
 	function addSub(obj) {
 		var sub_list = document.getElementsByClassName("b_subject_positon");
@@ -257,6 +296,11 @@ li {
 				+ subTxt[idx - 1].value
 				+ '</span> <input type="button" onclick="delSub(this)" value="제거">';
 		sub_list[idx - 1].appendChild(newList);
+	}
+
+	function delSub(obj) {
+		console.log(obj.parentElement);
+		obj.parentElement.remove();
 	}
 </script>
 </html>
