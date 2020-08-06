@@ -1,0 +1,46 @@
+@charset "UTF-8";
+
+.modifyForm ul, ol {
+	padding: 0;
+	list-style: none;
+}
+
+.password-header {
+	float: left;
+	width: 85px;
+}
+
+.password-body {
+	float: left;
+	margin-left: 8px;
+	width: 130px;
+}
+
+.myinfo_form {
+	margin-top: 5px;
+}
+
+.myinfo_form:first-child {
+	margin-top: 0;
+}
+
+.myinfo_form::after {
+	content: '';
+	display: block;
+	clear: both;
+}
+
+.txtTel {
+	width: 40px;
+}
+
+#telBox {
+	display: flex;
+	align-items: center;
+}
+
+.mypage_modify_btn {
+	width: 120px;
+	text-align: center;
+	padding: 0;
+}
