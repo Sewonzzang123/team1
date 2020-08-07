@@ -2,8 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mappers.BoardDAO-mapper">
 
+<!-- 게시판 카테고리 조회  -->
+<select id="selectBcategory" resultType="com.my.maintest.board.vo.BcategoryVO">
+select catnum, catname, btype from bcategory
+</select>
+<!-- 게시판 말머리 조회  -->
+<select id="selectHeadIdCategory" parameterType="long" resultType="com.my.maintest.board.vo.HeadIdCategoryVO">
 
+select hidnum, hidname
+from headid t1, bcategory t2
+where t1.catnum = t2.catnum 
+<!-- and t1.catnum = #{catnum} -->
 
+</select>
 <!-- 	// 전체글 조회 (default) -->
 <select id="selectArticles" resultType="com.my.maintest.board.vo.BoardVO">
 
@@ -28,14 +39,27 @@ order by bnum desc -->
 <!-- 게시글 등록-->
 
 <insert id="insertArticle"  parameterType="com.my.maintest.board.vo.BoardVO">
-insert into board(bnum, bcategory, hidcategory, ucode, btitle, bcontent)
-values(
-bnum_seq.nextVal
-, #{bcategory.catnum}
-, #{hidcategory.hidnum}
-, #{ucode}
-, #{btitle}
-, #{bcontent}
+insert into board(
+bnum, 
+bcategory, 
+hidcategory, 
+ucode,
+ btitle,
+bcontent,
+bgroup,
+bstep,
+bindent
+  )values(
+bnum_seq.nextVal, 
+#{bcategory.catnum}, 
+#{hidcategory.hidnum},
+#{ucode},
+#{btitle},
+#{bcontent},
+bnum_seq.nextVal, 
+0,
+0
+   
   )
 
 </insert>

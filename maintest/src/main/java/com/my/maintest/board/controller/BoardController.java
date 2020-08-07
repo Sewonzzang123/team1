@@ -1,5 +1,7 @@
 package com.my.maintest.board.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
@@ -10,7 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.my.maintest.board.svc.BoardSVC;
+import com.my.maintest.board.vo.BcategoryVO;
 import com.my.maintest.board.vo.BoardVO;
+import com.my.maintest.board.vo.HeadIdCategoryVO;
 
 @Controller
 @RequestMapping("/board")
@@ -19,6 +23,23 @@ public class BoardController {
 	@Inject
 	BoardSVC boardSVC;
 
+	
+	//게시판 카테고리 조회	
+	@ModelAttribute("bcategoryVO")
+	public List<BcategoryVO> getBcategory(){
+		 List<BcategoryVO> bcategoryVO =null;
+		 bcategoryVO =  boardSVC.selectBcategory();		 
+		return bcategoryVO ;
+	}
+	
+	//게시판 말머리 조회
+	@ModelAttribute("headIdCategoryVO")
+	public List<HeadIdCategoryVO> getHeadIdCategory(){
+		String catnum = "0" ; 
+		 List<HeadIdCategoryVO>  list = boardSVC.selectHeadIdCategory(catnum);
+		return list;
+	}
+	
 	// 리스트 페이지 
 	@GetMapping("")
 	public String toBoardMain(
@@ -49,7 +70,7 @@ public class BoardController {
 
 	// 게시글 작성 화면
 	@GetMapping("/boardWriteFrm")
-	public String toboardwrite() {
+	public String toboardwrite(@ModelAttribute("boardVO") BoardVO baordVO) {
 
 		return "/board/boardWriteFrm";
 	}
@@ -58,13 +79,14 @@ public class BoardController {
 	@PostMapping("/write")
 	public String toWrite(
 			//@Valid 
-			@ModelAttribute("boardVO") BoardVO boardVO
+			@ModelAttribute("boardVO") BoardVO boardVO,Model model
 			//,BindingResult result
 			) {
 	/*	if (result.hasErrors()) {
 			return "/board/boardWriteFrm";
 		}*/
 		boardSVC.insertArticle(boardVO);
+		model.addAttribute("list",	boardSVC.selectArticles()); //중복 체크???
 		return "redirect:/board/boardListFrm";
 	}
 

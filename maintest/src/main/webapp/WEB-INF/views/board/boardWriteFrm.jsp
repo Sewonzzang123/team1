@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>게시글 작성</title>
 <link rel="stylesheet" href="${contextPath}/css/board/boardWriteFrm.css" >
-<script type="text/javascript" src="${contextPath }/js/board/boardWriteFrm.js" defer></script>
+<script defer  type="text/javascript" src="${contextPath }/js/board/boardWriteFrm.js?ver=1" ></script>
 </head>
 <body>
 
@@ -37,33 +37,30 @@
 						<ul>						
 							<li class="selectGrp">						
 							
-							<form:select path="bcategory.catnum"	>								
-									<option value="">게시판분류</option>
-									<option value="1">여행팁</option>
-									<option value="2">Q&A</option>
-									<option value="3">갤러리</option>									
-							</form:select> 
+							<form:select path="bcategory.catnum" 	>								
+									<option value="0">게시판분류</option>
+									<form:options path="bcategory.catnum"  items="${bcategoryVO }" itemValue="catnum" itemLabel="catname"></form:options>
+			 				</form:select> 
 							
 							<form:select path="hidcategory.hidnum">
-									<form:option value="">말머리선택</form:option>
-									<form:option value="1">말머리1</form:option>
-									<form:option value="2">말머리2</form:option>
-									<form:option value="3">말머리3</form:option>
+									<form:option value="0">말머리선택</form:option>
+								<form:options path="hidcategory.hidnum" items="${headIdCategoryVO}" itemValue="hidnum" itemLabel="hidname"></form:options>
+								
 							</form:select>
 							</li>
 							
-								<li><form:label path="">제목</form:label>
-								<form:input type="text" path="btitle"	 /></li>
-								<form:errors path="btitle" cssClass="error"/>
+								<li><form:label path="btitle">제목</form:label>
+								<form:input type="text" path="btitle"	 />					<form:errors path="btitle" cssClass="error"/></li>
+			
 								
-								<li><form:label path="">작성자</form:label>
-								<form:input type="text" path="ucode" /></li>			
-									<form:errors path="ucode" cssClass="error"/>				
+								<li><form:label path="ucode">작성자</form:label>
+								<form:input type="text" path="ucode" />			
+									<form:errors path="ucode" cssClass="error"/></li>				
 							<li>
 							<form:textarea path="bcontent" cols="30" rows="5" placeholder="내용 입력"></form:textarea>
 								<form:errors path="bcontent" cssClass="error"/>
 								</li>
-							<li><form:label path="">파일첨부</form:label>
+							<li><form:label path="files">파일첨부</form:label>
 							<form:input type="file" path="files"  multiple="true" /></li>
 							<li>							
 							<div class="btnGrp">

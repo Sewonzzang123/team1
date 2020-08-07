@@ -12,6 +12,7 @@
             writeFrm.addEventListener("click", writeFrm_f);
      }
      
-     function writeFrm_f(){
+     function writeFrm_f(e){
+     e.preventDefault();
 writeFrm.submit();
      }

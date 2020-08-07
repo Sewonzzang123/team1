@@ -7,7 +7,9 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.my.maintest.board.dao.BoardDAO;
+import com.my.maintest.board.vo.BcategoryVO;
 import com.my.maintest.board.vo.BoardVO;
+import com.my.maintest.board.vo.HeadIdCategoryVO;
 
 @Service
 public class BoardSVCImpl implements BoardSVC {
@@ -15,6 +17,18 @@ public class BoardSVCImpl implements BoardSVC {
 	
 	@Inject
 	BoardDAO boardDAO;
+	
+	//게시판 카테고리 조회 
+	@Override
+	public List<BcategoryVO> selectBcategory() {		 
+		return boardDAO.selectBcategory();
+	}
+	//게시판 말머리 조회
+	@Override
+	public List<HeadIdCategoryVO> selectHeadIdCategory(String catnum) {
+		
+		return  boardDAO.selectHeadIdCategory(catnum);
+	}
 	
 //전체글 조회 (default)
 	@Override
@@ -45,5 +59,10 @@ public class BoardSVCImpl implements BoardSVC {
 	public void deleteArticle(long bNum) {
 
 	}
+
+
+	
+	
+
 
 }
