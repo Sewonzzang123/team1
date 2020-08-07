@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html lang="ko">
@@ -53,7 +51,7 @@
 										</label>
 									</div>
 									<div class="password-body">
-										<input name="culpw" id="txtPassword" type="password" />
+										<input name="txtPassword" id="txtPassword" type="password" />
 									</div>
 								</li>
 
@@ -64,7 +62,7 @@
 											비밀번호 </label>
 									</div>
 									<div class="password-body">
-										<input name="nextpw" id="txtNewPassword1" type="password" />
+										<input name="txtPassword" id="txtNewPassword1" type="password" />
 									</div>
 								</li>
 
@@ -75,7 +73,7 @@
 											비밀번호 확인 </label>
 									</div>
 									<div class="password-body">
-										<input name="nextpwc" id="txtNewPassword2" type="password" />
+										<input name="txtPassword" id="txtNewPassword2" type="password" />
 									</div>
 									<div class="password-body">
 										<input class="mypage_modify_btn" type="submit"
@@ -108,9 +106,9 @@
 					<input type="submit" value="회원정보 수정"
 						formaction="${pageContext.request.contextPath}/mypage/modify" />
 					<input type="button" value="회원정보 취소"
-						onClick="location.href='/maintest'" /> <input type="button"
+						onClick="location.href='/portfolio'" /> <input type="button"
 						value="회원탈퇴 신청"
-						onClick="location.href='/maintest/mypage/withdrawForm'" />
+						onClick="location.href='/portfolio/mypage/withdrawForm'" />
 				</div>
 			</form:form>
 		</main>

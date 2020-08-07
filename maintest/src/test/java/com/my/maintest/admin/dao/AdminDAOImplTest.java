@@ -26,7 +26,7 @@ public class AdminDAOImplTest {
 	AdminDAO adminDAO;
 
 	@Test
-	@Disabled
+//	@Disabled
 	public void getCate() {
 		List<BcategoryVO> bcategoryVO = adminDAO.getCate();
 		logger.info(bcategoryVO.toString());
@@ -47,7 +47,7 @@ public class AdminDAOImplTest {
 	}
 
 	@Test
-//	@Disabled
+	@Disabled
 	public void setBoard() {
 		BcategoryVO bcategorVO = new BcategoryVO();
 		bcategorVO.setBtype("blog");

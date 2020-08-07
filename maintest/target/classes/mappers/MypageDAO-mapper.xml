@@ -15,6 +15,8 @@
 	</delete>
 
 	<insert id="createBoard">
+
+
 		insert into bcategory
 		values(bnum_seq.NEXTVAL,'새게시판','blog')
 	</insert>
@@ -24,4 +26,22 @@
 		update bcategory set catname = #{catname},
 		btype=#{btype} where catnum=#{catnum}
 	</update>
+
+	<update id="modify"
+		parameterType="com.my.maintest.member.vo.MemberVO">
+		update member set nickname=#{nickname}, tel=#{tel}
+		where
+		id=#{id}
+	</update>
+
+	<update id="changePW" parameterType="string">
+		update member set pw=#{pw}
+		where id=#{id}
+	</update>
+
+	<delete id="withdraw" parameterType="string">
+		delete member where id =
+		#{id}
+	</delete>
+
 </mapper>

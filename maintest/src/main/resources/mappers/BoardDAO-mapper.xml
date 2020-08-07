@@ -4,55 +4,56 @@
 
 
 
-<!-- 	// 전체글 조회 (default) -->
-<select id="selectArticles" resultType="com.my.maintest.board.vo.BoardVO">
+	<!-- // 전체글 조회 (default) -->
+	<select id="selectArticles"
+		resultType="com.my.maintest.board.vo.BoardVO">
 
-select 
-t1.bNum as "bNum",
-t2.catName as "bCategory.catName",
- t3.hidname as "hidCategory.hidName"
-, t1.bTitle, t1.bContent, t1.bCdate, t1.bHits
-from board t1, bcategory t2, headid t3
-where t1.bcategory = t2.catnum and t1.hidCategory = t3.hidNum
+		select
+		t1.bNum as "bNum",
+		t2.catName as "bCategory.catName",
+		t3.hidname as "hidCategory.hidName"
+		, t1.bTitle, t1.bContent, t1.bCdate, t1.bHits
+		from board t1, bcategory t2, headid t3
+		where t1.bcategory = t2.catnum and t1.hidCategory = t3.hidNum
 
-<!-- 
-Select t1.bNum,t1.bcategory as "bCategory.catNum", t2.catname as "bCategory.catName"
-from board t1, bcategory t2 where t1.bcategory = t2.catnum
- -->
-<!-- select bnum, bCategory as "bCategory.catNum" , hidCategory as "hidCategory.hidNum", t2.nickname, bTitle, bContent, bHits, bCdate,bUdate,bGroup,bStep,bIndent
-from board t1, member t2 ,bcategory t3, headid t4
-where t1.ucode = t2.ucode and t1.bcategory = t3.catnum and t1.hidCategory = t4.hidNum
-order by bNum desc -->
-</select>
+		<!-- Select t1.bNum,t1.bcategory as "bCategory.catNum", t2.catname as "bCategory.catName" 
+			from board t1, bcategory t2 where t1.bcategory = t2.catnum -->
+		<!-- select bnum, bCategory as "bCategory.catNum" , hidCategory as "hidCategory.hidNum", 
+			t2.nickname, bTitle, bContent, bHits, bCdate,bUdate,bGroup,bStep,bIndent 
+			from board t1, member t2 ,bcategory t3, headid t4 where t1.ucode = t2.ucode 
+			and t1.bcategory = t3.catnum and t1.hidCategory = t4.hidNum order by bNum 
+			desc -->
+	</select>
 
-<!-- 게시글 등록-->
+	<!-- 게시글 등록 -->
 
-<insert id="insertArticle"  parameterType="com.my.maintest.board.vo.BoardVO">
-insert into board(bNum, bCategory, hidCategory, uCode, bTitle, bContent)
-values(
-bnum_seq.nextVal
-, #{bCategory.catNum}
-, #{hidCategory.hidNum}
-, #{uCode}
-, #{bTitle}
-, #{bContent}
-  )
-</insert>
+	<insert id="insertArticle"
+		parameterType="com.my.maintest.board.vo.BoardVO">
+		insert into board(bNum, bCategory, hidCategory, uCode, bTitle, bContent)
+		values(
+		bnum_seq.nextVal
+		, #{bCategory.catNum}
+		, #{hidCategory.hidNum}
+		, #{uCode}
+		, #{bTitle}
+		, #{bContent}
+		)
+	</insert>
 
-<!-- 	// 글 열람	 -->
+	<!-- // 글 열람 -->
 
 	<!-- //글 수정 -->
-<!-- 	//글 삭제 -->	
-	<!-- //글 검색	 -->
-	  <!-- //말머리	 -->
-	  <!-- //제목 -->
-<!-- //댓글 작성 -->
+	<!-- //글 삭제 -->
+	<!-- //글 검색 -->
+	<!-- //말머리 -->
+	<!-- //제목 -->
+	<!-- //댓글 작성 -->
 	<!-- //댓글 수정 -->
-	<!-- //댓글 삭제 	 -->
+	<!-- //댓글 삭제 -->
 	<!-- //답글 작성 -->
 	<!-- //답글 수정 -->
-	<!-- //답글 삭제  -->
-	
+	<!-- //답글 삭제 -->
+
 
 
 

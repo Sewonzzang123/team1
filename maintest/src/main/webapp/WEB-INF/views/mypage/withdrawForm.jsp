@@ -43,7 +43,7 @@ form {
 				않습니다.
 			</div>
 			<div id="inputForm">
-				<form action="">
+				<form action="${pageContext.request.contextPath}/mypage/withdraw"">
 					<div>
 						<div class="form_head">
 							<strong>아이디</strong>
@@ -59,7 +59,7 @@ form {
 						</div>
 					</div>
 					<div class="actionBtn">
-						<input type="submit" value="확인"> <input type="button"
+						<input type="submit" value="확인" > <input type="button"
 							value="취소">
 					</div>
 				</form>

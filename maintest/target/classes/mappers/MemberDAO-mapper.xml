@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.MemberDAO-mapper">
+
+	<select id="listOneMember" parameterType="string"
+		resultType="com.my.maintest.member.vo.MemberVO">
+		select id, pw,name,tel,nickname from member where id =
+		#{id}
+	</select>
+
+	<insert id="signup"
+		parameterType="com.my.maintest.member.vo.MemberVO">
+		insert into member (ucode, id, pw, name, tel, nickname)
+		values(m_ucode_seq.NEXTVAL, #{id}, #{pw}, #{name}, #{tel},
+		#{nickname})
+	</insert>
+
+</mapper>
