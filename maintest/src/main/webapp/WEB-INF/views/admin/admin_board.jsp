@@ -4,6 +4,8 @@
 <%@ include file="/WEB-INF/views/included/common_taglib.jsp"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 
 
 
@@ -218,6 +220,33 @@ li {
 						</div>
 					</form:form>
 				</c:forEach>
+
+				<c:if test="${empty sessionScope.member}">
+					<div class="container container-upm">
+						<%-- <p>
+					<a href="${contextPath }"><i id="logo"
+						class="fab fa-pied-piper-alt"></i></a>
+				</p> --%>
+						<p>
+							<a href="${url_login }">로그인</a><span> | </span><a
+								href="${contextPath }/member/joinForm">회원가입</a>
+						</p>
+					</div>
+				</c:if>
+				<!-- 로그인 후  -->
+				<c:if test="${!empty sessionScope.member}">
+
+					<div class="container container-upm">
+						<%-- <p>
+					<a href="${contextPath }"><i id="logo"
+						class="fab fa-pied-piper-alt"></i></a>
+				</p> --%>
+						<p>
+							<a href="${url_logout }">로그아웃</a><span> | </span> <a
+								href="${url_myPage}">${sessionScope.member.nickname }</a>
+						</p>
+					</div>
+				</c:if>
 			</div>
 		</div>
 	</main>
