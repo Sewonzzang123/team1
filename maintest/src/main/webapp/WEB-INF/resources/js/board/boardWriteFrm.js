@@ -7,12 +7,9 @@
         
         
         
-        function writeBtn_f(){
+        function writeBtn_f(e){
+ 
             console.log("글등록 버튼 클릭");
-            writeFrm.addEventListener("click", writeFrm_f);
+         writeFrm.submit();
      }
      
-     function writeFrm_f(e){
-     e.preventDefault();
-writeFrm.submit();
-     }

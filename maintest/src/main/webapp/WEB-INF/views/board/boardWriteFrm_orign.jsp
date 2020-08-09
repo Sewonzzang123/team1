@@ -27,47 +27,58 @@
 					</h2>
 					<hr>
 					<form:form
-					 id="writeFrm" 
-					name="writeFrm"
+					 id="writeFrm" 				
+					 name="writeFrm"
 					method="POST"
 					action="${contextPath}/board/write" 
 					enctype="multipart/form-data"
-					modelAttribute="boardVO">
+					modelAttribute="writeBoardVO"
+					>
 						
 						<ul>						
 							<li class="selectGrp">						
-							
+							<form:label path="bcategory.catnum">분류</form:label>
 							<form:select path="bcategory.catnum" 	>								
 									<option value="0">게시판분류</option>
-									<form:options path="bcategory.catnum"  items="${bcategoryVO }" itemValue="catnum" itemLabel="catname"></form:options>
+									<form:options path="bcategory.catnum"  items="${bcategory }" itemValue="catnum" itemLabel="catname"/>
 			 				</form:select> 
+			 					<form:errors path="bcategory.catnum" cssClass="error"/>
 							
 							<form:select path="hidcategory.hidnum">
 									<form:option value="0">말머리선택</form:option>
-								<form:options path="hidcategory.hidnum" items="${headIdCategoryVO}" itemValue="hidnum" itemLabel="hidname"></form:options>
+								<form:options path="hidcategory.hidnum" items="${hidcategory}" itemValue="hidnum" itemLabel="hidname"/>
 								
 							</form:select>
+							<form:errors path="hidcategory.hidnum" cssClass="error"/>
 							</li>
 							
-								<li><form:label path="btitle">제목</form:label>
-								<form:input type="text" path="btitle"	 />					<form:errors path="btitle" cssClass="error"/></li>
+								<li>
+								<form:label path="btitle" >제목</form:label>
+								<form:input path="btitle" type="text" />	
+								<form:errors path="btitle" cssClass="error"/></li>
 			
 								
-								<li><form:label path="ucode">작성자</form:label>
+								<li>
+								<form:label path="ucode">작성자</form:label>
 								<form:input type="text" path="ucode" />			
-									<form:errors path="ucode" cssClass="error"/></li>				
-							<li>
-							<form:textarea path="bcontent" cols="30" rows="5" placeholder="내용 입력"></form:textarea>
-								<form:errors path="bcontent" cssClass="error"/>
-								</li>
+								<form:errors path="ucode" cssClass="error"/></li>
+								
+												
+							<li><form:label path="bcontent">내용</form:label>
+							<form:textarea path="bcontent" rows="10" placeholder="내용 입력"></form:textarea>
+							<form:errors path="bcontent" cssClass="error"/></li>
+								
+								
+								
 							<li><form:label path="files">파일첨부</form:label>
 							<form:input type="file" path="files"  multiple="true" /></li>
-							<li>							
+							
+							<li>										
 							<div class="btnGrp">
-								<form:button id="tmpWriteBtn" type="button">임시저장</form:button>
-								<form:button id="writeBtn" type="button">등록</form:button>
-							</div>							
-							</li>
+							<form:button id="tmpWriteBtn" type="button">임시저장</form:button>
+							<form:button id="writeBtn" type="button">등록</form:button>
+							<form:button id="listBtn" type="button">취소</form:button>
+							</div></li>
 							
 						</ul>
 					</form:form>

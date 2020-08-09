@@ -17,6 +17,8 @@
 <a href="${contextPath }/mypage/">정민</a>
 <a href="${contextPath }/board/">대석</a>
 
+<a href="${contextPath }/"></a>
+
 <P>  The time on the server is ${serverTime}. </P>
 </body>
 </html>

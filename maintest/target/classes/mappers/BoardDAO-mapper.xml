@@ -7,50 +7,41 @@
 select catnum, catname, btype from bcategory
 </select>
 <!-- 게시판 말머리 조회  -->
-<select id="selectHeadIdCategory" parameterType="long" resultType="com.my.maintest.board.vo.HeadIdCategoryVO">
+<select id="selectHeadIdCategory" resultType="com.my.maintest.board.vo.HeadIdCategoryVO">
 
 select hidnum, hidname
 from headid t1, bcategory t2
 where t1.catnum = t2.catnum 
-<!-- and t1.catnum = #{catnum} -->
+
 
 </select>
+
+
 <!-- 	// 전체글 조회 (default) -->
 <select id="selectArticles" resultType="com.my.maintest.board.vo.BoardVO">
 
 select 
-t1.bNum,
-t2.catName as "bCategory.catName",
- t3.hidname as "hidCategory.hidName"
-, t1.bTitle, t4.nickname as "bnickname", t1.bCdate, t1.bHits
+t1.bnum,
+t2.catname as "bcategory.catname",
+ t3.hidname as "hidcategory.hidname"
+, t1.btitle, t4.nickname as "bnickname", t1.bcdate, t1.bhits
 from board t1, bcategory t2, headid t3,member t4
-where t1.bcategory = t2.catnum and t1.hidCategory = t3.hidNum and t1.ucode = t4.ucode
+where t1.bcategory = t2.catnum and t1.hidcategory = t3.hidnum and t1.ucode = t4.ucode
 
-<!-- 
-Select t1.bnum,t1.bcategory as "bcategory.catnum", t2.catname as "bcategory.catname"
-from board t1, bcategory t2 where t1.bcategory = t2.catnum
- -->
-<!-- select bnum, bcategory as "bcategory.catnum" , hidcategory as "hidcategory.hidnum", t2.nickname, btitle, bcontent, bhits, bcdate,bUdate,bGroup,bStep,bIndent
-from board t1, member t2 ,bcategory t3, headid t4
-where t1.ucode = t2.ucode and t1.bcategory = t3.catnum and t1.hidcategory = t4.hidnum
-order by bnum desc -->
 </select>
+
 
 <!-- 게시글 등록-->
 
 <insert id="insertArticle"  parameterType="com.my.maintest.board.vo.BoardVO">
-insert into board(
-bnum, 
-bcategory, 
-hidcategory, 
-ucode,
- btitle,
-bcontent,
+
+insert into board(bnum, bcategory, hidcategory, ucode, btitle, bcontent,
 bgroup,
 bstep,
 bindent
-  )values(
-bnum_seq.nextVal, 
+)
+values(
+bnum_seq.nextval, 
 #{bcategory.catnum}, 
 #{hidcategory.hidnum},
 #{ucode},
@@ -58,9 +49,7 @@ bnum_seq.nextVal,
 #{bcontent},
 bnum_seq.nextVal, 
 0,
-0
-   
-  )
+0)
 
 </insert>
 

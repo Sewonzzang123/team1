@@ -14,7 +14,7 @@ public interface BoardSVC {
 	//게시판 카테고리 조회 
 	List<BcategoryVO> selectBcategory();
 	//게시판 말머리 조회
-	List<HeadIdCategoryVO> selectHeadIdCategory(String catnum);
+	List<HeadIdCategoryVO> selectHeadIdCategory();
 	
 	// 전체글 조회 (default)
 	List<BoardVO> selectArticles() ;	

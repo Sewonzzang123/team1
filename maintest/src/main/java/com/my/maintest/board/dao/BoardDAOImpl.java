@@ -27,8 +27,8 @@ public class BoardDAOImpl implements BoardDAO {
 	
 	//게시판 말머리 조회
 	@Override
-	public List<HeadIdCategoryVO> selectHeadIdCategory(String catnum) {		
-		return sqlSession.selectList("mappers.BoardDAO-mapper.selectHeadIdCategory", Long.valueOf(catnum));
+	public List<HeadIdCategoryVO> selectHeadIdCategory() {		
+		return sqlSession.selectList("mappers.BoardDAO-mapper.selectHeadIdCategory");
 	}
 
 

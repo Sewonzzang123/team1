@@ -29,14 +29,14 @@
             <div class="th cols">조회수</div>
             <div class="th cols">작성일자</div>
 
-<c:forEach var="tdt" items="${requestScope.list}"> 
-            <div class="td cols">${tdt.bnum }</div>
-            <div class="td cols">${tdt.bcategory.catname}</div>
-            <div class="td cols">${tdt.hidcategory.hidname}</div>
-            <div class="td cols">${tdt.btitle}</div>
-            <div class="td cols">${tdt.bnickname}</div>
-            <div class="td cols">${tdt.bhits}</div>
-            <div class="td cols">${tdt.bcdate}</div>
+<c:forEach var="tdata" items="${requestScope.listBoardVO}"> 
+            <div class="td cols">${tdata.bnum }</div>
+            <div class="td cols">${tdata.bcategory.catname}</div>
+            <div class="td cols">${tdata.hidcategory.hidname}</div>
+            <div class="td cols">${tdata.btitle}</div>
+            <div class="td cols">${tdata.bnickname}</div>
+            <div class="td cols">${tdata.bhits}</div>
+            <div class="td cols">${tdata.bcdate}</div>
             </c:forEach>
         </div>
         

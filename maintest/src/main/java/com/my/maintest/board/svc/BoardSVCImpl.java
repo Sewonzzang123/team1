@@ -25,9 +25,9 @@ public class BoardSVCImpl implements BoardSVC {
 	}
 	//게시판 말머리 조회
 	@Override
-	public List<HeadIdCategoryVO> selectHeadIdCategory(String catnum) {
+	public List<HeadIdCategoryVO> selectHeadIdCategory() {
 		
-		return  boardDAO.selectHeadIdCategory(catnum);
+		return  boardDAO.selectHeadIdCategory();
 	}
 	
 //전체글 조회 (default)
