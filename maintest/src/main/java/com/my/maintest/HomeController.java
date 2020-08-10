@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.my.maintest.board.vo.BoardVO;
-import com.my.maintest.board.vo.TestVO;
+//import com.my.maintest.board.vo.TestVO;
 
 /**
  * Handles requests for the application home page.
@@ -37,27 +37,27 @@ public class HomeController {
 		return "home";
 	}
 	
-	@GetMapping("/test")
-	public ModelAndView toTest() {
-		
-		
-		return new ModelAndView("/board/boardWriteFrm1", "TestVO", new TestVO());
-	}
+//	@GetMapping("/test")
+//	public ModelAndView toTest() {
+//		
+//		
+//		return new ModelAndView("/board/boardWriteFrm1", "TestVO", new TestVO());
+//	}
 
 	
-	@PostMapping("/testDO")
-	public String toTestto(
-			//@RequestParam("btitle") String btitle,
-			@ModelAttribute TestVO testVO ,
-			RedirectAttributes redirectAttributes
-			
-			) {
-		
-		System.out.println(testVO.toString());
-		//System.out.println(boardVO.toString());
-		redirectAttributes.addAttribute("testVO", testVO);
-		
-		return "redirect:/test";
-		
-	}
+//	@PostMapping("/testDO")
+//	public String toTestto(
+//			//@RequestParam("btitle") String btitle,
+//			@ModelAttribute TestVO testVO ,
+//			RedirectAttributes redirectAttributes
+//			
+//			) {
+//		
+//		System.out.println(testVO.toString());
+//		//System.out.println(boardVO.toString());
+//		redirectAttributes.addAttribute("testVO", testVO);
+//		
+//		return "redirect:/test";
+//		
+//	}
 }

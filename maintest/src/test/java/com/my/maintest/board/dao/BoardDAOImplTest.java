@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,6 +31,7 @@ public class BoardDAOImplTest {
 	
 	@Test
 	@DisplayName("게시글 등록")
+	@Disabled
 	void insertArticle() {	
 		long catNum = 4;
 		long hidNum = 1;
@@ -55,12 +57,24 @@ public class BoardDAOImplTest {
 	
 	@Test
 	@DisplayName("게시글 전체조회")
+	@Disabled
 void selectArticles() {
 		List<BoardVO> list =	boardDAO.selectArticles();		
 
 		
 		list.stream().forEach(System.out::println);
 		Assertions.assertEquals(1, 1);
+	}
+	
+	@Test
+	@DisplayName("게시글 열람")
+	void toRead() {
+		long bNum = 72;
+		
+		System.out.println(boardDAO.selectArticle(bNum));
+		
+		
+		
 	}
 	
 	

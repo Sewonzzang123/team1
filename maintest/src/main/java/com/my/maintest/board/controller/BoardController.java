@@ -11,14 +11,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.my.maintest.board.svc.BoardSVC;
 import com.my.maintest.board.vo.BcategoryVO;
 import com.my.maintest.board.vo.BoardVO;
+//import com.my.maintest.board.vo.TestVO;
 import com.my.maintest.board.vo.HeadIdCategoryVO;
 
 @Controller
@@ -30,51 +30,43 @@ public class BoardController {
 	@Inject
 	BoardSVC boardSVC;
 
-	/*
-	 * //게시판 카테고리 조회
-	 * 
-	 * @ModelAttribute("bcategory") public List<BcategoryVO> getBcategory(){
-	 * List<BcategoryVO> bcategoryVO =null; bcategoryVO =
-	 * boardSVC.selectBcategory(); return bcategoryVO ; }
-	 * 
-	 * //게시판 말머리 조회
-	 * 
-	 * @ModelAttribute("hidcategory") public List<HeadIdCategoryVO>
-	 * getHeadIdCategory(){ List<HeadIdCategoryVO> list =
-	 * boardSVC.selectHeadIdCategory(); return list; }
-	 */
-	// 리스트 페이지
-	@GetMapping("")
-	public String toBoardMain(
-			// @ModelAttribute("boardVO") BoardVO boardVO
-			Model model) {
-		model.addAttribute("listBoardVO", boardSVC.selectArticles());
-		return "/board/boardListFrm";
+	// 게시판 카테고리 조회
+
+	@ModelAttribute("bcategory")
+	public List<BcategoryVO> getBcategory() {
+		List<BcategoryVO> bcategoryVO = null;
+		bcategoryVO = boardSVC.selectBcategory();
+		return bcategoryVO;
 	}
+
+	// 게시판 말머리 조회
+
+	@ModelAttribute("hidcategory")
+	public List<HeadIdCategoryVO> getHeadIdCategory() {
+		List<HeadIdCategoryVO> list = boardSVC.selectHeadIdCategory();
+		return list;
+	}
+
+	// 리스트 페이지
 
 	// 게시글목록
 	@GetMapping("/boardListFrm")
 	public String toboardListFrm(Model model) {
-
 		model.addAttribute("listBoardVO", boardSVC.selectArticles());
 		return "/board/boardListFrm";
 	}
 
 	// 게시글 작성 화면
 	@GetMapping("/boardWriteFrm")
-	public String toboardwrite(@ModelAttribute("writeBoardVO") BoardVO boardVO) {
+	public String toboardwrite(@ModelAttribute BoardVO boardVO) {
 
-		return "/board/boardWriteFrm1";
-
+		return "/board/boardWriteFrm";
 	}
 
 	// 게시글 등록
 
 	@PostMapping("/write")
-	public String toWrite(
-
-			@ModelAttribute BoardVO boardVO, BindingResult result) {
-		logger.info("컨트롤단 boardVO = " + boardVO.toString());
+	public String toWrite(@ModelAttribute BoardVO boardVO, BindingResult result) {
 
 		if (result.hasErrors()) {
 			return "/board/boardWriteFrm";
@@ -84,6 +76,12 @@ public class BoardController {
 	}
 
 	// 게시글열람
+	@GetMapping("/read/{bnum}")
+	public String toRead(@PathVariable("bnum") Long bNum, Model model) {
+		model.addAttribute("boardVO",boardSVC.selectArticle(bNum));		
+		return "/board/boardReadFrm";		
+	}
+	
 
 	// 게시글수정
 

@@ -24,7 +24,9 @@ select
 t1.bnum,
 t2.catname as "bcategory.catname",
  t3.hidname as "hidcategory.hidname"
-, t1.btitle, t4.nickname as "bnickname", t1.bcdate, t1.bhits
+, t1.btitle,
+ t4.nickname as "bnickname",
+ t1.bcdate, t1.bhits
 from board t1, bcategory t2, headid t3,member t4
 where t1.bcategory = t2.catnum and t1.hidcategory = t3.hidnum and t1.ucode = t4.ucode
 
@@ -54,7 +56,23 @@ bnum_seq.nextVal,
 </insert>
 
 <!-- 	// 글 열람	 -->
+<select id="selectArticle" parameterType="long" resultType="com.my.maintest.board.vo.BoardVO">
 
+select t1.bnum, 
+t2.catname   as "bcategory.catname",
+t2.catnum as "bcategory.catnum",
+ t4.hidname as "hidcategory.hidname", 
+ t4.hidnum as  "hidcategory.hidnum",
+ t3.nickname as bnickname, 
+ t1.btitle, 
+ t1.bcontent, 
+ t1.bcdate,
+  t1.budate
+from board t1, bcategory t2, member t3, headid t4
+where t1.bcategory = t2.catnum and t1.ucode = t3.ucode and t1.hidcategory = t4.hidnum and
+bnum = #{bnum}
+
+</select>
 	<!-- //글 수정 -->
 <!-- 	//글 삭제 -->	
 	<!-- //글 검색	 -->

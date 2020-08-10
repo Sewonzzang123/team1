@@ -39,7 +39,8 @@ public class BoardSVCImpl implements BoardSVC {
 	// 글 열람
 	@Override
 	public BoardVO selectArticle(long bNum) {
-		return null;
+		
+		return boardDAO.selectArticle(bNum);
 	}
 
 	// 게시글 등록

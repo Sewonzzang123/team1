@@ -15,7 +15,7 @@
 
 
 <a href="${contextPath }/mypage/">정민</a>
-<a href="${contextPath }/board/">대석</a>
+<a href="${contextPath }/board/boardListFrm">대석</a>
 
 <a href="${contextPath }/"></a>
 

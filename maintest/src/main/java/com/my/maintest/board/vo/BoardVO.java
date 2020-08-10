@@ -1,6 +1,7 @@
 package com.my.maintest.board.vo;
 
 import java.sql.Timestamp;
+
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -12,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.sun.istack.Nullable;
 
 import lombok.Data;
+
 public class BoardVO {
 
 
@@ -181,9 +183,6 @@ public String toString() {
 			+ budate + ", bgroup=" + bgroup + ", bstep=" + bstep + ", bindent=" + bindent + ", bnickname=" + bnickname
 			+ ", files=" + files + "]";
 }
-
-
-
 
 
 }

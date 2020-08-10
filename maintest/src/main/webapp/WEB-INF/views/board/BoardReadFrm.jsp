@@ -25,7 +25,7 @@
 						</a>
 					</h2>
 					<hr>
-					<form id="writeFrm" name="writeFrm" method="POST"
+					<form id="readModFrm" name="readModFrm" method="POST"
 						action="${contextPath}/board/write">
 						
 						<ul>
