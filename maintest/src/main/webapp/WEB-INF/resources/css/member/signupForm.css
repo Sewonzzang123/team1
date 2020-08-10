@@ -36,16 +36,6 @@ button, input, select, textarea {
 	padding: 0;
 }
 
-table {
-	width: 600px;
-	border-top: 2px solid #CBCBCB;
-	border-bottom: 2px solid #CBCBCB;
-	table-layout: fixed;
-	border-collapse: collapse;
-	border-spacing: 0;
-	border-top: 2px solid #CBCBCB;
-}
-
 th {
 	width: 130px;
 	color: #737373;
@@ -63,6 +53,40 @@ th, td {
 	line-height: 17px;
 	line-height: 1.55em;
 	border-bottom: 1px solid #E0E0E0;
+}
+
+/* 개인 폼 */
+table {
+	width: 500px;
+	border-top: 2px solid #CBCBCB;
+	border-bottom: 2px solid #CBCBCB;
+	table-layout: fixed;
+	border-collapse: collapse;
+	border-spacing: 0;
+	border-top: 2px solid #CBCBCB;
+	margin: auto;
+}
+
+.title {
+	text-align: center;
+}
+
+.signupForm ul, ol {
+	padding: 0;
+	list-style: none;
+}
+
+.txtTel {
+	width: 40px;
+}
+
+#telBox {
+	display: flex;
+	align-items: center;
+}
+
+.info {
+	width: 160px;
 }
 
 .err_msg {

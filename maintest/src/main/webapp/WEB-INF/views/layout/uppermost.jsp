@@ -72,9 +72,8 @@ header>.container-h {
 				</p> --%>
 				<p>
 					<a href="${url_login }">로그인</a><span> | </span><a
-						href="${contextPath }/maintest/signupForm">회원가입</a>
+						href="${pageContext.request.contextPath}/signupForm">회원가입</a>
 					${sessionScope.member.nickname }<span> | </span>
-					
 			</div>
 		</c:if>
 		<!-- 로그인 후  -->

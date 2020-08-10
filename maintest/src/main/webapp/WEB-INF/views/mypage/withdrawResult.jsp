@@ -13,13 +13,17 @@
 </style>
 </head>
 <body>
-
+	<!-- header -->
+	<header>
+		<%@ include file="/WEB-INF/views/layout/logo.jsp"%>
+	</header>
 	<div class="content">
 		<div class="result">
 			<h3>회원탈퇴가 완료되었습니다.</h3>
 
 			<div class="actionBtn">
-				<input type="button" value="메인화면으로">
+				<input type="button" value="메인화면으로"
+					onclick="location.href = '${pageContext.request.contextPath}'">
 			</div>
 		</div>
 	</div>

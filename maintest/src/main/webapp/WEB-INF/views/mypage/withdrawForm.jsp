@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Insert title here</title>
 <link rel="stylesheet"
-	href="${contextPath }/maintest/css/mypage/main.css">
+	href="${pageContext.request.contextPath}/css/mypage/main.css">
 <link rel="stylesheet"
-	href="${contextPath }/maintest/css/mypage/common.css">
+	href="${pageContext.request.contextPath}/css/mypage/common.css">
 <style type="text/css">
 #pw {
 	width: 300px;
@@ -24,6 +24,10 @@ form {
 
 .form_head, .form_data {
 	height: 30px;
+}
+
+.err_msg {
+	color: red;
 }
 </style>
 </head>
@@ -43,23 +47,25 @@ form {
 				않습니다.
 			</div>
 			<div id="inputForm">
-				<form action="${pageContext.request.contextPath}/mypage/withdraw"">
+				<form method="post"
+					action="${pageContext.request.contextPath}/mypage/withdraw">
 					<div>
 						<div class="form_head">
 							<strong>아이디</strong>
 						</div>
-						<div class="form_data">아이디폼</div>
+						<div class="form_data">${sessionScope.member.id }</div>
 					</div>
 					<div>
 						<div class="form_head">
 							<strong>비밀번호</strong>
 						</div>
 						<div class="form_data">
-							<input id="pw" type="password" name="pw">
+							<input id="pw" type="password" name="pw"><span
+								class="err_msg">${requestScope.err_msg }</span>
 						</div>
 					</div>
 					<div class="actionBtn">
-						<input type="submit" value="확인" > <input type="button"
+						<input type="submit" value="확인"> <input type="button"
 							value="취소">
 					</div>
 				</form>
