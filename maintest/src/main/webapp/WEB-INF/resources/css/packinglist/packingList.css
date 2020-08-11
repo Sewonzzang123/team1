@@ -55,4 +55,7 @@ input[type="text"]{
 	width:20%;
 }
 
+div[selected="true"]{
+	text-decoration:line-through;
+}
 

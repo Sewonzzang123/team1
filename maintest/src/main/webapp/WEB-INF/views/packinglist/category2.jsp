@@ -6,7 +6,8 @@
 			<c:forEach items="${categoryList }" var="itemCategoryVO">
 				<dd>
 					<button class ="tab_menu_btn${itemCategoryVO.ca_num } tab_menu_btn" id="${itemCategoryVO.ca_num }"type="button">${itemCategoryVO.ca_name }</button>
-					<ul></ul>
+					<ul>
+					</ul>
 				</dd>
 			</c:forEach>
 		</div>

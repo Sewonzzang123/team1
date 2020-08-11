@@ -18,7 +18,7 @@
 						<i class="fas fa-minus" onClick="deletelist2_f(this)" style="display:none"></i>
 						<i class="fas fa-plus" onClick="addlist_f(this)"></i></a>
 						</td>
-						<td><div class="item${itemVO.i_num }">${itemVO.i_name }</div></td>
+						<td><div class="item${itemVO.i_num }" selected="false">${itemVO.i_name }</div></td>
 					</tr>
 				</c:forEach>
 		</table>

@@ -71,12 +71,12 @@ $('.tab_menu_btn6').on('click',function(){
 		
 		let newitem = document.createElement('tr');
 		newitem.className +='tab_box  tab_box'+idTag ;
-		newitem.innerHTML = '<td><a href="#"><i class="fas fa-minus" onClick="deletelist2_f(this)" style="display:none"></i><i class="fas fa-plus" onClick="addlist_f(this)"></i></a></td><td><div class="newitem">'+add+'</div></td>';
+		newitem.innerHTML = '<td><a href="#"><i class="fas fa-minus" onClick="deletelist2_f(this)" style="display:none"></i><i class="fas fa-plus" onClick="addlist_f(this)"></i></a></td><td><div class="newitem" selected="false">'+add+'</div></td>';
 
 		document.querySelector('.tab_box').parentElement.prepend(newitem);		
 		}
 
-	
+
 
 	
 }
@@ -93,11 +93,11 @@ $('.tab_menu_btn6').on('click',function(){
 					
 					let addListItem = document.createElement('li');
 					//여기에 체크박스, 숫자, 마이너스 버튼 생성해야됨
-					addListItem.innerHTML ='<div><input type="checkbox">'+ itemid+'<input type="text" name="num" value="1"/><button class="plusBtn" onClick="plus(this)">증가</button><button class="minusBtn" onClick="minus(this)">감소</button><a href="#"><i class="fas fa-minus" onClick="deletelist_f(this)"></i></a></div>';
+					addListItem.innerHTML ='<div><input type="checkbox" onClick="check_f(this)">'+ itemid+'<input type="text" name="num" value="1"/><button class="plusBtn" onClick="plus(this)">증가</button><button class="minusBtn" onClick="minus(this)">감소</button><a href="#"><i class="fas fa-minus" onClick="deletelist_f(this)"></i></a></div>';
 					
 					let inputclass = document.querySelector("."+classTag);
 					inputclass.parentElement.lastElementChild.prepend(addListItem);
-					
+								
 					
 	}
 
@@ -128,8 +128,20 @@ $('.tab_menu_btn6').on('click',function(){
 		let a = e.parentElement.firstElementChild.nextElementSibling.nextElementSibling;
 		if(Number(a.value)-1<1){return;}
 		a.value = Number(a.value)-1;
-
 	}
+	
+	function check_f(e){
+		if(e.parentElement.firstElementChild.nextElementSibling.getAttribute('selected')=='false'){	
+		e.parentElement.firstElementChild.nextElementSibling.setAttribute('selected','true');
+		}else{
+		e.parentElement.firstElementChild.nextElementSibling.setAttribute('selected','false');
+		}
+		
+	}
+	
+	
+	
+
 
 
 
