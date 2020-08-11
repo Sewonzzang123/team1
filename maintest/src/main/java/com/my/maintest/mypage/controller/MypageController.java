@@ -1,6 +1,7 @@
 package com.my.maintest.mypage.controller;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -27,29 +28,49 @@ public class MypageController {
 	@RequestMapping(value = "")
 	public String getMypage() {
 
-		return "redirect:/mypage/modifyForm";
+		return "/mypage/modifyForm";
 	}
 
 	// 회원정보 수정 호출
 	@RequestMapping("/modifyForm")
-	public String get_modifyForm(@ModelAttribute MemberVO memberVO) {
+	public String get_modifyForm() {
 
 		return "/mypage/modifyForm";
 	}
 
 	// 비밀번호 변경
 	@RequestMapping("/changePW")
-	public String changePW(HttpSession session, @ModelAttribute("info") ChangePWVO info) {
+	public String changePW(HttpSession session, @ModelAttribute ChangePWVO info, Model model,
+			HttpServletResponse response) {
 
 		MemberVO memberVO = (MemberVO) session.getAttribute("member");
 
-		memberVO.setPw(info.getNextpw());
+		if (info.getCulpw().trim().length() == 0) {
+			model.addAttribute("err_msg_cpw", " * 필수 정보입니다.");
+			return "/mypage/modifyForm";
+		}
 
-		logger.info(memberVO.toString());
-		logger.info(info.toString());
+		if (!info.getCulpw().equals(memberVO.getPw())) {
+			model.addAttribute("err_msg_cpw", " * 현재 비밀번호가 일치하지 않습니다.");
+			return "/mypage/modifyForm";
+		}
+
+		if (info.getNewpw().trim().length() < 6) {
+			model.addAttribute("err_msg_npw", " * 6~10자리로 입력해주세요.");
+			logger.info(info.getNewpw() + info.getNewpwc());
+			return "/mypage/modifyForm";
+		}
+
+		if (!info.getNewpw().equals(info.getNewpwc())) {
+			model.addAttribute("err_msg_npw", " * 새 비밀번호가 일치하지 않습니다..");
+			return "/mypage/modifyForm";
+		}
+
+		memberVO.setPw(info.getNewpw());
 		mypageSVC.changePW(memberVO);
+		model.addAttribute("suc_msg", " * 비밀번호가 변경되었습니다.");
 
-		return "redirect:/mypage/modifyForm";
+		return "/mypage/modifyForm";
 	}
 
 	// 회원정보 수정
@@ -57,7 +78,7 @@ public class MypageController {
 	public String modify(HttpSession session, @ModelAttribute MemberVO info, BindingResult result, Model model) {
 
 		if (info.getNickname().trim().length() == 0) {
-			result.rejectValue("nickname", "required", "* 필수 정보입니다.");
+			model.addAttribute("err_msg", " * 필수 정보입니다.");
 			return "/mypage/modifyForm";
 		}
 
@@ -105,7 +126,13 @@ public class MypageController {
 
 	// 내 리스트
 	@RequestMapping("/mylist")
-	public String mylist() {
+	public String mylist(HttpSession session, Model model) {
+		MemberVO memberVO = (MemberVO) session.getAttribute("member");
+		String ucode = memberVO.getUcode();
+
+		model.addAttribute("mylist", mypageSVC.mylist(ucode));
+		logger.info(mypageSVC.mylist(ucode).toString());
+		logger.info(ucode);
 
 		return "/mypage/mylist";
 	}

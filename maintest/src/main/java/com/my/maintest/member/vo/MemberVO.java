@@ -34,4 +34,6 @@ public class MemberVO {
 	@NotEmpty(message = "* 필수 정보입니다.")
 	private String pwc;
 
+	private String ucode;
+
 }

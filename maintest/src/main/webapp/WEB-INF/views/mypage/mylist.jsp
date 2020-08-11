@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -47,6 +48,25 @@
 						<td><input type="button" name="mylist_btn"
 							id="mylist_delete_btn" value="삭제"></td>
 					</tr>
+					<c:forEach var="list" items="${requestScope.mylist }">
+						<tr>
+							<td>${list.l_name }</td>
+						</tr>
+						<%-- 		<div class="rec">${rec.bnum }</div>
+						<div class="rec">${rec.boardCategoryVO.cname }</div>
+						<div class="rec">
+							<c:forEach begin="1" end="${rec.bindent }">&nbsp;&nbsp;</c:forEach>
+							<c:if test="${rec.bindent > 0 }">
+								<i class="fas fa-reply"></i>
+							</c:if>
+							<a href="./view/${rec.bnum }">${rec.btitle }</a>
+						</div>
+						<div class="rec">${rec.bnickname }</div>
+						<div class="rec">
+							<fmt:formatDate value="${rec.bcdate }" pattern="yyyy/MM/dd" />
+						</div>
+						<div class="rec" style="text-align: right">${rec.bhit }</div> --%>
+					</c:forEach>
 				</tbody>
 			</table>
 
