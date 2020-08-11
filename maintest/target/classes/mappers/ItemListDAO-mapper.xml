@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.ItemListDAO-mapper">
+	<!-- 아이템 카테고리 전체 조회 -->
+	<select id="selectAllCategory"
+		resultType="com.my.maintest.item.vo.ItemCategoryVO">
+		select ca_num, ca_name
+		from i_category
+	</select>
+
+	<!-- 선택한 카테고리의 아이템 전체 조회 -->
+	<select id="selectAllItem"
+		resultType="com.my.maintest.item.vo.ItemVO">
+		select t2.ca_num as "itemCategoryVO.ca_num",
+		t2.ca_name as "itemCategoryVO.ca_name",
+		t1.i_num, t1.i_name, t1.i_description, t1.l_num
+		from item t1, i_category t2
+		where t1.ca_num = t2.ca_num
+<![CDATA[and t1.i_num <1000]]>
+	</select>
+	
+		<!-- 선택한 카테고리의 아이템 조회 -->
+	<select id="selectOneItem"
+		resultType="com.my.maintest.item.vo.ItemVO">
+		select t2.ca_num as "itemCategoryVO.ca_num",
+		t2.ca_name as "itemCategoryVO.ca_name",
+		t1.i_num, t1.i_name, t1.i_description, t1.l_num
+		from item t1, i_category t2
+		where t1.ca_num = t2.ca_num
+		<![CDATA[and t1.i_num <1000]]>
+		and t1.ca_num = ${ca_num}
+	</select>
+</mapper>
