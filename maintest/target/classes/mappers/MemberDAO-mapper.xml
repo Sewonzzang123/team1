@@ -4,7 +4,8 @@
 
 	<select id="listOneMember" parameterType="string"
 		resultType="com.my.maintest.member.vo.MemberVO">
-		select id, pw,name,tel,nickname from member where id =
+		select ucode, id, pw,name,tel,nickname from member where id
+		=
 		#{id}
 	</select>
 

@@ -44,4 +44,12 @@
 		#{id}
 	</delete>
 
+	<select id="mylist" parameterType="string"
+		resultType="com.my.maintest.mypage.vo.MylistVO">
+		select l_num, l_name, i_list, cdate from list where
+		ucode=
+		#{ucode}
+	</select>
+
+
 </mapper>

@@ -1,6 +1,9 @@
 package com.my.maintest.mypage.dao;
 
+import java.util.List;
+
 import com.my.maintest.member.vo.MemberVO;
+import com.my.maintest.mypage.vo.MylistVO;
 
 public interface MypageDAO {
 
@@ -12,4 +15,7 @@ public interface MypageDAO {
 
 	// 회원탈퇴
 	public int withdraw(String id);
+
+	// 마이리스트
+	public List<MylistVO> mylist(String ucode);
 }

@@ -1,5 +1,7 @@
 package com.my.maintest.mypage.dao;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.junit.jupiter.api.Disabled;
@@ -12,6 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.my.maintest.member.vo.MemberVO;
+import com.my.maintest.mypage.vo.MylistVO;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/spring/*.xml" })
@@ -42,7 +45,7 @@ public class MypageDAOImplTest {
 
 		MemberVO memberVO = new MemberVO();
 		memberVO.setPw("1234567");
-		memberVO.setId("min");
+		memberVO.setId("admin");
 
 		mypageDAO.changePW(memberVO);
 		logger.info("실행됨");
@@ -50,12 +53,29 @@ public class MypageDAOImplTest {
 
 	@Test
 	@DisplayName("회원탈퇴")
-//	@Disabled
+	@Disabled
 	void withdraw() {
 
 		String id = "id";
 
 		mypageDAO.withdraw(id);
 		logger.info("실행됨");
+	}
+
+	@Test
+	@DisplayName("마이리스트")
+//	@Disabled
+	void mylist() {
+		String ucode = "34";
+		List<MylistVO> list = (List<MylistVO>) mypageDAO.mylist(ucode);
+
+		for (MylistVO vo : list) {
+			logger.info(vo.getL_name());
+
+		}
+
+		logger.info(String.valueOf(list.size()));
+		logger.info(ucode);
+
 	}
 }

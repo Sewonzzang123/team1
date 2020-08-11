@@ -29,7 +29,7 @@
 		<!-- main -->
 		<main id="content" class="modifyForm">
 
-			<form method="post">
+			<form modelAttribute="info">
 				<table>
 
 					<!-- 고정 영역 -->
@@ -42,63 +42,59 @@
 						<td class="table-data">${sessionScope.member.name }</td>
 					</tr>
 					<!-- 비밀번호 영역 -->
-					<tr>
-						<th class="table-head">비밀번호 변경</th>
-						<td class="table-data">
-							<ul>
-								<!-- 현재 비밀번호 -->
-								<li class="myinfo_form">
-									<div class="password-header">
-										<label for="txtPassword" class="text__label"> 현재 비밀번호
-										</label>
-									</div>
-									<div class="password-body">
-										<input name="culpw" id="txtPassword" type="password"
-											maxlength="10"></Input>
-									</div> <span class="err_msg">${requestScope.err_msg_cpw }</span>
-								</li>
+					<form modelAttribute="changePWVO">
+						<tr>
+							<th class="table-head">비밀번호 변경</th>
+							<td class="table-data">
+								<ul>
+									<!-- 현재 비밀번호 -->
+									<li class="myinfo_form">
+										<div class="password-header">
+											<label for="txtPassword" class="text__label"> 현재 비밀번호
+											</label>
+										</div>
+										<div class="password-body">
+											<input name="culpw" id="txtPassword" type="password"></Input>
+										</div>
+									</li>
 
-								<!-- 새 비밀번호 -->
-								<li class="myinfo_form">
-									<div class="password-header">
-										<label for="txtNewPassword1" class="text__label"> 새
-											비밀번호 </label>
-									</div>
-									<div class="password-body">
-										<input name="newpw" id="txtNewPassword1" type="password"
-											maxlength="10"></Input>
-									</div> <span class="err_msg">${requestScope.err_msg_npw }</span>
-								</li>
+									<!-- 새 비밀번호 -->
+									<li class="myinfo_form">
+										<div class="password-header">
+											<label for="txtNewPassword1" class="text__label"> 새
+												비밀번호 </label>
+										</div>
+										<div class="password-body">
+											<input name="newpw" id="txtNewPassword1" type="password"></Input>
+										</div>
+									</li>
 
-								<!-- 새 비밀번호 확인 -->
-								<li class="myinfo_form">
-									<div class="password-header">
-										<label for="txtNewPassword2" class="text__label"> 새
-											비밀번호 확인 </label>
-									</div>
-									<div class="password-body">
-										<input name="newpwc" id="txtNewPassword2" type="password"
-											maxlength="10"></Input>
-									</div>
-									<div class="password-body">
-										<input class="mypage_modify_btn" type="submit"
-											id="PWChangeBtn" value="비밀번호 변경"
-											formaction="${pageContext.request.contextPath}/mypage/changePW">
-									</div>
-									<div>
-										<span class="suc_msg">${requestScope.suc_msg }</span>
-									</div>
-								</li>
-							</ul>
-						</td>
-					</tr>
+									<!-- 새 비밀번호 확인 -->
+									<li class="myinfo_form">
+										<div class="password-header">
+											<label for="txtNewPassword2" class="text__label"> 새
+												비밀번호 확인 </label>
+										</div>
+										<div class="password-body">
+											<input name="newpwc" id="txtNewPassword2" type="password"></Input>
+										</div>
+										<div class="password-body">
+											<input class="mypage_modify_btn" type="submit"
+												id="PWChangeBtn" value="비밀번호 변경"
+												formaction="${pageContext.request.contextPath}/mypage/changePW">
+										</div>
+									</li>
+								</ul>
+							</td>
+						</tr>
+					</form>
 
 					<!-- 수정 영역 -->
 					<tr>
 						<th class="table-head">별명</th>
 						<td class="table-data"><input name="nickname" class="info"
 							value="${sessionScope.member.nickname }" maxlength="10" /><span
-							class="err_msg">${requestScope.err_msg }</span>
+							class="err_msg" /></span>
 					</tr>
 					<tr class="table-head">
 						<th>전화번호</th>
