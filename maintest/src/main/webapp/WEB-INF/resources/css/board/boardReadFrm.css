@@ -37,50 +37,54 @@
 
 
 
-        #writeFrm {
+        #readModFrm {
             min-width: 400px;
             margin: 50px;
         }
 
 
-        #writeFrm * {
+        #readModFrm * {
             box-sizing: border-box;
         }
 
-        #writeFrm>ul {
+        #readModFrm>ul {
             width: 80%;
             margin: 0 auto;
             padding: 0px;
         }
 
 
-        #writeFrm>ul li {
+        #readModFrm>ul li {
             width: 100%;
             display: grid;
             grid-template-columns: 20% 1fr;
         }
 
-        #writeFrm>ul .selectGrp {
+        #readModFrm>ul .selectGrp {
             width: 100%;
             display: grid;
             grid-template-columns: 20% 20% 1fr;
         }
 
-        #writeFrm>ul .selectGrp>select {
+        #readModFrm>ul .selectGrp>select {
             margin-right: 5px;
         }
 
-        #writeFrm>ul .btnGrp {
+        #readModFrm>ul .btnGrp {
             display: flex;
             justify-content: center;
         }
 
-        #writeFrm>ul .btnGrp button {
+        #readModFrm>ul .btnGrp button {
             width: auto;
         }
 
+  #readModFrm>ul .btnGrp .modifyMode {
+       display: none;
+        }
 
-        #writeFrm>ul textarea {
+
+        #readModFrm>ul textarea {
             grid-column: 1/3;
             border-collapse: collapse;
         }

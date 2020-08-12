@@ -7,7 +7,6 @@ import com.my.maintest.board.vo.BoardVO;
 import com.my.maintest.board.vo.HeadIdCategoryVO;
 
 public interface BoardDAO {
-
 	
 	//게시판 카테고리 조회 
 	List<BcategoryVO> selectBcategory();
@@ -18,16 +17,18 @@ public interface BoardDAO {
 	List<BoardVO> selectArticles() ;	
 	
 	// 게시글 열람
-	BoardVO selectArticle(long bNum);	
+	BoardVO selectArticle(long bnum);
+	//게시글 조회수 갱신
+	int updateBhits(long bnum);
 	
 	//게시글 등록
 	int insertArticle(BoardVO boardVO);
 	
 	//게시글  수정
-	void updateArticle(long  bNum);
+	int updateArticle(BoardVO boardVO);
 	
 	//게시글 삭제
-	void deleteArticle(long  bNum);
+	int deleteArticle(long  bnum);
 
 
 	

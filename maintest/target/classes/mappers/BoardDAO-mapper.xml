@@ -20,15 +20,22 @@ where t1.catnum = t2.catnum
 <!-- 	// 전체글 조회 (default) -->
 <select id="selectArticles" resultType="com.my.maintest.board.vo.BoardVO">
 
-select 
-t1.bnum,
-t2.catname as "bcategory.catname",
- t3.hidname as "hidcategory.hidname"
-, t1.btitle,
- t4.nickname as "bnickname",
- t1.bcdate, t1.bhits
-from board t1, bcategory t2, headid t3,member t4
-where t1.bcategory = t2.catnum and t1.hidcategory = t3.hidnum and t1.ucode = t4.ucode
+select
+t1.bnum, 
+t1.bCategory as "bCategory.catNum" ,
+t1.hidCategory as "hidCategory.hidNum", 
+t2.nickname as "bNickname", 
+t1.bTitle,
+t1.bContent, 
+t1.bHits,
+t1.bCdate,
+t1.bUdate,
+t1.bGroup,
+t1.bStep,
+t1.bIndent
+from board t1, member t2 ,bcategory t3, headid t4
+where t1.ucode = t2.ucode and t1.bcategory = t3.catnum and t1.hidCategory = t4.hidNum
+order by t1.bgroup desc , t1.bstep
 
 </select>
 
@@ -55,6 +62,9 @@ bnum_seq.nextVal,
 
 </insert>
 
+
+<!-- 답글 등록 -->
+
 <!-- 	// 글 열람	 -->
 <select id="selectArticle" parameterType="long" resultType="com.my.maintest.board.vo.BoardVO">
 
@@ -73,8 +83,36 @@ where t1.bcategory = t2.catnum and t1.ucode = t3.ucode and t1.hidcategory = t4.h
 bnum = #{bnum}
 
 </select>
-	<!-- //글 수정 -->
+<!-- 조회수 갱신-->
+<update id="updateBhits" parameterType="long">
+update board set bhits = bhits+1 where bnum = #{bnum}
+
+</update>
+
+
+
+	<!-- //게시글 수정 -->
+	<update id="updateArticle" parameterType="com.my.maintest.board.vo.BoardVO">
+	
+	update board set
+		 bnum = #{bnum},
+	 	 bcategory= #{bcategory.catnum}, 
+	 	 hidcategory= #{hidcategory.hidnum}, 
+	 	 ucode = (select ucode from member where nickname = #{bnickname}),
+	   btitle= #{btitle},
+	   bcontent= #{bcontent}
+	   where bnum = #{bnum}
+	
+	</update>
+	
 <!-- 	//글 삭제 -->	
+<delete id="deleteArticle" parameterType="long" >
+delete from board 
+where bnum = #{bnum}
+</delete>
+
+
+
 	<!-- //글 검색	 -->
 	  <!-- //말머리	 -->
 	  <!-- //제목 -->

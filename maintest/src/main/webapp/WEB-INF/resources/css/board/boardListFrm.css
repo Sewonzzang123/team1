@@ -31,7 +31,7 @@
             border-top: 1px black solid;
             width: 80%;
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr 4fr 1fr 1fr 1fr;
+            grid-template-columns: 1fr 1fr 5fr 1fr 1fr 1fr;
 
         }
 
@@ -47,11 +47,17 @@
             font-weight: bold;
         }
 
+  .container .content #bcontent{
+         display:flex;
+       justify-content: left;
+       padding-left:10px;     
+  }
+
 
           /* 버튼 그룹  */
           .container .btnGrp {
             display: grid;
-            grid-template-columns:1fr 1fr 1fr 4fr 1fr 1fr 1fr;
+            grid-template-columns:1fr 1fr 5fr 1fr 1fr 1fr;
             padding: 10px;
             width: 80%;
             margin: 0px auto;

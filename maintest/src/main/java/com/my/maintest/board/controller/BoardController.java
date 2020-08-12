@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.my.maintest.board.svc.BoardSVC;
 import com.my.maintest.board.vo.BcategoryVO;
@@ -84,7 +86,23 @@ public class BoardController {
 	
 
 	// 게시글수정
+	@PostMapping("/save")
+	public String toSaveChanges(
+			@ModelAttribute BoardVO boardVO, Model model
+			) {
+		boardSVC.updateArticle(boardVO);
+	 
+			return "redirect:/board/read/"+boardVO.getBnum();
+	}
 
 	// 게시글삭제
+	@GetMapping("/delete/{bnum}")
+public String toDeleteArticle(@PathVariable("bnum") int bnum, Model model){	
+		
+		boardSVC.deleteArticle(bnum);
+			return"redirect:/board/boardListFrm";
+			
+		}
+
 
 }

@@ -68,14 +68,49 @@ void selectArticles() {
 	
 	@Test
 	@DisplayName("게시글 열람")
+	@Disabled
 	void toRead() {
-		long bNum = 72;
-		
-		System.out.println(boardDAO.selectArticle(bNum));
+		long bNum = 72;		
+		System.out.println(boardDAO.selectArticle(bNum));	
 		
 		
 		
 	}
 	
+	@Test
+	@DisplayName("게시글 삭제")
+	@Disabled
+	void toDelete() {
+		long bnum = 74;
+		int result = boardDAO.deleteArticle(bnum);
+		Assertions.assertEquals(1, result);
+	}
+	
+	
+	@Test
+	@DisplayName("조회수 갱신")
+	@Disabled
+	void updateBhits () {
+		
+		long bnum = 84;
+		boardDAO.updateBhits(bnum);
+	}
+	
+	@Test
+	@DisplayName("게시글 수정")
+	void updateArticle() {
+		BoardVO boardVO = new BoardVO();
+		
+		boardVO.setBnum(84);
+		boardVO.setBtitle("수정된 제목");
+		boardVO.setBcontent("수정된 내용");
+		BcategoryVO bcategory = new BcategoryVO();
+		boardVO.setBcategory(bcategory);
+		boardVO.getBcategory().setCatnum(1);
+		boardVO.setBnickname("관리자");
+		
+	
+		boardDAO.updateArticle(boardVO);
+	}
 	
 }

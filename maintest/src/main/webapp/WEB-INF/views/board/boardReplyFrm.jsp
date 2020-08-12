@@ -24,9 +24,8 @@
 						<a href=""> 게시글 제목 </a>
 					</h2>
 					<hr>
-					<form id="replyFrm" name="replyFrm" method="POST" 	
-						action="${contextPath}/board/reply" >
-						<input type="hidden" name="bnum"/> 
+					<form id="writeFrm" name="writeFrm" method="POST" 	
+						action="${contextPath}/board/write" >
 
 						<ul>
 							<li class="selectGrp"><label for="bcategory.catnum">분류</label>

@@ -21,7 +21,7 @@ import com.my.maintest.board.vo.BoardVO;
 /**
  * Handles requests for the application home page.
  */
-@Controller
+//@Controller
 public class HomeController {
 
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
@@ -37,27 +37,5 @@ public class HomeController {
 		return "home";
 	}
 	
-//	@GetMapping("/test")
-//	public ModelAndView toTest() {
-//		
-//		
-//		return new ModelAndView("/board/boardWriteFrm1", "TestVO", new TestVO());
-//	}
 
-	
-//	@PostMapping("/testDO")
-//	public String toTestto(
-//			//@RequestParam("btitle") String btitle,
-//			@ModelAttribute TestVO testVO ,
-//			RedirectAttributes redirectAttributes
-//			
-//			) {
-//		
-//		System.out.println(testVO.toString());
-//		//System.out.println(boardVO.toString());
-//		redirectAttributes.addAttribute("testVO", testVO);
-//		
-//		return "redirect:/test";
-//		
-//	}
 }

@@ -15,7 +15,12 @@
 
 
 <a href="${contextPath }/mypage/">정민</a>
-<a href="${contextPath }/board/boardListFrm">대석</a>
+<a href="#">게시판목록</a>
+<div class="btnGrp">
+<a href="${contextPath }/board/tipb" >여행팁</a>
+<a href="${contextPath }/board/qab">QA</a>
+<button type="button" >여행갤러리</a>
+</div>
 
 <a href="${contextPath }/"></a>
 

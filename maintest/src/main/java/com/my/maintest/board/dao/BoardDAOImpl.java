@@ -50,22 +50,29 @@ public class BoardDAOImpl implements BoardDAO {
 	
 // 게시글 열람
 @Override
-public BoardVO selectArticle(long bNum) {
-	return sqlSession.selectOne("mappers.BoardDAO-mapper.selectArticle", bNum);
+public BoardVO selectArticle(long bnum) {
+	return sqlSession.selectOne("mappers.BoardDAO-mapper.selectArticle", bnum);
+}
+//게시글 조회수 갱신
+@Override
+public int updateBhits(long bnum) {
+	return sqlSession.update("mappers.BoardDAO-mapper.updateBhits",bnum);
 }
 
 	// 게시글 수정
 	@Override
-	public void updateArticle(long bNum) {
+	public int updateArticle(BoardVO boardVO) {
 		
+		return sqlSession.update("mappers.BoardDAO-mapper.updateArticle", boardVO);		
 	}
 
 		// 게시글 삭제
 		@Override
-		public void deleteArticle(long bNum) {
-			// TODO Auto-generated method stub
-
+		public int deleteArticle(long bnum) {			
+			return sqlSession.delete("mappers.BoardDAO-mapper.deleteArticle", bnum);
 		}
+		
+
 
 
 

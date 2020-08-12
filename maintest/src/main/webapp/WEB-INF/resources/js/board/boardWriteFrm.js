@@ -16,6 +16,9 @@
      }
      
     function   listBtn_f(e){    
-    window.location.href="/pfpkg/board/boardListFrm";
-    }
+    
+    const url = `/pfpkg/board/boardListFrm`;
+    window.location.href=url;
      
+     
+     }
