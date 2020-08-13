@@ -58,7 +58,7 @@ public class BoardController {
 		return "/board/boardListFrm";
 	}
 
-	// 게시글 작성 화면
+	// 게시글 작성 화면 
 	@GetMapping("/boardWriteFrm")
 	public String toboardwrite(@ModelAttribute BoardVO boardVO) {
 
@@ -66,10 +66,8 @@ public class BoardController {
 	}
 
 	// 게시글 등록
-
 	@PostMapping("/write")
 	public String toWrite(@ModelAttribute BoardVO boardVO, BindingResult result) {
-
 		if (result.hasErrors()) {
 			return "/board/boardWriteFrm";
 		}
@@ -100,9 +98,30 @@ public class BoardController {
 public String toDeleteArticle(@PathVariable("bnum") int bnum, Model model){	
 		
 		boardSVC.deleteArticle(bnum);
-			return"redirect:/board/boardListFrm";
-			
+			return"redirect:/board/boardListFrm";			
 		}
+	
 
+	// 답글 작성 화면 
+	@GetMapping("/boardReplyFrm/{bnum}")
+	public String toboardReplyFrm(@PathVariable("bnum") long bnum,Model model) {
+		
+		 BoardVO boardVO = boardSVC.selectArticle(bnum);		
+		boardVO.setBtitle("[답글]"+boardVO.getBtitle());
+		boardVO.setBcontent("[원글]"+boardVO.getBcontent());				
+		model.addAttribute("boardVO", boardVO);		
+		
+		return "/board/boardReplyFrm";
+	}
+
+	//답글 등록
+	@PostMapping("/reply")
+	public String toReply(@ModelAttribute BoardVO boardVO, BindingResult result) {
+		if (result.hasErrors()) {
+			return "/board/boardWriteFrm";
+		}
+		boardSVC.insertRepliedArticle(boardVO);
+		return "redirect:/board/boardListFrm";
+	}
 
 }

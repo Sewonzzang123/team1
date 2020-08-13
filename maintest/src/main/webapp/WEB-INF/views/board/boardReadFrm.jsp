@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"
     isELIgnored="false"%>
     <!-- 공통모듈 -->
- 	<%@ include file="/WEB-INF/views/included/common_taglib.jsp"  %>
+ 	 	<%@ include file="/WEB-INF/views/included/common.jsp"  %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -28,7 +28,7 @@
 					<form id="readModFrm" name="readModFrm" method="POST"
 						action="${contextPath}/board/save">											
 									<input type="hidden" id="bnum" name="bnum" value="${boardVO.bnum }"/>
-
+				
 						<ul>						
 							<li class="selectGrp">													
 							<select name="bcategory.catnum" 
@@ -55,19 +55,21 @@
 								</li>
 					<!-- 		<li><label for="">파일첨부</label><input type="file" id="files" name="files" multiple /></li> -->
 								
-							<li><textarea id="bcontent" name="bcontent" cols="30" rows="5" placeholder="내용 입력"  readonly>${boardVO.bcontent }</textarea></li>
+							<li><textarea id="bcontent" name="bcontent" cols="30" rows="5" placeholder="내용 입력"  readonly  >${boardVO.bcontent }</textarea></li>
+					
 							
 							
 						
 							
 							<li>							
 							<div class="btnGrp">						
-								<!--읽기모드 -->
-								<button id="modifyBtn" type="button"  class="readMode">수정</button>
-								<button id="deleteBtn" type="submit"  class="readMode">삭제</button>
+								<!--읽기모드 -->								
+								<button id="peplyBtn" type="button"  class="readMode">답글</button>
+								<button id="modifyBtn" type="button"  class="readMode">수정</button>								
 								
 								<!-- 수정모드 -->
 									<button id="saveBtn" type="button" class="modifyMode" >저장</button>
+								<button id="deleteBtn" type="submit"  class="modifyMode">삭제</button>
 									<button id="cancelBtn" type="button"  class="modifyMode">취소</button>
 												
 								

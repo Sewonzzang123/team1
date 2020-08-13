@@ -1,6 +1,8 @@
 package com.my.maintest.board.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -30,7 +32,6 @@ public class BoardDAOImpl implements BoardDAO {
 	public List<HeadIdCategoryVO> selectHeadIdCategory() {		
 		return sqlSession.selectList("mappers.BoardDAO-mapper.selectHeadIdCategory");
 	}
-
 
 //전체 게시글 조회 (default)
 	@Override
@@ -70,6 +71,21 @@ public int updateBhits(long bnum) {
 		@Override
 		public int deleteArticle(long bnum) {			
 			return sqlSession.delete("mappers.BoardDAO-mapper.deleteArticle", bnum);
+		}
+		
+		
+		//게시글 답글 등록
+		@Override
+		public int insertRepliedArticle(BoardVO boardVO) {	
+			return		sqlSession.insert("mappers.BoardDAO-mapper.insertRepliedArticle",boardVO );
+		}
+		//게시글 bstep +1 처리 (답글 등록 순위)  높을수록 오래된 답글
+		@Override
+		public int updateBstep(long bgroup, long bstep) {
+			Map<String, Object> map = new HashMap<>();
+			map.put("bgroup", bgroup);
+			map.put("bstep", bstep);					
+			return sqlSession.update("mappers.BoardDAO-mapper.updateBstep", map );
 		}
 		
 

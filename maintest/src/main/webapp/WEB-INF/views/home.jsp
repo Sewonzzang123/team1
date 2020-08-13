@@ -2,8 +2,7 @@
     pageEncoding="UTF-8"
     isELIgnored="false"%>
 <%@ page session="false" %>
- 	<!-- 공통모듈 taglib -->
- 	<%@ include file="/WEB-INF/views/included/common_taglib.jsp"  %>
+ 	<%@ include file="/WEB-INF/views/included/common.jsp"  %>
 <html>
 <head>
 	<title>Home</title>

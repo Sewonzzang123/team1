@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"
     isELIgnored="false"%>
  	<!-- 공통모듈 -->
- 	<%@ include file="/WEB-INF/views/included/common_taglib.jsp"  %>
+ 	 	<%@ include file="/WEB-INF/views/included/common.jsp"  %>
     <c:set var="1" value="{"/>
 <!DOCTYPE html>
 <html lang="ko">

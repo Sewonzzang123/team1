@@ -21,21 +21,40 @@ where t1.catnum = t2.catnum
 <select id="selectArticles" resultType="com.my.maintest.board.vo.BoardVO">
 
 select
+dbrownum,
+bnum, 
+catname   as "bcategory.catname" ,
+catnum as "bcategory.catnum",
+hidname as "hidcategory.hidname",
+hidnum as  "hidcategory.hidnum", 
+nickname  as "bnickname", 
+btitle,
+bcontent, 
+bHits,
+bcdate,
+budate,
+bgroup,
+bstep,
+bIndent
+from (select row_number() over(order by bgroup asc, bstep desc) as dbrownum, 
 t1.bnum, 
-t1.bCategory as "bCategory.catNum" ,
-t1.hidCategory as "hidCategory.hidNum", 
-t2.nickname as "bNickname", 
-t1.bTitle,
-t1.bContent, 
-t1.bHits,
-t1.bCdate,
-t1.bUdate,
-t1.bGroup,
-t1.bStep,
+t2.catname,
+t2.catnum,
+ t4.hidname, 
+ t4.hidnum,
+ t3.nickname, 
+ t1.ucode,
+ t1.bhits,
+ t1.btitle, 
+ t1.bcontent, 
+t1.bcdate,
+t1.budate,
+t1.bgroup,
+t1.bstep,
 t1.bIndent
-from board t1, member t2 ,bcategory t3, headid t4
-where t1.ucode = t2.ucode and t1.bcategory = t3.catnum and t1.hidCategory = t4.hidNum
-order by t1.bgroup desc , t1.bstep
+from board t1, bcategory t2, member t3, headid t4
+where t1.bcategory = t2.catnum and t1.ucode = t3.ucode and t1.hidcategory = t4.hidnum) 
+order by dbrownum desc
 
 </select>
 
@@ -43,41 +62,84 @@ order by t1.bgroup desc , t1.bstep
 <!-- 게시글 등록-->
 
 <insert id="insertArticle"  parameterType="com.my.maintest.board.vo.BoardVO">
-
-insert into board(bnum, bcategory, hidcategory, ucode, btitle, bcontent,
-bgroup,
-bstep,
-bindent
+insert into board(
+bnum, 
+bcategory,
+hidcategory,
+ucode, 
+btitle, 
+bcontent,
+bgroup
 )
 values(
-bnum_seq.nextval, 
+bnum_seq.nextVal,
 #{bcategory.catnum}, 
 #{hidcategory.hidnum},
 #{ucode},
 #{btitle},
 #{bcontent},
-bnum_seq.nextVal, 
-0,
-0)
+bnum_seq.nextVal
+)
 
+<selectKey keyProperty="bnum" resultType="long" order="AFTER">
+select bnum_seq.currVal from dual
+</selectKey>
 </insert>
 
 
+<!--이전답글의 bstep +1 처리  : 답글 등록보다 선행되어야 함.-->
+<update id="updateBstep" parameterType="map">
+update board set bstep = bstep +1 
+where bgroup = #{bgroup} and bstep > #{bstep}
+</update>
+
 <!-- 답글 등록 -->
+<insert id="insertRepliedArticle" parameterType="com.my.maintest.board.vo.BoardVO">
+insert into board(
+bnum, 
+bcategory,
+hidcategory,
+ucode, 
+btitle, 
+bcontent,
+bgroup,
+bstep,
+bindent
+)
+values(
+bnum_seq.nextVal,
+#{bcategory.catnum},
+#{hidcategory.hidnum},
+#{ucode},
+#{btitle},
+#{bcontent},
+#{bgroup},
+#{bstep}+1,
+#{bindent}+1
+)
+</insert>
+
+
+
 
 <!-- 	// 글 열람	 -->
 <select id="selectArticle" parameterType="long" resultType="com.my.maintest.board.vo.BoardVO">
 
 select t1.bnum, 
-t2.catname   as "bcategory.catname",
-t2.catnum as "bcategory.catnum",
+ t2.catname   as "bcategory.catname",
+ t2.catnum as "bcategory.catnum",
  t4.hidname as "hidcategory.hidname", 
  t4.hidnum as  "hidcategory.hidnum",
  t3.nickname as bnickname, 
+ t1.ucode,
+ t1.bhits,
  t1.btitle, 
  t1.bcontent, 
- t1.bcdate,
-  t1.budate
+t1.bcdate,
+t1.budate,
+t1.bgroup,
+t1.bstep,
+t1.bIndent
 from board t1, bcategory t2, member t3, headid t4
 where t1.bcategory = t2.catnum and t1.ucode = t3.ucode and t1.hidcategory = t4.hidnum and
 bnum = #{bnum}
@@ -100,7 +162,8 @@ update board set bhits = bhits+1 where bnum = #{bnum}
 	 	 hidcategory= #{hidcategory.hidnum}, 
 	 	 ucode = (select ucode from member where nickname = #{bnickname}),
 	   btitle= #{btitle},
-	   bcontent= #{bcontent}
+	   bcontent= #{bcontent},
+	   budate=systimestamp
 	   where bnum = #{bnum}
 	
 	</update>

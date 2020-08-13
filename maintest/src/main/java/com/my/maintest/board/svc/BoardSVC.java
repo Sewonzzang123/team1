@@ -23,7 +23,9 @@ public interface BoardSVC {
 	int  updateArticle(BoardVO boardVO);
 	//게시글 삭제
 	int deleteArticle(long  bnum);
-
+	//게시글 답글 작성
+	int insertRepliedArticle(BoardVO boardVO);
+	
 	
 	
 	
@@ -36,11 +38,6 @@ public interface BoardSVC {
 	//댓글 작성
 	//댓글 수정
 	//댓글 삭제 
-	
-	
-	//답글 작성
-	//답글 수정
-	//답글 삭제 
 	
 	
 }

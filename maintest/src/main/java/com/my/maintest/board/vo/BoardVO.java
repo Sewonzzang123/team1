@@ -1,18 +1,10 @@
 package com.my.maintest.board.vo;
 
 import java.sql.Timestamp;
-
 import java.util.List;
-
-import javax.persistence.Entity;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.sun.istack.Nullable;
-
-import lombok.Data;
 
 public class BoardVO {
 
@@ -20,15 +12,17 @@ public class BoardVO {
 private long bnum;																																			  //bnum number primary key, --게시글 번호
 private BcategoryVO bcategory;         						//catNum catName							  //bcategory number , -- 게시판 코드
 private HeadIdCategoryVO hidcategory;							//hidNum catNum hidName															  //hidnum number, --말머리 번호
-private int ucode;																																						  //ucode number NOT NULL, --사용자 코드 아이디
+private long ucode;																																						  //ucode number NOT NULL, --사용자 코드 아이디
 private String btitle;																																						  //btitle varchar2(60) NOT NULL, --게시글 제목
 private String bcontent;																																  //bcontent varchar2(500) NOT NULL, -- 게시글 내용    
-private  int bhits;																																					  //bhits number NOT NULL, --조회수
+private  long bhits;																																					  //bhits number NOT NULL, --조회수
 private Timestamp bcdate;																												  //bCdate timestamp NOT NULL, --생성일
 private Timestamp budate;																										  //bUdate  timestamp NOT NULL, --수정일
-private  int bgroup;																						  //bGroup  number (5), --답글 그룹번호
-private  int bstep;																																				  //bstep number(5), --답글 순서 
-private  int bindent;																																		 // bindent number(5), --답글 들여쓰기 
+private  long bgroup;																						  //bGroup  number (5), --답글 그룹번호
+private  long bstep;																																				  //bstep number(5), --답글 순서 
+private  long bindent;																																		 // bindent number(5), --답글 들여쓰기 
+
+private long dbrownum;   //SQL : board "dbrownum" 게시글 목록 row_number() over(order by bgroup asc, bstep desc) as  dbrownum로 생성
 private String bnickname; //SQL : member.nickname as "bnickname"
 																										
 
@@ -66,12 +60,12 @@ public void setHidcategory(HeadIdCategoryVO hidcategory) {
 }
 
 
-public int getUcode() {
+public long getUcode() {
 	return ucode;
 }
 
 
-public void setUcode(int ucode) {
+public void setUcode(long ucode) {
 	this.ucode = ucode;
 }
 
@@ -96,12 +90,12 @@ public void setBcontent(String bcontent) {
 }
 
 
-public int getBhits() {
+public long getBhits() {
 	return bhits;
 }
 
 
-public void setBhits(int bhits) {
+public void setBhits(long bhits) {
 	this.bhits = bhits;
 }
 
@@ -126,32 +120,42 @@ public void setBudate(Timestamp budate) {
 }
 
 
-public int getBgroup() {
+public long getBgroup() {
 	return bgroup;
 }
 
 
-public void setBgroup(int bgroup) {
+public long getDbrownum() {
+	return dbrownum;
+}
+
+
+public void setDbrownum(long dbrownum) {
+	this.dbrownum = dbrownum;
+}
+
+
+public void setBgroup(long bgroup) {
 	this.bgroup = bgroup;
 }
 
 
-public int getBstep() {
+public long getBstep() {
 	return bstep;
 }
 
 
-public void setBstep(int bstep) {
+public void setBstep(long bstep) {
 	this.bstep = bstep;
 }
 
 
-public int getBindent() {
+public long getBindent() {
 	return bindent;
 }
 
 
-public void setBindent(int bindent) {
+public void setBindent(long bindent) {
 	this.bindent = bindent;
 }
 
@@ -180,9 +184,13 @@ public void setFiles(List<MultipartFile> files) {
 public String toString() {
 	return "BoardVO [bnum=" + bnum + ", bcategory=" + bcategory + ", hidcategory=" + hidcategory + ", ucode=" + ucode
 			+ ", btitle=" + btitle + ", bcontent=" + bcontent + ", bhits=" + bhits + ", bcdate=" + bcdate + ", budate="
-			+ budate + ", bgroup=" + bgroup + ", bstep=" + bstep + ", bindent=" + bindent + ", bnickname=" + bnickname
-			+ ", files=" + files + "]";
+			+ budate + ", bgroup=" + bgroup + ", bstep=" + bstep + ", bindent=" + bindent + ", dbrownum=" + dbrownum
+			+ ", bnickname=" + bnickname + ", files=" + files + "]";
 }
+
+
+
+
 
 
 }

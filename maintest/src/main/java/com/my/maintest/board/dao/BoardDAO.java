@@ -30,7 +30,12 @@ public interface BoardDAO {
 	//게시글 삭제
 	int deleteArticle(long  bnum);
 
-
+	//게시글 답글 작성
+	int insertRepliedArticle(BoardVO boardVO);
+	//게시글 bstep +1 처리 (답글 등록 순위)  높을수록 오래된 답글
+	int updateBstep(long bgroup, long bstep);
+		
+	
 	
 	
 	//글 검색
@@ -43,10 +48,6 @@ public interface BoardDAO {
 	//댓글 수정
 	//댓글 삭제 
 	
-	
-	//답글 작성
-	//답글 수정
-	//답글 삭제 
 	
 	
 	

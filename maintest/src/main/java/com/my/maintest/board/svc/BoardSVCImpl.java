@@ -36,7 +36,7 @@ public class BoardSVCImpl implements BoardSVC {
 		return boardDAO.selectArticles();
 	}
 
-	// 글 열람
+	// 게시글 열람
 	@Override
 	public BoardVO selectArticle(long bnum) {		
 		boardDAO.updateBhits(bnum);
@@ -49,18 +49,25 @@ public class BoardSVCImpl implements BoardSVC {
 		return boardDAO.insertArticle(boardVO);
 	}
 
-	// 글 수정
+	// 게시글 수정
 	@Override
 	public int updateArticle(BoardVO boardVO) {
 
 		return boardDAO.updateArticle(boardVO);
 	}
 
-	// 글 삭제
+	// 게시글 삭제
 	@Override
 	public int deleteArticle(long bnum) {
 
 		return boardDAO.deleteArticle(bnum);
+	}
+	
+	//게시글 답글 작성
+	@Override
+	public int insertRepliedArticle(BoardVO boardVO) {	
+		boardDAO.updateBstep(boardVO.getBgroup(), boardVO.getBstep());
+		return boardDAO.insertRepliedArticle(boardVO);
 	}
 
 

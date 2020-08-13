@@ -2,7 +2,8 @@
     pageEncoding="UTF-8"
     isELIgnored="false"%>
  	<!-- 공통모듈 -->
- 	<%@ include file="/WEB-INF/views/included/common_taglib.jsp"  %>
+ 	<%@ include file="/WEB-INF/views/included/common.jsp"  %>
+ 	
  	
  	<!-- 오늘 날짜 불러오기 -->
  	<jsp:useBean id="now" class="java.util.Date"/>
@@ -37,7 +38,7 @@
             <div class="th cols">작성일자</div>
 
 <c:forEach var="tdata" items="${requestScope.listBoardVO}"> 
-            <div class="td cols">${tdata.bnum }</div>
+            <div class="td cols">${tdata.dbrownum }</div>
             <div class="td cols">${tdata.bcategory.catname}</div>
            
             <div class="td cols" id="bcontent"><a href="${contextPath }/board/read/${tdata.bnum}"> <div class="headid">[${tdata.hidcategory.hidname}]</div> ${tdata.btitle}</a></div>

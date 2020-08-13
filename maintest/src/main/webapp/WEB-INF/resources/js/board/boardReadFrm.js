@@ -1,18 +1,30 @@
 'use strict'
 
 <!--읽기모드 -->
-        const modifyBtn = document.getElementById("modifyBtn");
-        const deleteBtn = document.getElementById("deleteBtn");
+        const peplyBtn = document.getElementById("peplyBtn");
+         const modifyBtn = document.getElementById("modifyBtn");
         const listBtn = document.getElementById("listBtn");
-      
+      	peplyBtn.addEventListener("click", peplyBtn_f);  
         modifyBtn.addEventListener("click", modifyBtn_f);        
-        deleteBtn.addEventListener("click",deleteBtn_f);        
+         
         listBtn.addEventListener("click", listBtn_f);     
       
+      
+      <!-- 답글 -->      
+      function peplyBtn_f(){      
+      console.log("답글 버튼 클릭");
+      const bnum = document.getElementById("bnum").value;
+      const url = `/pfpkg/board/boardReplyFrm/${bnum}`;
+      window.location.href=url;      
+      }
+      
+      
+      
         <!--수정모드 -->
+        const deleteBtn = document.getElementById("deleteBtn");
         const saveBtn = document.getElementById("saveBtn");
         const cancelBtn = document.getElementById("cancelBtn");
-       
+        deleteBtn.addEventListener("click",deleteBtn_f);      
           saveBtn.addEventListener("click", saveBtn_f);           
         cancelBtn.addEventListener("click", cancelBtn_f);        
         
@@ -29,7 +41,7 @@
      //수정 / 읽기 모드 처리 로직
      function modeChange(isModifyMode){          
      if(isModifyMode== true){
-     //버튼 설정 --> 수정모드 
+     //읽기모드--> 수정모드 
      const ritems = document.getElementsByClassName("readMode")
      Array.from(ritems).forEach((item)=>{item.style.display = "none"});     
       const mitems = document.getElementsByClassName("modifyMode")
@@ -48,7 +60,7 @@
      document.getElementById("hidcategory.hidnum").children[0].removeAttribute("selected")
      
      }else{     	
-       //버튼 설정 --> 읽기모드 
+       // 읽기모드 --> 수정모드
        const ritems = document.getElementsByClassName("readMode")
      Array.from(ritems).forEach((item)=>{item.style.display = "inline-block"});  
        const mitems = document.getElementsByClassName("modifyMode")
@@ -104,8 +116,9 @@ document.getElementById("bcontent").setAttribute("readonly",true);
     }
      //취소 버튼
    function   cancelBtn_f(e){        
-      const isModifyMode = false; 
-       modeChange(isModifyMode);             
+      const isModifyMode = false;
+      readModFrm.reset();      
+     modeChange(isModifyMode);             
      }
      
      

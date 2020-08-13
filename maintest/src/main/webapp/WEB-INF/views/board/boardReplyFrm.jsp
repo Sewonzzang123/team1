@@ -1,17 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false"%>
 <!-- 공통모듈 -->
-<%@ include file="/WEB-INF/views/included/common_taglib.jsp"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+ 	<%@ include file="/WEB-INF/views/included/common.jsp"  %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>게시글 작성</title>
-<link rel="stylesheet" href="${contextPath}/css/board/boardWriteFrm.css">
+<title>답글 작성</title>
+<link rel="stylesheet" href="${contextPath}/css/board/boardReplyFrm.css">
 <script defer type="text/javascript"
-	src="${contextPath }/js/board/boardWriteFrm.js"></script>
+	src="${contextPath }/js/board/boardReplyFrm.js"></script>
 </head>
 <body>
 
@@ -21,38 +20,44 @@
 			<div class="content">
 				<section>
 					<h2>
-						<a href=""> 게시글 제목 </a>
+						<a href=""> 답글 작성하기 </a>
 					</h2>
 					<hr>
-					<form id="writeFrm" name="writeFrm" method="POST" 	
-						action="${contextPath}/board/write" >
-
-						<ul>
-							<li class="selectGrp"><label for="bcategory.catnum">분류</label>
-								<select name="bcategory.catnum">
-								<option value="">게시판분류</option>
-								<c:forEach var="bcate"  items="${bcategory }">
-									<option value="${bcate.catnum }">${bcate.catname }</option>
-							 </c:forEach>
-							 
-								</select> 
-								 <select 	name="hidcategory.hidnum">
-								 						<option value="">말머리분류</option>
-								 	<c:forEach var="hcate"  items="${hidcategory }">
-								 	<option value="${hcate.hidnum }">${hcate.hidname }</option>
-							 </c:forEach>
-								</select>
-	
-							<li><label for="btitle">제목</label> <input 	name="btitle" type="text" /> 
-
-							<li><label for="ucode">작성자</label> <input	type="text" name="ucode" /> 
-
-
-							<li><label for="bcontent">내용</label> <textarea		name="bcontent" rows="10" placeholder="내용 입력"></textarea></li>
-							<li>
+					<form id="replyFrm" name="replyFrm" method="POST"
+						action="${contextPath}/board/reply">											
+									<%-- <input type="hidden" id="bnum" name="bnum" value="${boardVO.bnum }"/> --%>
+									<input type="hidden" name="bcategory.catnum" value="${boardVO.bcategory.catnum }" />
+									<input type="hidden" name="hidcategory.hidnum" value="${boardVO.hidcategory.hidnum }"/>
+									<input type="hidden" name="ucode" value="${boardVO.ucode }"/>									
+									<input type="hidden" name="bgroup" value="${boardVO.bgroup }"/>
+									<input type="hidden" name="bstep" value="${boardVO.bstep }"/>
+									<input type="hidden" name="bindent" value="${boardVO.bindent }"/>
+						<ul>						
+							<li class="selectGrp">													
+							<select name="bcategory.catnum" 
+								id="bcategory.catnum"disabled="disabled">
+								<option value="${boardVO.bcategory.catnum }" disabled="disabled" selected>${boardVO.bcategory.catname }</option>								
+							
+							</select> 							
+							<select name="hidcategory.hidnum" id="hidcategory.hidnum" disabled="disabled">	
+							<option class="readMode" value="${boardVO.hidcategory.hidnum }"selected>${boardVO.hidcategory.hidname }</option>													
+							</select>							
+							
+							</li>							
+							<li><label for="">제목</label><input type="text" id="btitle"	name="btitle" value="${boardVO.btitle }" ></li>
+								<li>
+								<label for="">작성자</label><input type="text" id="bnickname"	name="bnickname" value="${boardVO.bnickname }" readonly/>
+								작성일:<fmt:formatDate value="${boardVO.bcdate }" pattern="yy/MM/dd HH:mm"/>
+								조회:<c:out value="${boardVO.bhits }"/>
+								</li>
+					<!-- 		<li><label for="">파일첨부</label><input type="file" id="files" name="files" multiple /></li> -->
+								
+							<li><textarea id="bcontent" name="bcontent" cols="30" rows="5" placeholder="내용 입력"    >${boardVO.bcontent }</textarea></li>
+					
+														
 								<div class="btnGrp">					
 							<button id="tmpWriteBtn" type="button">임시저장</button>
-							<button id="writeBtn" type="button">등록</button>
+							<button id="replyBtn" type="button">등록</button>
 							<button id="listBtn" type="button">목록으로</button> 
 								</div>
 							</li>
