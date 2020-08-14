@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -40,43 +41,64 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>1</td>
-						<td class="title">리스트1</td>
-						<td>3/30 [ 10% ]</td>
-						<td>2020.02.02</td>
-						<td><input type="button" name="mylist_btn"
-							id="mylist_delete_btn" value="삭제"></td>
-					</tr>
 					<c:forEach var="list" items="${requestScope.mylist }">
 						<tr>
-							<td>${list.l_name }</td>
+							<td>${list.num}</td>
+							<td class="title"><a
+								href="/maintest/mypage/listview/${list.lnum}"
+								onclick="window.open(this.href,'','width=1000, height=620, scrollbars=yes'); return false;">${list.lname }</a></td>
+							<td>3/30 [ 10% ]</td>
+							<td><fmt:formatDate value="${list.cdate }"
+									pattern="yyyy/MM/dd" /></td>
+							<td><input type="button" class="mylist_btn"
+								id="mylist_delete_btn" lnum="${list.lnum}" value="삭제"></td>
 						</tr>
-						<%-- 		<div class="rec">${rec.bnum }</div>
-						<div class="rec">${rec.boardCategoryVO.cname }</div>
-						<div class="rec">
-							<c:forEach begin="1" end="${rec.bindent }">&nbsp;&nbsp;</c:forEach>
-							<c:if test="${rec.bindent > 0 }">
-								<i class="fas fa-reply"></i>
-							</c:if>
-							<a href="./view/${rec.bnum }">${rec.btitle }</a>
-						</div>
-						<div class="rec">${rec.bnickname }</div>
-						<div class="rec">
-							<fmt:formatDate value="${rec.bcdate }" pattern="yyyy/MM/dd" />
-						</div>
-						<div class="rec" style="text-align: right">${rec.bhit }</div> --%>
 					</c:forEach>
 				</tbody>
 			</table>
 
 			<div id="page_num">
-				<span>1</span>
+				<c:set var="page" value="${requestScope.paging.startPage }" />
+				<c:forEach begin="${requestScope.paging.startPage }"
+					end="${requestScope.paging.endPage}">
+					<span><a href="/maintest/mypage/mylist/${page }">${page }</a></span>
+					<c:set var="page" value="${page+1}" />
+				</c:forEach>
 			</div>
 		</main>
 	</div>
 	<!-- footer -->
 	<footer>footer</footer>
 </body>
+<script>
+	const del_btn = document.querySelectorAll('.mylist_btn');
+
+	for (var i = 0; i < del_btn.length; i++) {
+		del_btn[i].addEventListener('click', del_btn_f);
+	}
+
+	function del_btn_f(e) {
+
+		if (confirm("정말 삭제하시겠습니까?") == true) {
+
+			var ele = e.target.getAttribute('lnum');
+			/* window.location.href = "http://localhost:9080/myweb/member/out.do?id=" */
+			var ajax = new XMLHttpRequest();
+			ajax.onreadystatechange = function() {
+				if (ajax.readyState === ajax.DONE) {
+					if (ajax.status === 200 || ajax.status === 201) {
+						console.log(ajax.responseText);
+					} else {
+						console.error(ajax.responseText);
+					}
+				}
+			};
+			ajax.open("POST", "/maintest/mypage/del_list"); //
+			ajax.send(ele);
+
+			location.reload(true)
+		}
+	}
+</script>
 </html>
 

@@ -44,12 +44,45 @@
 		#{id}
 	</delete>
 
-	<select id="mylist" parameterType="string"
+	<select id="mylist" parameterType="map"
 		resultType="com.my.maintest.mypage.vo.MylistVO">
-		select l_num, l_name, i_list, cdate from list where
-		ucode=
-		#{ucode}
+		select * from(select LNUM , LNAME, CDATE, ucode,
+		row_number() over( order by LNUM desc) as num from list where
+		ucode=#{ucode}) where num between #{str_num} and #{end_num}
 	</select>
 
+	<select id="total_list" parameterType="string" resultType="int">
+		select count(*) from list
+		where ucode=#{ucode}
+	</select>
+
+	<delete id="del_list" parameterType="string">
+		delete list where lnum =
+		#{lnum}
+	</delete>
+
+	<select id="get_category"
+		resultType="com.my.maintest.mypage.vo.IcategoryVO">
+		select * from I_CATEGORY
+	</select>
+
+	<select id="get_listing" parameterType="string"
+		resultType="com.my.maintest.mypage.vo.ListingVO">
+		select * from listing t1, ITEM t2, I_CATEGORY t3 where
+		t1.I_NUM = t2.I_NUM and t2.ca_num = t3.ca_num and lnum=#{lnum}
+	</select>
+
+	<select id="total_item" parameterType="string" resultType="int">
+		select count(*) from listing t1, ITEM t2 where t1.I_NUM =
+		t2.I_NUM and
+		lnum=#{lnum}
+	</select>
+
+	<select id="checked_item" parameterType="string"
+		resultType="int">
+		select count(*) from listing t1, ITEM t2 where t1.I_NUM =
+		t2.I_NUM and
+		lnum=#{lnum} and checked='true'
+	</select>
 
 </mapper>

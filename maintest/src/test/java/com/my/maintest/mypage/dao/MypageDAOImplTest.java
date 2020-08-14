@@ -14,6 +14,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.my.maintest.member.vo.MemberVO;
+import com.my.maintest.mypage.vo.IcategoryVO;
+import com.my.maintest.mypage.vo.ListingVO;
 import com.my.maintest.mypage.vo.MylistVO;
 
 @ExtendWith(SpringExtension.class)
@@ -64,18 +66,84 @@ public class MypageDAOImplTest {
 
 	@Test
 	@DisplayName("마이리스트")
-//	@Disabled
+	@Disabled
 	void mylist() {
 		String ucode = "34";
-		List<MylistVO> list = (List<MylistVO>) mypageDAO.mylist(ucode);
+		int str_num = -1;
+		int end_num = 3;
+
+		List<MylistVO> list = (List<MylistVO>) mypageDAO.mylist(ucode, str_num, end_num);
 
 		for (MylistVO vo : list) {
-			logger.info(vo.getL_name());
-
+			logger.info(vo.toString());
 		}
 
 		logger.info(String.valueOf(list.size()));
 		logger.info(ucode);
+	}
 
+	@Test
+	@DisplayName("리스트 수")
+	@Disabled
+	void total_list() {
+
+		String ucode = "34";
+
+		mypageDAO.total_list(ucode);
+		logger.info(String.valueOf(mypageDAO.total_list(ucode)));
+	}
+
+	@Test
+	@DisplayName("리스트 삭제")
+	@Disabled
+	void del_list() {
+
+		String l_num = "34";
+
+		mypageDAO.del_list(l_num);
+		logger.info("실행됨");
+	}
+
+	@Test
+	@DisplayName("체크된 아이템 개수")
+	@Disabled
+	void checked_item() {
+
+		String lnum = "56";
+
+		mypageDAO.checked_item(lnum);
+		logger.info(String.valueOf(mypageDAO.checked_item(lnum)));
+	}
+
+	@Test
+	@DisplayName("총 아이템 개수")
+	@Disabled
+	void total_item() {
+
+		String lnum = "56";
+
+		mypageDAO.total_item(lnum);
+		logger.info(String.valueOf(mypageDAO.total_item(lnum)));
+	}
+
+	@Test
+	@DisplayName("아이템 카테고리")
+//	@Disabled
+	void get_category() {
+		IcategoryVO categoryVO = new IcategoryVO();
+
+		mypageDAO.get_category();
+		logger.info(mypageDAO.get_category().toString());
+	}
+
+	@Test
+	@DisplayName("아이템 카테고리")
+	@Disabled
+	void get_listing() {
+		ListingVO listingVO = new ListingVO();
+
+		String lnum = "56";
+		mypageDAO.get_category();
+		logger.info(mypageDAO.get_listing(lnum).toString());
 	}
 }
