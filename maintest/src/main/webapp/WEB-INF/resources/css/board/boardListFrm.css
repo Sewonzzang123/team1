@@ -47,10 +47,13 @@
             font-weight: bold;
         }
 
-  .container .content #bcontent{
+  .container .content #btitle{
          display:flex;
        justify-content: left;
-       padding-left:10px;     
+         
+  }
+    .container .content #btitle  span{
+        padding-left:10px; 
   }
 
 

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.my.maintest.board.dao.BoardDAO;
 import com.my.maintest.board.vo.BcategoryVO;
+import com.my.maintest.board.vo.BoardFileVO;
 import com.my.maintest.board.vo.BoardVO;
 import com.my.maintest.board.vo.HeadIdCategoryVO;
 
@@ -46,8 +47,16 @@ public class BoardSVCImpl implements BoardSVC {
 	// 게시글 등록
 	@Override
 	public int insertArticle(BoardVO boardVO) {		
+		
 		return boardDAO.insertArticle(boardVO);
 	}
+	
+//첨부파일 등록
+	@Override
+	public int insertFiles(BoardFileVO boardFileVO) {		
+				return boardDAO.insertFiles(boardFileVO);
+	}
+
 
 	// 게시글 수정
 	@Override
@@ -69,7 +78,6 @@ public class BoardSVCImpl implements BoardSVC {
 		boardDAO.updateBstep(boardVO.getBgroup(), boardVO.getBstep());
 		return boardDAO.insertRepliedArticle(boardVO);
 	}
-
 
 	
 	

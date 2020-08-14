@@ -3,6 +3,7 @@ package com.my.maintest.board.svc;
 import java.util.List;
 
 import com.my.maintest.board.vo.BcategoryVO;
+import com.my.maintest.board.vo.BoardFileVO;
 import com.my.maintest.board.vo.BoardVO;
 import com.my.maintest.board.vo.HeadIdCategoryVO;
 
@@ -18,7 +19,9 @@ public interface BoardSVC {
 	// 게시글 열람
 	BoardVO selectArticle(long bnum);	
 	//게시글 등록
-	int insertArticle(BoardVO boardVO);	
+	int insertArticle(BoardVO boardVO);		
+	//첨부파일 등록
+	int insertFiles(BoardFileVO boardFileVO);
 	//게시글  수정
 	int  updateArticle(BoardVO boardVO);
 	//게시글 삭제

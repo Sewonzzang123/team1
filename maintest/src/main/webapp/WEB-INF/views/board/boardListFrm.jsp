@@ -16,8 +16,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Board메인페이지</title>
-<link rel="stylesheet" href="${contextPath }/css/board/boardListFrm.css?ver=1">
-<script defer type="text/javascript" src="${contextPath }/js/board/boardListFrm.js?ver=1" ></script>
+<link rel="stylesheet" href="${contextPath }/css/board/boardListFrm.css">
+<script defer type="text/javascript" src="${contextPath }/js/board/boardListFrm.js" ></script>
 </head>
 <body>
 
@@ -41,7 +41,18 @@
             <div class="td cols">${tdata.dbrownum }</div>
             <div class="td cols">${tdata.bcategory.catname}</div>
            
-            <div class="td cols" id="bcontent"><a href="${contextPath }/board/read/${tdata.bnum}"> <div class="headid">[${tdata.hidcategory.hidname}]</div> ${tdata.btitle}</a></div>
+            <div class="td cols">
+            <a href="${contextPath }/board/read/${tdata.bnum}"  id="btitle">    
+            <!-- 페이징 넘버 반영해서 리스트버튼 누르면 같은 페이지로  --> 
+            
+            <c:if test="${tdata.bstep > 0  }">
+            <span style="padding-left:${tdata.bindent *20+10}px; ">└${tdata.btitle}</span>            
+            </c:if>
+             <c:if test="${tdata.bstep == 0  }">
+            <span style="padding-left:${tdata.bindent *20+10}px; ">[${tdata.hidcategory.hidname}]</span><span>${tdata.btitle}</span>            
+            </c:if>
+            </a></div>
+
             <div class="td cols">${tdata.bnickname}</div>
             <div class="td cols">${tdata.bhits}</div>
             <div class="td cols">

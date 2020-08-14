@@ -15,6 +15,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.my.maintest.board.vo.BcategoryVO;
+import com.my.maintest.board.vo.BoardFileVO;
 import com.my.maintest.board.vo.BoardVO;
 import com.my.maintest.board.vo.HeadIdCategoryVO;
 
@@ -150,6 +151,25 @@ public class BoardDAOImplTest {
 		boardVO.getBcategory().setCatnum(1);
 		boardVO.setBnickname("관리자");
 		boardDAO.updateArticle(boardVO);
+	}
+	
+	
+	@Test
+	@DisplayName("첨부파일 등록")
+	void insertFiles() {
+		
+		
+		BoardFileVO boardFileVO = new BoardFileVO();
+		
+		boardFileVO.setBnum(210);
+		boardFileVO.setFname("파일이름");
+		boardFileVO.setFsize(1008);
+		boardFileVO.setFtype("jpg");
+
+		
+		boardDAO.insertFiles(boardFileVO);
+		
+		
 	}
 
 }

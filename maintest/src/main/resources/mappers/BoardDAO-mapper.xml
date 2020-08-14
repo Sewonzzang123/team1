@@ -86,6 +86,28 @@ select bnum_seq.currVal from dual
 </selectKey>
 </insert>
 
+<!-- 첨부파일 등록 -->
+<insert id="insertFiles" parameterType="com.my.maintest.board.vo.BoardFileVO">
+insert into board_upload_file(
+fid,
+bnum,
+fname,
+fsize,
+ftype,
+fdata,
+cdate, 
+udate)
+values(
+UPLOAD_FILE_FID_SEQ,
+#{bnum},
+#{fname},
+#{fsize},
+#{ftype},
+#{fdata},
+systimestamp,
+systimestamp)
+</insert>
+
 
 <!--이전답글의 bstep +1 처리  : 답글 등록보다 선행되어야 함.-->
 <update id="updateBstep" parameterType="map">

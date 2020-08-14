@@ -10,6 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.my.maintest.board.vo.BcategoryVO;
+import com.my.maintest.board.vo.BoardFileVO;
 import com.my.maintest.board.vo.BoardVO;
 import com.my.maintest.board.vo.HeadIdCategoryVO;
 
@@ -47,6 +48,14 @@ public class BoardDAOImpl implements BoardDAO {
 		
 		return result;
 	}
+	
+//첨부파일 등록
+	@Override
+	public int insertFiles(BoardFileVO boardFileVO) {		
+		return sqlSession.insert("mappers.BoardDAO-mapper.insertFiles", boardFileVO);
+	}
+	
+	
 	
 	
 // 게시글 열람
@@ -87,7 +96,7 @@ public int updateBhits(long bnum) {
 			map.put("bstep", bstep);					
 			return sqlSession.update("mappers.BoardDAO-mapper.updateBstep", map );
 		}
-		
+
 
 
 
