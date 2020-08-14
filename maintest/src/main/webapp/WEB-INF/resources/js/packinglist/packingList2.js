@@ -5,6 +5,8 @@ let idTag = null;
 let classTag = null;
 
 function init(){
+const saveBtn = document.querySelector("#saveBtn");
+saveBtn.addEventListener('click',saveBtn_f);
 //탭박스 이벤트
 $('.tab_box').hide();
 
@@ -135,7 +137,27 @@ $('.tab_menu_btn6').on('click',function(){
 		e.parentElement.firstElementChild.nextElementSibling.setAttribute('selected','true');
 		}else{
 		e.parentElement.firstElementChild.nextElementSibling.setAttribute('selected','false');
-		}
+		}	
+	}
+	
+		function saveBtn_f(event){
+		event.preventDefault();
+		console.log("saveBtn_f");
+		const url 		= event.target.href;
+		const fname 	= event.target.id;
+		const option 	= "width=460,height=540,location=no,resizable=no";
+		console.log(option);
+		window.open(url,fname,option);
+		
+		
+		const items = document.getElementsByTagName('li');
+		for(var i=0; i<items.length; i++){
+		console.log("체크:"+items[i].firstChild.firstElementChild.checked);
+		console.log("아이템번호:"+items[i].firstChild.firstElementChild.nextElementSibling.className);
+		console.log("아이템이름:"+items[i].firstChild.firstElementChild.nextElementSibling.innerText);
+		console.log("카테고리:"+items[i].parentElement.parentElement.firstElementChild.id);
+		console.log("수량:"+items[i].firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.value);
+		};
 		
 	}
 	
