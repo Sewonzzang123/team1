@@ -25,7 +25,9 @@
 		</tbody>
 		<button id="additem">아이템 추가</button>
 		<div class="buttons">
-			<a href="#">저장</a>| <a href="#">불러오기</a>| <a href="#">출력</a>
+			<a href="${contextPath }/itemlist/saveListForm" id="saveBtn">저장</a> <span>|</span> 
+					<a href="${contextPath }/itemlist/" id="">비밀번호 찾기</a> <span>|</span>
+					<a href="${contextPath }/itemlist/">회원 가입</a>
 		</div>
 
 	</div>
