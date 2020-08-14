@@ -44,7 +44,5 @@ public class MemberDAOImplTest {
 		memberDAO.singup(memberVO);
 		logger.info(memberDAO.listOneMember("admin").toString());
 	}
-	
-	
 
 }

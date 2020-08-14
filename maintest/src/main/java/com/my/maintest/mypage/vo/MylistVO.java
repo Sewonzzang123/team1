@@ -6,8 +6,8 @@ import lombok.Data;
 
 @Data
 public class MylistVO {
-	String l_num;
-	String l_name;
-	String i_list;
-	Date cdate;
+	private String lnum;
+	private String lname;
+	private Date cdate;
+	private int num;
 }
