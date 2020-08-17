@@ -18,6 +18,8 @@ import com.my.maintest.board.vo.BcategoryVO;
 import com.my.maintest.board.vo.BoardFileVO;
 import com.my.maintest.board.vo.BoardVO;
 import com.my.maintest.board.vo.HeadIdCategoryVO;
+import com.my.maintest.common.paging.PageCriteria;
+import com.my.maintest.common.paging.RecordCriteria;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/spring/*.xml" })
@@ -32,6 +34,8 @@ public class BoardDAOImplTest {
 	@DisplayName("게시글 등록")
 	@Disabled
 	void insertArticle() {
+		
+		for(int i = 1 ; i < 100; i++ ) {
 		long catNum = 2;
 		long hidNum = 1;
 		long uCode = 0;
@@ -53,7 +57,7 @@ public class BoardDAOImplTest {
 		  boardVO.setUcode(uCode); boardVO.setBtitle(bTitle);
 		  boardVO.setBcontent(bContent);
 		  boardDAO.insertArticle(boardVO);
-	
+		}
 	}
 	
 	@Test
@@ -156,6 +160,7 @@ public class BoardDAOImplTest {
 	
 	@Test
 	@DisplayName("첨부파일 등록")
+	@Disabled
 	void insertFiles() {
 		
 		
@@ -171,5 +176,32 @@ public class BoardDAOImplTest {
 		
 		
 	}
-
+	
+	
+	@Test
+	@DisplayName("첨부파일 가져오기")
+	@Disabled
+	void toSelectFiles() {
+		long bnum = 15;
+		boardDAO.selectFiles(bnum);
+			}
+	
+	@Test
+	@DisplayName("리스트 조회 + 페이징")
+	void toSelectArticles1() {
+		
+		int recNumPerPage	= 10;	
+		int reqPage = 1 ;
+	RecordCriteria recordCriteria = new RecordCriteria(recNumPerPage, reqPage);
+		int pagingNumsPerPage= 10;
+	PageCriteria pageCriteria = new PageCriteria(reqPage, recordCriteria.getTotalRec(), pagingNumsPerPage);
+	
+	
+		boardDAO.selectArticles(recordCriteria.getRecFrom(), recordCriteria.getRecTo());
+		
+		
+	}
+	
+	
+	
 }

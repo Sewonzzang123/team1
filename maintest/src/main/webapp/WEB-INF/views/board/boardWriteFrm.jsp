@@ -10,7 +10,7 @@
 <title>게시글 작성</title>
 <link rel="stylesheet" href="${contextPath}/css/board/boardWriteFrm.css">
 <script defer type="text/javascript"
-	src="${contextPath }/js/board/boardWriteFrm.js"></script>
+	src="${contextPath }/js/board/boardWriteFrm.js?ver=1"></script>
 </head>
 <body>
 
@@ -23,9 +23,10 @@
 						<a href=""> 게시글 제목 </a>
 					</h2>
 					<hr>
-					<form id="replyFrm" name="replyFrm" method="POST" 	
-						action="${contextPath}/board/reply" >
-						<input type="hidden" name="bnum"/> 
+					<form id=writeFrm name="writeFrm" method="POST" 
+							 enctype="multipart/form-data"	
+						action="${contextPath}/board/write" >
+					
 
 						<ul>
 							<li class="selectGrp"><label for="bcategory.catnum">분류</label>
@@ -48,7 +49,11 @@
 							<li><label for="ucode">작성자</label> <input	type="text" name="ucode" /> 
 
 
-							<li><label for="bcontent">내용</label> <textarea		name="bcontent" rows="10" placeholder="내용 입력"></textarea></li>
+							<li><label for="bcontent">내용</label> <textarea name="bcontent" rows="10" placeholder="내용 입력"></textarea></li>
+							<li>
+							
+							<li><label for="files">첨부</label> <input type="file" id="files" name="files" multiple="multiple"/></li>
+							
 							<li>
 								<div class="btnGrp">					
 							<button id="tmpWriteBtn" type="button">임시저장</button>

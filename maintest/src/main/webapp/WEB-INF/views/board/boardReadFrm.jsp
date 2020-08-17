@@ -9,8 +9,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>게시글 열람</title>
-<link rel="stylesheet" href="${contextPath}/css/board/boardReadFrm.css" >
-<script  defer type="text/javascript" src="${contextPath }/js/board/boardReadFrm.js" ></script>
+<link rel="stylesheet" href="${contextPath}/css/board/boardReadFrm.css?ver=0" >
+<script  defer type="text/javascript" src="${contextPath }/js/board/boardReadFrm.js?ver=0" ></script>
 </head>
 <body>
 
@@ -26,6 +26,7 @@
 					</h2>
 					<hr>
 					<form id="readModFrm" name="readModFrm" method="POST"
+					 enctype="multipart/form-data"	
 						action="${contextPath}/board/save">											
 									<input type="hidden" id="bnum" name="bnum" value="${boardVO.bnum }"/>
 				
@@ -53,10 +54,24 @@
 								작성일:<fmt:formatDate value="${boardVO.bcdate }" pattern="yy/MM/dd HH:mm"/>
 								조회:<c:out value="${boardVO.bhits }"/>
 								</li>
-					<!-- 		<li><label for="">파일첨부</label><input type="file" id="files" name="files" multiple /></li> -->
-								
+						
+							
 							<li><textarea id="bcontent" name="bcontent" cols="30" rows="5" placeholder="내용 입력"  readonly  >${boardVO.bcontent }</textarea></li>
-					
+							<li>
+							
+							
+							
+							<li class="modifyMode"><label for="files">첨부</label> <input type="file" id="files" name="files" multiple="multiple"/></li>
+							<label for="">첨부목록</label>							
+							<div class="attachments" id="attatchments">						
+							<c:forEach var="file" items="${requestScope.files }">	
+							<div>					
+							<a href="${contextPath }/board/file/${file.fid}">${file.fname }</a><span>(${file.fsize/1024 }kb)</span>
+							<a href="#" class="modifyMode"><i class="fas fa-minus-square" data-fid="${file.fid }"></i></a>
+							</div>
+							</c:forEach>
+							</div>
+							</li>
 							
 							
 						
@@ -68,7 +83,7 @@
 								<button id="modifyBtn" type="button"  class="readMode">수정</button>								
 								
 								<!-- 수정모드 -->
-									<button id="saveBtn" type="button" class="modifyMode" >저장</button>
+								<button id="saveBtn" type="button" class="modifyMode" >저장</button>
 								<button id="deleteBtn" type="submit"  class="modifyMode">삭제</button>
 									<button id="cancelBtn" type="button"  class="modifyMode">취소</button>
 												

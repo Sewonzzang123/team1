@@ -24,9 +24,17 @@
         const deleteBtn = document.getElementById("deleteBtn");
         const saveBtn = document.getElementById("saveBtn");
         const cancelBtn = document.getElementById("cancelBtn");
+        const attachments = document.getElementById("attachments");
+        
+        
+        
         deleteBtn.addEventListener("click",deleteBtn_f);      
           saveBtn.addEventListener("click", saveBtn_f);           
         cancelBtn.addEventListener("click", cancelBtn_f);        
+        //첨부파일 일부 삭제
+        attatchments.addEventListener("click", deleteFile_f);
+        
+        
         
         //수정버튼
         function modifyBtn_f(){
@@ -122,5 +130,53 @@ document.getElementById("bcontent").setAttribute("readonly",true);
      }
      
      
+     //첨부 파일 삭제 
+     function deleteFile_f(e){     
+     console.log(e.target);
+       if(e.target.tagName != "I") return false;
+       const iTag = e.target;
+       const fid = iTag.getAttribute("data-fid");
+       
+       
+     if(confirm("삭제하시겠습니까?")) {   
+     //AJAX사용
+     // XMLHttpRequest 객체 새성
+     const xhttp = new XMLHttpRequest();
+     
+     //서비스 요청
+     const uri = `http://localhost:9080/pfpkg/board/deleteFile/${fid}`;
+     
+     xhttp.open("get", uri)
+     xhttp.send();
+     
+     //응답처리
+     //readystate
+     //0:open()이 호출되지 않은상태
+     //1:open()이 실행된 상태 -> 서버에 연결됨.
+     //2:send()가 실행된 상태, 서버가 클라이언트 요청을 받았음.
+     //3:서버가 클라이언트 요청을 처리중 / 응답헤더는 수신했으나 바디가 수신중인 상태
+     //4:서버가 클라이언트의 요청을 완료 햇고 , 서버도 응답이 완료된 상태
+     xhttp.addEventListener("readystatechange", ajaxCall);
+     
+     function ajaxCall(e){
+     if(this.readyState == 4 && this.status == 200){
+     //서버에서 삭제를 처리햇으면 
+     if(this.responseText == "success"){
+     //성공했을때 첨부파일 표시 하던 tag 삭제 처리  
+     const parent = iTag.parentElement.parentElement;
+     parent.remove(iTag); 		
+     }else{     
+     console.log("파일삭제 실패!") 
+     
+     }
+     }     
+     }
+     
+     }
+     
+     
+     
+     
+     }
      
      

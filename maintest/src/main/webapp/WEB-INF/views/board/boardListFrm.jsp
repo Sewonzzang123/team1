@@ -37,7 +37,7 @@
             <div class="th cols">조회수</div>
             <div class="th cols">작성일자</div>
 
-<c:forEach var="tdata" items="${requestScope.listBoardVO}"> 
+<c:forEach var="tdata" items="${requestScope.articles}"> 
             <div class="td cols">${tdata.dbrownum }</div>
             <div class="td cols">${tdata.bcategory.catname}</div>
            
@@ -64,23 +64,30 @@
             </c:forEach>
         </div>
         
+        
+        
+        
+        
         <div class="btnGrp">
             <button type="button" id="writeBtn">글쓰기</button>
-
             <div class="paging">
-                <div><a href="">처음페이지</a></div>
-                <div><a href="">이전페이지</a></div>
-                <div><a href="">|1</a></div>
-                <div><a href="">2</a></div>
-                <div><a href="">3</a></div>
-                <div><a href="">4</a></div>
-                <div><a href="">5</a></div>
-                <div><a href="">6</a></div>
-                <div><a href="">7</a></div>
-                <div><a href="">8</a></div>
-                <div><a href="">9|</a></div>
-                <div><a href="">다음페이지</a></div>
-                <div><a href="">끝페이지</a></div>             
+                <div><a href="${contextPath }/board/boardListFrm/1">처음페이지</a></div>
+                <!-- 이전페이지 여부에 따라 표현  -->
+                <c:if test="${pagingComponent.pageCriteria.prevPage }">
+                <div><a href="${pagingComponent.pageCriteria.pagingNumFrom -1}">이전페이지</a></div>
+                </c:if>
+                
+               <c:forEach var="pageNum" begin="${pagingComponent.pageCriteria.pagingNumFrom }" 
+               end="${pagingComponent.pageCriteria.pagingNumTo }">               
+                <div><a href="${contextPath }/board/boardListFrm/${pageNum}">${pageNum }</a></div>
+               
+               </c:forEach>
+               
+               
+               <c:if test="${pagingComponent.pageCriteria.nextPage }">
+                <div><a href="${pagingComponent.pageCriteria.pagingNumTo+1 }">다음페이지</a></div>
+                 </c:if>
+                <div><a href="${contextPath }/board/boardListFrm/${pagingComponent.pageCriteria.endPagingNum}">끝페이지</a></div>             
             </div>        
         </div>
     </div>

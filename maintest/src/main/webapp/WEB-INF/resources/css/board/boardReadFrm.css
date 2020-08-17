@@ -79,7 +79,7 @@
             width: auto;
         }
 
-  #readModFrm>ul .btnGrp .modifyMode {
+		.modifyMode{
        display: none;
         }
 

@@ -37,16 +37,28 @@ public class BoardDAOImpl implements BoardDAO {
 //전체 게시글 조회 (default)
 	@Override
 	public List<BoardVO> selectArticles() {		
-		return	sqlSession.selectList("mappers.BoardDAO-mapper.selectArticles");
+		return	sqlSession.selectList("mappers.BoardDAO-mapper.selectArticles0");
 	}
+	
+	//전체 게시글 조회 + 페이징	
+	@Override
+	public List<BoardVO> selectArticles(int recFrom, int recTo) {
+				
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("recFrom", recFrom);
+		map.put("recTo", recTo);
+		
+		return sqlSession.selectList("mappers.BoardDAO-mapper.selectArticles", map);
+	}
+
+
 
 	// 게시글 등록
 	@Override
 	public int insertArticle(BoardVO boardVO) {
-		int result = 0;
-		result = sqlSession.insert("mappers.BoardDAO-mapper.insertArticle", boardVO);
-		
-		return result;
+
+		return sqlSession.insert("mappers.BoardDAO-mapper.insertArticle", boardVO);
 	}
 	
 //첨부파일 등록
@@ -55,14 +67,21 @@ public class BoardDAOImpl implements BoardDAO {
 		return sqlSession.insert("mappers.BoardDAO-mapper.insertFiles", boardFileVO);
 	}
 	
-	
-	
-	
+		
 // 게시글 열람
 @Override
 public BoardVO selectArticle(long bnum) {
 	return sqlSession.selectOne("mappers.BoardDAO-mapper.selectArticle", bnum);
 }
+
+//게시글 열람 +첨부파일
+@Override
+public List<BoardFileVO> selectFiles(long bnum) {	
+	List<BoardFileVO> files = null;	
+	files =(sqlSession.selectList("mappers.BoardDAO-mapper.selectFiles", bnum));
+	return files;
+}
+
 //게시글 조회수 갱신
 @Override
 public int updateBhits(long bnum) {
@@ -75,12 +94,27 @@ public int updateBhits(long bnum) {
 		
 		return sqlSession.update("mappers.BoardDAO-mapper.updateArticle", boardVO);		
 	}
+	
+	
+	
+
+	//첨부파일 일부 삭제 
+	@Override
+	public int deleteFile(long fid) {		
+		return sqlSession.delete("mappers.BoardDAO-mapper.deleteFile",fid);
+	}
+
+
 
 		// 게시글 삭제
 		@Override
 		public int deleteArticle(long bnum) {			
 			return sqlSession.delete("mappers.BoardDAO-mapper.deleteArticle", bnum);
 		}
+		
+		
+		//첨부파일 전체 삭제 
+		//cascade 외래키 연동으로 자동삭제
 		
 		
 		//게시글 답글 등록
@@ -97,7 +131,14 @@ public int updateBhits(long bnum) {
 			return sqlSession.update("mappers.BoardDAO-mapper.updateBstep", map );
 		}
 
+		//페이징
+		//레코드 총 수량 구하기 
+		@Override
+		public int selectRecQnty() {		
+			return sqlSession.selectOne("mappers.BoardDAO-mapper.selectRecQnty");
+		}
 
+		
 
 
 

@@ -1,16 +1,24 @@
 package com.my.maintest.board.svc;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.my.maintest.board.dao.BoardDAO;
 import com.my.maintest.board.vo.BcategoryVO;
 import com.my.maintest.board.vo.BoardFileVO;
 import com.my.maintest.board.vo.BoardVO;
 import com.my.maintest.board.vo.HeadIdCategoryVO;
+import com.my.maintest.common.paging.PageCriteria;
+import com.my.maintest.common.paging.PagingComponent;
+import com.my.maintest.common.paging.RecordCriteria;
 
 @Service
 public class BoardSVCImpl implements BoardSVC {
@@ -37,38 +45,135 @@ public class BoardSVCImpl implements BoardSVC {
 		return boardDAO.selectArticles();
 	}
 
+	
+	
+	
+	
+	@Inject 
+	PagingComponent pagingComponent;
+	
+	
+	//전체글 조회 + 페이징
+	@Override
+	public List<BoardVO> selectArticles(int reqPage) {		
+		pagingComponent = getPagingComponent(reqPage);		
+		System.out.println("board SVC ===pagingComponent" + pagingComponent.toString());
+	return boardDAO.selectArticles(pagingComponent.getRecordCriteria().getRecFrom(), pagingComponent.getRecordCriteria().getRecTo());
+	}
+	
+
+	
+	
+	
+
 	// 게시글 열람
 	@Override
-	public BoardVO selectArticle(long bnum) {		
-		boardDAO.updateBhits(bnum);
-		return boardDAO.selectArticle(bnum);
+	public Map<String, Object> selectArticle(long bnum) {		
+		 Map<String, Object> map = new HashMap<>();
+		 List<BoardFileVO> files = null;
+		 
+		//조회수 업데이트 
+		boardDAO.updateBhits(bnum);	
+		
+		//게시글 가져오기 
+		map.put("boardVO",boardDAO.selectArticle(bnum));
+		//첨부파일 가져오기 
+		files = boardDAO.selectFiles(bnum);
+		if(files !=null && files.size() >0 ) {
+		map.put("files", files);
+		}
+		
+		return map;
 	}
 
 	// 게시글 등록
+	@Transactional 	
 	@Override
 	public int insertArticle(BoardVO boardVO) {		
+		int result = 0 ;
 		
-		return boardDAO.insertArticle(boardVO);
+		//게시글 저장		
+		result = boardDAO.insertArticle(boardVO);
+		//첨부파일 저장
+		//첨부파일 유무 체크 
+		
+		
+		List<MultipartFile> files = boardVO.getFiles();
+		if(files !=null && files.size() > 0 ) {			
+		
+			insertFiles(files, boardVO.getBnum());		
+			
+		}
+
+		
+		
+		
+		
+		return result;
 	}
+	//첨부파일 등록	
+public void insertFiles(List<MultipartFile> files, long bnum) {
+	BoardFileVO boardFileVO = null;
 	
-//첨부파일 등록
-	@Override
-	public int insertFiles(BoardFileVO boardFileVO) {		
-				return boardDAO.insertFiles(boardFileVO);
+	for(MultipartFile file : files) {
+		boardFileVO = new BoardFileVO();
+		
+		try {
+			System.out.println("file" + file.getOriginalFilename());
+			//게시글 번호
+			boardFileVO.setBnum(bnum);
+			//파일명
+			boardFileVO.setFname(file.getOriginalFilename());
+			//파일크기
+			boardFileVO.setFsize(file.getSize());
+			//파일타입
+			boardFileVO.setFtype(file.getContentType());
+			//파일데이터
+			boardFileVO.setFdata(file.getBytes());
+			
+			
+			if(boardFileVO.getFsize() >0 ) {
+				boardDAO.insertFiles(boardFileVO);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
+
+		
 	}
 
 
 	// 게시글 수정
+	@Transactional
 	@Override
 	public int updateArticle(BoardVO boardVO) {
+		
+		
+		//게시글 저장
+		boardDAO.updateArticle(boardVO);
+		
+		//첨부파일 변경사항 저장
+		List<MultipartFile> files = boardVO.getFiles();
+		if(files != null && files.size() >0) {
+			insertFiles(files, boardVO.getBnum());
+		}
+		
 
 		return boardDAO.updateArticle(boardVO);
 	}
+	//첨부파일 일부 삭제 
+		@Override
+		public int deleteFile(long fid) {		
+			return	boardDAO.deleteFile(fid);
+		}
 
 	// 게시글 삭제
 	@Override
 	public int deleteArticle(long bnum) {
-
 		return boardDAO.deleteArticle(bnum);
 	}
 	
@@ -78,6 +183,49 @@ public class BoardSVCImpl implements BoardSVC {
 		boardDAO.updateBstep(boardVO.getBgroup(), boardVO.getBstep());
 		return boardDAO.insertRepliedArticle(boardVO);
 	}
+	
+	
+	//페이징 설정
+	@Override
+	public PagingComponent getPagingComponent(int reqPage) {
+		PagingComponent pagingComponent = new PagingComponent();
+		
+		RecordCriteria recordCriteria = getRecCriteria(reqPage);
+		PageCriteria pageCriteria = getPageCriteria(reqPage, recordCriteria);
+		
+		pagingComponent.setRecordCriteria(recordCriteria);
+		pagingComponent.setPageCriteria(pageCriteria);	
+		
+		System.out.println(recordCriteria.toString());
+		System.out.println(pageCriteria.toString());
+		System.out.println(pagingComponent.toString());
+		
+		return pagingComponent;
+	}
+
+	@Override
+	public RecordCriteria getRecCriteria(int reqPage) {
+	//한페이지에 보여줄 게시글 수 
+	int recNumPerPage = 10; 
+	RecordCriteria recordCriteria = new RecordCriteria(recNumPerPage, reqPage);
+	//게시글 총수량 
+	recordCriteria.setTotalRec(boardDAO.selectRecQnty());
+	return recordCriteria;
+	}
+	
+	@Override
+	public PageCriteria getPageCriteria(int reqPage, RecordCriteria recordCriteria) {
+		//한페이지에 보여줄 페이징넘버의 수 : 이전페이지 {1,2,3,....,10} 다음페이지
+		int pagingNumsPerPage = 10;					
+		PageCriteria pageCriteria = new PageCriteria(reqPage, recordCriteria.getTotalRec(), pagingNumsPerPage);
+		return pageCriteria;
+	}
+
+
+	
+	
+	
+	
 
 	
 	

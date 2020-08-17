@@ -1,11 +1,16 @@
 package com.my.maintest.board.svc;
 
 import java.util.List;
+import java.util.Map;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.my.maintest.board.vo.BcategoryVO;
-import com.my.maintest.board.vo.BoardFileVO;
 import com.my.maintest.board.vo.BoardVO;
 import com.my.maintest.board.vo.HeadIdCategoryVO;
+import com.my.maintest.common.paging.PageCriteria;
+import com.my.maintest.common.paging.PagingComponent;
+import com.my.maintest.common.paging.RecordCriteria;
 
 public interface BoardSVC {
 	
@@ -17,18 +22,41 @@ public interface BoardSVC {
 	// 전체 게시글 조회 (default)
 	List<BoardVO> selectArticles() ;	
 	// 게시글 열람
-	BoardVO selectArticle(long bnum);	
+	
+	
+	//전체 게시글 조회 + 페이징 
+	List<BoardVO> selectArticles(int reqPage) ;
+	
+	
+	
+	PagingComponent getPagingComponent(int reqPage);
+	
+	
+	Map<String, Object> selectArticle(long bnum);	
+	
+	
+	
+	
+	
+	
 	//게시글 등록
 	int insertArticle(BoardVO boardVO);		
 	//첨부파일 등록
-	int insertFiles(BoardFileVO boardFileVO);
+	void insertFiles(List<MultipartFile> files, long bnum);
 	//게시글  수정
 	int  updateArticle(BoardVO boardVO);
+	//첨부파일 일부 삭제 
+	int deleteFile(long fid); 
+	
 	//게시글 삭제
 	int deleteArticle(long  bnum);
 	//게시글 답글 작성
 	int insertRepliedArticle(BoardVO boardVO);
 	
+	
+	//페이징
+	RecordCriteria getRecCriteria(int reqPage);
+	PageCriteria getPageCriteria(int reqPage, RecordCriteria recordCriteria);
 	
 	
 	
