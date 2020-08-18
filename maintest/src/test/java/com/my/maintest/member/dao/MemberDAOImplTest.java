@@ -1,5 +1,8 @@
 package com.my.maintest.member.dao;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import org.junit.jupiter.api.Disabled;
@@ -43,6 +46,17 @@ public class MemberDAOImplTest {
 
 		memberDAO.singup(memberVO);
 		logger.info(memberDAO.listOneMember("admin").toString());
+	}
+
+	@Test
+	@DisplayName("아이디 찾기")
+//	@Disabled
+	void findID() {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("name", "관리자");
+		map.put("tel", "010-1111-1111");
+
+		logger.info(memberDAO.findID(map));
 	}
 
 }

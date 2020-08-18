@@ -20,22 +20,22 @@ public class Paging {
 	private boolean prev; // 이전페이지
 	private boolean next; // 다음페지
 
+	private int prevpage; // 이전페이지
+	private int nextpage; // 다음페지
+
 	private int reqPage; // 요청페이지
 	private int recNumPerPage; // 한페이지당 보여줄 레코드수
 
 	// 시작레코드 = (요청페이지-1) * 한페이지에 보여줄 레코드수+1
 	public int getStr_num() {
 
-		return (reqPage - 1) * recNumPerPage + 1;
+		return totalRec - ((reqPage - 1) * recNumPerPage);
 	}
 
 	// 종료레코드 = 요청페이지 X 한페이지에보여줄 레코드수
 	public int getEnd_num() {
-		return reqPage * recNumPerPage;
+		return totalRec - (reqPage * recNumPerPage) + 1;
 	}
-
-	public Paging() {
-	} // 디폴트생성자
 
 	public void calculatefinalEndPage() {
 
@@ -56,22 +56,19 @@ public class Paging {
 		}
 	}
 
-//	// 이전페이지 노출여부 : 요청페이지의 시작페이지가 1이 아닌경우 노출
-//	public boolean isPrev() {
-//		return getStartPage() == 1 ? false : true;
-//	}
-//
-//	public void setPrev(boolean prev) {
-//		this.prev = prev;
-//	}
-//
-//	// 다음페이지 노출여부 : 전체 레코드수가 요청페이지의 종료페이지보다 큰경우 노출
-//	public boolean isNext() {
-//		return totalRec > getEndPage() * rc.getRecNumPerPage() ? true : false;
-//	}
-//
-//	public void setNext(boolean next) {
-//		this.next = next;
-//	}
+	// 이전페이지 노출여부 : 요청페이지의 시작페이지가 1이 아닌경우 노출
+	public boolean isPrev() {
+		return getStartPage() == 1 ? false : true;
+	}
+
+	// 다음페이지 노출여부 : 전체 레코드수가 요청페이지의 종료페이지보다 큰경우 노출
+	public boolean isNext() {
+		return totalRec > getEndPage() * getRecNumPerPage() ? true : false;
+	}
+
+	public void napPage() {
+		nextpage = ((reqPage / pageNumPerPage) + 1) * pageNumPerPage + 1;
+		prevpage = (((reqPage / pageNumPerPage) - 1) * pageNumPerPage) + 1;
+	}
 
 }

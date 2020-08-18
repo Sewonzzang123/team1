@@ -16,4 +16,17 @@
 		#{nickname})
 	</insert>
 
+	<select id="findID" parameterType="map" resultType="string">
+		SELECT id
+		from member
+		where
+		name=#{name} and tel=#{tel}
+	</select>
+
+	<select id="findPW" parameterType="map" resultType="string">
+		SELECT pw
+		from member
+		where
+		id=#{id} and tel=#{tel}
+	</select>
 </mapper>

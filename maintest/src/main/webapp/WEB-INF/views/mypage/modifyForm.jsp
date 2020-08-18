@@ -17,6 +17,74 @@
 	href="${pageContext.request.contextPath}/css/mypage/modifyForm.css">
 <style type="text/css">
 </style>
+<script>
+	window.onload = function() {
+		const PWChangeBtn = document.getElementById('PWChangeBtn');
+		PWChangeBtn.addEventListener('click', PWChangeBtn_f);
+
+	}
+
+	function PWChangeBtn_f() {
+		var curpw = document.getElementById('curpw');
+		var nextpw = document.getElementById('nextpw');
+		var nextpwc = document.getElementById('nextpwc');
+
+		var curpw_msg = document.getElementById('curpw_msg');
+		var nextpw_msg = document.getElementById('nextpw_msg');
+
+		curpw_msg.innerText = '';
+		nextpw_msg.innerText = '';
+
+		if (curpw.value.trim().length == 0) {
+			curpw_msg.innerText = '*현재 비밀번호를 입력해주세요.';
+			curpw.focus();
+			return;
+		}
+
+		if (curpw.value != ${sessionScope.member.pw }) {
+			curpw_msg.innerText = '*현재 비밀번호가 일치하지 않습니다.';
+			curpw.focus();
+			return;
+		}
+
+		if (nextpw.value.trim().length == 0) {
+			nextpw_msg.innerText = '*새 비밀번호를 입력해주세요.';
+			nextpw.focus();
+			return;
+		}
+
+		if (nextpw.value.trim().length < 6) {
+			nextpw_msg.innerText = '*비밀번호는 6자리 이상입니다.';
+			nextpw.focus();
+			return;
+		}
+
+		if (nextpw.value != nextpwc.value) {
+			nextpw_msg.innerText = '*새 비밀번호를 확인해주세요.';
+			nextpwc.focus();
+			return;
+		}
+
+		
+		var ajax = new XMLHttpRequest();
+		ajax.onreadystatechange = function() {
+			if (ajax.readyState === ajax.DONE) {
+				if (ajax.status === 200 || ajax.status === 201) {
+					console.log(ajax.responseText);
+				} else {
+					console.error(ajax.responseText);
+				}
+			}
+		};
+		ajax.open("POST", "/maintest/mypage/changePW"); //
+		ajax.send(nextpw.value);
+		
+		curpw.value = '';
+		nextpw.value = '';
+		nextpwc.value = '';
+		alert('비밀번호가 변경되었습니다.')
+	}
+</script>
 </head>
 <body>
 	<!-- header -->
@@ -28,7 +96,7 @@
 
 		<!-- main -->
 		<main id="content" class="modifyForm">
-
+			<div class="content_sub-title">회원정보수정</div>
 			<form method="post">
 				<table>
 
@@ -43,52 +111,45 @@
 					</tr>
 					<!-- 비밀번호 영역 -->
 					<tr>
-						<th class="table-head">비밀번호 변경</th>
+						<th>비밀번호 변경</th>
 						<td class="table-data">
 							<ul>
-								<!-- 현재 비밀번호 -->
 								<li class="myinfo_form">
 									<div class="password-header">
 										<label for="txtPassword" class="text__label"> 현재 비밀번호
 										</label>
 									</div>
 									<div class="password-body">
-										<input name="culpw" id="txtPassword" type="password"
-											maxlength="10"></Input>
-									</div> <span class="err_msg">${requestScope.err_msg_cpw }</span>
+										<input name="curpw" id="curpw" type="password"></Input>
+
+
+									</div> <span class="err_msg" id="curpw_msg"></span>
 								</li>
 
-								<!-- 새 비밀번호 -->
 								<li class="myinfo_form">
 									<div class="password-header">
 										<label for="txtNewPassword1" class="text__label"> 새
 											비밀번호 </label>
 									</div>
 									<div class="password-body">
-										<input name="newpw" id="txtNewPassword1" type="password"
-											maxlength="10"></Input>
-									</div> <span class="err_msg">${requestScope.err_msg_npw }</span>
+										<input name="nextpw" id="nextpw" type="password"></Input>
+									</div> <span class="err_msg" id="nextpw_msg"></span>
 								</li>
 
-								<!-- 새 비밀번호 확인 -->
 								<li class="myinfo_form">
 									<div class="password-header">
 										<label for="txtNewPassword2" class="text__label"> 새
 											비밀번호 확인 </label>
 									</div>
 									<div class="password-body">
-										<input name="newpwc" id="txtNewPassword2" type="password"
-											maxlength="10"></Input>
+										<input name="nextpwc" id="nextpwc" type="password"></Input>
 									</div>
 									<div class="password-body">
-										<input class="mypage_modify_btn" type="submit"
-											id="PWChangeBtn" value="비밀번호 변경"
-											formaction="${pageContext.request.contextPath}/mypage/changePW">
-									</div>
-									<div>
-										<span class="suc_msg">${requestScope.suc_msg }</span>
+										<input class="mypage_modify_btn" type="button"
+											id="PWChangeBtn" value="비밀번호 변경">
 									</div>
 								</li>
+
 							</ul>
 						</td>
 					</tr>

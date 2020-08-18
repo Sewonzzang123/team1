@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import com.my.maintest.board.vo.BoardVO;
 import com.my.maintest.member.vo.MemberVO;
 import com.my.maintest.mypage.vo.IcategoryVO;
 import com.my.maintest.mypage.vo.ListingVO;
@@ -69,8 +70,8 @@ public class MypageDAOImplTest {
 	@Disabled
 	void mylist() {
 		String ucode = "34";
-		int str_num = -1;
-		int end_num = 3;
+		int str_num = 80;
+		int end_num = 0;
 
 		List<MylistVO> list = (List<MylistVO>) mypageDAO.mylist(ucode, str_num, end_num);
 
@@ -105,30 +106,8 @@ public class MypageDAOImplTest {
 	}
 
 	@Test
-	@DisplayName("체크된 아이템 개수")
-	@Disabled
-	void checked_item() {
-
-		String lnum = "56";
-
-		mypageDAO.checked_item(lnum);
-		logger.info(String.valueOf(mypageDAO.checked_item(lnum)));
-	}
-
-	@Test
-	@DisplayName("총 아이템 개수")
-	@Disabled
-	void total_item() {
-
-		String lnum = "56";
-
-		mypageDAO.total_item(lnum);
-		logger.info(String.valueOf(mypageDAO.total_item(lnum)));
-	}
-
-	@Test
 	@DisplayName("아이템 카테고리")
-//	@Disabled
+	@Disabled
 	void get_category() {
 		IcategoryVO categoryVO = new IcategoryVO();
 
@@ -145,5 +124,34 @@ public class MypageDAOImplTest {
 		String lnum = "56";
 		mypageDAO.get_category();
 		logger.info(mypageDAO.get_listing(lnum).toString());
+	}
+
+	@Test
+	@DisplayName("포스트 수")
+	@Disabled
+	void total_post() {
+
+		String ucode = "34";
+
+		mypageDAO.total_list(ucode);
+		logger.info(String.valueOf(mypageDAO.total_post(ucode)));
+	}
+
+	@Test
+	@DisplayName("마이포스트")
+//	@Disabled
+	void mypost() {
+		String ucode = "34";
+		int str_num = 5;
+		int end_num = 1;
+
+		List<BoardVO> list = (List<BoardVO>) mypageDAO.mypost(ucode, str_num, end_num);
+
+		for (BoardVO vo : list) {
+			logger.info(vo.toString());
+		}
+
+		logger.info(String.valueOf(list.size()));
+		logger.info(ucode);
 	}
 }

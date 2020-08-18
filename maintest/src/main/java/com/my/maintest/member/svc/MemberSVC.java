@@ -14,10 +14,10 @@ public interface MemberSVC {
 	public int logout();
 
 	// 아이디 찾기
-	public int findID();
+	public String findID(String name, String tel);
 
 	// 비밀번호 찾기
-	public int findPW();
+	public String findPW(String id, String tel);
 
 	// 개별 조회
 	public MemberVO listOneMember(String id);

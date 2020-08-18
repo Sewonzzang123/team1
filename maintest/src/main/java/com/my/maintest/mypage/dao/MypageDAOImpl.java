@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.my.maintest.board.vo.BoardVO;
 import com.my.maintest.member.vo.MemberVO;
 import com.my.maintest.mypage.vo.IcategoryVO;
 import com.my.maintest.mypage.vo.ListingVO;
@@ -73,15 +74,36 @@ public class MypageDAOImpl implements MypageDAO {
 	}
 
 	@Override
-	public int total_item(String lnum) {
+	public int item_check(String linum) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("mappers.MypageDAO-mapper.total_item", lnum);
+		return sqlSession.update("mappers.MypageDAO-mapper.item_check", linum);
 	}
 
 	@Override
-	public int checked_item(String lnum) {
+	public int item_uncheck(String linum) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("mappers.MypageDAO-mapper.checked_item", lnum);
+		return sqlSession.selectOne("mappers.MypageDAO-mapper.item_uncheck", linum);
 	}
 
+	@Override
+	public int total_post(String ucode) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("mappers.MypageDAO-mapper.total_post", ucode);
+	}
+
+	@Override
+	public List<BoardVO> mypost(String ucode, int str_num, int end_num) {
+		Map<String, String> map = new HashMap();
+		map.put("ucode", ucode);
+		map.put("str_num", String.valueOf(str_num));
+		map.put("end_num", String.valueOf(end_num));
+
+		return sqlSession.selectList("mappers.MypageDAO-mapper.mypost", map);
+	}
+
+	@Override
+	public int del_post(String bnum) {
+
+		return sqlSession.delete("mappers.MypageDAO-mapper.del_post", bnum);
+	}
 }
