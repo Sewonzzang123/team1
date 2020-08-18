@@ -51,9 +51,22 @@ public class BoardDAOImpl implements BoardDAO {
 		
 		return sqlSession.selectList("mappers.BoardDAO-mapper.selectArticles", map);
 	}
+	//전체게시글 조회 + 페이징 + 검색어 (검색타입/검색어)
 
 
+	@Override
+	public List<BoardVO> selectArticlesWithKey( int recFrom,int recTo,String searchType, String searchKeyword) {
+		Map<String,Object> map = new HashMap<String, Object>();		
+		map.put("recFrom", recFrom);
+		map.put("recTo", recTo);
+		map.put("searchType", searchType);
+		map.put("searchKeyword", searchKeyword);			
+		return sqlSession.selectList("mappers.BoardDAO-mapper.selectArticlesWithKey", map ) ;
+	}
 
+	
+	
+	
 	// 게시글 등록
 	@Override
 	public int insertArticle(BoardVO boardVO) {
@@ -134,8 +147,11 @@ public int updateBhits(long bnum) {
 		//페이징
 		//레코드 총 수량 구하기 
 		@Override
-		public int selectRecQnty() {		
-			return sqlSession.selectOne("mappers.BoardDAO-mapper.selectRecQnty");
+		public int selectRecQnty(String searchType, String searchKeyword) {		
+			Map<String, Object> map = new HashMap<>();
+			map.put("searchType", searchType);
+			map.put("searchKeyword", searchKeyword);
+			return sqlSession.selectOne("mappers.BoardDAO-mapper.selectRecQnty", map);
 		}
 
 		

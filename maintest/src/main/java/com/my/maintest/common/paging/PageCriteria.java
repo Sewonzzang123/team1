@@ -46,20 +46,19 @@ public class PageCriteria {
 		this.endPagingNum = totalPagingNums;
 	
 		// 페이징 끝번호 : pagingNumTo = (reqPage/pagingNums)*pagingNums
+		this.pagingNumTo = (int) Math.ceil(reqPage/(double)pagingNumsPerPage)*pagingNumsPerPage;
 		
-				if(reqPage <= 10) {
+	// 페이징 시작번호 : pagingNumFrom = pagingNumTo - (pagingNums -1)		
+		this.pagingNumFrom =pagingNumTo <=pagingNumsPerPage ? 1 :pagingNumTo-(pagingNumsPerPage-1) ;
+		
+		
+		//마지막 페이지 페이징 번호 설정
+				if(this.pagingNumTo > endPagingNum) {
 					this.pagingNumTo = endPagingNum;
-				}else {
-					this.pagingNumTo = (int)(reqPage/(double)pagingNumsPerPage)*pagingNumsPerPage;
 				}
-		
-
-		// 페이징 시작번호 : pagingNumFrom = pagingNumTo - (pagingNums -1)
-		
-		this.pagingNumFrom = pagingNumTo <= 10 ? 1 : pagingNumTo - (pagingNumsPerPage - 1);
-		
+				
 		//이전페이지  true :
-		this.prevPage = this.pagingNumFrom == 1 ? false: true;
+		this.prevPage = reqPage <= 10 ? false: true;
 		
 		//다음페이지 true:
 		this.nextPage = this.pagingNumTo < endPagingNum ? true : false;

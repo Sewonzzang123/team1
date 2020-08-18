@@ -39,7 +39,7 @@ public class BoardDAOImplTest {
 		long catNum = 2;
 		long hidNum = 1;
 		long uCode = 0;
-		String bTitle = "8/13 13:54제목1제목1제목1제목1제목1";
+		String bTitle = "제목1"+i;
 		String bContent = "내용111111";
 
 		BcategoryVO BcategoryVO = new BcategoryVO();
@@ -70,7 +70,7 @@ public class BoardDAOImplTest {
 	}
 	@Test
 	@DisplayName("게시글 답글 등록")
-	//@Disabled
+	@Disabled
 	void insertRepliedArticle() {
 		long catNum = 3;
 		long hidNum = 2;
@@ -188,6 +188,7 @@ public class BoardDAOImplTest {
 	
 	@Test
 	@DisplayName("리스트 조회 + 페이징")
+	@Disabled
 	void toSelectArticles1() {
 		
 		int recNumPerPage	= 10;	
@@ -198,9 +199,24 @@ public class BoardDAOImplTest {
 	
 	
 		boardDAO.selectArticles(recordCriteria.getRecFrom(), recordCriteria.getRecTo());
+				
+	}
+	
+	@Test
+	@DisplayName("리스트조회 + 페이징 + 검색어")
+	void toSearchKeyword() {
 		
+		int recNumPerPage	= 10;	
+		int reqPage = 3 ;
+	RecordCriteria recordCriteria = new RecordCriteria(recNumPerPage, reqPage);
+		int pagingNumsPerPage= 10;
+	PageCriteria pageCriteria = new PageCriteria(reqPage, recordCriteria.getTotalRec(), pagingNumsPerPage);
+	String searchType = "N";	
+	String searchKeyword ="관리자";
+	boardDAO.selectArticlesWithKey(recordCriteria.getRecFrom(),recordCriteria.getRecTo(), searchType, searchKeyword);
 		
 	}
+	
 	
 	
 	

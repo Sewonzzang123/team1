@@ -19,7 +19,7 @@ public interface BoardDAO {
 	//전체 게시글 조회 + 페이징 
 	List<BoardVO> selectArticles(int recFrom,int recTo) ;
 	//전체게시글 조회 + 페이징 + 검색어 (검색타입/검색어)
-	
+	List<BoardVO> selectArticlesWithKey(int recFrom,int recTo,String searchType, String searchKeyword);
 	
 	
 	
@@ -64,7 +64,7 @@ public interface BoardDAO {
 	
 	//페이징
 	//레코드 총 수량 구하기 
-	int selectRecQnty();
+	int selectRecQnty(String searchType, String searchKeyword);
 	
 	
 	//글 검색

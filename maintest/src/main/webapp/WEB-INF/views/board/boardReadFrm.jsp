@@ -9,7 +9,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>게시글 열람</title>
-<link rel="stylesheet" href="${contextPath}/css/board/boardReadFrm.css?ver=0" >
+<link rel="stylesheet" href="${contextPath}/css/board/boardReadFrm.css" >
 <script  defer type="text/javascript" src="${contextPath }/js/board/boardReadFrm.js?ver=0" ></script>
 </head>
 <body>
@@ -29,7 +29,8 @@
 					 enctype="multipart/form-data"	
 						action="${contextPath}/board/save">											
 									<input type="hidden" id="bnum" name="bnum" value="${boardVO.bnum }"/>
-				
+									<input type="hidden" id="returnPage" name="returnPage" value="${returnPage}"/>
+									
 						<ul>						
 							<li class="selectGrp">													
 							<select name="bcategory.catnum" 
@@ -51,17 +52,17 @@
 							<li><label for="">제목</label><input type="text" id="btitle"	name="btitle" value="${boardVO.btitle }" readonly></li>
 								<li>
 								<label for="">작성자</label><input type="text" id="bnickname"	name="bnickname" value="${boardVO.bnickname }" readonly/>
-								작성일:<fmt:formatDate value="${boardVO.bcdate }" pattern="yy/MM/dd HH:mm"/>
-								조회:<c:out value="${boardVO.bhits }"/>
 								</li>
+										<li>
+								<label>작성일자</label><fmt:formatDate value="${boardVO.bcdate }" pattern="yy/MM/dd HH:mm"/>		</li>
+								<li>	<label>조회수</label><c:out value="${boardVO.bhits }"/>	</li>
+							
 						
 							
 							<li><textarea id="bcontent" name="bcontent" cols="30" rows="5" placeholder="내용 입력"  readonly  >${boardVO.bcontent }</textarea></li>
 							<li>
 							
-							
-							
-							<li class="modifyMode"><label for="files">첨부</label> <input type="file" id="files" name="files" multiple="multiple"/></li>
+							<c:if test="${requestScope.files != null}">
 							<label for="">첨부목록</label>							
 							<div class="attachments" id="attatchments">						
 							<c:forEach var="file" items="${requestScope.files }">	
@@ -69,9 +70,14 @@
 							<a href="${contextPath }/board/file/${file.fid}">${file.fname }</a><span>(${file.fsize/1024 }kb)</span>
 							<a href="#" class="modifyMode"><i class="fas fa-minus-square" data-fid="${file.fid }"></i></a>
 							</div>
-							</c:forEach>
+							</c:forEach>											
 							</div>
+								</c:if>
 							</li>
+							<li class="modifyMode" id="addFiles" >
+								<label for="">파일추가</label>	
+							<input type="file" id="files" name="files" multiple="multiple"/>
+							</li>							
 							
 							
 						

@@ -15,10 +15,18 @@
          replyFrm.submit();
      }
      
-    function   listBtn_f(e){    
+   
     
-    const url = `/pfpkg/board/boardListFrm`;
-    window.location.href=url;
-     
+    
+    
+         //목록 버튼
+   function   listBtn_f(e){        
+   
+    const returnPage = document.getElementById("returnPage").value;
+    const url = `/pfpkg/board/boardListFrm/${returnPage}`;
+    window.location.href=url;     
      
      }
+
+     
+     

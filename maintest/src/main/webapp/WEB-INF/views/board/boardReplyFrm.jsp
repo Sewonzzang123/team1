@@ -10,7 +10,7 @@
 <title>답글 작성</title>
 <link rel="stylesheet" href="${contextPath}/css/board/boardReplyFrm.css">
 <script defer type="text/javascript"
-	src="${contextPath }/js/board/boardReplyFrm.js"></script>
+	src="${contextPath }/js/board/boardReplyFrm.js?ver=0"></script>
 </head>
 <body>
 
@@ -32,6 +32,7 @@
 									<input type="hidden" name="bgroup" value="${boardVO.bgroup }"/>
 									<input type="hidden" name="bstep" value="${boardVO.bstep }"/>
 									<input type="hidden" name="bindent" value="${boardVO.bindent }"/>
+									<input type="hidden" id="returnPage" name="returnPage" value="${returnPage}"/>
 						<ul>						
 							<li class="selectGrp">													
 							<select name="bcategory.catnum" 
@@ -46,10 +47,14 @@
 							</li>							
 							<li><label for="">제목</label><input type="text" id="btitle"	name="btitle" value="${boardVO.btitle }" ></li>
 								<li>
+									<li>
 								<label for="">작성자</label><input type="text" id="bnickname"	name="bnickname" value="${boardVO.bnickname }" readonly/>
-								작성일:<fmt:formatDate value="${boardVO.bcdate }" pattern="yy/MM/dd HH:mm"/>
-								조회:<c:out value="${boardVO.bhits }"/>
 								</li>
+										<li>
+								<label>작성일자</label><fmt:formatDate value="${boardVO.bcdate }" pattern="yy/MM/dd HH:mm"/>		</li>
+								<li>	<label>조회수</label><c:out value="${boardVO.bhits }"/>	</li>
+								
+								
 					<!-- 		<li><label for="">파일첨부</label><input type="file" id="files" name="files" multiple /></li> -->
 								
 							<li><textarea id="bcontent" name="bcontent" cols="30" rows="5" placeholder="내용 입력"    >${boardVO.bcontent }</textarea></li>

@@ -28,6 +28,7 @@ import com.my.maintest.board.vo.BoardVO;
 //import com.my.maintest.board.vo.TestVO;
 import com.my.maintest.board.vo.HeadIdCategoryVO;
 import com.my.maintest.board.vo.TemporaryVO;
+import com.my.maintest.common.paging.PagingComponent;
 
 @Controller
 @RequestMapping("/board")
@@ -39,7 +40,6 @@ public class BoardController {
 	BoardSVC boardSVC;
 
 	// 게시판 카테고리 조회
-
 	@ModelAttribute("bcategory")
 	public List<BcategoryVO> getBcategory() {
 		List<BcategoryVO> bcategoryVO = null;
@@ -63,8 +63,7 @@ public class BoardController {
 
 	// 로그인 처리 및 세션
 	@GetMapping("/login")
-	String toLogin(@RequestParam("id") String id, @RequestParam("pw") String pw,
-			HttpSession session, Model model) {
+	String toLogin(@RequestParam("id") String id, @RequestParam("pw") String pw, HttpSession session, Model model) {
 
 		System.out.println("String login()호출됨");
 		TemporaryVO tmpVO = new TemporaryVO();
@@ -77,30 +76,40 @@ public class BoardController {
 
 		return "redirect:/board/boardListFrm/1";
 	}
+//
+//	// 게시글목록
+//	@GetMapping({ "/boardListFrm", 
+//																		"/boardListFrm/{reqPage}", 
+//																		"/boardListFrm/{reqPage}/{recNumPerPage}" }) // 보여지는 게시글 수	조정을 위한 값
+//																																																			
+//	public String toboardListFrm(@PathVariable(value = "reqPage", required = false) Optional<Integer> reqPage,
+//			@PathVariable(value = "recNumPerPage", required = false) String recNumPerPage, Model model) {
+//
+//		model.addAttribute("articles", boardSVC.selectArticles(reqPage.orElse(1)));
+//		model.addAttribute("pagingComponent", boardSVC.getPagingComponent(reqPage.orElse(1)));
+//
+//		return "/board/boardListFrm";
+//	}
 
-	// 게시글목록
+	// 게시글 목록 (페이징 + 검색)
 	@GetMapping({
-		"/boardListFrm",
-		"/boardListFrm/{reqPage}",
-		"/boardListFrm/{reqPage}/{recNumPerPage}"})
-	public String toboardListFrm(@PathVariable(value="reqPage", required=false) Optional<Integer> reqPage,
-			@PathVariable(value="recNumPerPage", required=false) String recNumPerPage,
+		 "/boardListFrm", 
+			"/boardListFrm/{reqPage}", 
+			"/search/{reqPage}/{searchType}/{searchKeyword}"})
+	public String toSearch(@PathVariable(value = "reqPage", required = false) Optional<Integer> reqPage,
+			@PathVariable(value = "searchType", required = false) String searchType,
+			@PathVariable(value = "searchKeyword", required = false) String searchKeyword,
 			Model model) {
-		
-	
-		
-		
-		model.addAttribute("articles",boardSVC.selectArticles(reqPage.orElse(1)));
-		model.addAttribute("pagingComponent", boardSVC.getPagingComponent(reqPage.orElse(1)));
-		
-		System.out.println();
-		
+
+		model.addAttribute("articles", boardSVC.selectArticlesWithKey(reqPage.orElse(1), searchType, searchKeyword));
+		model.addAttribute("pagingComponent", boardSVC.getPagingComponent(reqPage.orElse(1),searchType,searchKeyword ));
+
 		return "/board/boardListFrm";
 	}
 
 	// 게시글 작성 화면
-	@GetMapping("/boardWriteFrm")
-	public String toboardWriteFrm(@ModelAttribute BoardVO boardVO) {
+	@GetMapping("/boardWriteFrm/{returnPage}")
+	public String toboardWriteFrm(@ModelAttribute BoardVO boardVO, @ModelAttribute("returnPage") String returnPage) {
 
 		return "/board/boardWriteFrm";
 	}
@@ -108,60 +117,56 @@ public class BoardController {
 	// 게시글 등록
 	@PostMapping("/write")
 	public String toWrite(@ModelAttribute BoardVO boardVO
-			//, BindingResult result
-			) {
 
-	//	if (result.hasErrors()) {
-		//	return "/board/boardWriteFrm";
-		//}
-		
-		
+	// , BindingResult result
+	) {
+
+		// if (result.hasErrors()) {
+		// return "/board/boardWriteFrm";
+		// }
+
 		System.out.println(boardVO.getFiles());
-				System.out.println(boardVO.getBtitle());
-		
+		System.out.println(boardVO.getBtitle());
+
 		boardSVC.insertArticle(boardVO);
 		return "redirect:/board/boardListFrm";
 	}
 
 	// 게시글열람
-	@GetMapping("/read/{bnum}")
-	public String toRead(@PathVariable("bnum") Long bnum, Model model) {
-		
-		//svc는 map 타입을 반환값으로 가짐
+	@GetMapping("/read/{bnum}/{returnPage}") // returnPage : 열람후 리스트로 이동시 돌아갈 reqPage
+	public String toRead(@PathVariable("bnum") Long bnum, @ModelAttribute("returnPage") String returnPage, Model model) {
+
+		// svc는 map 타입을 반환값으로 가짐
 		Map<String, Object> map = boardSVC.selectArticle(bnum);
-		
-		//게시글 타입은 BoardVO 
+
+		// 게시글 타입은 BoardVO
 		model.addAttribute("boardVO", map.get("boardVO"));
-		//파일 타입은 List<BoardFileVO>
+		// 파일 타입은 List<BoardFileVO>
 		model.addAttribute("files", map.get("files"));
-		
 		return "/board/boardReadFrm";
 	}
 
-	//첨부파일 일부 삭제
+	// 첨부파일 일부 삭제
 	@GetMapping("/deleteFile/{fid}")
 	@ResponseBody
-	public ResponseEntity<String> toDeleteFile(
-			@PathVariable("fid") long fid , Model model) {	
-		ResponseEntity<String>	responseEntity= null;
-		int result = boardSVC.deleteFile(fid);	
-		
-		if(result == 1) {
-			
+	public ResponseEntity<String> toDeleteFile(@PathVariable("fid") long fid, Model model) {
+		ResponseEntity<String> responseEntity = null;
+		int result = boardSVC.deleteFile(fid);
+
+		if (result == 1) {
+
 			responseEntity = new ResponseEntity<>("success", HttpStatus.OK);
-		}else {
-			
+		} else {
+
 			responseEntity = new ResponseEntity<>("fail", HttpStatus.OK);
 		}
-	return responseEntity;
+		return responseEntity;
 	}
-	
-	
+
 	// 게시글수정
 	@PostMapping("/save")
 	public String toSaveChanges(@ModelAttribute BoardVO boardVO, Model model) {
-		
-		boardSVC.updateArticle(boardVO);				
+		boardSVC.updateArticle(boardVO);
 		return "redirect:/board/read/" + boardVO.getBnum();
 	}
 
@@ -174,19 +179,19 @@ public class BoardController {
 	}
 
 	// 답글 작성 화면
-	@GetMapping("/boardReplyFrm/{bnum}")
-	public String toboardReplyFrm(@PathVariable("bnum") long bnum, Model model) {
+	@GetMapping("/boardReplyFrm/{bnum}/{returnPage}")
+	public String toboardReplyFrm(@PathVariable("bnum") long bnum, @ModelAttribute("returnPage") String returnPage,
+			Model model) {
 
-		Map<String,Object> map = null;
+		Map<String, Object> map = null;
 		map = boardSVC.selectArticle(bnum);
-		//맵안에서 게시글데이터를 가져와 가공한다.
-		BoardVO boardVO = (BoardVO)map.get("boardVO");	
+		// 맵안에서 게시글데이터를 가져와 가공한다.
+		BoardVO boardVO = (BoardVO) map.get("boardVO");
 		boardVO.setBtitle("[답글]" + boardVO.getBtitle());
 		boardVO.setBcontent("[원글]" + boardVO.getBcontent());
-		
-		
+
 		model.addAttribute("boardVO", boardVO);
-	
+
 		return "/board/boardReplyFrm";
 	}
 

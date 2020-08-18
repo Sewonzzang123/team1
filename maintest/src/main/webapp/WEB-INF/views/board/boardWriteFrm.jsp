@@ -10,7 +10,7 @@
 <title>게시글 작성</title>
 <link rel="stylesheet" href="${contextPath}/css/board/boardWriteFrm.css">
 <script defer type="text/javascript"
-	src="${contextPath }/js/board/boardWriteFrm.js?ver=1"></script>
+	src="${contextPath }/js/board/boardWriteFrm.js"></script>
 </head>
 <body>
 
@@ -26,11 +26,11 @@
 					<form id=writeFrm name="writeFrm" method="POST" 
 							 enctype="multipart/form-data"	
 						action="${contextPath}/board/write" >
-					
+							<input type="hidden" id="returnPage" name="returnPage" value="${returnPage}"/>
 
 						<ul>
 							<li class="selectGrp"><label for="bcategory.catnum">분류</label>
-								<select name="bcategory.catnum">
+								<select name="bcategory.catnum" id="bcategory.catnum">
 								<option value="">게시판분류</option>
 								<c:forEach var="bcate"  items="${bcategory }">
 									<option value="${bcate.catnum }">${bcate.catname }</option>

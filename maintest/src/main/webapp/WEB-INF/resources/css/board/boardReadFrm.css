@@ -63,7 +63,7 @@
         #readModFrm>ul .selectGrp {
             width: 100%;
             display: grid;
-            grid-template-columns: 20% 20% 1fr;
+            grid-template-columns: 20% 20% 20%;
         }
 
         #readModFrm>ul .selectGrp>select {

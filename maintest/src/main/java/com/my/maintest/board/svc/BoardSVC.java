@@ -25,15 +25,14 @@ public interface BoardSVC {
 	
 	
 	//전체 게시글 조회 + 페이징 
-	List<BoardVO> selectArticles(int reqPage) ;
+	List<BoardVO> selectArticles(int reqPage, String searchType, String searchKeyword);
 	
 	
+	//전체게시글 조회 + 페이징 + 검색어 (검색타입/검색어)
+	List<BoardVO> selectArticlesWithKey(int reqPage, String searchType, String searchKeyword);
 	
-	PagingComponent getPagingComponent(int reqPage);
-	
-	
+	// 게시글 열람
 	Map<String, Object> selectArticle(long bnum);	
-	
 	
 	
 	
@@ -55,12 +54,17 @@ public interface BoardSVC {
 	
 	
 	//페이징
-	RecordCriteria getRecCriteria(int reqPage);
-	PageCriteria getPageCriteria(int reqPage, RecordCriteria recordCriteria);
+
+	PageCriteria getPageCriteria(int reqPage, RecordCriteria recordCriteria);	
+	RecordCriteria getRecCriteria(int reqPage, String searchType, String searchKeyword);
+	PagingComponent getPagingComponent(int reqPage, String searchType, String searchKeyword);
+
 	
 	
+
 	
-	//글 검색
+	
+
 
 	
 	  //말머리

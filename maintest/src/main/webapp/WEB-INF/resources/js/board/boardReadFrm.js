@@ -14,7 +14,8 @@
       function peplyBtn_f(){      
       console.log("답글 버튼 클릭");
       const bnum = document.getElementById("bnum").value;
-      const url = `/pfpkg/board/boardReplyFrm/${bnum}`;
+       const returnPage = document.getElementById("returnPage").value;
+      const url = `/pfpkg/board/boardReplyFrm/${bnum}/${returnPage}`;
       window.location.href=url;      
       }
       
@@ -108,7 +109,8 @@ document.getElementById("bcontent").setAttribute("readonly",true);
    function   listBtn_f(e){        
       const isModifyMode = false; 
        modeChange(isModifyMode);     
-    const url = `/pfpkg/board/boardListFrm`;
+       const returnPage = document.getElementById("returnPage").value;
+    const url = `/pfpkg/board/boardListFrm/${returnPage}`;
     window.location.href=url;     
      
      }

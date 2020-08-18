@@ -55,14 +55,20 @@ public class BoardSVCImpl implements BoardSVC {
 	
 	//전체글 조회 + 페이징
 	@Override
-	public List<BoardVO> selectArticles(int reqPage) {		
-		pagingComponent = getPagingComponent(reqPage);		
+	public List<BoardVO> selectArticles(int reqPage, String searchType, String searchKeyword) {		
+		pagingComponent = getPagingComponent(reqPage,searchType,searchKeyword);		
 		System.out.println("board SVC ===pagingComponent" + pagingComponent.toString());
 	return boardDAO.selectArticles(pagingComponent.getRecordCriteria().getRecFrom(), pagingComponent.getRecordCriteria().getRecTo());
 	}
 	
-
-	
+	//전체게시글 조회 + 페이징 + 검색어 (검색타입/검색어)
+	@Override
+	public List<BoardVO> selectArticlesWithKey(int reqPage, String searchType, String searchKeyword) {
+		pagingComponent = getPagingComponent(reqPage,searchType,searchKeyword);		
+		System.out.println("board SVC ===pagingComponent" + pagingComponent.toString());
+	 return boardDAO.selectArticlesWithKey(pagingComponent.getRecordCriteria().getRecFrom(), pagingComponent.getRecordCriteria().getRecTo(), searchType, searchKeyword);
+		
+	}
 	
 	
 
@@ -187,10 +193,10 @@ public void insertFiles(List<MultipartFile> files, long bnum) {
 	
 	//페이징 설정
 	@Override
-	public PagingComponent getPagingComponent(int reqPage) {
+	public PagingComponent getPagingComponent(int reqPage,String searchType, String searchKeyword) {
 		PagingComponent pagingComponent = new PagingComponent();
 		
-		RecordCriteria recordCriteria = getRecCriteria(reqPage);
+		RecordCriteria recordCriteria = getRecCriteria(reqPage,searchType,searchKeyword);
 		PageCriteria pageCriteria = getPageCriteria(reqPage, recordCriteria);
 		
 		pagingComponent.setRecordCriteria(recordCriteria);
@@ -204,12 +210,12 @@ public void insertFiles(List<MultipartFile> files, long bnum) {
 	}
 
 	@Override
-	public RecordCriteria getRecCriteria(int reqPage) {
+	public RecordCriteria getRecCriteria(int reqPage,String searchType, String searchKeyword ) {
 	//한페이지에 보여줄 게시글 수 
 	int recNumPerPage = 10; 
 	RecordCriteria recordCriteria = new RecordCriteria(recNumPerPage, reqPage);
 	//게시글 총수량 
-	recordCriteria.setTotalRec(boardDAO.selectRecQnty());
+	recordCriteria.setTotalRec(boardDAO.selectRecQnty(searchType,searchKeyword));
 	return recordCriteria;
 	}
 	
@@ -220,6 +226,8 @@ public void insertFiles(List<MultipartFile> files, long bnum) {
 		PageCriteria pageCriteria = new PageCriteria(reqPage, recordCriteria.getTotalRec(), pagingNumsPerPage);
 		return pageCriteria;
 	}
+	
+
 
 
 	
