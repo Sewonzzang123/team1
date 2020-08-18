@@ -26,3 +26,16 @@ td {
 	margin-top: 20px;
 	text-align: center;
 }
+
+.content_sub-title {
+	display: block;
+	margin: 0.5rem 0;
+	padding: 0.25rem 0;
+	font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI",
+		"Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+	font-size: 2em;
+	font-weight: bold;
+	text-transform: uppercase;
+	border-bottom: 1px solid #5d4fad;
+	margin-bottom: 10px;
+}

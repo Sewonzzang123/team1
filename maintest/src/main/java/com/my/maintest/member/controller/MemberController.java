@@ -114,4 +114,51 @@ public class MemberController {
 		session.invalidate();
 		return "redirect:/";
 	}
+
+	// 아이디 찾기 화면
+	@GetMapping("/findIDForm")
+	public String get_findIDForm() {
+
+		return "member/findIDForm";
+	}
+
+	// 아이디 찾기
+	@PostMapping("/findID")
+	public String findID(@RequestParam String name, @RequestParam String tel, Model model) {
+		String id = memberSVC.findID(name, tel);
+
+		// 1)회원id가 없는경우
+		if (id == null) {
+			model.addAttribute("err_msg", "일치하는 정보가 없습니다.");
+			return "/member/findIDForm";
+		}
+
+		model.addAttribute("name", name);
+		model.addAttribute("id", id);
+
+		return "member/findIDResult";
+	}
+
+	// 비밀번호 찾기 화면
+	@GetMapping("/findPWForm")
+	public String get_findPWForm() {
+
+		return "member/findPWForm";
+	}
+
+	// 비밀번호 찾기
+	@PostMapping("/findPW")
+	public String findPW(@RequestParam String id, @RequestParam String tel, Model model) {
+		String pw = memberSVC.findPW(id, tel);
+
+		// 1)회원id가 없는경우
+		if (pw == null) {
+			model.addAttribute("err_msg", "일치하는 정보가 없습니다.");
+			return "/member/findPWForm";
+		}
+
+		model.addAttribute("id", id);
+
+		return "member/findPWResult";
+	}
 }

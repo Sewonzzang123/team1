@@ -124,8 +124,9 @@ button, input, select, textarea {
 			</form:form>
 
 			<div class="linkbar">
-				<a href="#">아이디 찾기</a> | <a href="#">비밀번호 찾기</a> | <a
-					href="${pageContext.request.contextPath}/signupForm">회원가입</a>
+				<a href="${pageContext.request.contextPath}/findIDForm">아이디 찾기</a> |
+				<a href="${pageContext.request.contextPath}/findPWForm">비밀번호 찾기</a>
+				| <a href="${pageContext.request.contextPath}/signupForm">회원가입</a>
 			</div>
 		</main>
 	</div>

@@ -10,4 +10,7 @@ public class MylistVO {
 	private String lname;
 	private Date cdate;
 	private int num;
+	private String checked_item;
+	private String total_item;
+	
 }

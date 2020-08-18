@@ -46,7 +46,7 @@
 					</tr>
 					<tr>
 						<th>이름</th>
-						<td class="table-head">${sessionScope.member.nickname }</td>
+						<td class="table-head">${sessionScope.member.name }</td>
 					</tr>
 					<tr>
 						<th>별명</th>

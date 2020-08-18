@@ -1,5 +1,7 @@
 package com.my.maintest.member.dao;
 
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
@@ -22,16 +24,16 @@ public class MemberDAOImpl implements MemberDAO {
 
 	// 아이디 찾기
 	@Override
-	public int findID(String id, String tel) {
-		// TODO Auto-generated method stub
-		return 0;
+	public String findID(Map<String, String> map) {
+
+		return sqlSession.selectOne("mappers.MemberDAO-mapper.findID", map);
 	}
 
 	// 비밀번호 찾기
 	@Override
-	public int findPW() {
+	public String findPW(Map<String,String> map) {
 		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.selectOne("mappers.MemberDAO-mapper.findPW", map);
 	}
 
 	// 개별 조회

@@ -1,12 +1,14 @@
 package com.my.maintest.mypage.svc;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.my.maintest.board.vo.BoardVO;
 import com.my.maintest.common.paging.Paging;
 import com.my.maintest.member.vo.MemberVO;
 import com.my.maintest.mypage.dao.MypageDAO;
@@ -16,6 +18,7 @@ import com.my.maintest.mypage.vo.MylistVO;
 
 @Repository
 public class MypageSVCImpl implements MypageSVC {
+	private static final Logger logger = LoggerFactory.getLogger(MypageSVCImpl.class);
 
 	@Inject
 	MypageDAO mypageDAO;
@@ -44,14 +47,17 @@ public class MypageSVCImpl implements MypageSVC {
 	@Override
 	public List<MylistVO> mylist(int reqPage, String ucode) {
 		Paging paging = new Paging();
+		paging.setTotalRec(mypageDAO.total_list(ucode));
 		paging.setReqPage(reqPage);
 		paging.setRecNumPerPage(10);
+		logger.info(String.valueOf(paging.getStr_num()));
+		logger.info(String.valueOf(paging.getEnd_num()));
 
 		return mypageDAO.mylist(ucode, paging.getStr_num(), paging.getEnd_num());
 	}
 
 	@Override
-	public Paging paging(int reqPage, String ucode) {
+	public Paging mylist_paging(int reqPage, String ucode) {
 
 		Paging paging = new Paging();
 		paging.setReqPage(reqPage);
@@ -59,6 +65,10 @@ public class MypageSVCImpl implements MypageSVC {
 		paging.setRecNumPerPage(10);
 		paging.setTotalRec(mypageDAO.total_list(ucode));
 		paging.calculatefinalEndPage();
+		paging.setNext(paging.isNext());
+		paging.setPrev(paging.isPrev());
+		paging.napPage();
+
 		return paging;
 	}
 
@@ -81,15 +91,49 @@ public class MypageSVCImpl implements MypageSVC {
 	}
 
 	@Override
-	public int total_item(String lnum) {
+	public int item_check(String linum) {
 		// TODO Auto-generated method stub
-		return mypageDAO.total_item(lnum);
+		return mypageDAO.item_check(linum);
 	}
 
 	@Override
-	public int checked_item(String lnum) {
+	public int item_uncheck(String linum) {
 		// TODO Auto-generated method stub
-		return mypageDAO.checked_item(lnum);
+		return mypageDAO.item_uncheck(linum);
 	}
 
+	@Override
+	// 마이포스트
+	public List<BoardVO> mypost(int reqPage, String ucode) {
+		Paging paging = new Paging();
+		paging.setTotalRec(mypageDAO.total_post(ucode));
+		paging.setReqPage(reqPage);
+		paging.setRecNumPerPage(10);
+		logger.info(String.valueOf(paging.getStr_num()));
+		logger.info(String.valueOf(paging.getEnd_num()));
+
+		return mypageDAO.mypost(ucode, paging.getStr_num(), paging.getEnd_num());
+	}
+
+	@Override
+	// 마이 포스트 페이징
+	public Paging mypost_paging(int reqPage, String ucode) {
+
+		Paging paging = new Paging();
+		paging.setReqPage(reqPage);
+		paging.setPageNumPerPage(10);
+		paging.setRecNumPerPage(10);
+		paging.setTotalRec(mypageDAO.total_post(ucode));
+		paging.calculatefinalEndPage();
+		paging.setNext(paging.isNext());
+		paging.setPrev(paging.isPrev());
+		paging.napPage();
+
+		return paging;
+	}
+
+	@Override
+	public int del_post(String bnum) {
+		return mypageDAO.del_post(bnum);
+	}
 }

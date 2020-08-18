@@ -1,5 +1,8 @@
 package com.my.maintest.member.svc;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Repository;
@@ -34,15 +37,21 @@ public class MemberSVCImpl implements MemberSVC {
 	}
 
 	@Override
-	public int findID() {
-		// TODO Auto-generated method stub
-		return 0;
+	public String findID(String name, String tel) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("name", name);
+		map.put("tel", tel);
+
+		return memberDAO.findID(map);
 	}
 
 	@Override
-	public int findPW() {
-		// TODO Auto-generated method stub
-		return 0;
+	public String findPW(String id, String tel) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("id", id);
+		map.put("tel", tel);
+
+		return memberDAO.findPW(map);
 	}
 
 	// 개별 조회
