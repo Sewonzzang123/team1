@@ -58,4 +58,15 @@ input[type="text"]{
 div[selected="true"]{
 	text-decoration:line-through;
 }
+.edit_number {
+    display: inline-block;
+    width: 13px;
+    font-size: 0;
+    line-height: 0;
+    height: 19px;
+    vertical-align: middle;
+}
 
+.tab_menu_btn >ul>li>div{
+	display:flex;
+}

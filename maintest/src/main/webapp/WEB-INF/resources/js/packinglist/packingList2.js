@@ -56,6 +56,7 @@ $('.tab_menu_btn6').on('click',function(){
 });
 
 
+
 	//클릭한 클래스 이름 가져오기
 	document.querySelectorAll('.tab_menu_btn').forEach(div => {
 	    div.addEventListener('click', function() {
@@ -95,8 +96,8 @@ $('.tab_menu_btn6').on('click',function(){
 					
 					let addListItem = document.createElement('li');
 					//여기에 체크박스, 숫자, 마이너스 버튼 생성해야됨
-					addListItem.innerHTML ='<div><input type="checkbox" onClick="check_f(this)">'+ itemid+'<input type="text" name="num" value="1"/><button class="plusBtn" onClick="plus(this)">증가</button><button class="minusBtn" onClick="minus(this)">감소</button><a href="#"><i class="fas fa-minus" onClick="deletelist_f(this)"></i></a></div>';
-					
+					addListItem.innerHTML ='<div><input type="checkbox" onClick="check_f(this)">'+ itemid+'<input type="text" name="icount" value="1"/><button class="plusBtn" onClick="plus(this)">증가</button><button class="minusBtn" onClick="minus(this)">감소</button><a href="#"><i class="fas fa-minus" onClick="deletelist_f(this)"></i></a></div>';
+		
 					let inputclass = document.querySelector("."+classTag);
 					inputclass.parentElement.lastElementChild.prepend(addListItem);
 								
@@ -142,25 +143,65 @@ $('.tab_menu_btn6').on('click',function(){
 	
 		function saveBtn_f(event){
 		event.preventDefault();
-		console.log("saveBtn_f");
+		
+		//기존에 있는 아이템들을 담는 itemList
+		var itemList = new List();
+		//map1을 리스트로 만든 newitemList
+		var newitemList = new List();
+		
+		const items = document.getElementsByTagName('li');
+	
+		for(var i=0; i<items.length; i++){
+		
+		if(items[i].firstChild.firstElementChild.nextElementSibling.className.trim()=='newitem'){
+			//newitem 담는 map1
+			let map1 = new Map();
+			map1.set("iname",items[i].firstChild.firstElementChild.nextElementSibling.innerText);
+			map1.set("icategory",items[i].parentElement.parentElement.firstElementChild.id);
+			map1.set("ichecked",items[i].firstChild.firstElementChild.checked);	
+			map1.set("icount",items[i].firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.value);	
+			newitemList.add(map1);
+		}else{	
+			//기존에 있는 아이템을 담는 map2
+			let map2 = new Map();
+			map2.set("inum",items[i].firstChild.firstElementChild.nextElementSibling.className.split('m')[1]);
+			map2.set("icategory",items[i].parentElement.parentElement.firstElementChild.id);
+			map2.set("ichecked",items[i].firstChild.firstElementChild.checked);	
+			map2.set("icount",items[i].firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.value);	
+			itemList.add(map2);
+				}
+		};
+		
+		console.log(newitemList.elements);
+		console.log(itemList.elements);
+		
+
+		 
 		const url 		= event.target.href;
 		const fname 	= event.target.id;
 		const option 	= "width=460,height=540,location=no,resizable=no";
-		console.log(option);
 		window.open(url,fname,option);
-		
-		
-		const items = document.getElementsByTagName('li');
-		for(var i=0; i<items.length; i++){
-		console.log("체크:"+items[i].firstChild.firstElementChild.checked);
-		console.log("아이템번호:"+items[i].firstChild.firstElementChild.nextElementSibling.className);
-		console.log("아이템이름:"+items[i].firstChild.firstElementChild.nextElementSibling.innerText);
-		console.log("카테고리:"+items[i].parentElement.parentElement.firstElementChild.id);
-		console.log("수량:"+items[i].firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.value);
-		};
-		
+			
 	}
-	
+
+	//리스트 구조	
+	function List() {
+   	this.elements = {};
+   	this.idx = 0;
+   	this.length = 0;
+	};
+
+	List.prototype.add = function(element) {
+   	this.length++;
+   	this.elements[this.idx++] = element;
+	};
+
+	List.prototype.get = function(idx) {
+  	 return this.elements[idx];
+	};
+
+
+
 	
 	
 
