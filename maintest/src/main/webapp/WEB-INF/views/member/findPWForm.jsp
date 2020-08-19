@@ -12,6 +12,10 @@
 	href="${pageContext.request.contextPath}/css/member/findIDPW.css">
 
 <body>
+	<!-- header -->
+	<header>
+		<%@ include file="/WEB-INF/views/layout/logo.jsp"%>
+	</header>
 	<main>
 		<div class="container">
 			<div class="find_tapmenu">

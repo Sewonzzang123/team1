@@ -11,6 +11,10 @@
 	href="${pageContext.request.contextPath}/css/member/findIDPW.css">
 
 <body>
+	<!-- header -->
+	<header>
+		<%@ include file="/WEB-INF/views/layout/logo.jsp"%>
+	</header>
 	<main>
 		<div class="container">
 			<div class="find_tapmenu">
@@ -36,7 +40,7 @@
 				<div class="actionBtn">
 					<input type="submit" title="로그인" id="login" class="btn"
 						value="로그인하기"
-						formaction="${pageContext.request.contextPath}/login" />
+						onclick="location.href = '${pageContext.request.contextPath}/loginForm' " />
 				</div>
 			</fieldset>
 		</div>
