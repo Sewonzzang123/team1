@@ -1,6 +1,10 @@
 package com.my.maintest.member.controller;
 
+import java.io.PrintWriter;
+
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -148,14 +152,31 @@ public class MemberController {
 
 	// 비밀번호 찾기
 	@PostMapping("/findPW")
-	public String findPW(@RequestParam String id, @RequestParam String tel, Model model) {
+	public String findPW(@RequestParam String id, @RequestParam String tel, Model model, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		String pw = memberSVC.findPW(id, tel);
 
-		// 1)회원id가 없는경우
 		if (pw == null) {
 			model.addAttribute("err_msg", "일치하는 정보가 없습니다.");
 			return "/member/findPWForm";
 		}
+
+		pw = memberSVC.findPW(id, tel);
+
+		PrintWriter out = response.getWriter();
+		StringBuffer sb = new StringBuffer();
+		sb.append("<html><body>");
+		sb.append("<meta http-equiv='Content-Type' content='text/html; charset=euc-kr'>");
+		sb.append("<h1>" + "packing 비밀번호 찾기" + "<h1><br>");
+		sb.append(id + "님의 비밀번호입니다.<br><br>");
+		sb.append("<b>비밀번호 : " + pw + "</b>");
+		sb.append("<br><br>");
+		sb.append("<a href='http://localhost:9080/maintest/loginForm'>로그인</a>");
+		sb.append("</body></html>");
+
+		memberSVC.sendMail(id, "packing 비밀번호 찾기", sb.toString());
+
+		out.print("메일을 발송하였습니다.!!");
 
 		model.addAttribute("id", id);
 
