@@ -1,17 +1,19 @@
 window.addEventListener('load',init);
-
+const saveFrm = document.getElementById("saveFrm");
 const addItemTag = document.getElementById("additem");
 let idTag = null;
 let classTag = null;
 
 function init(){
+const saveBtn = document.querySelector("#saveBtn");
+saveBtn.addEventListener('click',saveBtn_f);
 //탭박스 이벤트
 $('.tab_box').hide();
 
 //버튼 색 제거,추가
 $('.tab_menu_btn').on('click',function(){
   $('.tab_menu_btn').removeClass('on');
-  $(this).addClass('on')
+  $(this).addClass('on');
 });
 
 //1번 컨텐츠
@@ -54,6 +56,7 @@ $('.tab_menu_btn6').on('click',function(){
 });
 
 
+
 	//클릭한 클래스 이름 가져오기
 	document.querySelectorAll('.tab_menu_btn').forEach(div => {
 	    div.addEventListener('click', function() {
@@ -67,102 +70,127 @@ $('.tab_menu_btn6').on('click',function(){
 	addItemTag.addEventListener('click',additem_f);
 	function additem_f(e){
 		let add = window.prompt("아이템 이름을 입력하세요");
-
+		if(!checkItem(add)){return;}
 		
 		let newitem = document.createElement('tr');
-		newitem.className+='tab_box  tab_box'+idTag ;
-		newitem.innerHTML = '<td><a href="#"><i class="fas fa-plus"></i></a></td><td><div class="newitem">'+add+'</div></td>';
+		newitem.className +='tab_box  tab_box'+idTag ;
+		newitem.innerHTML = '<td><a href="#"><i class="fas fa-minus" onClick="deletelist2_f(this)" style="display:none"></i><i class="fas fa-plus" onClick="addlist_f(this)"></i></a></td><td><div class="newitem" selected="false">'+add+'</div></td>';
 
 		document.querySelector('.tab_box').parentElement.prepend(newitem);		
-		addItemTag.parentElement.firstElementChild.nextElementSibling.firstElementChild.nextElementSibling.prepend(newitem);
-
- 		document.querySelector('i.fa-plus').addEventListener('click', addlist_f);
 		}
-		
-		document.querySelectorAll('i.fa-plus').forEach(i => {
-		i.addEventListener('click', function() {
-				
-					//플러스 클릭하면 안보이게 만들기
-					i.parentElement.parentElement.parentElement.style.display="none";
-
-
-					//카테고리 아래에 li생성
-					let addListItem = document.createElement('li');
-					//클릭한 아이템의 정보
-					let itemid = i.parentElement.parentElement.nextElementSibling.innerHTML;
-					//여기에 체크박스, 숫자, 마이너스 버튼 생성해야됨
-					addListItem.innerHTML ='<div><input type="checkbox">'+ itemid+'<input type="text" name="num" value="1"/><button class="plusBtn" onClick="plus(this)">증가</button><button class="minusBtn" onClick="minus(this)">감소</button><a href="#"><i class="fas fa-minus"></i></a></div>';		
-					let inputclass = document.querySelector("."+classTag);
-					inputclass.parentElement.lastElementChild.append(addListItem);
-					
-					/*
-					//아이템 리스트에 마이너스 버튼이 생기게 하기			
-					let deleteListItem = document.createElement('tr');
-					deleteListItem.className+='tab_box  tab_box'+idTag ;
-					deleteListItem.innerHTML = '<td><a href="#"><i class="fas fa-minus"></i></a></td><td>'+itemid+'</td>';
-	   			i.parentElement.parentElement.parentElement.parentElement.appendChild(deleteListItem);
-	   			document.querySelector('.additem').firstElementChild.appendChild(deleteListItem);
-	   			
-	   			//마이너스 버튼 생긴거 이벤트 처리
-	   			document.querySelectorAll('i.fa-minus').forEach(i => {
-					i.addEventListener('click', deletelist_f);
-		
-
-				
-				});
-							*/
-	    });
-	});
-	
-
 	
 }
-	function deletelist_f(e){
-	
-					document.getElementsByClassName(e.target.parentElement.parentElement.nextElementSibling.firstElementChild.className)[0].parentElement.parentElement.remove();
-					document.getElementsByClassName(e.target.parentElement.parentElement.nextElementSibling.firstElementChild.className)[1].parentElement.parentElement.remove();
-					document.getElementsByClassName(e.target.parentElement.parentElement.nextElementSibling.firstElementChild.className)[0].parentElement.parentElement.style.display="table-row";
-					
-	}
-			function addlist_f(e){
-					let itemid = document.querySelector('i.fa-plus').parentElement.parentElement.nextElementSibling.innerHTML;
 
+function checkItem(e){
+	if(e.trim()==0){
+		window.alert("한글자 이상 입력해야합니다!");
+		return false;
+	}
+	return true;
+}
+
+
+	
+	function addlist_f(e){
+					//플러스 클릭하면 안보이게 만들기
+					e.previousElementSibling.style.display="inline";
+					e.style.display="none";
+					let itemNum =null;
+				
+					
+					let itemid = e.parentElement.parentElement.nextElementSibling.innerHTML;					
+					let split =itemid.split(' ');
+				
+					
+					let itemid2 = e.parentElement.parentElement.nextElementSibling.firstChild;
+					let itemName =  e.parentElement.parentElement.nextElementSibling.firstChild.innerText;
+					
+					if(itemid2.className=='newitem'){
+					 itemNum = itemid2.className;
+					}else{
+					 itemNum = itemid2.className.substring(4);
+					 }
+					 
+					
+					let itemNameTag = split[0];
+					itemNameTag += ' name="iname" value="'+itemid2.innerText+'" ';
+					for(let n=1; n<split.length; n++){itemNameTag += split[n];}
+			
 					let addListItem = document.createElement('li');
 					//여기에 체크박스, 숫자, 마이너스 버튼 생성해야됨
-					addListItem.innerHTML ='<div><input type="checkbox">'+ itemid+'<input type="text" name="num" value="1"/><button class="plusBtn">증가</button><button class="minusBtn">감소</button><a href="#"><i class="fas fa-minus"></i></a></div>';
+					let a = '<div><input name="ichecked" value="false" type="checkbox" onClick="check_f(this)">'+itemNameTag+'<input type="text" name="icount" value="1" max="100"/><div class="edit_number"><input type="button" class="plusBtn" onClick="plus(this)">증가</input><input type="button"  class="minusBtn" onClick="minus(this)">감소</input></div><a href="#"><i class="fas fa-minus" onClick="deletelist_f(this)">';
+					a += '</i></a></div><input type="hidden" name="icategory" value="'+idTag+'"/>';
+					a += '<input type="hidden" name="inum" value="'+itemNum+'"/><input type="hidden" name="iname" value="'+itemName+'"/><input type="hidden" name="ichecked" value="false"/>';
+					addListItem.innerHTML =a;
 					
 					let inputclass = document.querySelector("."+classTag);
 					inputclass.parentElement.lastElementChild.prepend(addListItem);
-					/*
-					//아이템 리스트에 마이너스 버튼이 생기게 하기			
-					let deleteListItem = document.createElement('tr');
-					deleteListItem.innerHTML = '<td><a href="#"><i class="fas fa-minus"></i></a></td><td>'+itemid+'</td>';
-	   			e.target.parentElement.parentElement.parentElement.parentElement.appendChild(deleteListItem);
-	   			document.querySelector('.additem').firstElementChild.appendChild(deleteListItem);
-	   			
-	   			//마이너스 버튼 생긴거 이벤트 처리
-	   			document.querySelectorAll('i.fa-minus').forEach(i => {
-					i.addEventListener('click', deletelist_f);
-	
-				});
-								*/
+								
 					
+	}
+
+	function deletelist_f(e){
+					document.getElementsByClassName(e.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.nextElementSibling.className)[0].parentElement.previousElementSibling.firstElementChild.firstElementChild.style.display="none";
+					document.getElementsByClassName(e.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.nextElementSibling.className)[0].parentElement.previousElementSibling.firstElementChild.lastElementChild.style.display="inline";				
+					document.getElementsByClassName(e.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.nextElementSibling.className)[1].parentElement.parentElement.remove();								
+								
+	}
+	
+	function deletelist2_f(e){	
+					e.style.display="none";	
+					e.nextElementSibling.style.display="inline";
+				
+					document.getElementsByClassName(e.parentElement.parentElement.nextElementSibling.firstElementChild.className)[1].parentElement.parentElement.remove();	
+												
 	}
 
 	function addClass(element, className) 
 	{ element.className += " " + className; };
 	
 	function plus(e){
-		let a = e.parentElement.firstElementChild.nextElementSibling.nextElementSibling;
+
+		let a = e.parentElement.parentElement.firstElementChild.nextElementSibling.nextElementSibling;
 		a.value = Number(a.value)+1;
 	}
 	
 	function minus(e){
-		let a = e.parentElement.firstElementChild.nextElementSibling.nextElementSibling;
+
+		let a = e.parentElement.parentElement.firstElementChild.nextElementSibling.nextElementSibling;
 		if(Number(a.value)-1<1){return;}
 		a.value = Number(a.value)-1;
-
 	}
+	
+	function check_f(e){
+
+		if(e.parentElement.firstElementChild.nextElementSibling.getAttribute('selected')=='false'){	
+		e.parentElement.firstElementChild.nextElementSibling.setAttribute('selected','true');
+		e.value="true";
+		}else{
+		e.parentElement.firstElementChild.nextElementSibling.setAttribute('selected','false');
+		e.value="false";
+		}	
+	}
+	
+	
+function saveBtn_f(event){
+		event.preventDefault();
+		document.forms["saveFrm"].submit();
+		
+		const url 		= event.target.href;
+		const fname 	= event.target.id;
+		const option 	= "width=460,height=540,location=no,resizable=no";
+		window.open(url,fname,option);
+		
+
+	
+	}
+
+
+
+
+	
+	
+
 
 
 

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
 <div id="wrapper">
 	<div class="container additem tab_box_container">
 		<table>
@@ -23,11 +24,12 @@
 				</c:forEach>
 		</table>
 		</tbody>
-		<button id="additem">아이템 추가</button>
+	
 		<div class="buttons">
-			<a href="${contextPath }/itemlist/saveListForm" id="saveBtn">저장</a> <span>|</span> 
-					<a href="${contextPath }/itemlist/" id="">비밀번호 찾기</a> <span>|</span>
-					<a href="${contextPath }/itemlist/">회원 가입</a>
+				<input type="button" id="additem" value="아이템 추가"/><span>|</span>
+				<button id="saveBtn">저장</button> <span>|</span> 
+					<a href="${contextPath }/itemlist/" id="saveBtn">리스트 불러오기</a> <span>|</span>
+					<a href="${contextPath }/itemlist/"> 인쇄</a>
 		</div>
 
 	</div>

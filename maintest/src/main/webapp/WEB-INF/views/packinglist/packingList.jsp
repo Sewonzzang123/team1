@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/included/common_taglib.jsp"%>
 <link rel="stylesheet" href="${contextPath }/css/packinglist/packingList.css">
-<script defer src="${contextPath }/js/packinglist/packingList.js"/>    
+<script defer src="${contextPath }/js/packinglist/packingList.js?ver=133"/>    
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -12,9 +12,11 @@
 <style>*{outline:1px solid grey;}</style>
 </head>
 <body>
+
 <%@ include file="/WEB-INF/views/packinglist/itemList.jsp" %>
 
 <%@ include file="/WEB-INF/views/packinglist/category.jsp" %>
+
 
 <script>
 
