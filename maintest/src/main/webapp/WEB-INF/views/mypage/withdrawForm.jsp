@@ -25,10 +25,6 @@ form {
 .form_head, .form_data {
 	height: 30px;
 }
-
-.err_msg {
-	color: red;
-}
 </style>
 </head>
 <body>
@@ -41,7 +37,7 @@ form {
 
 		<!-- main -->
 		<main id="content" class="withdrawForm">
-			<h3>회원탈퇴 신청</h3>
+			<div class="content_sub-title">회원탈퇴 신청</div>
 			<div>
 				- 비밀번호를 입력 후 확인을 클릭하시면 탈퇴가 완료됩니다. <br> - 게시판에 작성하신 글은 자동으로 삭제되지
 				않습니다.
@@ -66,7 +62,7 @@ form {
 					</div>
 					<div class="actionBtn">
 						<input type="submit" value="확인"> <input type="button"
-							value="취소">
+							value="취소" onclick="location.href = '${pageContext.request.contextPath}/mypage' ">
 					</div>
 				</form>
 			</div>
