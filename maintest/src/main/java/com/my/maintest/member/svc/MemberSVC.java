@@ -21,4 +21,8 @@ public interface MemberSVC {
 
 	// 개별 조회
 	public MemberVO listOneMember(String id);
+
+	// 메일 전송
+	public void sendMail(String to, String subject, String body);
+
 }

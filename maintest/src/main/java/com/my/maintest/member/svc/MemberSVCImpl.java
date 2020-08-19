@@ -4,7 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Repository;
 
 import com.my.maintest.member.dao.MemberDAO;
@@ -15,6 +20,9 @@ public class MemberSVCImpl implements MemberSVC {
 
 	@Inject
 	MemberDAO memberDAO;
+
+	@Inject
+	private JavaMailSender mailSender;
 
 	// 회원가입
 	@Override
@@ -59,6 +67,25 @@ public class MemberSVCImpl implements MemberSVC {
 	public MemberVO listOneMember(String id) {
 
 		return memberDAO.listOneMember(id);
+	}
+
+	@Override
+	@Async
+	public void sendMail(String to, String subject, String body) {
+		MimeMessage message = mailSender.createMimeMessage();
+		String From = "mnj190@gmail.com";
+		try {
+
+			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+			messageHelper.setSubject(subject);
+			messageHelper.setTo(to);
+			messageHelper.setFrom(From);
+			messageHelper.setText(body, true);
+			mailSender.send(message);
+
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
