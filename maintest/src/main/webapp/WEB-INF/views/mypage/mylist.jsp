@@ -69,7 +69,7 @@
 						<th></th>
 						<th>리스트 이름</th>
 						<th>진행률</th>
-						<th>작성일자</th>
+						<th>작성일</th>
 						<th></th>
 					</tr>
 				</thead>

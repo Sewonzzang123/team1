@@ -118,7 +118,7 @@ main {
 .block {
 	text-align: left;
 	margin-bottom: 30px;
-	width: 330px;
+	width: 350px;
 }
 
 .title {

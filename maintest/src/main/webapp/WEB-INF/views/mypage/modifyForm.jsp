@@ -178,7 +178,7 @@
 				<div class="actionBtn">
 					<input type="submit" value="회원정보 수정"
 						formaction="${pageContext.request.contextPath}/mypage/modify" />
-					<input type="button" value="회원정보 취소"
+					<input type="button" value="취소"
 						onClick="location.href='/maintest'" /> <input type="button"
 						value="회원탈퇴 신청"
 						onClick="location.href='/maintest/mypage/withdrawForm'" />
