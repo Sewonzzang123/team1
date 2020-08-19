@@ -46,6 +46,18 @@
 				console.log('변경됨')
 			}
 		}
+
+		var g_oBeforeBody = document.getElementById('container').innerHTML;
+
+		$('#printbtn').click(function() {
+
+			// 프린트를 보이는 그대로 나오기위한 셋팅
+			window.onbeforeprint = function(ev) {
+				document.body.innerHTML = g_oBeforeBody;
+			};
+			window.print();
+			location.reload();
+		});
 	});
 </script>
 <style>
@@ -92,10 +104,20 @@ main {
 	text-decoration-style: solid;
 }
 
+.container {
+	display: inline-flex;
+}
+
+.frame {
+	display: inline-flex;
+	flex-direction: column;
+	align-content: flex-start;
+	/* margin: auto; */
+}
+
 .block {
-	display: inline-block;
-	margin-bottom: 30PX;
 	text-align: left;
+	margin-bottom: 30px;
 	width: 330px;
 }
 
@@ -103,15 +125,10 @@ main {
 	margin-bottom: 40PX;
 }
 
-@media ( min-width : 680px) {
-	.frame {
-		width: 350px;
-		float: left;
-		margin: auto;
-	}
+@media ( max-width : 680px) {
 	.container {
-		width: 700px;
-		margin: auto;
+		display: inline-flex;
+		flex-direction: column;
 	}
 }
 </style>
@@ -121,7 +138,7 @@ main {
 
 	<main>
 		<h3 class="title">have a good day and a better tomorrow</h3>
-		<div class="container">
+		<div class="container" id="container">
 			<div class="frame">
 				<!-- 카테고리 -->
 				<c:forEach var="category" items="${requestScope.icategory }"
@@ -165,6 +182,10 @@ main {
 					</div>
 				</c:forEach>
 			</div>
+		</div>
+		<div class="action">
+			<input type="button" id="printbtn" value="인쇄"> <input
+				type="button" id="pdfbtn" value="PDF출력">
 		</div>
 	</main>
 
