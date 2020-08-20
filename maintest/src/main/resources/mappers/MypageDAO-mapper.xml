@@ -2,32 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mappers.MypageDAO-mapper">
 
-
-	<select id="getCate"
-		resultType="com.my.maintest.board.vo.BcategoryVO">
-		select catnum,catname,btype
-		from bcategory
-		order by catnum
-	</select>
-
-	<delete id="delBoard" parameterType="string">
-		delete bcategory where
-		catnum=${catnum}
-	</delete>
-
-	<insert id="createBoard">
-
-
-		insert into bcategory
-		values(bnum_seq.NEXTVAL,'새게시판','blog')
-	</insert>
-
-	<update id="setBoard"
-		parameterType="com.my.maintest.board.vo.BcategoryVO">
-		update bcategory set catname = #{catname},
-		btype=#{btype} where catnum=#{catnum}
-	</update>
-
 	<!-- 회원정보수정 -->
 	<update id="modify"
 		parameterType="com.my.maintest.member.vo.MemberVO">
