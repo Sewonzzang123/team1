@@ -1,59 +1,60 @@
-package com.my.maintest.admin.dao;
+package com.my.maintest.admin.svc;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.my.maintest.admin.dao.AdminDAO;
 import com.my.maintest.board.vo.BcategoryVO;
 import com.my.maintest.board.vo.HeadIdCategoryVO;
 
 @Repository
-public class AdminDAOImpl implements AdminDAO {
+public class AdminSVCImpl implements AdminSVC {
 
 	@Inject
-	private SqlSession sqlSession;
+	AdminDAO adminDAO;
 
 	@Override
 	public List<BcategoryVO> getCate() {
-
-		return sqlSession.selectList("mappers.AdminDAO-mapper.getCate");
+		// TODO Auto-generated method stub
+		return adminDAO.getCate();
 	}
 
 	@Override
 	public int delBoard(String catnum) {
 
-		return sqlSession.delete("mappers.AdminDAO-mapper.delBoard", catnum);
+		return adminDAO.delBoard(catnum);
 	}
 
 	@Override
 	public int createBoard(BcategoryVO bcategoryVO) {
-		return sqlSession.insert("mappers.AdminDAO-mapper.createBoard", bcategoryVO);
+		// TODO Auto-generated method stub
+		return adminDAO.createBoard(bcategoryVO);
 	}
 
 	@Override
 	public int setBoard(BcategoryVO bcategoryVO) {
-		return sqlSession.update("mappers.AdminDAO-mapper.setBoard", bcategoryVO);
+		// TODO Auto-generated method stub
+		return adminDAO.setBoard(bcategoryVO);
 	}
 
 	@Override
 	public List<HeadIdCategoryVO> getHead() {
 
-		return sqlSession.selectList("mappers.AdminDAO-mapper.getHead");
+		return adminDAO.getHead();
 	}
 
 	@Override
 	public int setHead(HeadIdCategoryVO headIdCategoryVO) {
 		// TODO Auto-generated method stub
-		return sqlSession.insert("mappers.AdminDAO-mapper.setHead", headIdCategoryVO);
+		return adminDAO.setHead(headIdCategoryVO);
 	}
 
 	@Override
 	public int delHead(String hidnum) {
 
-		return sqlSession.delete("mappers.AdminDAO-mapper.delHead", hidnum);
+		return adminDAO.delHead(hidnum);
 	}
-
 }

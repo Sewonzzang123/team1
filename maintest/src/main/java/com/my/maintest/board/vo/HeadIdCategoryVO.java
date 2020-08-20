@@ -4,10 +4,18 @@ import lombok.Data;
 
 @Data
 public class HeadIdCategoryVO {
-	long hidnum;  
-	long catnum; 
+	String hidnum;
+	String catnum;
 	String hidname;
 
-	
-		
+	public HeadIdCategoryVO() {
+	};
+
+	public HeadIdCategoryVO(String hidnum, String catnum, String hidname) {
+		super();
+		this.hidnum = hidnum;
+		this.catnum = catnum;
+		this.hidname = hidname;
+	}
+
 }

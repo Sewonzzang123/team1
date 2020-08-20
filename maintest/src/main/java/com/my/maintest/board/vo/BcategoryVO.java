@@ -13,4 +13,7 @@ public class BcategoryVO {
 	private String catnum; // CID NUMBER(10,0) No 1 분류코드
 	private String catname; // CNAME VARCHAR2(60 BYTE) No 2 분류명
 	private String btype;
+	private String bmemo;
+
+	HeadIdCategoryVO headIdCategory;
 }

@@ -1,11 +1,11 @@
-package com.my.maintest.admin.dao;
+package com.my.maintest.admin.svc;
 
 import java.util.List;
 
 import com.my.maintest.board.vo.BcategoryVO;
 import com.my.maintest.board.vo.HeadIdCategoryVO;
 
-public interface AdminDAO {
+public interface AdminSVC {
 
 	// 게시판 카테고리 읽기
 	public List<BcategoryVO> getCate();
