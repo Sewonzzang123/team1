@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<form target="_blank" method="post"  name="form">
 <div id="wrapper">
 	<div class="container additem tab_box_container">
 		<table>
@@ -27,8 +27,8 @@
 	
 		<div class="buttons">
 				<input type="button" id="additem" value="아이템 추가"/><span>|</span>
-				<button id="saveBtn">저장</button> <span>|</span> 
-					<a href="${contextPath }/itemlist/" id="saveBtn">리스트 불러오기</a> <span>|</span>
+				<input type="button" value="저장" id="saveBtn"/> <span>|</span> 
+				<input type="submit" value="리스트 불러오기" formaction="${contextPath }/itemlist/viewListForm"/> <span>|</span>
 					<a href="${contextPath }/itemlist/"> 인쇄</a>
 		</div>
 
