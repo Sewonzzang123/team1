@@ -8,4 +8,8 @@ public class ItemVO {
 	private long i_num;
 	private String i_name;
 	private String i_description;
+<<<<<<< Upstream, based on origin/master
 }
+=======
+}
+>>>>>>> 5a76fbb adasd

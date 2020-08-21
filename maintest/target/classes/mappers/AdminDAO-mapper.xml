@@ -45,4 +45,35 @@
 		hidnum=#{hidnum}
 	</delete>
 
+	<!-- 아이템 관리 -->
+	<select id="getIcate"
+		resultType="com.my.maintest.item.vo.ItemCategoryVO">
+		select * from i_category
+	</select>
+
+	<select id="getItem" resultType="com.my.maintest.item.vo.ItemVO">
+		select ca_num
+		as"itemCategoryVO.ca_num", i_num, i_name from item
+	</select>
+
+	<delete id="delIcate" parameterType="string">
+		delete i_category where
+		ca_num=#{ca_num}
+	</delete>
+
+
+	<delete id="delItem" parameterType="string">
+		delete item where
+		i_num=#{i_num}
+	</delete>
+
+	<insert id="setIcate" parameterType="string">
+		insert into i_category (ca_num, ca_name) values (ca_num_seq.nextval,
+		#{ca_name})
+	</insert>
+
+<!-- 	<update id="modifyIcate"></update>
+
+	<insert id="setItem"></insert> -->
+
 </mapper>
