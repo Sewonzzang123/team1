@@ -8,5 +8,4 @@ public class ItemVO {
 	private long i_num;
 	private String i_name;
 	private String i_description;
-	private long lnum;
 }

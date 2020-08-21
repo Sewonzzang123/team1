@@ -45,7 +45,6 @@ public class PackingListDAOImplXMLTEST {
 		ItemCategoryVO itemCategoryVO = new ItemCategoryVO();
 		itemCategoryVO.setCa_num(1);
 		itemVO.setItemCategoryVO(itemCategoryVO);
-		itemVO.setLnum(1);
 		itemVO.setI_name("test1");
 		logger.info(""+itemVO.toString());
 		packingListDAO.saveNewItem(itemVO);
