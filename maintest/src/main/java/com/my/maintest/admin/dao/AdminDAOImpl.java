@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import com.my.maintest.board.vo.BcategoryVO;
 import com.my.maintest.board.vo.HeadIdCategoryVO;
+import com.my.maintest.item.vo.ItemCategoryVO;
+import com.my.maintest.item.vo.ItemVO;
 
 @Repository
 public class AdminDAOImpl implements AdminDAO {
@@ -54,6 +56,36 @@ public class AdminDAOImpl implements AdminDAO {
 	public int delHead(String hidnum) {
 
 		return sqlSession.delete("mappers.AdminDAO-mapper.delHead", hidnum);
+	}
+
+	@Override
+	public List<ItemCategoryVO> getIcate() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("mappers.AdminDAO-mapper.getIcate");
+	}
+
+	@Override
+	public List<ItemVO> getItem() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("mappers.AdminDAO-mapper.getItem");
+	}
+
+	@Override
+	public int delIcate(String ca_num) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("mappers.AdminDAO-mapper.delIcate", ca_num);
+	}
+
+	@Override
+	public int delItem(String i_num) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("mappers.AdminDAO-mapper.delItem", i_num);
+	}
+
+	@Override
+	public int setIcate(String ca_name) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("mappers.AdminDAO-mapper.setIcate", ca_name);
 	}
 
 }

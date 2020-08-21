@@ -79,9 +79,37 @@ public class AdminDAOImplTest {
 	}
 
 	@Test
-//	@Disabled
+	@Disabled
 	public void delHead() {
 		String hidnum = "5";
 		adminDAO.delHead(hidnum);
+	}
+
+	@Test
+	@Disabled
+	public void getIcate() {
+		logger.info(adminDAO.getIcate().toString());
+	}
+
+	@Test
+//	@Disabled
+	public void getItem() {
+		logger.info(adminDAO.getItem().toString());
+	}
+
+	@Test
+@Disabled
+	public void delIcate() {
+		String ca_num = "5";
+		adminDAO.delIcate(ca_num);
+		logger.info("완료");
+	}
+
+	@Test
+@Disabled
+	public void delItem() {
+		String i_num = "72";
+		adminDAO.delIcate(i_num);
+		logger.info("완료");
 	}
 }

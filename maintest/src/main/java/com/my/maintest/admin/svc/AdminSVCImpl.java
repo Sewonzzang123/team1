@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import com.my.maintest.admin.dao.AdminDAO;
 import com.my.maintest.board.vo.BcategoryVO;
 import com.my.maintest.board.vo.HeadIdCategoryVO;
+import com.my.maintest.item.vo.ItemCategoryVO;
+import com.my.maintest.item.vo.ItemVO;
 
 @Repository
 public class AdminSVCImpl implements AdminSVC {
@@ -56,5 +58,35 @@ public class AdminSVCImpl implements AdminSVC {
 	public int delHead(String hidnum) {
 
 		return adminDAO.delHead(hidnum);
+	}
+
+	@Override
+	public List<ItemCategoryVO> getIcate() {
+		// TODO Auto-generated method stub
+		return adminDAO.getIcate();
+	}
+
+	@Override
+	public List<ItemVO> getItem() {
+		// TODO Auto-generated method stub
+		return adminDAO.getItem();
+	}
+
+	@Override
+	public int delIcate(String ca_num) {
+		// TODO Auto-generated method stub
+		return adminDAO.delIcate(ca_num);
+	}
+
+	@Override
+	public int delItem(String i_num) {
+		// TODO Auto-generated method stub
+		return adminDAO.delItem(i_num);
+	}
+
+	@Override
+	public int setIcate(String ca_name) {
+		// TODO Auto-generated method stub
+		return adminDAO.setIcate(ca_name);
 	}
 }

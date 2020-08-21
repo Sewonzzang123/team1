@@ -1,9 +1,11 @@
 package com.my.maintest.admin.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.apache.tomcat.util.json.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -92,6 +94,43 @@ public class AdminController {
 
 		return "admin/admin_board";
 	}
+
+	// 아이템 관리 호출
+	@RequestMapping("/item")
+	public String get_admin_item(Model model) {
+
+//		logger.info(adminSVC.getItem().toString());
+		model.addAttribute("itemCategoryVO", adminSVC.getIcate());
+		model.addAttribute("item", adminSVC.getItem());
+
+		return "admin/admin_item";
+	}
+
+//아이템 설정 저장()
+	@SuppressWarnings("unchecked")
+	@PostMapping(value = "/setItem", produces = "application/json")
+	@ResponseBody
+	public String setItem(@RequestBody Map<String, Object> param) {
+		logger.info("JSON() 호출됨!!");
+
+		logger.info(param.toString());
+//		List<Object> text = (List<Object>) param.get("icate_data");
+//		logger.info(text.get(0).toString());
+		for (String del_icate : (List<String>) param.get("del_icate_list")) {
+			adminSVC.delIcate(del_icate);
+		}
+
+		for (String item_del : (List<String>) param.get("item_del_list")) {//
+			adminSVC.delItem(item_del);
+		}
+
+//		logger.info(String.valueOf(icate_dataVO.get(0).getItem_list()));
+
+//		for (Icate_dataVO icate_dataVO : (List<Icate_dataVO>) param.get("icate_data")) {
+//			logger.info(icate_dataVO.getCa_num());
+//		}
+		return "에이잭스 완료";
+	}
 //
 //	// 게시판 생성
 //	@RequestMapping(value = "/createBoard", method = RequestMethod.POST)
@@ -110,4 +149,5 @@ public class AdminController {
 //		adminDAO.setBoard(bcategoryVO);
 //		return "redirect:/admin/board";
 //	}
+
 }

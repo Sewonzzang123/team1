@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.my.maintest.board.vo.BcategoryVO;
 import com.my.maintest.board.vo.HeadIdCategoryVO;
+import com.my.maintest.item.vo.ItemCategoryVO;
+import com.my.maintest.item.vo.ItemVO;
 
 public interface AdminDAO {
 
@@ -27,4 +29,19 @@ public interface AdminDAO {
 
 	// 말머리 삭제
 	public int delHead(String hidnum);
+
+	// 아이템 카테고리 읽기
+	public List<ItemCategoryVO> getIcate();
+
+	// 아이템 가져오기
+	public List<ItemVO> getItem();
+
+	// 아이템 카테고리 삭제
+	public int delIcate(String ca_num);
+
+	// 아이템 삭제
+	public int delItem(String i_num);
+	
+	//카테고리 생성
+	public int setIcate(String ca_name);
 }
