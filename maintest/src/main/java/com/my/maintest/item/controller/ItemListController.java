@@ -57,10 +57,15 @@ public class ItemListController {
 	@ResponseBody
 	public ResponseEntity<Map> lname(@RequestBody HashMap<String, String> map) {
 		ResponseEntity<Map> res = null;
+		
 		int result = 0;
-		int lnum= 0;
-		result = itemListSVC.listNameInsert(map.get("ucode"), map.get("lname"));
-		lnum = itemListSVC.getNum(map.get("ucode"), map.get("lname"));
+		int lnum= 0; 
+		
+		String ucode = map.get("ucode");
+		String lname = map.get("lname");
+		
+		result = itemListSVC.listNameInsert(ucode, lname);
+		lnum = itemListSVC.getNum(ucode, lname);
 		map.put("lnum", String.valueOf(lnum));
 		Map<String, Object> resultMap = new HashMap<>();
 		
@@ -74,14 +79,14 @@ public class ItemListController {
 		return res;		
 	}
 
-	
+	//세션추가
 	@RequestMapping(value="/saveListForm", method=RequestMethod.POST)
 	public String inum(
 			@RequestParam(value="inum" , required = false) List<String> inum,
 			@RequestParam(value="iname", required = false) List<String> iname,
 			@RequestParam(value="icount", required = false) List<String> icount,	
 			@RequestParam(value="icategory", required = false) List<String> icategory,
-			@RequestParam(value="ichecked", required = false) List<String> ichecked,	
+			@RequestParam(value="ichecked", required = false) List<String> checked,	
 			Model model) {
 		
 
@@ -93,13 +98,9 @@ public class ItemListController {
 			itemMap.put("iname", iname.get(i));
 			itemMap.put("icategory", icategory.get(i));
 			itemMap.put("icount", icount.get(i));
-			itemMap.put("ichecked", ichecked.get(i));
+			itemMap.put("checked", checked.get(i));
 			listing.add(i,itemMap);
-		}
-		
-		for(int j=0; j<listing.size(); j++) {
-			logger.info(""+listing.get(j));
-		}
+			}		
 		}
 		String ucode = "0";
 		List<ListVO> listVO = null;

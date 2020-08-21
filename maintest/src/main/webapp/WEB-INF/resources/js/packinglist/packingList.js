@@ -117,7 +117,7 @@ function checkItem(e){
 			
 					let addListItem = document.createElement('li');
 					//여기에 체크박스, 숫자, 마이너스 버튼 생성해야됨
-					let a = '<div><input name="ichecked" value="false" type="checkbox" onClick="check_f(this)">'+itemNameTag+'<input type="text" name="icount" value="1" max="100"/><div class="edit_number"><input type="button" class="plusBtn" onClick="plus(this)">증가</input><input type="button"  class="minusBtn" onClick="minus(this)">감소</input></div><a href="#"><i class="fas fa-minus" onClick="deletelist_f(this)">';
+					let a = '<div><input name="checked" value="false" type="checkbox" onClick="check_f(this)">'+itemNameTag+'<input type="text" name="icount" value="1" max="100"/><div class="edit_number"><input type="button" class="plusBtn" onClick="plus(this)">증가</input><input type="button"  class="minusBtn" onClick="minus(this)">감소</input></div><a href="#"><i class="fas fa-minus" onClick="deletelist_f(this)">';
 					a += '</i></a></div><input type="hidden" name="icategory" value="'+idTag+'"/>';
 					a += '<input type="hidden" name="inum" value="'+itemNum+'"/><input type="hidden" name="iname" value="'+itemName+'"/><input type="hidden" name="ichecked" value="false"/>';
 					addListItem.innerHTML =a;
@@ -171,7 +171,7 @@ function checkItem(e){
 	}
 	
 	function saveBtn_f(){
-		const option 	= "width=480,height=540,location=no,resizable=no";
+		const option 	= "width=465,height=540,location=no,resizable=no";
 		let gsWin=window.open("about:blank","winName",option);
 		let frm = document.form;
 		frm.action="http://localhost:9080/pfpkg/itemlist/saveListForm";
