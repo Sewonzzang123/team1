@@ -13,10 +13,8 @@
 	window.addEventListener("load", init);
 	function init() {
 		const listBtn = document.getElementById("listBtn");
-		const saveBtn = document.getElementById("saveBtn");
 		const cancelBtn = document.getElementById("cancelBtn");
 		listBtn.addEventListener("click", listBtn_f);
-		saveBtn.addEventListener("click", saveBtn_f);
 		cancelBtn.addEventListener("click", cancelBtn_f);
 	}
 	function listBtn_f(e) {
@@ -54,7 +52,7 @@
 					const lname = jsonObj.lname;
 					let newlist = document.createElement('p');
 					let inputTag = "<input type='radio' id='lnum_"+lnum+"'";
-            	inputTag += " name='listname' value='lnum"+lnum+"' /> <label";
+            	inputTag += " name='lnum' value='"+lnum+"' /> <label";
             	inputTag +=	" for='lnum_"+lnum+"'>"
 							+ lname + "</label>";
 					newlist.innerHTML = inputTag;
@@ -100,10 +98,6 @@
 
 	}
 
-	function saveBtn_f() {
-		console.log('saveBtn_f');
-	}
-
 	function cancelBtn_f() {
 		window.close();
 	}
@@ -112,7 +106,7 @@
 </head>
 <body>
 	<div id="contentsArea">
-		<form name="folderList" action="${contextPath }/packingList/save" method="POST">
+		<form name="folderList" method="post" action="${contextPath }/packingList/saveList">
 			<div class="pop_wrapper"
 				style="width: 440px; height: 530px; padding: 0px;">
 				<div class="pop_header">
@@ -124,8 +118,8 @@
 					<div class="estimate_list_area">
 						<c:forEach items="#{list }" var="listVO">
 							<p>
-								<input type="radio" id="lnum_${listVO.lnum }" name="listname"
-									value="lnum${listVO.lnum }"/> 
+								<input type="radio" id="lnum_${listVO.lnum }" name="lnum"
+									value="${listVO.lnum }"/> 
 								<label for="lnum_${listVO.lnum }">${listVO.lname }</label>
 							</p>
 						</c:forEach>
@@ -149,7 +143,7 @@
 						</ul>
 					</div>
 					<div class="estimate_button_area">
-						<button class="btn_pop_save" type="button" id="saveBtn">저장</button>
+						<button class="btn_pop_save" type="submit">저장</button>
 						<input class="btn_pop_cancel" type="button" id="cancelBtn" value="취소"/>
 					</div>
 				</div>
@@ -162,7 +156,7 @@
 					<input type="hidden" name="icount" value="${item.icount }" />
 					<input type="hidden" name="inum" value="${item.inum }" />
 					<input type="hidden" name="icategory" value="${item.icategory }" />
-					<input type="hidden" name="ichecked" value="${item.ichecked }" />
+					<input type="hidden" name="checked" value="${item.checked }" />
 
 				</c:forEach>
 			</c:if>

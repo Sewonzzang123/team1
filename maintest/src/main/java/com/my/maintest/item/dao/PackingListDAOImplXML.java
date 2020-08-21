@@ -23,6 +23,10 @@ public class PackingListDAOImplXML implements PackingListDAO {
 		return sqlSession.delete("mappers.ItemListDAO-mapper.deleteListing", lnum);
 	}
 	@Override
+	public int deleteNewItem(long lnum) {
+		return sqlSession.delete("mappers.ItemListDAO-mapper.deleteNewItem", lnum);
+	}
+	@Override
 	public int countListing(long lnum) {
 		return sqlSession.selectOne("mappers.ItemListDAO-mapper.countListing", lnum);
 	}
@@ -35,9 +39,15 @@ public class PackingListDAOImplXML implements PackingListDAO {
 	
 	//listing table에 item넣기
 	@Override
+	public String getListname(long lnum) {		
+		return sqlSession.selectOne("mappers.ItemListDAO-mapper.getListname", lnum);
+	}
+	@Override
 	public int insertListing(ListingVO listingVO) {		
 		return sqlSession.insert("mappers.ItemListDAO-mapper.insertListing", listingVO);
 	}
+
+
 
 
 

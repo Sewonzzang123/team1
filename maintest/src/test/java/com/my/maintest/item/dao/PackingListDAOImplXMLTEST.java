@@ -56,8 +56,11 @@ public class PackingListDAOImplXMLTEST {
 //	@Disabled
 	void insertListing() {
 		ListingVO listingVO = new ListingVO();
-//		listingVO.setI_num(i_num);
-//		listingVO.setChecked(checked);
+		listingVO.setI_num(1000);
+		listingVO.setChecked("false");
+		listingVO.setIcount(3);
+		listingVO.setLname("ㄹㅇㄹㄴㅇㄹㄴㄹㅇ");
+		listingVO.setLnum(1);
 		
 		packingListDAO.insertListing(listingVO);
 	}
