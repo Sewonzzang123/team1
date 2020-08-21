@@ -25,8 +25,8 @@
            function searchBtn_f(){
             const searchType = document.getElementById("searchType").value;
             const searchKeyword = document.getElementById("searchKeyword").value;
-            const returnPage = document.getElementById("returnPage").value;
-            const url = `/pfpkg/board/search/${returnPage}/${searchType}/${searchKeyword}`
+           // const returnPage = document.getElementById("returnPage").value;
+            const url = `/pfpkg/board/boardListFrm/1/${searchType}/${searchKeyword}`
             window.location.href = url;
         }
   

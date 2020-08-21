@@ -1,5 +1,6 @@
 package com.my.maintest.board.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -18,17 +19,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.my.maintest.board.svc.BoardSVC;
+import com.my.maintest.board.svc.PagingSVC;
 import com.my.maintest.board.vo.BcategoryVO;
 import com.my.maintest.board.vo.BoardVO;
 //import com.my.maintest.board.vo.TestVO;
 import com.my.maintest.board.vo.HeadIdCategoryVO;
 import com.my.maintest.board.vo.TemporaryVO;
-import com.my.maintest.common.paging.PagingComponent;
+import com.my.maintest.common.paging.SearchCriteria;
 
 @Controller
 @RequestMapping("/board")
@@ -38,7 +41,15 @@ public class BoardController {
 
 	@Inject
 	BoardSVC boardSVC;
+	
+	@Inject 
+	PagingSVC pagingSVC;
 
+	@GetMapping("/1")
+	public int  test() {
+		return 11111;
+	}
+	
 	// 게시판 카테고리 조회
 	@ModelAttribute("bcategory")
 	public List<BcategoryVO> getBcategory() {
@@ -48,12 +59,37 @@ public class BoardController {
 	}
 
 	// 게시판 말머리 조회
+	@GetMapping(	value="/headid", produces="application/json")
+	@ResponseBody
+	public		ResponseEntity<Map<String,Object>>  getHeadIdCategory(
+		@RequestParam("catnum") int catnum
+			) {
+		
+		
+		System.out.println(catnum);
+		ResponseEntity<Map<String,Object>> res = null;
+			
+		List<HeadIdCategoryVO> list = boardSVC.selectHeadIdCategory(catnum);
+		Map<String, Object> map = new HashMap<>();
+		
+		
+		if(list != null & list.size()>0) {	
+			
+			map.put("result","OK");
+		map.put("hidcategory",list );
+			
+			res = new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+			
+			}else {				
+				map.put("result", "NG");
 
-	@ModelAttribute("hidcategory")
-	public List<HeadIdCategoryVO> getHeadIdCategory() {
-		List<HeadIdCategoryVO> list = boardSVC.selectHeadIdCategory();
-		return list;
+				res = new ResponseEntity<Map<String,Object>>(map, HttpStatus.BAD_REQUEST);
+		}
+		
+		
+		return res;
 	}
+	
 
 	// 임시 로그인 + 리스트 페이지
 	@GetMapping("")
@@ -95,21 +131,31 @@ public class BoardController {
 	@GetMapping({
 		 "/boardListFrm", 
 			"/boardListFrm/{reqPage}", 
-			"/search/{reqPage}/{searchType}/{searchKeyword}"})
-	public String toSearch(@PathVariable(value = "reqPage", required = false) Optional<Integer> reqPage,
-			@PathVariable(value = "searchType", required = false) String searchType,
+			"/boardListFrm/{reqPage}/{searchType}/{searchKeyword}"})
+	public String toSearch(@PathVariable(value = "reqPage", required = false) Optional<Integer> reqPage,			
+			@PathVariable(value="searchType", required =false) String searchType,
 			@PathVariable(value = "searchKeyword", required = false) String searchKeyword,
+			@ModelAttribute SearchCriteria searchCriteria,
 			Model model) {
-
-		model.addAttribute("articles", boardSVC.selectArticlesWithKey(reqPage.orElse(1), searchType, searchKeyword));
-		model.addAttribute("pagingComponent", boardSVC.getPagingComponent(reqPage.orElse(1),searchType,searchKeyword ));
-
+		
+		model.addAttribute("pagingComponent", pagingSVC.getPagingComponent(reqPage.orElse(1),searchType,searchKeyword));
+		model.addAttribute("articles", boardSVC.selectArticlesWithKey(reqPage.orElse(1), searchType,searchKeyword));
+		
+		
+		
+		System.out.println("board 컨트롤러 던져줄 값들 req, 써치타입 , 키워드 ===" +reqPage + " +" + searchType + " " + searchKeyword);
+		System.out.println("board 컨트롤러 페이징 설정 ===" + pagingSVC.getPagingComponent(reqPage.orElse(1),searchType,searchKeyword));
+		System.out.println("board 컨트롤러 읽어오는 데이터 개수===size" + boardSVC.selectArticlesWithKey(reqPage.orElse(1), searchType,searchKeyword).size());
+		
+		
+		
 		return "/board/boardListFrm";
 	}
 
 	// 게시글 작성 화면
 	@GetMapping("/boardWriteFrm/{returnPage}")
-	public String toboardWriteFrm(@ModelAttribute BoardVO boardVO, @ModelAttribute("returnPage") String returnPage) {
+	public String toboardWriteFrm(@ModelAttribute BoardVO boardVO,
+			@ModelAttribute("returnPage") String returnPage) {
 
 		return "/board/boardWriteFrm";
 	}
@@ -133,8 +179,13 @@ public class BoardController {
 	}
 
 	// 게시글열람
-	@GetMapping("/read/{bnum}/{returnPage}") // returnPage : 열람후 리스트로 이동시 돌아갈 reqPage
-	public String toRead(@PathVariable("bnum") Long bnum, @ModelAttribute("returnPage") String returnPage, Model model) {
+	@GetMapping({"/read/{bnum}/{returnPage}",
+			"/read/{bnum}/{returnPage}/{searchType}/{searchKeyword}"
+	}) // returnPage : 열람후 리스트로 이동시 돌아갈 reqPage
+	public String toRead(@PathVariable("bnum") Long bnum, 
+			@ModelAttribute("returnPage") String returnPage, 
+			@ModelAttribute SearchCriteria searchCriteria,
+			Model model) {
 
 		// svc는 map 타입을 반환값으로 가짐
 		Map<String, Object> map = boardSVC.selectArticle(bnum);

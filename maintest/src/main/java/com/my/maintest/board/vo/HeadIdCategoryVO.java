@@ -17,22 +17,25 @@ public class HeadIdCategoryVO {
 		this.hidnum = hidnum;
 	}
 
-	/*
-	 * public long getCatnum() { return catnum; } public void setCatnum(long catnum)
-	 * { this.catnum = catnum; }
-	 */
 	public String getHidname() {
 		return hidname;
 	}
 	public void setHidname(String hidname) {
 		this.hidname = hidname;
 	}
+	public long getCatnum() {
+		return catnum;
+	}
+	public void setCatnum(long catnum) {
+		this.catnum = catnum;
+	}
 	@Override
 	public String toString() {
-		return "HeadIdCategoryVO [hidnum=" + hidnum + ", catnum=" +
-	//catnum +
-	", hidname=" + hidname + "]";
+		return "HeadIdCategoryVO [hidnum=" + hidnum + ", catnum=" + catnum + ", hidname=" + hidname + "]";
 	}
+
+	
+	
 
 	
 		

@@ -7,11 +7,12 @@
 select catnum, catname, btype from bcategory
 </select>
 <!-- 게시판 말머리 조회  -->
-<select id="selectHeadIdCategory" resultType="com.my.maintest.board.vo.HeadIdCategoryVO">
+<select id="selectHeadIdCategory" parameterType="long" resultType="com.my.maintest.board.vo.HeadIdCategoryVO">
 
-select hidnum, hidname
+select t1.hidnum, t1.hidname
 from headid t1, bcategory t2
-where t1.catnum = t2.catnum 
+where t1.catnum = t2.catnum and
+ t1.catnum = #{catnum} 
 
 
 </select>
@@ -137,25 +138,24 @@ t1.bgroup,
 t1.bstep,
 t1.bIndent
 from board t1, bcategory t2, member t3, headid t4
-where t1.bcategory = t2.catnum and t1.ucode = t3.ucode and t1.hidcategory = t4.hidnum) 
-where dbrownum between #{recFrom} and #{recTo}
+where t1.bcategory = t2.catnum and t1.ucode = t3.ucode and t1.hidcategory = t4.hidnum
 
 <if test="searchType != null">
 and 
-</if>
+
 
 <choose>
 <!--전체  -->
 <when test="searchType == 'A'.toString() ">
-btitle  like '%'||#{searchKeyword}||'%' or
+(btitle  like '%'||#{searchKeyword}||'%' or
 bcontent like '%'||#{searchKeyword}||'%' or
-nickname like '%'||#{searchKeyword}||'%'
+nickname like '%'||#{searchKeyword}||'%')
 </when>
 
 <!--제목+ 내용  -->
 <when test="searchType == 'TC'.toString() ">
-btitle  like '%'||#{searchKeyword}||'%' or
-bcontent like '%'||#{searchKeyword}||'%'
+(btitle  like '%'||#{searchKeyword}||'%' or
+bcontent like '%'||#{searchKeyword}||'%')
 </when>
 
 
@@ -174,6 +174,11 @@ bcontent like '%'||#{searchKeyword}||'%'
 nickname like '%'||#{searchKeyword}||'%'
 </when>
 </choose>
+</if>
+) 
+where dbrownum between #{recFrom} and #{recTo}
+order by dbrownum asc
+
 </select>
 
 
@@ -348,42 +353,63 @@ where bnum = #{bnum}
 <!-- 페이징  -->
 <!-- 레코드 총수량 구하기  -->
 <select id="selectRecQnty"  parameterType="map"  resultType="int">
-select count(*) from board 
+select count(*) 
 
+from  
+
+(select row_number() over(order by bgroup desc, bstep asc) as dbrownum, 
+t1.bnum, 
+t2.catname,
+t2.catnum,
+ t4.hidname, 
+ t4.hidnum,
+ t3.nickname, 
+ t1.ucode,
+ t1.bhits,
+ t1.btitle, 
+ t1.bcontent, 
+t1.bcdate,
+t1.budate,
+t1.bgroup,
+t1.bstep,
+t1.bIndent
+from board t1, bcategory t2, member t3, headid t4
+where t1.bcategory = t2.catnum and t1.ucode = t3.ucode and t1.hidcategory = t4.hidnum  
 <if test="searchType != null">
-where  
-</if>
+and  
+
 <choose>
 <!--전체  -->
 <when test="searchType == 'A'.toString() ">
-btitle  like '%'||#{searchKeyword}||'%' or
-bcontent like '%'||#{searchKeyword}||'%' or
-nickname like '%'||#{searchKeyword}||'%'
+(t1.btitle  like '%'||#{searchKeyword}||'%' or
+t1.bcontent like '%'||#{searchKeyword}||'%' or
+t3.nickname like '%'||#{searchKeyword}||'%')
 </when>
 
 <!--제목+ 내용  -->
 <when test="searchType == 'TC'.toString() ">
-btitle  like '%'||#{searchKeyword}||'%' or
-bcontent like '%'||#{searchKeyword}||'%'
+(t1.btitle  like '%'||#{searchKeyword}||'%' or
+t1.bcontent like '%'||#{searchKeyword}||'%')
 </when>
 
 
 <!--제목  -->
 <when test="searchType == 'T'.toString() ">
-btitle  like '%'||#{searchKeyword}||'%'
+t1.btitle  like '%'||#{searchKeyword}||'%' 
 </when>
 
 <!--내용  -->
 <when test="searchType == 'C'.toString() ">
-bcontent like '%'||#{searchKeyword}||'%'
+t1.bcontent like '%'||#{searchKeyword}||'%' 
 </when>
 
 <!--작성자  -->
 <when test="searchType == 'N'.toString() ">
-nickname like '%'||#{searchKeyword}||'%'
+t3.nickname like '%'||#{searchKeyword}||'%'
 </when>
 </choose>
-
+</if>
+)
 </select>
 
 	<!-- //글 검색	 -->

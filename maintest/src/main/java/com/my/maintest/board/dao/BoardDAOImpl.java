@@ -30,8 +30,8 @@ public class BoardDAOImpl implements BoardDAO {
 	
 	//게시판 말머리 조회
 	@Override
-	public List<HeadIdCategoryVO> selectHeadIdCategory() {		
-		return sqlSession.selectList("mappers.BoardDAO-mapper.selectHeadIdCategory");
+	public List<HeadIdCategoryVO> selectHeadIdCategory(long catnum) {		
+		return sqlSession.selectList("mappers.BoardDAO-mapper.selectHeadIdCategory", catnum);
 	}
 
 //전체 게시글 조회 (default)
@@ -52,15 +52,17 @@ public class BoardDAOImpl implements BoardDAO {
 		return sqlSession.selectList("mappers.BoardDAO-mapper.selectArticles", map);
 	}
 	//전체게시글 조회 + 페이징 + 검색어 (검색타입/검색어)
-
-
 	@Override
 	public List<BoardVO> selectArticlesWithKey( int recFrom,int recTo,String searchType, String searchKeyword) {
 		Map<String,Object> map = new HashMap<String, Object>();		
+		
 		map.put("recFrom", recFrom);
 		map.put("recTo", recTo);
 		map.put("searchType", searchType);
-		map.put("searchKeyword", searchKeyword);			
+		map.put("searchKeyword", searchKeyword);
+		System.out.println("board DAO SLQ에 던져줄 인수들  ===" + map.toString() );	
+		System.out.println("board DAO 읽어오는 데이터 개수 ===" + sqlSession.selectList("mappers.BoardDAO-mapper.selectArticlesWithKey", map ).size() );	
+	
 		return sqlSession.selectList("mappers.BoardDAO-mapper.selectArticlesWithKey", map ) ;
 	}
 
@@ -144,15 +146,7 @@ public int updateBhits(long bnum) {
 			return sqlSession.update("mappers.BoardDAO-mapper.updateBstep", map );
 		}
 
-		//페이징
-		//레코드 총 수량 구하기 
-		@Override
-		public int selectRecQnty(String searchType, String searchKeyword) {		
-			Map<String, Object> map = new HashMap<>();
-			map.put("searchType", searchType);
-			map.put("searchKeyword", searchKeyword);
-			return sqlSession.selectOne("mappers.BoardDAO-mapper.selectRecQnty", map);
-		}
+		
 
 		
 

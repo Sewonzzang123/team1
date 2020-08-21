@@ -207,17 +207,28 @@ public class BoardDAOImplTest {
 	void toSearchKeyword() {
 		
 		int recNumPerPage	= 10;	
-		int reqPage = 3 ;
+		int reqPage = 1 ;
 	RecordCriteria recordCriteria = new RecordCriteria(recNumPerPage, reqPage);
 		int pagingNumsPerPage= 10;
 	PageCriteria pageCriteria = new PageCriteria(reqPage, recordCriteria.getTotalRec(), pagingNumsPerPage);
-	String searchType = "N";	
-	String searchKeyword ="관리자";
+	String searchType = "T";	
+	String searchKeyword ="179";
 	boardDAO.selectArticlesWithKey(recordCriteria.getRecFrom(),recordCriteria.getRecTo(), searchType, searchKeyword);
 		
 	}
 	
 	
-	
-	
+		@Test
+	@DisplayName("말머리 카테고리 조회 based on bcategory ")
+		void selectHId() {
+			
+			long catnum = 2;
+			
+			boardDAO.selectHeadIdCategory(catnum);
+			
+			
+		}
+		
+		
+		
 }

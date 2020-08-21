@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>게시글 열람</title>
 <link rel="stylesheet" href="${contextPath}/css/board/boardReadFrm.css" >
-<script  defer type="text/javascript" src="${contextPath }/js/board/boardReadFrm.js?ver=0" ></script>
+<script  defer type="text/javascript" src="${contextPath }/js/board/boardReadFrm.js" ></script>
 </head>
 <body>
 
@@ -30,7 +30,8 @@
 						action="${contextPath}/board/save">											
 									<input type="hidden" id="bnum" name="bnum" value="${boardVO.bnum }"/>
 									<input type="hidden" id="returnPage" name="returnPage" value="${returnPage}"/>
-									
+									<input type="hidden" id="searchType" name ="searchType" value="${requestScope.searchCriteria.searchType }"/>
+									<input type="hidden" id="searchKeyword" name ="searchKeyword" value="${requestScope.searchCriteria.searchKeyword }"/>
 						<ul>						
 							<li class="selectGrp">													
 							<select name="bcategory.catnum" 
@@ -61,7 +62,13 @@
 							
 							<li><textarea id="bcontent" name="bcontent" cols="30" rows="5" placeholder="내용 입력"  readonly  >${boardVO.bcontent }</textarea></li>
 							<li>
+							<c:if test="${empty requestScope.files }">
 							
+							<label for="">첨부목록</label>	
+							<div>
+									<p> 첨부파일 없음</p>
+								</div>
+							</c:if>
 							<c:if test="${requestScope.files != null}">
 							<label for="">첨부목록</label>							
 							<div class="attachments" id="attatchments">						

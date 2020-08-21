@@ -19,6 +19,7 @@ import com.my.maintest.board.vo.HeadIdCategoryVO;
 import com.my.maintest.common.paging.PageCriteria;
 import com.my.maintest.common.paging.PagingComponent;
 import com.my.maintest.common.paging.RecordCriteria;
+import com.my.maintest.common.paging.SearchCriteria;
 
 @Service
 public class BoardSVCImpl implements BoardSVC {
@@ -34,9 +35,9 @@ public class BoardSVCImpl implements BoardSVC {
 	}
 	//게시판 말머리 조회
 	@Override
-	public List<HeadIdCategoryVO> selectHeadIdCategory() {
+	public List<HeadIdCategoryVO> selectHeadIdCategory(int catnum) {
 		
-		return  boardDAO.selectHeadIdCategory();
+		return  boardDAO.selectHeadIdCategory((long)catnum);
 	}
 	
 //전체글 조회 (default)
@@ -50,23 +51,30 @@ public class BoardSVCImpl implements BoardSVC {
 	
 	
 	@Inject 
-	PagingComponent pagingComponent;
+	PagingSVC pagingSVC;
 	
 	
 	//전체글 조회 + 페이징
 	@Override
 	public List<BoardVO> selectArticles(int reqPage, String searchType, String searchKeyword) {		
-		pagingComponent = getPagingComponent(reqPage,searchType,searchKeyword);		
-		System.out.println("board SVC ===pagingComponent" + pagingComponent.toString());
+		PagingComponent	pagingComponent = pagingSVC.getPagingComponent(reqPage,searchType,searchKeyword);		
+		
+		System.out.println("board SVC 사용안하는 메소드 호출");
+		
 	return boardDAO.selectArticles(pagingComponent.getRecordCriteria().getRecFrom(), pagingComponent.getRecordCriteria().getRecTo());
 	}
+	
+	
 	
 	//전체게시글 조회 + 페이징 + 검색어 (검색타입/검색어)
 	@Override
 	public List<BoardVO> selectArticlesWithKey(int reqPage, String searchType, String searchKeyword) {
-		pagingComponent = getPagingComponent(reqPage,searchType,searchKeyword);		
-		System.out.println("board SVC ===pagingComponent" + pagingComponent.toString());
-	 return boardDAO.selectArticlesWithKey(pagingComponent.getRecordCriteria().getRecFrom(), pagingComponent.getRecordCriteria().getRecTo(), searchType, searchKeyword);
+		PagingComponent pagingComponent = pagingSVC.getPagingComponent(reqPage,searchType,searchKeyword);		
+		
+		System.out.println("board SVC  recFrom , recTO SQL범위 설정=== " + pagingComponent.toString());
+		System.out.println("board SVC DAO단에서 읽어오는 데이터 개수" + boardDAO.selectArticlesWithKey(pagingComponent.getRecordCriteria().getRecFrom(), pagingComponent.getRecordCriteria().getRecTo(), searchType, searchKeyword).size());
+	 
+		return boardDAO.selectArticlesWithKey(pagingComponent.getRecordCriteria().getRecFrom(), pagingComponent.getRecordCriteria().getRecTo(), searchType, searchKeyword);
 		
 	}
 	
@@ -191,41 +199,6 @@ public void insertFiles(List<MultipartFile> files, long bnum) {
 	}
 	
 	
-	//페이징 설정
-	@Override
-	public PagingComponent getPagingComponent(int reqPage,String searchType, String searchKeyword) {
-		PagingComponent pagingComponent = new PagingComponent();
-		
-		RecordCriteria recordCriteria = getRecCriteria(reqPage,searchType,searchKeyword);
-		PageCriteria pageCriteria = getPageCriteria(reqPage, recordCriteria);
-		
-		pagingComponent.setRecordCriteria(recordCriteria);
-		pagingComponent.setPageCriteria(pageCriteria);	
-		
-		System.out.println(recordCriteria.toString());
-		System.out.println(pageCriteria.toString());
-		System.out.println(pagingComponent.toString());
-		
-		return pagingComponent;
-	}
-
-	@Override
-	public RecordCriteria getRecCriteria(int reqPage,String searchType, String searchKeyword ) {
-	//한페이지에 보여줄 게시글 수 
-	int recNumPerPage = 10; 
-	RecordCriteria recordCriteria = new RecordCriteria(recNumPerPage, reqPage);
-	//게시글 총수량 
-	recordCriteria.setTotalRec(boardDAO.selectRecQnty(searchType,searchKeyword));
-	return recordCriteria;
-	}
-	
-	@Override
-	public PageCriteria getPageCriteria(int reqPage, RecordCriteria recordCriteria) {
-		//한페이지에 보여줄 페이징넘버의 수 : 이전페이지 {1,2,3,....,10} 다음페이지
-		int pagingNumsPerPage = 10;					
-		PageCriteria pageCriteria = new PageCriteria(reqPage, recordCriteria.getTotalRec(), pagingNumsPerPage);
-		return pageCriteria;
-	}
 	
 
 

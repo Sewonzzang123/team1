@@ -17,7 +17,7 @@ public interface BoardSVC {
 	//게시판 카테고리 조회 
 	List<BcategoryVO> selectBcategory();
 	//게시판 말머리 조회
-	List<HeadIdCategoryVO> selectHeadIdCategory();
+	List<HeadIdCategoryVO> selectHeadIdCategory(int catnum);
 	
 	// 전체 게시글 조회 (default)
 	List<BoardVO> selectArticles() ;	
@@ -34,10 +34,6 @@ public interface BoardSVC {
 	// 게시글 열람
 	Map<String, Object> selectArticle(long bnum);	
 	
-	
-	
-	
-	
 	//게시글 등록
 	int insertArticle(BoardVO boardVO);		
 	//첨부파일 등록
@@ -52,14 +48,7 @@ public interface BoardSVC {
 	//게시글 답글 작성
 	int insertRepliedArticle(BoardVO boardVO);
 	
-	
-	//페이징
 
-	PageCriteria getPageCriteria(int reqPage, RecordCriteria recordCriteria);	
-	RecordCriteria getRecCriteria(int reqPage, String searchType, String searchKeyword);
-	PagingComponent getPagingComponent(int reqPage, String searchType, String searchKeyword);
-
-	
 	
 
 	

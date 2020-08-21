@@ -8,9 +8,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>게시글 작성</title>
-<link rel="stylesheet" href="${contextPath}/css/board/boardWriteFrm.css">
+<link rel="stylesheet" href="${contextPath}/css/board/boardWriteFrm.css?ver=0">
 <script defer type="text/javascript"
-	src="${contextPath }/js/board/boardWriteFrm.js"></script>
+	src="${contextPath }/js/board/boardWriteFrm.js?ver=0"></script>
 </head>
 <body>
 
@@ -52,8 +52,16 @@
 							<li><label for="bcontent">내용</label> <textarea name="bcontent" rows="10" placeholder="내용 입력"></textarea></li>
 							<li>
 							
-							<li><label for="files">첨부</label> <input type="file" id="files" name="files" multiple="multiple"/></li>
+							<li>						
+		<div class="files" id="filesDropArea">	
 							
+							<button type="button" >파일첨부</button>						
+							
+							</div>
+
+							<input type="file" id="files" name="files" multiple="multiple" />							
+							
+							</li>							
 							<li>
 								<div class="btnGrp">					
 							<button id="tmpWriteBtn" type="button">임시저장</button>

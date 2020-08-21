@@ -12,7 +12,7 @@ public interface BoardDAO {
 	//게시판 카테고리 조회 
 	List<BcategoryVO> selectBcategory();
 	//게시판 말머리 조회
-	List<HeadIdCategoryVO> selectHeadIdCategory();
+	List<HeadIdCategoryVO> selectHeadIdCategory(long catnum);
 	
 	// 전체 게시글 조회 (default)
 	List<BoardVO> selectArticles() ;
@@ -61,10 +61,6 @@ public interface BoardDAO {
 	//게시글 bstep +1 처리 (답글 등록 순위)  높을수록 오래된 답글
 	int updateBstep(long bgroup, long bstep);
 		
-	
-	//페이징
-	//레코드 총 수량 구하기 
-	int selectRecQnty(String searchType, String searchKeyword);
 	
 	
 	//글 검색

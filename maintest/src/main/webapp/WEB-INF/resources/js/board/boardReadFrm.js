@@ -4,10 +4,10 @@
         const peplyBtn = document.getElementById("peplyBtn");
          const modifyBtn = document.getElementById("modifyBtn");
         const listBtn = document.getElementById("listBtn");
-      	peplyBtn.addEventListener("click", peplyBtn_f);  
-        modifyBtn.addEventListener("click", modifyBtn_f);        
-         
-        listBtn.addEventListener("click", listBtn_f);     
+     
+        if( peplyBtn)  	peplyBtn.addEventListener("click", peplyBtn_f);  
+           if( modifyBtn) modifyBtn.addEventListener("click", modifyBtn_f);                 
+          if( listBtn)  listBtn.addEventListener("click", listBtn_f);     
       
       
       <!-- 답글 -->      
@@ -29,11 +29,11 @@
         
         
         
-        deleteBtn.addEventListener("click",deleteBtn_f);      
-          saveBtn.addEventListener("click", saveBtn_f);           
-        cancelBtn.addEventListener("click", cancelBtn_f);        
+       if( deleteBtn) deleteBtn.addEventListener("click",deleteBtn_f);      
+       if( saveBtn)    saveBtn.addEventListener("click", saveBtn_f);           
+       if( cancelBtn) cancelBtn.addEventListener("click", cancelBtn_f);        
         //첨부파일 일부 삭제
-        attatchments.addEventListener("click", deleteFile_f);
+         if( attachments)  attachments.addEventListener("click", deleteFile_f);
         
         
         
@@ -107,11 +107,15 @@ document.getElementById("bcontent").setAttribute("readonly",true);
      
      //목록 버튼
    function   listBtn_f(e){        
+      e.preventDefault();
       const isModifyMode = false; 
-       modeChange(isModifyMode);     
-       const returnPage = document.getElementById("returnPage").value;
-    const url = `/pfpkg/board/boardListFrm/${returnPage}`;
-    window.location.href=url;     
+       modeChange(isModifyMode);       
+    const searchType = document.getElementById("searchType").value;
+   	const searchKeyword = document.getElementById("searchKeyword").value;   	
+    const returnPage = document.getElementById("returnPage").value;       
+    const url = `/pfpkg/board/boardListFrm/${returnPage}/${searchType}/${searchKeyword}`;
+    
+   window.location.href=url;     
      
      }
      

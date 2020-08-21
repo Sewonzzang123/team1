@@ -5,7 +5,9 @@ public class PagingComponent {
 	
 	private RecordCriteria recordCriteria;
 	private PageCriteria pageCriteria;
-
+private SearchCriteria searchCriteria;
+	
+	
 	
 	public PagingComponent() {
 
@@ -27,11 +29,21 @@ public class PagingComponent {
 		this.pageCriteria = pageCriteria;
 	}
 
+	public SearchCriteria getSearchCriteria() {
+		return searchCriteria;
+	}
+
+	public void setSearchCriteria(SearchCriteria searchCriteria) {
+		this.searchCriteria = searchCriteria;
+	}
+
 	@Override
 	public String toString() {
-		return "PagingComponent [recordCriteria=" + recordCriteria + ", pageCriteria=" + pageCriteria + "]";
+		return "PagingComponent [recordCriteria=" + recordCriteria + ", pageCriteria=" + pageCriteria + ", searchCriteria="
+				+ searchCriteria + "]";
 	}
-	
+
+
 	
 	
 	
