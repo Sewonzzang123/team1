@@ -50,38 +50,8 @@ public class ItemListController {
 		model.addAttribute("itemList", itemListSVC.selectAllItem());
 		
 		return "/packinglist/packingList2";
-	}
+	}	
 	
-	@GetMapping("saveListForm/a")
-	public String saveListForm(
-			Model model
-			) {
-		//저장되는거 보기
-		//MemberVO memberVO = (MemberVO)session.getAttribute("member");
-		String ucode = "0";
-		List<ListVO> listVO = null;
-		listVO = itemListSVC.loadList(ucode);
-		
-		model.addAttribute("list", listVO);
-		
-		return "/packinglist/saveListForm";
-	}
-	
-	@GetMapping("saveListForm")
-	public String newitemSave(
-			Model model
-			) {
-		//저장되는거 보기
-		//MemberVO memberVO = (MemberVO)session.getAttribute("member");
-		
-		
-		String ucode = "0";
-		List<ListVO> listVO = null;
-		listVO = itemListSVC.loadList(ucode);
-		
-		model.addAttribute("list", listVO);
-		return "/packinglist/saveListForm";
-	}
 
 	@PostMapping(value="/lname", produces = "application/json")
 	@ResponseBody
@@ -103,24 +73,9 @@ public class ItemListController {
 			}
 		return res;		
 	}
+
 	
-	//세션적용
-	@GetMapping("saveListForm2")
-	public String saveListForm2(
-			Model model,
-			HttpSession session) {
-		//저장되는거 보기
-		MemberVO memberVO = (MemberVO)session.getAttribute("member");
-		String ucode = memberVO.getUcode();
-		List<ListVO> listVO = null;
-		listVO = itemListSVC.loadList(ucode);
-		
-		model.addAttribute("list", listVO);
-		
-		return "/packinglist/saveListForm";
-	}
-	
-	@RequestMapping(value="itemValue", method=RequestMethod.GET)
+	@RequestMapping(value="/saveListForm", method=RequestMethod.POST)
 	public String inum(
 			@RequestParam(value="inum" , required = false) List<String> inum,
 			@RequestParam(value="iname", required = false) List<String> iname,

@@ -9,4 +9,14 @@
 	 <setting name="jdbcTypeForNull" value="NULL"/>
 	</settings>
 	<!-- mybatis에서 null값 허용 세팅 종료-->
+	
+	<typeAliases>
+			<typeAlias type="com.my.maintest.item.vo.ItemVO"
+			alias="ItemVO" />
+						<typeAlias type="com.my.maintest.item.vo.ListVO"
+			alias="ListVO" />
+					<typeAlias type="com.my.maintest.item.vo.ItemCategoryVO"
+			alias="ItemCategoryVO" />
+			
+	</typeAliases>
 </configuration>

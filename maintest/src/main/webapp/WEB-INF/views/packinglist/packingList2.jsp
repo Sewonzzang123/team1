@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/included/common_taglib.jsp"%>
 <link rel="stylesheet" href="${contextPath }/css/packinglist/packingList.css?ver=15">
-<script defer src="${contextPath }/js/packinglist/packingList.js?ver=44"></script> 
+<script defer src="${contextPath }/js/packinglist/packingList.js?ver=46"></script> 
    
 <!DOCTYPE html>
 <html lang="ko">

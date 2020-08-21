@@ -10,8 +10,6 @@ import com.my.maintest.item.vo.ListVO;
 public interface ItemListDAO {
 	//아이템 카테고리 불러오기
 	List<ItemCategoryVO> selectAllCategory();
-	//카테고리 클릭시 아이템  불러오기
-	List<ItemVO> selectOneItem(String ca_num);
 	//아이템 전체 불러오기
 	List<ItemVO> selectAllItem();
 	//사용자의 리스트 불러오기(이름만, 저장하기용)

@@ -1,12 +1,11 @@
 window.addEventListener('load',init);
-const saveFrm = document.getElementById("saveFrm");
 const addItemTag = document.getElementById("additem");
 let idTag = null;
 let classTag = null;
 
 function init(){
-const saveBtn = document.querySelector("#saveBtn");
-saveBtn.addEventListener('click',saveBtn_f);
+	const saveBtn = document.getElementById("saveBtn");
+	saveBtn.addEventListener("click",saveBtn_f);
 //탭박스 이벤트
 $('.tab_box').hide();
 
@@ -171,19 +170,15 @@ function checkItem(e){
 		}	
 	}
 	
-	
-function saveBtn_f(event){
-		event.preventDefault();
-		document.forms["saveFrm"].submit();
-		
-		const url 		= event.target.href;
-		const fname 	= event.target.id;
-		const option 	= "width=460,height=540,location=no,resizable=no";
-		window.open(url,fname,option);
-		
-
-	
+	function saveBtn_f(){
+		const option 	= "width=480,height=540,location=no,resizable=no";
+		let gsWin=window.open("about:blank","winName",option);
+		let frm = document.form;
+		frm.action="http://localhost:9080/pfpkg/itemlist/saveListForm";
+		frm.target="winName";
+		frm.submit();
 	}
+	
 
 
 

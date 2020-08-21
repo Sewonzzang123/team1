@@ -21,10 +21,7 @@
 	}
 	function listBtn_f(e) {
 		e.preventDefault();
-		if (document.getElementsByTagName('p').length >= 10) {
-			window.alert("리스트는 10개까지 생성가능합니다.");
-			return false;
-		}
+		
 		let nameTag = document.getElementById('estimate_box_txt').value;
 
 		console.log(nameTag);
@@ -110,11 +107,12 @@
 	function cancelBtn_f() {
 		window.close();
 	}
+
 </script>
 </head>
 <body>
 	<div id="contentsArea">
-		<form name="folderList">
+		<form name="folderList" action="${contextPath }/packingList/save" method="POST">
 			<div class="pop_wrapper"
 				style="width: 440px; height: 530px; padding: 0px;">
 				<div class="pop_header">
@@ -127,8 +125,8 @@
 						<c:forEach items="#{list }" var="listVO">
 							<p>
 								<input type="radio" id="lnum_${listVO.lnum }" name="listname"
-									value="lnum${listVO.lnum }" /> <label
-									for="lnum_${listVO.lnum }">${listVO.lname }</label>
+									value="lnum${listVO.lnum }"/> 
+								<label for="lnum_${listVO.lnum }">${listVO.lname }</label>
 							</p>
 						</c:forEach>
 					</div>
@@ -136,8 +134,8 @@
 						<label class="tit_sub" for="estimate_box_txt">리스트 생성</label> <input
 							type="text" title="리스트 생성" id="estimate_box_txt"
 							placeholder="리스트 명을 입력하세요." maxlength="30" />
-						<button class="folder_add_button" type="button" id="listBtn"
-							title="리스트 생성하기">생성하기</button>
+						<input type="button" class="folder_add_button" type="button" id="listBtn"
+							value="생성하기"/>
 					</div>
 					<div class="folder_info_wrap">
 						<div class="info_title">리스트 저장 안내</div>
@@ -152,26 +150,26 @@
 					</div>
 					<div class="estimate_button_area">
 						<button class="btn_pop_save" type="button" id="saveBtn">저장</button>
-						<button class="btn_pop_cancel" type="button" id="cancelBtn">취소</button>
+						<input class="btn_pop_cancel" type="button" id="cancelBtn" value="취소"/>
 					</div>
 				</div>
 			</div>
-			
+
+			<!-- 리스트에 넣을 아이템 정렬 -->
+			<c:if test="${not empty listing}">
+				<c:forEach items="#{listing }" var="item">
+					<input type="hidden" name="iname" value="${item.iname }" />
+					<input type="hidden" name="icount" value="${item.icount }" />
+					<input type="hidden" name="inum" value="${item.inum }" />
+					<input type="hidden" name="icategory" value="${item.icategory }" />
+					<input type="hidden" name="ichecked" value="${item.ichecked }" />
+
+				</c:forEach>
+			</c:if>
 		</form>
 	</div>
-	<!-- 이 폼이랑 저장 버튼 연동해서 저장시키기 -->
-	<form>
-	<!-- 리스트에 넣을 아이템 정렬 -->
-<c:if test="${not empty listing}">
-<c:forEach  items="#{listing }" var="item">
-	<input type="hidden" name="iname" value="${item.iname }"/>
-	<input type="hidden" name="icount" value="${item.icount }"/>
-	<input type="hidden" name="inum" value="${item.inum }"/>
-	<input type="hidden" name="icategory" value="${item.icategory }"/>
-	<input type="hidden" name="ichecked" value="${item.ichecked }"/>
 
-</c:forEach>
-</c:if>
-	</form>
+
+
 </body>
 </html>
