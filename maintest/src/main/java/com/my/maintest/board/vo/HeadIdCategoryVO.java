@@ -1,42 +1,29 @@
 package com.my.maintest.board.vo;
 
-import lombok.Data;
-
-
 public class HeadIdCategoryVO {
-	long hidnum;  
-	long catnum; 
+	String hidnum;  
+	String catnum; 
 	String hidname;
-	
-	
-	
-	public long getHidnum() {
+	public String getHidnum() {
 		return hidnum;
 	}
-	public void setHidnum(long hidnum) {
+	public void setHidnum(String hidnum) {
 		this.hidnum = hidnum;
 	}
-
+	public String getCatnum() {
+		return catnum;
+	}
+	public void setCatnum(String catnum) {
+		this.catnum = catnum;
+	}
 	public String getHidname() {
 		return hidname;
 	}
 	public void setHidname(String hidname) {
 		this.hidname = hidname;
 	}
-	public long getCatnum() {
-		return catnum;
-	}
-	public void setCatnum(long catnum) {
-		this.catnum = catnum;
-	}
 	@Override
 	public String toString() {
 		return "HeadIdCategoryVO [hidnum=" + hidnum + ", catnum=" + catnum + ", hidname=" + hidname + "]";
 	}
-
-	
-	
-
-	
-		
 }

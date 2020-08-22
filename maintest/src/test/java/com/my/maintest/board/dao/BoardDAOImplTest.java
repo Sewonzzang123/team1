@@ -31,7 +31,7 @@ public class BoardDAOImplTest {
 	BoardDAO boardDAO;
 
 	@Test
-	@DisplayName("게시글 등록")
+	@DisplayName("寃뚯떆湲� �벑濡�")
 	@Disabled
 	void insertArticle() {
 		
@@ -39,7 +39,7 @@ public class BoardDAOImplTest {
 		long catNum = 2;
 		long hidNum = 1;
 		long uCode = 0;
-		String bTitle = "제목1"+i;
+		String bTitle = "제목"+i;
 		String bContent = "내용111111";
 
 		BcategoryVO BcategoryVO = new BcategoryVO();
@@ -61,22 +61,22 @@ public class BoardDAOImplTest {
 	}
 	
 	@Test
-	@DisplayName("이전답글 bstep+1처리 답글 insert 전 처리 ")
+	@DisplayName("�씠�쟾�떟湲� bstep+1泥섎━ �떟湲� insert �쟾 泥섎━ ")
 	@Disabled
 	void updateBstep() {		
 		long	bgroup =185;
-		long bstep = 0; //원글에 대한 답글		
+		long bstep = 0; //�썝湲��뿉 ���븳 �떟湲�		
 		boardDAO.updateBstep(bgroup, bstep);		
 	}
 	@Test
-	@DisplayName("게시글 답글 등록")
+	@DisplayName("寃뚯떆湲� �떟湲� �벑濡�")
 	@Disabled
 	void insertRepliedArticle() {
 		long catNum = 3;
 		long hidNum = 2;
 		long uCode = 2;
-		String bTitle = "8/1314:54게시글 답글 등록";
-		String bContent = "1111게시글 답글 등록2";
+		String bTitle = "8/1314:54寃뚯떆湲� �떟湲� �벑濡�";
+		String bContent = "1111寃뚯떆湲� �떟湲� �벑濡�2";
 		long	bgroup =184;
 		long bstep = 0;
 		long bindent = 0 ;
@@ -106,7 +106,7 @@ public class BoardDAOImplTest {
 
 
 	@Test
-	@DisplayName("게시글 전체조회")
+	@DisplayName("寃뚯떆湲� �쟾泥댁“�쉶")
 	@Disabled
 	void selectArticles() {
 		List<BoardVO> list = boardDAO.selectArticles();
@@ -116,7 +116,7 @@ public class BoardDAOImplTest {
 	}
 
 	@Test
-	@DisplayName("게시글 열람")
+	@DisplayName("寃뚯떆湲� �뿴�엺")
 	@Disabled
 	void toRead() {
 		long bNum = 72;
@@ -125,7 +125,7 @@ public class BoardDAOImplTest {
 	}
 
 	@Test
-	@DisplayName("게시글 삭제")
+	@DisplayName("寃뚯떆湲� �궘�젣")
 	@Disabled
 	void toDelete() {
 		long bnum = 74;
@@ -134,7 +134,7 @@ public class BoardDAOImplTest {
 	}
 
 	@Test
-	@DisplayName("조회수 갱신")
+	@DisplayName("議고쉶�닔 媛깆떊")
 	@Disabled
 	void updateBhits() {
 
@@ -143,23 +143,23 @@ public class BoardDAOImplTest {
 	}
 
 	@Test
-	@DisplayName("게시글 수정")
+	@DisplayName("寃뚯떆湲� �닔�젙")
 	@Disabled
 	void updateArticle() {
 		BoardVO boardVO = new BoardVO();
 		boardVO.setBnum(84);
-		boardVO.setBtitle("수정된 제목");
-		boardVO.setBcontent("수정된 내용");
+		boardVO.setBtitle("�닔�젙�맂 �젣紐�");
+		boardVO.setBcontent("�닔�젙�맂 �궡�슜");
 		BcategoryVO bcategory = new BcategoryVO();
 		boardVO.setBcategory(bcategory);
 		boardVO.getBcategory().setCatnum(1);
-		boardVO.setBnickname("관리자");
+		boardVO.setBnickname("愿�由ъ옄");
 		boardDAO.updateArticle(boardVO);
 	}
 	
 	
 	@Test
-	@DisplayName("첨부파일 등록")
+	@DisplayName("泥⑤��뙆�씪 �벑濡�")
 	@Disabled
 	void insertFiles() {
 		
@@ -167,7 +167,7 @@ public class BoardDAOImplTest {
 		BoardFileVO boardFileVO = new BoardFileVO();
 		
 		boardFileVO.setBnum(210);
-		boardFileVO.setFname("파일이름");
+		boardFileVO.setFname("�뙆�씪�씠由�");
 		boardFileVO.setFsize(1008);
 		boardFileVO.setFtype("jpg");
 
@@ -179,7 +179,7 @@ public class BoardDAOImplTest {
 	
 	
 	@Test
-	@DisplayName("첨부파일 가져오기")
+	@DisplayName("泥⑤��뙆�씪 媛��졇�삤湲�")
 	@Disabled
 	void toSelectFiles() {
 		long bnum = 15;
@@ -187,7 +187,7 @@ public class BoardDAOImplTest {
 			}
 	
 	@Test
-	@DisplayName("리스트 조회 + 페이징")
+	@DisplayName("由ъ뒪�듃 議고쉶 + �럹�씠吏�")
 	@Disabled
 	void toSelectArticles1() {
 		
@@ -203,7 +203,7 @@ public class BoardDAOImplTest {
 	}
 	
 	@Test
-	@DisplayName("리스트조회 + 페이징 + 검색어")
+	@DisplayName("由ъ뒪�듃議고쉶 + �럹�씠吏� + 寃��깋�뼱")
 	void toSearchKeyword() {
 		
 		int recNumPerPage	= 10;	
@@ -219,7 +219,7 @@ public class BoardDAOImplTest {
 	
 	
 		@Test
-	@DisplayName("말머리 카테고리 조회 based on bcategory ")
+	@DisplayName("留먮㉧由� 移댄뀒怨좊━ 議고쉶 based on bcategory ")
 		void selectHId() {
 			
 			long catnum = 2;

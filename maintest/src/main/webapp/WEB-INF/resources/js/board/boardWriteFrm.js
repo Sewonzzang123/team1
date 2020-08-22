@@ -111,29 +111,33 @@
      		
      		
      		
-     		//보드 카테고리에 맞는 말머리 불러오기 
-     		//ajax
-     	function	getHeadid_f(e){   	 	
+//보드 카테고리에 맞는 말머리 불러오기 
+//ajax
+function	getHeadid_f(e){   	 	
+ 	
+const selectTag = e.target     	
+console.log("selectTag" + selectTag);     	
      	
-     	const selectTag = e.target     	
-     console.log("selectTag" + selectTag);     	
-     	
-     const 	selectValue = selectTag.value;     
-        console.log("selectValue" + selectValue);       
+const electValue = selectTag.value;     
+console.log("selectValue" + selectValue);       
 
-			    const xhttp = new XMLHttpRequest();
-    			xhttp.addEventListener("readystatechange", ajaxCall);
+const xhttp = new XMLHttpRequest();
+xhttp.addEventListener("readystatechange", ajaxCall);
     
-   //---------------------------------------- ajaxCall------------------------------------------------
+//---------------------------------------- ajaxCall------------------------------------------------
      function ajaxCall(e){         
-       console.log("ajaxCall " + "요청 처리 되었을때 " +  this.responseText);
-     const jsonObj = JSON.parse(this.responseText);
-     console.log("jsonObj" + jsonObj);
+	 
+	 
+	 console.log("요청 처리 되었을때 responseText" +  this.responseText);
+          
      
+              
      
      if(this.readyState == 4 && this.status == 200){
-     console.log("요청 처리 되었을때 " +  this.responseText);    
-     
+
+     const jsonObj = JSON.parse(this.responseText);
+     console.log("jsonObj" + jsonObj);
+    
      switch(jsonObj.result){
      case "OK": 
            console.log("요청 OK " +  this.responseText);  
@@ -145,22 +149,31 @@
      break;    
      }
      }
-     }
+  
      //-----------------------------------------------------------------------------------------------
      //요청 파라미터 보내기 
      
      const para = {};
      para.catnum =  selectValue;
-         
+          console.log("-----------------json 변경전------------- ");  
+         console.log("para.catnum ="+   para.catnum );  
+         console.log("para" + para);   
+console.log("-----------------json 변경후------------- ");  
+      const jsonPara = JSON.stringify(para);
+      console.log("jsonPara" + jsonPara); 
+      
       
       
      //서비스 요청
-     const url = `http://localhost:9080/pfpkg/board/headid`;         
-     xhttp.open("get", url);
-          
-     xhttp.send(para);
+     const url = `http://localhost:9080/pfpkg/board/headid`;
      
+              
+     xhttp.open("POST", "http://localhost:9080/pfpkg/board/headid");
+     xhttp.setRequestHeader(
+     "Content-Type","application/json;charset=utf-8");          
+     xhttp.send(jsonPara);
      
+        }
      	
      	
      	}
