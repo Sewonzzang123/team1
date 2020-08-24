@@ -35,9 +35,9 @@ public class BoardSVCImpl implements BoardSVC {
 	}
 	//게시판 말머리 조회
 	@Override
-	public List<HeadIdCategoryVO> selectHeadIdCategory(int catnum) {
+	public List<HeadIdCategoryVO> selectHeadIdCategory(String catnum) {
 		
-		return  boardDAO.selectHeadIdCategory((long)catnum);
+		return  boardDAO.selectHeadIdCategory(Long.parseLong( catnum));
 	}
 	
 //전체글 조회 (default)
@@ -92,9 +92,10 @@ public class BoardSVCImpl implements BoardSVC {
 		//게시글 가져오기 
 		map.put("boardVO",boardDAO.selectArticle(bnum));
 		//첨부파일 가져오기 
-		files = boardDAO.selectFiles(bnum);
+		files = boardDAO.selectFiles(bnum);	
 		if(files !=null && files.size() >0 ) {
 		map.put("files", files);
+		System.out.println("board SVC 파일 개수=============================" + files.size());	
 		}
 		
 		return map;
@@ -119,10 +120,6 @@ public class BoardSVCImpl implements BoardSVC {
 			
 		}
 
-		
-		
-		
-		
 		return result;
 	}
 	//첨부파일 등록	
@@ -184,6 +181,15 @@ public void insertFiles(List<MultipartFile> files, long bnum) {
 		public int deleteFile(long fid) {		
 			return	boardDAO.deleteFile(fid);
 		}
+		
+		//첨부파일 다운로드
+		@Override
+		public BoardFileVO selectFileToDwLoad(String fid) {
+			
+			
+			return			boardDAO.selectFileToDwLoad(Long.parseLong(fid));
+		}
+		
 
 	// 게시글 삭제
 	@Override
@@ -197,7 +203,7 @@ public void insertFiles(List<MultipartFile> files, long bnum) {
 		boardDAO.updateBstep(boardVO.getBgroup(), boardVO.getBstep());
 		return boardDAO.insertRepliedArticle(boardVO);
 	}
-	
+
 	
 	
 

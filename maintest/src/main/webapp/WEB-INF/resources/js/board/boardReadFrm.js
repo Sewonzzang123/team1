@@ -11,8 +11,7 @@
       
       
       <!-- 답글 -->      
-      function peplyBtn_f(){      
-      console.log("답글 버튼 클릭");
+      function peplyBtn_f(){          
       const bnum = document.getElementById("bnum").value;
        const returnPage = document.getElementById("returnPage").value;
       const url = `/pfpkg/board/boardReplyFrm/${bnum}/${returnPage}`;
@@ -26,7 +25,8 @@
         const saveBtn = document.getElementById("saveBtn");
         const cancelBtn = document.getElementById("cancelBtn");
         const attachments = document.getElementById("attachments");
-        
+        //게시판 카테고리별 말머리 불러오기 
+        const   bcateTag = document.getElementById("bcategory");
         
         
        if( deleteBtn) deleteBtn.addEventListener("click",deleteBtn_f);      
@@ -34,7 +34,7 @@
        if( cancelBtn) cancelBtn.addEventListener("click", cancelBtn_f);        
         //첨부파일 일부 삭제
          if( attachments)  attachments.addEventListener("click", deleteFile_f);
-        
+       if(bcateTag) bcateTag.addEventListener("change", getHidcate_f);
         
         
         //수정버튼
@@ -54,7 +54,7 @@
      const ritems = document.getElementsByClassName("readMode")
      Array.from(ritems).forEach((item)=>{item.style.display = "none"});     
       const mitems = document.getElementsByClassName("modifyMode")
-     Array.from(mitems).forEach((item)=>{item.style.display = "inline-block"});
+     Array.from(mitems).forEach((item)=>{item.style.display = "block"});
      
      // selectTags disabled 해제
      const selectTags = document.getElementsByTagName("select")
@@ -65,13 +65,13 @@
    document.getElementById("bcontent").removeAttribute("readonly")
      
      //bcategory 및 hidcategory 의 db에서 불러온 값 selected 속성 풀기    
-        document.getElementById("bcategory.catnum").children[0].removeAttribute("selected")
-     document.getElementById("hidcategory.hidnum").children[0].removeAttribute("selected")
+        document.getElementById("bcategory").children[0].removeAttribute("selected")
+     document.getElementById("hidcategory").children[0].removeAttribute("selected")
      
      }else{     	
-       // 읽기모드 --> 수정모드
+       // 수정 --> 읽기모드
        const ritems = document.getElementsByClassName("readMode")
-     Array.from(ritems).forEach((item)=>{item.style.display = "inline-block"});  
+     Array.from(ritems).forEach((item)=>{item.style.display = "block"});  
        const mitems = document.getElementsByClassName("modifyMode")
      Array.from(mitems).forEach((item)=>{item.style.display = "none"});
      
@@ -86,8 +86,13 @@ document.getElementById("bcontent").setAttribute("readonly",true);
 
 
        //bcategory db에서 불러온 값 다시 보이기
-     document.getElementById("bcategory.catnum").children[0].setAttribute("selected", true)
-     document.getElementById("hidcategory.hidnum").children[0].setAttribute("selected",true)
+     document.getElementById("bcategory").children[0].setAttribute("selected", true)
+     document.getElementById("hidcategory").children[0].setAttribute("selected",true)
+
+    // hidcateTag.innerHTML  +=	"<option value='${hid.hidnum }' style='display:none'>${hid.hidname }</option>	"	
+     
+     
+     
      }
      }
      
@@ -173,16 +178,69 @@ document.getElementById("bcontent").setAttribute("readonly",true);
      parent.remove(iTag); 		
      }else{     
      console.log("파일삭제 실패!") 
-     
-     }
-     }     
-     }
-     
-     }
-     
+          }
+ 			    }     
+   			  }
+          }
+          }
      
      
+     //게시판 카테고리별 말머리 불러오기 
      
-     }
+     function getHidcate_f(e){
+     
+     const bcateVal = bcateTag.value;
+     
+
+  
+     //요청 시작
+     
+     const xhttp = new XMLHttpRequest();
+     
+     xhttp.addEventListener("readystatechange", ajaxCallForHid);
+     
+          //요청 처리 완료되었을때 
+     function ajaxCallForHid(e){     
+        if(this.readyState == 4 && this.status == 200){
+     
+     //제이슨 --> 자바스크립트 객체로 변환 
+  const   jsonToJavascript = JSON.parse(this.responseText);
+     
+     switch(jsonToJavascript.rtcode) {
+     case "00":
+        const   hidcateTag = document.getElementById("hidcategory");
+     
+     		const hidcategory = jsonToJavascript.hidcategory;
+     		hidcateTag.innerHTML="";
+     		Array.from(hidcategory).forEach(e=>{
+     		
+     		hidcateTag.innerHTML += "<option value='" + e.hidnum + "'>" + e.hidname + "</option>";
+     		})
+     	 	
+     		break;
+     
+     case "01":
+     console.log("hid 카테 조회 실패");
+     
+     break;    
+   														  } //switch
+   														  
+   														  }//if    
+    												 }//ajaxcall()
+     
+
+     
+     //요청 파라미터 셋팅
+     const reqPara = {} ; 
+     reqPara.catnum = bcateVal;
+     
+     const javascriptToJson = JSON.stringify(reqPara);
+     
+     xhttp.open("POST", "http://localhost:9080/pfpkg/board/headid");
+     xhttp.setRequestHeader("Content-Type","application/json;charset=utf-8");
+     xhttp.send(javascriptToJson);
+          }
+     
+     
      
      

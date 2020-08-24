@@ -1,5 +1,7 @@
 package com.my.maintest.board.controller;
 
+
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +12,9 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +31,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.my.maintest.board.svc.BoardSVC;
 import com.my.maintest.board.svc.PagingSVC;
 import com.my.maintest.board.vo.BcategoryVO;
+import com.my.maintest.board.vo.BoardFileVO;
 import com.my.maintest.board.vo.BoardVO;
 //import com.my.maintest.board.vo.TestVO;
 import com.my.maintest.board.vo.HeadIdCategoryVO;
@@ -45,42 +50,39 @@ public class BoardController {
 	@Inject
 	PagingSVC pagingSVC;
 
-	@GetMapping("/1")
-	public int test() {
-		return 11111;
-	}
+
 
 	// 게시판 카테고리 조회
-	@ModelAttribute("bcategory")
+	@ModelAttribute("bcategoryList")
 	public List<BcategoryVO> getBcategory() {
 		List<BcategoryVO> bcategoryVO = null;
 		bcategoryVO = boardSVC.selectBcategory();
 		return bcategoryVO;
 	}
-
+	
 	// 게시판 말머리 조회
 	@PostMapping(value = "/headid", produces = "application/json")
 	 @ResponseBody
 	public  ResponseEntity<Map<String, Object>> getHeadIdCategory(
-		@RequestParam("catnum") HeadIdCategoryVO headIdCategoryVO) {
+		@RequestBody HeadIdCategoryVO headIdCategoryVO) {
 		System.out.println("/headid 호출");
 
 		System.out.println("@RequestParam(\"catnum\")" + headIdCategoryVO.getCatnum());
 		ResponseEntity<Map<String, Object>> res = null;
 
-		//List<HeadIdCategoryVO> list = boardSVC.selectHeadIdCategory(catnum);
+		List<HeadIdCategoryVO> list = boardSVC.selectHeadIdCategory(headIdCategoryVO.getCatnum());
 		Map<String, Object> map = new HashMap<>();
 
-		//if (list != null & list.size() > 0) {
+		if (list != null & list.size() > 0) {
 
 			map.put("rtcode", "00");
-			//map.put("hidcategory", list);
+			map.put("hidcategory", list);
 			res = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 
-	//	} else {
+		} else {
 			map.put("rtcode", "01");
 			res = new ResponseEntity<Map<String, Object>>(map, HttpStatus.BAD_REQUEST);
-		//}
+		}
 
 		return res;
 	}
@@ -165,24 +167,70 @@ public class BoardController {
 		boardSVC.insertArticle(boardVO);
 		return "redirect:/board/boardListFrm";
 	}
+	
+	
+	
+	//파일 첨부 화면
+	@GetMapping("/fileUploadFrm")
+	 String toFileUploadFrm() {
+		
+		
+		return "/board/fileUploadFrm";
+	}
+	
+	
 
 	// 게시글열람
-	@GetMapping({ "/read/{bnum}/{returnPage}", "/read/{bnum}/{returnPage}/{searchType}/{searchKeyword}" }) // returnPage
-																											// : 열람후
-																											// 리스트로 이동시
-																											// 돌아갈
-																											// reqPage
-	public String toRead(@PathVariable("bnum") Long bnum, @ModelAttribute("returnPage") String returnPage,
+	@GetMapping({ "/read/{bnum}/{returnPage}", 
+		"/read/{bnum}/{returnPage}/{searchType}/{searchKeyword}" }) 
+	// returnPage		열람후	리스트로 이동시 돌아갈reqPage																								
+	public String toRead(@PathVariable("bnum") Long bnum
+			, @ModelAttribute("returnPage") String returnPage,
 			@ModelAttribute SearchCriteria searchCriteria, Model model) {
-
+		
 		// svc는 map 타입을 반환값으로 가짐
-		Map<String, Object> map = boardSVC.selectArticle(bnum);
+		Map<String, Object> map = boardSVC.selectArticle(bnum);		
+	
+		BoardVO boardVO = (BoardVO)map.get("boardVO");
 
-		// 게시글 타입은 BoardVO
-		model.addAttribute("boardVO", map.get("boardVO"));
-		// 파일 타입은 List<BoardFileVO>
-		model.addAttribute("files", map.get("files"));
+		// 파일 타입은 List<BoardFileVO>	
+		List<BoardFileVO> files = (List<BoardFileVO>)  map.get("files");
+        
+		model.addAttribute("boardVO", boardVO);		
+		model.addAttribute("files",files);
 		return "/board/boardReadFrm";
+	}
+	
+	//첨부파일 다운로드
+	@GetMapping("/file/{fid}")
+	public ResponseEntity<byte[]> toGetFile(
+			@PathVariable("fid") String fid
+			,Model model			
+			){
+		 ResponseEntity<byte[]> res = null;		 
+		 BoardFileVO boardFileVO = boardSVC.selectFileToDwLoad(fid);
+		 
+		 //응답헤더에 mimetype과 파일 사이즈 정보를 설정
+		 final HttpHeaders headers = new HttpHeaders();
+		 String[] mimeTypes = boardFileVO.getFtype().split("/");
+		 headers.setContentType(new MediaType(mimeTypes[0], mimeTypes[1]));
+		 headers.setContentLength(boardFileVO.getFsize());
+		 
+		 //첨부파일 명이 한글일 경우 깨짐방지
+		 String fileName = null;
+		 try {
+			fileName = new String(boardFileVO.getFname().getBytes("utf-8"), "ISO-8859-1");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+
+		 
+		 //응답헤더에 파일이 있음을 알려줌
+		 headers.setContentDispositionFormData("attachment", fileName);
+		 
+		 res = new ResponseEntity<byte[]>(boardFileVO.getFdata(), headers, HttpStatus.OK);
+				 
+		return res;
 	}
 
 	// 첨부파일 일부 삭제
@@ -204,9 +252,11 @@ public class BoardController {
 
 	// 게시글수정
 	@PostMapping("/save")
-	public String toSaveChanges(@ModelAttribute BoardVO boardVO, Model model) {
+	public String toSaveChanges(@ModelAttribute BoardVO boardVO
+			,@RequestParam("returnPage") String returnPage
+			, Model model) {
 		boardSVC.updateArticle(boardVO);
-		return "redirect:/board/read/" + boardVO.getBnum();
+		return "redirect:/board/read/" + boardVO.getBnum() +"/" + returnPage;
 	}
 
 	// 게시글삭제

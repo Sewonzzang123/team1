@@ -9,7 +9,7 @@ select catnum, catname, btype from bcategory
 <!-- 게시판 말머리 조회  -->
 <select id="selectHeadIdCategory" parameterType="long" resultType="com.my.maintest.board.vo.HeadIdCategoryVO">
 
-select t1.hidnum, t1.hidname
+select t1.hidnum, t1.catnum, t1.hidname
 from headid t1, bcategory t2
 where t1.catnum = t2.catnum and
  t1.catnum = #{catnum} 
@@ -343,6 +343,15 @@ update board set bhits = bhits+1 where bnum = #{bnum}
 	delete from board_upload_file where fid = #{fid}
 	
 	</delete>
+	
+	
+	<!-- 첨부파일 다운로드 -->
+	
+	<select id="selectFileToDwLoad"  parameterType="long" resultType="com.my.maintest.board.vo.BoardFileVO" >
+	
+select fid, bnum, fname, fsize , ftype, fdata, cdate, udate from board_upload_file where fid = #{fid}
+	
+	</select>
 	
 <!-- 	//글 삭제 -->	
 <delete id="deleteArticle" parameterType="long" >

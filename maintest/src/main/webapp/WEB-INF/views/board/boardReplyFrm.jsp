@@ -55,7 +55,7 @@
 								<li>	<label>조회수</label><c:out value="${boardVO.bhits }"/>	</li>
 								
 								
-					<!-- 		<li><label for="">파일첨부</label><input type="file" id="files" name="files" multiple /></li> -->
+								<label for="">파일첨부</label><input type="file" id="files" name="files" multiple />
 								
 							<li><textarea id="bcontent" name="bcontent" cols="30" rows="5" placeholder="내용 입력"    >${boardVO.bcontent }</textarea></li>
 					

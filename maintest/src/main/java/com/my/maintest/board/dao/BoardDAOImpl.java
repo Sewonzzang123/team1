@@ -60,8 +60,7 @@ public class BoardDAOImpl implements BoardDAO {
 		map.put("recTo", recTo);
 		map.put("searchType", searchType);
 		map.put("searchKeyword", searchKeyword);
-		System.out.println("board DAO SLQ에 던져줄 인수들  ===" + map.toString() );	
-		System.out.println("board DAO 읽어오는 데이터 개수 ===" + sqlSession.selectList("mappers.BoardDAO-mapper.selectArticlesWithKey", map ).size() );	
+
 	
 		return sqlSession.selectList("mappers.BoardDAO-mapper.selectArticlesWithKey", map ) ;
 	}
@@ -94,6 +93,9 @@ public BoardVO selectArticle(long bnum) {
 public List<BoardFileVO> selectFiles(long bnum) {	
 	List<BoardFileVO> files = null;	
 	files =(sqlSession.selectList("mappers.BoardDAO-mapper.selectFiles", bnum));
+	
+	
+	System.out.println("board DAO 파일 조회 =============================" + files.toString() );	
 	return files;
 }
 
@@ -118,6 +120,13 @@ public int updateBhits(long bnum) {
 	public int deleteFile(long fid) {		
 		return sqlSession.delete("mappers.BoardDAO-mapper.deleteFile",fid);
 	}
+//첨부파일 다운로드
+	@Override
+	public BoardFileVO selectFileToDwLoad(long fid) {
+	
+		return sqlSession.selectOne("mappers.BoardDAO-mapper.selectFileToDwLoad", fid);
+	}
+
 
 
 
@@ -145,6 +154,7 @@ public int updateBhits(long bnum) {
 			map.put("bstep", bstep);					
 			return sqlSession.update("mappers.BoardDAO-mapper.updateBstep", map );
 		}
+
 
 		
 

@@ -10,93 +10,7 @@
 <title>게시글 작성</title>
 <link rel="stylesheet"
 	href="${contextPath}/css/board/boardWriteFrm.css?ver=0">
-<%-- <script defer type="text/javascript" src="${contextPath }/js/board/boardWriteFrm.js?ver=0"></script> --%>
-
-<script type="text/javascript">
-window.addEventListener("load", init)
-
-
-function init() {
-
-    const bCateTag = document.getElementById("bcategory.catnum")
-
-    bCateTag.addEventListener("change", gethid);
-
-    function gethid(e) {
-
-        let bCateTagVal = bCateTag.value;
-
-        console.log("bCateTagVal == " + bCateTagVal);
-
-        //ajax 
-
-        const xhttp = new XMLHttpRequest();
-
-
-//xhttp의 상태 변화를 감지하는 readystatechange 이벤트 리스너를 걸어준다.
-// 변화를 감지할려면 최소 요청이 한번은 들어가야 로직을 탄다. 
-
-		xhttp.addEventListener("readystatechange" , ajaxCall);
-
-		function ajaxCall(){
-		
-        // 응답유형 부터 
-        const resObj = XMLHttpRequest.responseText;
-        console.log("요청으로 가져오는 텍스트 ==" +  resObj);
-
-        
-		if(XMLHttpRequest.readyState == 4 && XMLHttpRequest.status == 200){
-
-			console.log(XMLHttpRequest.responseText);
-
-			const jsonToJsobj = JSON.parse(XMLHttpRequest.responseText);
-
-			switch(jsonToJsobj.rtcode){
-			case "00":
-				console.log("rtcode = 00")
-				break; 
-			case "01":
-				console.log("rtcode = 01");
-				break;			
-			}
-
-
-			}
-    }//ajaxCall
-
-
-		//요청하기
-			//1. 파라미터 부터 만들기 Jsobj to Json 포맷
-			//배열형식을 만들어준다. 
-			const jsobj = {};
-			jsobj.catnum = bCateTagVal;
-			console.log("jsobj.catnum = " + jsobj);	
-
-			const jsobjToJson = JSON.stringify(jsobj);
-			console.log("jsobjToJson = json 형태로 보낼거임" + jsobjToJson);	
-				
-		 xhttp.open("post", "http://localhost:9080/pfpkg/board/headid");
-		//데이터 타입을 선언 
-		//post: Form 요청시 
-		//xhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-
-		//get: queryString 형식으로 전송 필요시 !!!!
-		//xhttp.send("jsobjToJson = " + jsobjToJson);
-		
-		//post: json 요청시 
-		xhttp.setRequestHeader("Content-Type", "application/json;charset-8");		
-		xhttp.send(jsobjToJson);
-
-		
-
-		
-    } //gethid
-
-} //init
-
-
-
-	</script>
+<script defer type="text/javascript" src="${contextPath }/js/board/boardWriteFrm.js?ver=1"></script> 
 
 </head>
 <body>
@@ -117,15 +31,15 @@ function init() {
 
 						<ul>
 							<li class="selectGrp"><label for="bcategory.catnum">분류</label>
-								<select name="bcategory.catnum" id="bcategory.catnum">
+								<select name="bcategory.catnum" id="bcategory">
 									<option value="">게시판분류</option>
-									<c:forEach var="bcate" items="${bcategory }">
+									<c:forEach var="bcate" items="${bcategoryList }">
 										<option value="${bcate.catnum }">${bcate.catname }</option>
 									</c:forEach>
 
-							</select> <select name="hidcategory.hidnum">
+							</select> <select name="hidcategory.hidnum"  id="hidcategory">
 									<option value="">말머리분류</option>
-									<c:forEach var="hcate" items="${hidcategory }">
+									<c:forEach var="hcate" items="${hidcategoryList }">
 										<option value="${hcate.hidnum }">${hcate.hidname }</option>
 									</c:forEach>
 							</select></li>
@@ -138,12 +52,29 @@ function init() {
 							<li>
 							<li>
 								<div class="files" id="filesDropArea">
-
-									<button type="button">파일첨부</button>
-
+									<a href="${contextPath }/board/fileUploadFrm">파일첨부</a>
 								</div> <input type="file" id="files" name="files" multiple="multiple" />
-
 							</li>
+							
+							
+<script type="text/javascript">
+event.preventDefault();
+const filesDropArea = document.getElementById("filesDropArea");
+
+
+filesDropArea.addEventListener("click",function(e){
+
+	const  url = e.target.href;
+	const wname = e.target.id;
+	const option = "width = 250, height=300, resizable =no, location= ";
+	window.open(url, wname, option);
+	
+} );
+
+
+
+</script>
+							
 							<li>
 								<div class="btnGrp">
 									<button id="tmpWriteBtn" type="button">임시저장</button>

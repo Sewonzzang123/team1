@@ -70,18 +70,31 @@
             margin-right: 5px;
         }
 
-        #readModFrm>ul .btnGrp {
+			.attachments{
+	 			display:flex;
+	 		     width: 80%;
+           margin: 0 auto;
+	 			  display:none;		
+			}
+
+
+        #readModFrm .btnGrp {
             display: flex;
-            justify-content: center;
+            justify-content: flex-end;
+               width: 80%;
+            	margin: 0 auto;
         }
 
-        #readModFrm>ul .btnGrp button {
-            width: auto;
-        }
 
 		.modifyMode{
-       display: none;
-        }
+       display: none;     }
+
+
+.attchfiles{
+	display:flex;
+}
+
+
 
 
         #readModFrm>ul textarea {

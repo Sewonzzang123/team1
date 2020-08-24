@@ -2,15 +2,15 @@ package com.my.maintest.board.vo;
 
 public class BcategoryVO {
 
-	private long catnum; // CID NUMBER(10,0) No 1 분류코드
+	private String catnum; // CID NUMBER(10,0) No 1 분류코드
 	private String catname; // CNAME VARCHAR2(60 BYTE) No 2 분류명
 	private String btype;
 
-	public long getCatnum() {
+	public String getCatnum() {
 		return catnum;
 	}
 
-	public void setCatnum(long catnum) {
+	public void setCatnum(String catnum) {
 		this.catnum = catnum;
 	}
 

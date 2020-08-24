@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.my.maintest.board.vo.BcategoryVO;
+import com.my.maintest.board.vo.BoardFileVO;
 import com.my.maintest.board.vo.BoardVO;
 import com.my.maintest.board.vo.HeadIdCategoryVO;
 import com.my.maintest.common.paging.PageCriteria;
@@ -17,7 +18,7 @@ public interface BoardSVC {
 	//게시판 카테고리 조회 
 	List<BcategoryVO> selectBcategory();
 	//게시판 말머리 조회
-	List<HeadIdCategoryVO> selectHeadIdCategory(int catnum);
+	List<HeadIdCategoryVO> selectHeadIdCategory(String catnum);
 	
 	// 전체 게시글 조회 (default)
 	List<BoardVO> selectArticles() ;	
@@ -42,6 +43,8 @@ public interface BoardSVC {
 	int  updateArticle(BoardVO boardVO);
 	//첨부파일 일부 삭제 
 	int deleteFile(long fid); 
+	//첨부파일 다운로드
+	BoardFileVO selectFileToDwLoad(String fid);
 	
 	//게시글 삭제
 	int deleteArticle(long  bnum);

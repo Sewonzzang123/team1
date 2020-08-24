@@ -4,19 +4,22 @@
         const writeBtn = document.getElementById("writeBtn");
         const writeFrm = document.getElementById("writeFrm");
         const listBtn = document.getElementById("listBtn");
-        const bcategoryTag = document.getElementById("bcategory.catnum");
+   
         const filesDropAreaTag = document.getElementById("filesDropArea");      
         const filesTag = document.getElementById("files");
-        
+        		
+			  const bCateTag = document.getElementById("bcategory")
+				const hidCateTag = document.getElementById("hidcategory")
+				        //게시판 분류 카테고리 별 말머리 연동 ajax
+    		bCateTag.addEventListener("change", getHeadid_f);
         
         writeBtn.addEventListener("click", writeBtn_f);
-        listBtn.addEventListener("click", listBtn_f);
-       
+        listBtn.addEventListener("click", listBtn_f);       
         filesDropAreaTag.addEventListener("click", filesDropAreaTag_f);
         
-        //게시판 분류와 말머리 연동 ajax
-  			bcategoryTag.addEventListener("change", getHeadid_f );
-			
+
+
+  	
 			
 			
 			
@@ -40,12 +43,13 @@
      		}
      		
           		
-     		function filesDropAreaTag_f(e){
+     		function filesDropAreaTag_1f(e){
      		//첨부파일 버튼 클릭   
      		e.preventDefault();
      		let clickedTag  = e.target;
      		
-     		let newWin = window.open("/pfpkg/board/boardListFrm/","width=500px, height=500px");
+     		
+     		let newWin = window.open("/pfpkg/board/files/","width=500px, height=500px");
    	
    			 //버튼 클릭시 해당 버튼 삭제 및 첨부 영역 확장 + 문구 표시 
      		if(clickedTag.tagName === 'BUTTON') {     		     		
@@ -114,67 +118,43 @@
 //보드 카테고리에 맞는 말머리 불러오기 
 //ajax
 function	getHeadid_f(e){   	 	
- 	
-const selectTag = e.target     	
-console.log("selectTag" + selectTag);     	
-     	
-const electValue = selectTag.value;     
-console.log("selectValue" + selectValue);       
-
-const xhttp = new XMLHttpRequest();
-xhttp.addEventListener("readystatechange", ajaxCall);
-    
-//---------------------------------------- ajaxCall------------------------------------------------
-     function ajaxCall(e){         
-	 
-	 
-	 console.log("요청 처리 되었을때 responseText" +  this.responseText);
-          
-     
-              
-     
-     if(this.readyState == 4 && this.status == 200){
-
-     const jsonObj = JSON.parse(this.responseText);
-     console.log("jsonObj" + jsonObj);
-    
-     switch(jsonObj.result){
-     case "OK": 
-           console.log("요청 OK " +  this.responseText);  
-           
-     break;
-     case "NG" : 
-      console.log("요청 NG " +  this.responseText);  
-      
-     break;    
-     }
-     }
+  const bCateTagVal = bCateTag.value;
   
-     //-----------------------------------------------------------------------------------------------
-     //요청 파라미터 보내기 
-     
-     const para = {};
-     para.catnum =  selectValue;
-          console.log("-----------------json 변경전------------- ");  
-         console.log("para.catnum ="+   para.catnum );  
-         console.log("para" + para);   
-console.log("-----------------json 변경후------------- ");  
-      const jsonPara = JSON.stringify(para);
-      console.log("jsonPara" + jsonPara); 
-      
-      
-      
-     //서비스 요청
-     const url = `http://localhost:9080/pfpkg/board/headid`;
-     
-              
-     xhttp.open("POST", "http://localhost:9080/pfpkg/board/headid");
-     xhttp.setRequestHeader(
-     "Content-Type","application/json;charset=utf-8");          
-     xhttp.send(jsonPara);
-     
-        }
-     	
+  //ajax 
+  const xhttp = new XMLHttpRequest();
+  
+  xhttp.addEventListener("readystatechange", ajaxCall);
+  
+  
+  function ajaxCall(e){
+  //처리완료 시 응답처리 
+  
+  if(this.readyState == 4 && this.status == 200){
+  
+   const responseObj = this.responseText;
+   const jsonToJsObj = JSON.parse(responseObj);
+   switch(jsonToJsObj.rtcode){
+   case "00": 
+   const hidcategory = jsonToJsObj.hidcategory;
+   hidCateTag.innerHTML = "";
+   Array.from(hidcategory).forEach(e=>{
+   hidCateTag.innerHTML += "<option value='" +e.hidnum + "' >" +e.hidname + "</option>"
+   })   
+   break;
+   
+   case"01" :
+  console.log("말머리 불러오기 실패" )
+   break;   
+   }
+  }
+  }
+  
+  const jsObj = {};
+  jsObj.catnum = bCateTagVal;
+  const jsObjToJson = JSON.stringify(jsObj);
+  xhttp.open("POST", "http://localhost:9080/pfpkg/board/headid");
+  xhttp.setRequestHeader("Content-Type", "application/json;charset=utf-8");
+  xhttp.send(jsObjToJson);     	
      	
      	}
      		 

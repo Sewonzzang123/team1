@@ -36,8 +36,8 @@ public class BoardDAOImplTest {
 	void insertArticle() {
 		
 		for(int i = 1 ; i < 100; i++ ) {
-		long catNum = 2;
-		long hidNum = 1;
+		String catNum = "2";
+		String hidNum = "1";
 		long uCode = 0;
 		String bTitle = "제목"+i;
 		String bContent = "내용111111";
@@ -72,8 +72,8 @@ public class BoardDAOImplTest {
 	@DisplayName("寃뚯떆湲� �떟湲� �벑濡�")
 	@Disabled
 	void insertRepliedArticle() {
-		long catNum = 3;
-		long hidNum = 2;
+		String catNum = "3";
+		String hidNum = "2";
 		long uCode = 2;
 		String bTitle = "8/1314:54寃뚯떆湲� �떟湲� �벑濡�";
 		String bContent = "1111寃뚯떆湲� �떟湲� �벑濡�2";
@@ -152,7 +152,7 @@ public class BoardDAOImplTest {
 		boardVO.setBcontent("�닔�젙�맂 �궡�슜");
 		BcategoryVO bcategory = new BcategoryVO();
 		boardVO.setBcategory(bcategory);
-		boardVO.getBcategory().setCatnum(1);
+		boardVO.getBcategory().setCatnum("1");
 		boardVO.setBnickname("愿�由ъ옄");
 		boardDAO.updateArticle(boardVO);
 	}

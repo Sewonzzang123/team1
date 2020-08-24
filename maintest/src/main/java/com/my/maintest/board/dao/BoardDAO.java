@@ -41,7 +41,7 @@ public interface BoardDAO {
 	int insertFiles(BoardFileVO boardFileVO);
 	
 	
-	//게시글 삭제 + 첨부파일
+	//게시글 삭제
 	int deleteArticle(long  bnum);
 
 	//첨부파일 전체 삭제 
@@ -53,6 +53,8 @@ public interface BoardDAO {
 	int updateArticle(BoardVO boardVO);
 	//첨부파일 일부 삭제 
 	int deleteFile(long fid); 
+	//첨부파일 다운로드
+	BoardFileVO selectFileToDwLoad(long fid);
 	
 	
 	

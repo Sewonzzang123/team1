@@ -72,7 +72,7 @@
 
         #replyFrm>ul .btnGrp {
             display: flex;
-            justify-content: center;
+            justify-content: flex-end;
         }
 
         #replyFrm>ul .btnGrp button {
