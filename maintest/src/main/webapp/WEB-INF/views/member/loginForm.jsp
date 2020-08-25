@@ -120,7 +120,8 @@ button, input, select, textarea {
 					</div>
 					<div class="actionBtn">
 						<input type="submit" title="로그인" id="login" class="btn"
-							value="로그인" formaction="${pageContext.request.contextPath}/login" />
+							value="로그인"
+							formaction="${pageContext.request.contextPath}/login?reqURI=${reqURI}" />
 					</div>
 				</fieldset>
 			</form:form>

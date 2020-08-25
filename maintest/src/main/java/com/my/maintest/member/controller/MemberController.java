@@ -71,15 +71,17 @@ public class MemberController {
 	}
 
 	// 로그인 화면
-	@GetMapping("/loginForm")
-	public String loginForm(Model model) {
-		logger.info("로그인 호출");
+	@GetMapping("/loginForm*")
+	public String loginForm(@RequestParam(value = "reqURI", required = false) String reqURI, Model model) {
+
+		model.addAttribute("reqURI", reqURI);
 		return "/member/loginForm";
 	}
 
 //로그인 처리
 	@PostMapping("/login")
-	public String login(@RequestParam("id") String id, @RequestParam("pw") String pw, HttpSession session, Model model) {
+	public String login(@RequestParam("id") String id, @RequestParam("pw") String pw,
+			@RequestParam("reqURI") String reqURI, HttpSession session, Model model) {
 		logger.info("String login()호출됨");
 		logger.info("id : " + id);
 		logger.info("pw : " + pw);
@@ -107,7 +109,8 @@ public class MemberController {
 				return "/member/loginForm";
 			}
 		}
-		return "redirect:/";
+
+		return "redirect:/" + reqURI;
 	}
 
 //로그아웃
@@ -182,4 +185,5 @@ public class MemberController {
 
 		return "member/findPWResult";
 	}
+
 }

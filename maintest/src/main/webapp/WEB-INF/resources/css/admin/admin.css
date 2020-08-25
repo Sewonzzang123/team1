@@ -60,6 +60,12 @@
 	width: 420px;
 }
 
+.admin_board .b_content {
+	/* border: 1px solid black; */
+	height: auto;
+	width: 420px;
+}
+
 .b_content table {
 	width: 380px;
 	margin: 20px;
