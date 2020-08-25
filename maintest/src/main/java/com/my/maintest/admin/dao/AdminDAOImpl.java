@@ -1,5 +1,6 @@
 package com.my.maintest.admin.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -11,6 +12,7 @@ import com.my.maintest.board.vo.BcategoryVO;
 import com.my.maintest.board.vo.HeadIdCategoryVO;
 import com.my.maintest.item.vo.ItemCategoryVO;
 import com.my.maintest.item.vo.ItemVO;
+import com.my.maintest.member.vo.MemberVO;
 
 @Repository
 public class AdminDAOImpl implements AdminDAO {
@@ -83,9 +85,57 @@ public class AdminDAOImpl implements AdminDAO {
 	}
 
 	@Override
-	public int setIcate(String ca_name) {
+	public String getCa_num() {
 		// TODO Auto-generated method stub
-		return sqlSession.delete("mappers.AdminDAO-mapper.setIcate", ca_name);
+		return sqlSession.selectOne("mappers.AdminDAO-mapper.getCa_num");
+	}
+
+	@Override
+	public int setIcate(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("mappers.AdminDAO-mapper.setIcate", map);
+	}
+
+	@Override
+	public int modifyIcate(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("mappers.AdminDAO-mapper.modifyIcate", map);
+	}
+
+	@Override
+	public int setItem(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("mappers.AdminDAO-mapper.setItem", map);
+	}
+
+	@Override
+	public int total_member() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("mappers.AdminDAO-mapper.total_member");
+	}
+
+	@Override
+	public int total_member(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("mappers.AdminDAO-mapper.total_member_ck", map);
+	}
+
+	@Override
+	public List<MemberVO> memberlist(HashMap<String, String> map) {
+
+		return sqlSession.selectList("mappers.AdminDAO-mapper.memberlist", map);
+	}
+
+	@Override
+	public List<MemberVO> memberlist_ck(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("mappers.AdminDAO-mapper.memberlist_ck", map);
+	}
+
+	@Override
+	public int exit_member(String ucode) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("mappers.AdminDAO-mapper.exit_member", ucode);
 	}
 
 }

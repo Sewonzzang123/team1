@@ -8,11 +8,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Insert title here</title>
 <link rel="stylesheet"
-	href="${contextPath }/maintest/css/mypage/main.css">
+	href="${pageContext.request.contextPath}/css/mypage/main.css">
 <link rel="stylesheet"
-	href="${contextPath }/maintest/css/mypage/common.css">
+	href="${pageContext.request.contextPath}/css/mypage/common.css">
 <link rel="stylesheet"
-	href="${contextPath }/maintest/css/mypage/modifyForm.css">
+	href="${pageContext.request.contextPath}/css/mypage/modifyForm.css">
 <style type="text/css">
 </style>
 </head>

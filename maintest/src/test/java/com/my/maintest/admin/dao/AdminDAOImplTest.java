@@ -1,5 +1,6 @@
 package com.my.maintest.admin.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -92,13 +93,13 @@ public class AdminDAOImplTest {
 	}
 
 	@Test
-//	@Disabled
+	@Disabled
 	public void getItem() {
 		logger.info(adminDAO.getItem().toString());
 	}
 
 	@Test
-@Disabled
+	@Disabled
 	public void delIcate() {
 		String ca_num = "5";
 		adminDAO.delIcate(ca_num);
@@ -106,10 +107,45 @@ public class AdminDAOImplTest {
 	}
 
 	@Test
-@Disabled
+	@Disabled
 	public void delItem() {
 		String i_num = "72";
 		adminDAO.delIcate(i_num);
 		logger.info("완료");
+	}
+
+	@Test
+	@Disabled
+	public void total_member() {
+		logger.info(String.valueOf(adminDAO.total_member()));
+	}
+
+	@Test
+	@Disabled
+	public void total_member_ck() {
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("searchType", "name");
+		map.put("keyword", "정민");
+		logger.info(String.valueOf(adminDAO.total_member(map)));
+	}
+
+	@Test
+	@Disabled
+	public void memberlist() {
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("end_num", "1");
+		map.put("str_num", "5");
+		logger.info(adminDAO.memberlist(map).toString());
+	}
+
+	@Test
+//@Disabled
+	public void memberlist_ck() {
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("end_num", "1");
+		map.put("str_num", "5");
+		map.put("searchType", "name");
+		map.put("keyword", "정민");
+		logger.info(adminDAO.memberlist_ck(map).toString());
 	}
 }

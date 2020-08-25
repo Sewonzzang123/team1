@@ -76,7 +76,7 @@
 				}
 			}
 		};
-		ajax.open("POST", "/maintest/mypage/changePW"); //
+		ajax.open("POST", "/${pageContext.request.contextPath}/mypage/changePW"); //
 		ajax.send(nextpw.value);
 		
 		curpw.value = '';
@@ -179,9 +179,9 @@
 					<input type="submit" value="회원정보 수정"
 						formaction="${pageContext.request.contextPath}/mypage/modify" />
 					<input type="button" value="취소"
-						onClick="location.href='/maintest'" /> <input type="button"
+						onClick="location.href='${pageContext.request.contextPath}'" /> <input type="button"
 						value="회원탈퇴 신청"
-						onClick="location.href='/maintest/mypage/withdrawForm'" />
+						onClick="location.href='${pageContext.request.contextPath}/mypage/withdrawForm'" />
 				</div>
 			</form>
 		</main>

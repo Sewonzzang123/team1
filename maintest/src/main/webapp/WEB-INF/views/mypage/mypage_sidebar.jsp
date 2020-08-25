@@ -53,9 +53,13 @@ a {
 
 	<div class="nav_sub-title">마이페이지</div>
 	<ul id="sidebar_list">
-		<li><a href="/maintest/mypage/modifyForm">회원 정보 수정</a></li>
-		<li><a href="/maintest/mypage/mypost">내가 쓴 글</a></li>
-		<li><a href="/maintest/mypage/mylist">내 리스트</a></li>
+		<li><a
+			href="${pageContext.request.contextPath}/mypage/modifyForm">회원
+				정보 수정</a></li>
+		<li><a href="${pageContext.request.contextPath}/mypage/mypost">내가
+				쓴 글</a></li>
+		<li><a href="${pageContext.request.contextPath}/mypage/mylist">내
+				리스트</a></li>
 	</ul>
 
 

@@ -10,157 +10,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Document</title>
+<title>게시판 관리</title>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/admin/admin.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/admin/admin_main.css">
 <script src="http://code.jquery.com/jquery-latest.js"></script>
-<style>
-ul {
-	padding: 0;
-	margin: 0;
-}
 
-li {
-	list-style: none;
-}
-
-.b_sidebar .b_listSet {
-	width: inherit;
-	height: 100%;
-	min-height: 600px;
-	overflow-y: scroll;
-}
-
-.b_sidebar button {
-	width: 180px;
-	height: 35px;
-	text-align: left;
-	padding-left: 20px;
-	background-color: white;
-	border: 0px white solid;
-}
-
-.b_listBtn input {
-	width: 100px;
-}
-
-.b_container {
-	width: 620px;
-	border: 1px solid black;
-	border-collapse: collapse;
-	display: flex;
-}
-
-.b_sidebar {
-	border-right: 1px solid black;
-	width: 200px;
-	display: flex;
-	flex-direction: column;
-}
-
-.b_content {
-	/* border: 1px solid black; */
-	width: 420px;
-}
-
-.b_content table {
-	width: 380px;
-	margin: 20px;
-	border-collapse: collapse;
-}
-
-.b_content th, .b_content td {
-	border-bottom: 1px black solid;
-	padding: 15px 0 15px 15px;
-}
-
-.b_content th {
-	text-align: left;
-	vertical-align: top;
-}
-
-.btype_input_box {
-	text-align: center;
-}
-
-.b_content tr {
-	margin: 20px;
-}
-
-#caname_input, #bmemo_input {
-	height: 25px;
-	width: 250px;
-}
-
-.b_subject_chd {
-	margin-left: 5px;
-	margin-top: 10px;
-	width: 250px;
-	border-bottom: 1px solid #979797;
-}
-
-.b_subject_chd>span {
-	margin-bottom: 5px;
-	display: inline-block;
-	width: 200px;
-}
-
-.actionBtn {
-	width: 600px;
-	margin-top: 20px;
-	text-align: center;
-}
-
-.actionBtn input {
-	display: inline-block;
-	height: 32px;
-	width: 80px;
-	background: url(https://cafe.pstatic.net/img/manage/sp_btn_141125.gif)
-		no-repeat 100% -86px;
-	font-size: 12px;
-	line-height: 34px;
-	color: #fff;
-	text-align: center;
-	cursor: pointer;
-	letter-spacing: -1px;
-	font-weight: bold;
-	font-family: '돋움', Dotum, Helvetica, sans-serif;
-}
-
-.hide {
-	display: none;
-}
-
-.on {
-	color: blue;
-	font-weight: bold;
-}
-
-#btype_input {
-	width: 250px;
-	height: 30px;
-}
-
-.sub_input {
-	width: 200px;
-}
-
-.sub_input_box {
-	display: flex;
-	justify-content: space-between;
-}
-
-.content_sub-title {
-	display: block;
-	margin: 0.5rem 0;
-	padding: 0.25rem 0;
-	font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI",
-		"Helvetica Neue", "Lucida Grande", Arial, sans-serif;
-	font-size: 2em;
-	font-weight: bold;
-	text-transform: uppercase;
-	border-bottom: 1px solid #5d4fad;
-	margin-bottom: 10px;
-}
-</style>
 <script>
 	//선택된 게시판
 	var idx = null;
@@ -357,8 +213,6 @@ li {
 
 	}
 </script>
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/mypage/main.css">
 </head>
 
 <body>
@@ -395,14 +249,13 @@ li {
 					<c:forEach var="bcate" items="${requestScope.bcategoryVO }">
 						<table id="" class="set_box hide">
 							<input type="hidden" class="info" id="canum_input"
-								value="${bcate.catnum }">
+								value="${bcate.catnum }" />
 							<!-- 카테고리 넘버 -->
 
 							<tr>
 								<th class="caname">게시판명</th>
 								<td class="caname_value"><input id="caname_input"
-									class="caname_input info" type=" text"
-									value="${bcate.catname }"></td>
+									class="caname_input info" type="text" value="${bcate.catname }"></td>
 							</tr>
 
 							<tr>

@@ -51,6 +51,7 @@ public class MypageController {
 
 		MemberVO memberVO = (MemberVO) session.getAttribute("member");
 
+		logger.info(memberVO.toString());
 		memberVO.setPw(nextpw);
 		mypageSVC.changePW(memberVO);
 
@@ -107,7 +108,7 @@ public class MypageController {
 			HttpSession session, Model model) {
 		MemberVO memberVO = (MemberVO) session.getAttribute("member");
 		String ucode = memberVO.getUcode();
-
+		logger.info(memberVO.toString());
 		model.addAttribute("mypost", mypageSVC.mypost(reqPage.orElse(1), ucode));
 		model.addAttribute("paging", mypageSVC.mypost_paging(reqPage.orElse(1), ucode));
 
@@ -131,8 +132,10 @@ public class MypageController {
 	@RequestMapping({ "/mylist", "/mylist/{reqPage}" })
 	public String mylist(@PathVariable(value = "reqPage", required = false) Optional<Integer> reqPage,
 			HttpSession session, Model model) {
+
 		MemberVO memberVO = (MemberVO) session.getAttribute("member");
 		String ucode = memberVO.getUcode();
+		logger.info(memberVO.toString());
 
 		model.addAttribute("mylist", mypageSVC.mylist(reqPage.orElse(1), ucode));
 		model.addAttribute("paging", mypageSVC.mylist_paging(reqPage.orElse(1), ucode));
