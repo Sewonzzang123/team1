@@ -21,7 +21,6 @@
 
 	<!-- main -->
 	<main id="page" class="signupForm">
-		<h1 class="title">회원 가입</h1>
 		<form:form modelAttribute="memberVO">
 			<table>
 				<tr>
@@ -74,7 +73,8 @@
 			<div class="actionBtn">
 				<input type="submit" value="회원가입"
 					formaction="${pageContext.request.contextPath}/signup" /> <input
-					type="button" value="취소" onClick="location.href='/${pageContext.request.contextPath}'" />
+					type="button" value="취소"
+					onClick="location.href='/${pageContext.request.contextPath}'" />
 			</div>
 		</form:form>
 	</main>

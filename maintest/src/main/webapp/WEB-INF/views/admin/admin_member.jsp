@@ -7,178 +7,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title></title>
-<style>
-html {
-	font-family: Tahoma, Gulim, '굴림';
-	font-size: 12px;
-	line-height: 1.3;
-	color: #333333;
-	-webkit-text-size-adjust: 100%;
-	-ms-text-size-adjust: 100%;
-}
-
-thead {
-	background: #EFEFEF;
-	text-align: center;
-	font-size: 15px;
-}
-
-thead>tr>th {
-	border-bottom: 2px solid #cbcbcb;
-	border-top: 2px solid #cbcbcb;
-}
-
-#member_table {
-	width: 700px;
-	border-collapse: collapse;
-}
-
-#content {
-	width: 700px;
-}
-
-#box1 {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-}
-
-#box2 {
-	width: 370px;
-	display: flex;
-	align-items: center;
-	justify-content: space-around;
-}
-
-#searchType {
-	width: 85px;
-	height: 22px;
-}
-
-#member_exit {
-	width: 100px;
-	display: inline-block;
-}
-
-#member_exit>input {
-	width: 100px;
-}
-
-#page_num {
-	margin-top: 20px;
-	text-align: center;
-}
-
-#page_num>span {
-	border: 1px solid black;
-}
-
-.checkbox {
-	text-align: left;
-}
-
-.id, .nickname {
-	text-align: left;
-}
-
-tbody td {
-	text-align: center;
-}
-
-tbody td, tbody th {
-	border-bottom: 1px #E0E0E0 solid;
-}
-</style>
+<title>회원 관리</title>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/admin/admin_main.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/admin/admin_member.css">
 <script src="http://code.jquery.com/jquery-latest.js"></script>
-<script>
-	$(document).ready(function() {
-		$("#allselect").change(allselect);
-		$("#exitBtn").click(member_exit)
-	});
-
-	function allselect(e) {
-		if (e.target.checked == true) {
-			$(".check").prop("checked", true);
-			console.log("체크됨");
-		} else {
-			$(".check").prop("checked", false);
-			console.log('해제됨');
-			;
-		}
-	}
-
-	function member_exit(e) {	
-		
-		var delete_list = new Array;
-
-		for (var i = 0; i < $(".check").length; i++) {
-			if ($(".check")[i].checked == true) {
-				delete_list.push($(".check")[i].getAttribute('ucode'));
-			}
-		}
-
-		console.log(delete_list);
-
-		if (delete_list.length == 0) {
-			alert("탈퇴시킬 회원을 선택해주세요.")
-			return;
-		}
-
-		if(confirm("선택한 회원을 탈퇴시키겠습니까?") == false){
-			return;}
-
-		//ajax 등록	
-		const xhttp = new XMLHttpRequest();
-
-		xhttp.addEventListener("readystatechange", ajaxCall);
-		function ajaxCall(event) {
-			if (xhttp.readyState == 4 && xhttp.status == 200) {
-				alert("선택한 회원을 탈퇴시켰습니다..");
-				location.reload(true);
-			}
-		}
-
-		const result = JSON.stringify(delete_list);
-
-		console.log(result)
-		//서비스요청1
-		xhttp.open("POST", "${pageContext.request.contextPath}/admin/exit", );
-
-		xhttp
-				.setRequestHeader("Content-Type",
-						"application/json;charset=utf-8");
-
-		xhttp.send(result);
-
-	}
-</script>
 <script type="text/javascript">
-	window.onload = function() {
-		document.getElementById('serchBtn').addEventListener('click', serch)
-	}
-
-	function serch() {
-		var searchType = document.getElementById('searchType').value;
-		var keyword = document.getElementById('keyword').value;
-
-		if (keyword.trim().length != 0) {
-
-			location.href = "${pageContext.request.contextPath}/admin/member/1/" + searchType + "/"
-					+ keyword;
-
-		} else {
-			alert('검색어를 입력해주세요.')
-		}
-	}
+	var contextPath = "${pageContext.request.contextPath}";
 </script>
+<script defer
+	src="${pageContext.request.contextPath}/js/admin/admin_member.js"></script>
 </head>
 
 <body>
 	<!-- header -->
-	<%@ include file="/WEB-INF/views/layout/haeder.jsp"%>
+	<%@ include file="/WEB-INF/views/layout/uppermost.jsp"%>
 
 	<div class="box-container">
 		<!-- aside -->
@@ -206,12 +50,12 @@ tbody td, tbody th {
 			<br>
 			<table id="member_table">
 				<colgroup>
-					<col width="23">
-					<col width="100">
-					<col width="150">
-					<col width="60">
-					<col width="100">
-					<col width="120">
+					<col style="width: 23px;">
+					<col style="width: 100px;">
+					<col style="width: 150px;">
+					<col style="width: 60px;">
+					<col style="width: 100px;">
+					<col style="width: 120px;">
 				</colgroup>
 				<thead id="member_table_header">
 					<tr>
@@ -245,16 +89,16 @@ tbody td, tbody th {
 				<c:set var="page" value="${requestScope.paging.startPage }" />
 				<c:if test="${requestScope.paging.prev==true }">
 					<a
-						href="/${pageContext.request.contextPath}/admin/member/${requestScope.paging.prevpage }<c:if test="${not empty requestScope.searchType}">/${requestScope.searchType }/${requestScope.keyword }</c:if>">이전</a> | </c:if>
+						href="${pageContext.request.contextPath}/admin/member/${requestScope.paging.prevpage }<c:if test="${not empty requestScope.searchType}">/${requestScope.searchType }/${requestScope.keyword }</c:if>">이전</a> | </c:if>
 				<c:forEach begin="${requestScope.paging.startPage }"
 					end="${requestScope.paging.endPage}">
 					<span><a
-						href="/${pageContext.request.contextPath}/admin/member/${page }<c:if test="${not empty requestScope.searchType}">/${requestScope.searchType }/${requestScope.keyword }</c:if>
+						href="${pageContext.request.contextPath}/admin/member/${page }<c:if test="${not empty requestScope.searchType}">/${requestScope.searchType }/${requestScope.keyword }</c:if>
 				">${page }</a></span>
 					<c:set var="page" value="${page+1}" />
 				</c:forEach>
 				<c:if test="${requestScope.paging.next==true }"> | <a
-						href="/${pageContext.request.contextPath}/mypage/mylist/${requestScope.paging.nextpage }<c:if test="${not empty requestScope.searchType}">/${requestScope.searchType }/${requestScope.keyword }</c:if>">다음</a>
+						href="${pageContext.request.contextPath}/mypage/mylist/${requestScope.paging.nextpage }<c:if test="${not empty requestScope.searchType}">/${requestScope.searchType }/${requestScope.keyword }</c:if>">다음</a>
 				</c:if>
 			</div>
 		</main>
