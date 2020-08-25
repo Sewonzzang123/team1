@@ -22,6 +22,9 @@ button, input, select, textarea {
 	width: 450px;
 	text-align: center;
 	padding: 0;
+	background-color: #5d4fad;
+	border: 0;
+	color: white;
 }
 
 .input_row {
@@ -57,7 +60,6 @@ button, input, select, textarea {
 }
 
 .btn {
-	width: 300px;
 	margin-bottom: 12px;
 	height: 40px;
 	line-height: 40px;
@@ -131,6 +133,6 @@ button, input, select, textarea {
 		</main>
 	</div>
 	<!-- footer -->
-	<footer>footer</footer>
+
 </body>
 </html>

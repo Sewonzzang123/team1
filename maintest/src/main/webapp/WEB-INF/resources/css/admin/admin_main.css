@@ -9,16 +9,8 @@ html {
 	-ms-text-size-adjust: 100%;
 }
 
-header {
-	height: 50px;
-}
-
 footer {
 	height: 150px;
-}
-
-header, footer {
-	min-width: 700px;
 }
 
 #content {

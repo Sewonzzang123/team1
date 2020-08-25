@@ -36,6 +36,12 @@ public class AdminController {
 
 	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
+	@RequestMapping(value = "")
+	public String getMypage() {
+
+		return "redirect:/admin/member";
+	}
+
 	// 게시판 관리 호출
 	@RequestMapping("/board")
 	public String get_admin_board(Model model) {
