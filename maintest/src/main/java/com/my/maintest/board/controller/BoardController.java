@@ -102,6 +102,9 @@ public class BoardController {
 
 		tmpVO.setId(id);
 		tmpVO.setPw(pw);
+		tmpVO.setNickname("홍길동");
+		tmpVO.setUcode("5");
+
 		session.setAttribute("member", tmpVO);
 
 		System.out.println("getSession" + session.getAttribute("member").toString());
@@ -286,12 +289,15 @@ public class BoardController {
 
 	// 답글 등록
 	@PostMapping("/reply")
-	public String toReply(@ModelAttribute BoardVO boardVO, BindingResult result) {
-		if (result.hasErrors()) {
-			return "/board/boardWriteFrm";
-		}
+	public String toReply(@ModelAttribute BoardVO boardVO,
+			@RequestParam("returnPage") String returnPage,
+			BindingResult result) {
+		
+//		if (result.hasErrors()) {
+//			return "/board/boardReplyFrm";
+//		}
 		boardSVC.insertRepliedArticle(boardVO);
-		return "redirect:/board/boardListFrm";
+		return "redirect:/board/boardListFrm/"+ returnPage;
 	}
 
 }

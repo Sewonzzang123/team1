@@ -23,9 +23,9 @@
 						<a href=""> 답글 작성하기 </a>
 					</h2>
 					<hr>
-					<form id="replyFrm" name="replyFrm" method="POST"
+					<form id="replyFrm" name="replyFrm" method="POST" 	enctype="multipart/form-data"
 						action="${contextPath}/board/reply">											
-									<%-- <input type="hidden" id="bnum" name="bnum" value="${boardVO.bnum }"/> --%>
+									<input type="hidden" id="bnum" name="bnum" value="${boardVO.bnum }"/> 
 									<input type="hidden" name="bcategory.catnum" value="${boardVO.bcategory.catnum }" />
 									<input type="hidden" name="hidcategory.hidnum" value="${boardVO.hidcategory.hidnum }"/>
 									<input type="hidden" name="ucode" value="${boardVO.ucode }"/>									
@@ -55,16 +55,16 @@
 								<li>	<label>조회수</label><c:out value="${boardVO.bhits }"/>	</li>
 								
 								
-								<label for="">파일첨부</label><input type="file" id="files" name="files" multiple />
+							<li>		<label for="">파일첨부</label><input type="file" id="files" name="files" multiple /></li>
 								
 							<li><textarea id="bcontent" name="bcontent" cols="30" rows="5" placeholder="내용 입력"    >${boardVO.bcontent }</textarea></li>
 					
-														
+									<li>					
 								<div class="btnGrp">					
 							<button id="tmpWriteBtn" type="button">임시저장</button>
 							<button id="replyBtn" type="button">등록</button>
 							<button id="listBtn" type="button">목록으로</button> 
-								</div>
+							</div>
 							</li>
 						</ul>
 					</form>

@@ -83,13 +83,10 @@
             grid-column: 1/3;
             border-collapse: collapse;
         }
-        
         #writeFrm  #files{
         display:none;
         }
+      
+
         
-          #writeFrm .dragOver{
-    		border = '1px solid blue';
-        backgroundColor= skyblue;
-        opacity : 0.3;        				
-          }
+        

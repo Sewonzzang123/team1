@@ -200,8 +200,26 @@ public void insertFiles(List<MultipartFile> files, long bnum) {
 	//게시글 답글 작성
 	@Override
 	public int insertRepliedArticle(BoardVO boardVO) {	
+		
+		//답글 step 갱신
 		boardDAO.updateBstep(boardVO.getBgroup(), boardVO.getBstep());
-		return boardDAO.insertRepliedArticle(boardVO);
+			int result = 0 ;
+		
+		//게시글 저장		
+		result = boardDAO.insertRepliedArticle(boardVO);
+		//첨부파일 저장
+		//첨부파일 유무 체크 
+		
+		
+		List<MultipartFile> files = boardVO.getFiles();
+		if(files !=null && files.size() > 0 ) {			
+		
+			insertFiles(files, boardVO.getBnum());		
+			
+		}
+
+		return result;	
+
 	}
 
 	

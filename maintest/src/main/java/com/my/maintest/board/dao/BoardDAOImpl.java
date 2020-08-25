@@ -144,6 +144,7 @@ public int updateBhits(long bnum) {
 		//게시글 답글 등록
 		@Override
 		public int insertRepliedArticle(BoardVO boardVO) {	
+			
 			return		sqlSession.insert("mappers.BoardDAO-mapper.insertRepliedArticle",boardVO );
 		}
 		//게시글 bstep +1 처리 (답글 등록 순위)  높을수록 오래된 답글
