@@ -74,7 +74,7 @@
 				<input type="submit" value="회원가입"
 					formaction="${pageContext.request.contextPath}/signup" /> <input
 					type="button" value="취소"
-					onClick="location.href='/${pageContext.request.contextPath}'" />
+					onClick="location.href='${pageContext.request.contextPath}'" />
 			</div>
 		</form:form>
 	</main>
