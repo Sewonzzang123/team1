@@ -9,9 +9,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Insert title here</title>
 <link rel="stylesheet"
-	href="${contextPath }/maintest/css/mypage/main.css">
+	href="${pageContext.request.contextPath}/css/mypage/main.css">
 <link rel="stylesheet"
-	href="${contextPath }/maintest/css/mypage/common2.css">
+	href="${pageContext.request.contextPath}/css/mypage/common2.css">
 <script>
 	window.onload = function on() {
 		const del_btn = document.querySelectorAll('.mylist_btn');
@@ -37,7 +37,8 @@
 					}
 				}
 			};
-			ajax.open("POST", "/maintest/mypage/del_list"); //
+			ajax.open("POST",
+					"${pageContext.request.contextPath}/mypage/del_list"); //
 			ajax.send(ele);
 
 			location.reload(true)
@@ -58,9 +59,9 @@
 			<div class="content_sub-title">내 리스트</div>
 			<table id="">
 				<colgroup>
-					<col width="40">
+					<col width="50">
 					<col width="200">
-					<col width="200">
+					<col width="150">
 					<col width="100">
 					<col width="100">
 				</colgroup>
@@ -78,7 +79,7 @@
 						<tr>
 							<td>${list.num}</td>
 							<td class="title"><a
-								href="/maintest/mypage/listview/${list.lnum}"
+								href="${pageContext.request.contextPath}/mypage/listview/${list.lnum}"
 								onclick="window.open(this.href,'','width=1000, height=620, scrollbars=yes'); return false;">${list.lname }</a></td>
 							<td>${list.checked_item }/${list.total_item }[
 								${list.checked_item/list.total_item*100}% ]</td>
@@ -94,14 +95,16 @@
 			<div id="page_num">
 				<c:set var="page" value="${requestScope.paging.startPage }" />
 				<c:if test="${requestScope.paging.prev==true }">
-					<a href="/maintest/mypage/mylist/${requestScope.paging.prevpage }">이전</a> | </c:if>
+					<a
+						href="${pageContext.request.contextPath}/mypage/mylist/${requestScope.paging.prevpage }">이전</a> | </c:if>
 				<c:forEach begin="${requestScope.paging.startPage }"
 					end="${requestScope.paging.endPage}">
-					<span><a href="/maintest/mypage/mylist/${page }">${page }</a></span>
+					<span><a
+						href="${pageContext.request.contextPath}/mypage/mylist/${page }">${page }</a></span>
 					<c:set var="page" value="${page+1}" />
 				</c:forEach>
 				<c:if test="${requestScope.paging.next==true }"> | <a
-						href="/maintest/mypage/mylist/${requestScope.paging.nextpage }">다음</a>
+						href="${pageContext.request.contextPath}/mypage/mylist/${requestScope.paging.nextpage }">다음</a>
 				</c:if>
 			</div>
 		</main>

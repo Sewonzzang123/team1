@@ -52,9 +52,12 @@ a {
 
 	<div class="nav_sub-title">관리자 페이지</div>
 	<ul id="sidebar_list">
-		<li><a href="/maintest/admin/adminMember">회원 관리</a></li>
-		<li><a href="/maintest/admin/board">게시판 관리</a></li>
-		<li><a href="/maintest/mypage/mylist">내 리스트</a></li>
+		<li><a href="${pageContext.request.contextPath}/admin/member">회원
+				관리</a></li>
+		<li><a href="${pageContext.request.contextPath}/admin/board">게시판
+				관리</a></li>
+		<li><a href="${pageContext.request.contextPath}/admin/item">아이템
+				관리</a></li>
 	</ul>
 
 </aside>

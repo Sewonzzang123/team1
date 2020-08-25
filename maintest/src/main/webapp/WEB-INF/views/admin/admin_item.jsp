@@ -10,184 +10,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Document</title>
+<title>아이템 관리</title>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/admin/admin.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/admin/admin_main.css">
 <script src="http://code.jquery.com/jquery-latest.js"></script>
-<style>
-ul {
-	padding: 0;
-	margin: 0;
-}
 
-li {
-	list-style: none;
-}
-
-.b_sidebar .b_listSet {
-	width: inherit;
-	height: 100%;
-	min-height: 600px;
-	overflow-y: scroll;
-}
-
-.b_sidebar button {
-	width: 180px;
-	height: 35px;
-	text-align: left;
-	padding-left: 20px;
-	background-color: white;
-	border: 0px white solid;
-}
-
-.b_listBtn input {
-	width: 100px;
-}
-
-.b_container {
-	width: 620px;
-	border: 1px solid black;
-	border-collapse: collapse;
-	display: flex;
-}
-
-.b_sidebar {
-	border-right: 1px solid black;
-	width: 200px;
-	display: flex;
-	flex-direction: column;
-}
-
-.b_content {
-	/* border: 1px solid black; */
-	width: 420px;
-}
-
-.b_content table {
-	width: 380px;
-	margin: 20px;
-	border-collapse: collapse;
-}
-
-.b_content th, .b_content td {
-	border-bottom: 1px black solid;
-	padding: 15px 0 15px 15px;
-}
-
-.b_content th {
-	text-align: left;
-	vertical-align: top;
-}
-
-.btype_input_box {
-	text-align: center;
-}
-
-.b_content tr {
-	margin: 20px;
-}
-
-#caname_input, #bmemo_input {
-	height: 25px;
-	width: 250px;
-}
-
-#icate_name_input {
-	height: 40px;
-	width: 250px;
-	text-align: center;
-}
-
-.b_subject_chd {
-	margin-left: 5px;
-	margin-top: 10px;
-	width: 250px;
-	border-bottom: 1px solid #979797;
-}
-
-.b_subject_chd>span {
-	margin-bottom: 5px;
-	display: inline-block;
-	width: 200px;
-}
-
-.actionBtn {
-	width: 600px;
-	margin-top: 20px;
-	text-align: center;
-}
-
-.actionBtn input {
-	display: inline-block;
-	height: 32px;
-	width: 80px;
-	background: url(https://cafe.pstatic.net/img/manage/sp_btn_141125.gif)
-		no-repeat 100% -86px;
-	font-size: 12px;
-	line-height: 34px;
-	color: #fff;
-	text-align: center;
-	cursor: pointer;
-	letter-spacing: -1px;
-	font-weight: bold;
-	font-family: '돋움', Dotum, Helvetica, sans-serif;
-}
-
-.on {
-	color: blue;
-	font-weight: bold;
-}
-
-#btype_input {
-	width: 250px;
-	height: 30px;
-}
-
-.sub_input {
-	width: 200px;
-}
-
-.sub_input_box {
-	display: flex;
-	justify-content: space-between;
-}
-
-.icategory_name {
-	width: 700px;
-}
-
-#icategory_set_box {
-	height: 100%;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-}
-
-#icategory_table td, #icategory_table tr {
-	border: none;
-}
-
-#icategory_table tfoot {
-	position: absolute;
-	bottom: 0px;
-	height: 50px;
-}
-
-#icategory_table .item_area {
-	padding: 20px 10px;
-}
-
-#icategory_table .item_set {
-	display: flex;
-	justify-content: space-between;
-	border-bottom: 1px solid #979797;
-	padding-bottom: 5px;
-	margin-bottom: 5px;
-}
-
-.icategory_add_btn_area {
-	text-align: center;
-	margin-bottom: 10px;
-}
-</style>
 <script>
 	//선택된 카테고리
 	var idx = null;
@@ -314,8 +143,8 @@ li {
 			const icate_info = board_data[i].getElementsByClassName('info');
 			const item = board_data[i].getElementsByClassName('item_name');
 
-			icategory.ca_num = icate_info[0].value;
-			icategory.ca_name = icate_info[1].value;
+			icategory.ca_name = icate_info[0].value;
+			icategory.ca_num = icate_info[1].value;
 
 			const item_list = new Array;
 
@@ -366,76 +195,82 @@ li {
 </head>
 
 <body>
+	<!-- header -->
+	<%@ include file="/WEB-INF/views/layout/haeder.jsp"%>
 
-	<main class="content" id="adminBoard">
+	<div class="box-container">
+		<!-- aside -->
+		<%@ include file="/WEB-INF/views/admin/admin_sidebar.jsp"%>
 
-		<div class="b_container">
+		<!-- main -->
 
-			<div class="b_sidebar">
-				<div class="b_listSet">
-					<ul id="b_list">
-						<c:forEach var="icate" items="${requestScope.itemCategoryVO }">
-							<li class="selectable"><button class="icate_name"
-									onclick="icate_name_select(this)" ca_num="${icate.ca_num }">${icate.ca_name }</button></li>
-						</c:forEach>
+		<main id="content" class="admin_item">
+			<div class="content_sub-title">아이템 관리</div>
+			<div class="b_container">
+				<div class="b_sidebar">
+					<div class="b_listSet">
+						<ul id="b_list">
+							<c:forEach var="icate" items="${requestScope.itemCategoryVO }">
+								<li class="selectable"><button class="icate_name"
+										onclick="icate_name_select(this)" ca_num="${icate.ca_num }">${icate.ca_name }</button></li>
+							</c:forEach>
 
-					</ul>
-				</div>
-				<div class="b_listBtn">
-					<input type="button" onclick="addMenu()" value="추가"><input
-						type="button" onclick="delMenu()" value="제거">
-				</div>
-			</div>
-
-
-
-			<div class="b_content" id="b_content">
-				<c:forEach var="icate" items="${requestScope.itemCategoryVO }">
-
-					<div id="icategory_set_box" class="set_box" style="display: none;">
-
-						<table id="icategory_table">
-							<caption>
-								<input id="icate_name_input" class="icate_name_input info"
-									type=" text" value="${icate.ca_name }">
-							</caption>
-							<input type="hidden" class="info" id="ca_num_input"
-								value="${icate.ca_num }">
-							<!-- 카테고리 넘버 -->
-							<tr>
-								<td class="item_area">
-									<li><c:forEach var="item" items="${requestScope.item }">
-											<c:if test="${item.itemCategoryVO.ca_num == icate.ca_num }">
-												<div class="item_set" i_num="${item.i_num }">
-													<span class="item_name">${item.i_name }</span><input
-														type="button" value="삭제" class="item_del_btn"
-														onclick="item_del(this)">
-												</div>
-											</c:if>
-										</c:forEach></li>
-								</td>
-							</tr>
-						</table>
-
-						<div class="icategory_add_btn_area">
-							<input type="button" value="아이템 추가" class="icategory_add_btn"
-								onclick="item_add()">
-						</div>
+						</ul>
 					</div>
-				</c:forEach>
+					<div class="b_listBtn">
+						<input type="button" onclick="addMenu()" value="추가"><input
+							type="button" onclick="delMenu()" value="제거">
+					</div>
+				</div>
 
+
+
+				<div class="b_content" id="b_content">
+					<c:forEach var="icate" items="${requestScope.itemCategoryVO }">
+
+						<div id="icategory_set_box" class="set_box" style="display: none;">
+
+							<table id="icategory_table">
+								<caption>
+									<input id="icate_name_input" class="icate_name_input info"
+										type="text" value="${icate.ca_name }">
+								</caption>
+								<input type="hidden" class="info" id="ca_num_input"
+									value="${icate.ca_num }" />
+								<!-- 카테고리 넘버 -->
+								<tr>
+									<td class="item_area">
+										<ul>
+											<li><c:forEach var="item" items="${requestScope.item }">
+													<c:if test="${item.itemCategoryVO.ca_num == icate.ca_num }">
+														<div class="item_set" i_num="${item.i_num }">
+															<span class="item_name">${item.i_name }</span><input
+																type="button" value="삭제" class="item_del_btn"
+																onclick="item_del(this)">
+														</div>
+													</c:if>
+												</c:forEach></li>
+										</ul>
+									</td>
+								</tr>
+							</table>
+
+							<div class="icategory_add_btn_area">
+								<input type="button" value="아이템 추가" class="icategory_add_btn"
+									onclick="item_add()">
+							</div>
+						</div>
+					</c:forEach>
+
+				</div>
 			</div>
-		</div>
 
-		<div class="actionBtn">
-			<input type="button" id="saveBtn" value="저장"> <input
-				type="button" value="취소">
-		</div>
+			<div class="actionBtn">
+				<input type="button" id="saveBtn" value="저장"> <input
+					type="button" value="취소">
+			</div>
 
-	</main>
-
-	<script>
-		
-	</script>
+		</main>
+	</div>
 </body>
 </html>

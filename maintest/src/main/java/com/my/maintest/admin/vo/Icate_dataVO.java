@@ -10,5 +10,4 @@ public class Icate_dataVO {
 	private String ca_name;
 	private List<String> item_list;
 
-
 }

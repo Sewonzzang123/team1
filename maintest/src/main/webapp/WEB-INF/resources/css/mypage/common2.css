@@ -8,8 +8,8 @@ table {
 }
 
 thead>tr>th {
-	border-bottom: 2px solid black;
-	border-top: 2px solid black;
+	border-bottom: 2px solid #cbcbcb;
+	border-top: 2px solid #cbcbcb;
 }
 
 td {

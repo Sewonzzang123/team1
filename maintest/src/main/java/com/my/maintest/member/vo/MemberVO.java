@@ -1,5 +1,7 @@
 package com.my.maintest.member.vo;
 
+import java.sql.Date;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
@@ -15,7 +17,6 @@ public class MemberVO {
 	@Email(message = "* 이메일 형식으로 입력해주세요.")
 	private String id; // ID VARCHAR2(40 BYTE) No 1 이메일 ex)admin@google.com
 
-	@NotEmpty(message = "* 필수 정보입니다.")
 	@Length(min = 6, max = 10, message = "* 6~10자리로 입력해주세요.")
 	private String pw; // PW VARCHAR2(10 BYTE) No 2 6~10자리, 특수문자 포함
 
@@ -44,4 +45,10 @@ public class MemberVO {
 
 	private String ucode;
 
+<<<<<<< Upstream, based on origin/master
 }
+=======
+	private Date cdate;
+
+}
+>>>>>>> 81b2787 0825

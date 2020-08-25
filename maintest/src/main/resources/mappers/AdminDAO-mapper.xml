@@ -67,13 +67,114 @@
 		i_num=#{i_num}
 	</delete>
 
-	<insert id="setIcate" parameterType="string">
-		insert into i_category (ca_num, ca_name) values (ca_num_seq.nextval,
+	<select id="getCa_num" resultType="string">
+		SELECT CA_NUM_SEQ.nextval FROM
+		DUAL
+	</select>
+
+	<insert id="setIcate" parameterType="hashMap">
+		insert into i_category
+		(ca_num, ca_name) values (#{ca_num },
 		#{ca_name})
 	</insert>
 
-<!-- 	<update id="modifyIcate"></update>
+	<update id="modifyIcate" parameterType="hashMap">
+		update i_category set
+		ca_name=#{ca_name } where
+		ca_num=#{ca_num }
+	</update>
 
-	<insert id="setItem"></insert> -->
+	<insert id="setItem" parameterType="hashMap">
+		insert into item (ca_num,
+		i_num, i_name) values (#{ca_num }, I_NUM_SEQ.nextval, #{i_name})
+	</insert>
+
+	<select id="total_member" resultType="int">
+		select count(*) from member
+	</select>
+
+	<select id="total_member_ck" resultType="int"
+		parameterType="hashMap">
+		select count(*) from
+		member
+		<if test="searchType != null">
+			where
+			<choose>
+				<!-- 이름 -->
+				<when test="searchType == 'name'">
+					name like '%' || #{keyword} || '%'
+				</when>
+				<!-- 별명 -->
+				<when test="searchType == 'nickname'">
+					nickname like '%' || #{keyword} || '%'
+				</when>
+				<!-- 아이디 -->
+				<when test="searchType == 'id'">
+					id like '%' || #{keyword} || '%'
+				</when>
+			</choose>
+		</if>
+	</select>
+
+	<select id="memberlist"
+		resultType="com.my.maintest.member.vo.MemberVO"
+		parameterType="hashMap">
+		select ucode, id, pw, name, tel,
+		nickname, cdate, num
+		from(
+		select ucode, id, pw, name, tel,
+		nickname, cdate, row_number()
+		over(
+		order by
+		ucode
+		asc) as num from
+		member) where num between #{end_num}
+		and #{str_num} order
+		by num
+		desc
+	</select>
+
+	<select id="memberlist_ck"
+		resultType="com.my.maintest.member.vo.MemberVO"
+		parameterType="hashMap">
+		select ucode, id, pw, name, tel,
+		nickname, cdate, num
+		from(
+		select ucode,
+		id, pw, name, tel,
+		nickname, cdate, row_number()
+		over(
+		order by
+		ucode
+		asc)
+		as num from
+		member
+		<if test="searchType != null">
+			where
+			<choose>
+				<!-- 이름 -->
+				<when test="searchType == 'name'">
+					name like '%' || #{keyword} || '%'
+				</when>
+				<!-- 별명 -->
+				<when test="searchType == 'nickname'">
+					nickname like '%' || #{keyword} || '%'
+				</when>
+				<!-- 아이디 -->
+				<when test="searchType == 'id'">
+					id like '%' || #{keyword} || '%'
+				</when>
+			</choose>
+		</if>
+		) where num between #{end_num}
+		and #{str_num} order
+		by num
+		desc
+	</select>
+
+	<delete id="exit_member" parameterType="string">
+		delete member where
+		ucode=#{ucode}
+	</delete>
 
 </mapper>

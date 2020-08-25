@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Insert title here</title>
 <link rel="stylesheet"
-	href="${contextPath }/maintest/css/mypage/main.css">
+	href="${pageContext.request.contextPath}/css/mypage/main.css">
 <link rel="stylesheet"
-	href="${contextPath }/maintest/css/mypage/common.css">
+	href="${pageContext.request.contextPath}/css/mypage/common.css">
 <style>
 #txt {
 	text-align: center;
@@ -61,9 +61,9 @@
 
 			<div class="actionBtn">
 				<input type="button" value="메인페이지로"
-					onClick="location.href='/maintest'"> <input type="button"
+					onClick="location.href='${pageContext.request.contextPath}'"> <input type="button"
 					value="이전 페이지"
-					onClick="location.href='/maintest/mypage/modifyForm'">
+					onClick="location.href='${pageContext.request.contextPath}/mypage/modifyForm'">
 			</div>
 		</main>
 	</div>

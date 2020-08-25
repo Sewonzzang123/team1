@@ -9,9 +9,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Insert title here</title>
 <link rel="stylesheet"
-	href="${contextPath }/maintest/css/mypage/main.css">
+	href="${pageContext.request.contextPath}/css/mypage/main.css">
 <link rel="stylesheet"
-	href="${contextPath }/maintest/css/mypage/common2.css">
+	href="${pageContext.request.contextPath}/css/mypage/common2.css">
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
 	$(document).ready(function() {
@@ -51,7 +51,8 @@
 				}
 			}
 		};
-		ajax.open("POST", "/maintest/mypage/del_post", false); //
+		ajax.open("POST",
+				"/${pageContext.request.contextPath}/mypage/del_post", false); //
 		ajax.send(del_list);
 
 		location.reload(true)
@@ -140,14 +141,16 @@
 			<div id="page_num">
 				<c:set var="page" value="${requestScope.paging.startPage }" />
 				<c:if test="${requestScope.paging.prev==true }">
-					<a href="/maintest/mypage/mylist/${requestScope.paging.prevpage }">이전</a> | </c:if>
+					<a
+						href="${pageContext.request.contextPath}/mypage/mylist/${requestScope.paging.prevpage }">이전</a> | </c:if>
 				<c:forEach begin="${requestScope.paging.startPage }"
 					end="${requestScope.paging.endPage}">
-					<span><a href="/maintest/mypage/mypost/${page }">${page }</a></span>
+					<span><a
+						href="${pageContext.request.contextPath}/mypage/mypost/${page }">${page }</a></span>
 					<c:set var="page" value="${page+1}" />
 				</c:forEach>
 				<c:if test="${requestScope.paging.next==true }"> | <a
-						href="/maintest/mypage/mypost/${requestScope.paging.nextpage }">다음</a>
+						href="${pageContext.request.contextPath}/mypage/mypost/${requestScope.paging.nextpage }">다음</a>
 				</c:if>
 			</div>
 

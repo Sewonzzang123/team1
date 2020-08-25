@@ -1,15 +1,18 @@
 package com.my.maintest.admin.controller;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
-import org.apache.tomcat.util.json.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,15 +21,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.my.maintest.admin.svc.AdminSVC;
 import com.my.maintest.admin.vo.Board_dataVO;
+import com.my.maintest.admin.vo.Icate_dataVO;
+import com.my.maintest.admin.vo.Item_dataVO;
 import com.my.maintest.board.vo.BcategoryVO;
 import com.my.maintest.board.vo.HeadIdCategoryVO;
+import com.my.maintest.member.vo.MemberVO;
 
 @Controller
 @RequestMapping(value = "/admin")
 public class AdminController {
-
-//	@Inject
-//	AdminDAO adminDAO;
 
 	@Inject
 	AdminSVC adminSVC;
@@ -78,7 +81,6 @@ public class AdminController {
 				}
 			}
 		}
-
 		return "location.reload(true)";
 	}
 
@@ -99,55 +101,87 @@ public class AdminController {
 	@RequestMapping("/item")
 	public String get_admin_item(Model model) {
 
-//		logger.info(adminSVC.getItem().toString());
 		model.addAttribute("itemCategoryVO", adminSVC.getIcate());
 		model.addAttribute("item", adminSVC.getItem());
 
 		return "admin/admin_item";
 	}
 
-//아이템 설정 저장()
-	@SuppressWarnings("unchecked")
+	// 아이템 설정 저장()
 	@PostMapping(value = "/setItem", produces = "application/json")
 	@ResponseBody
-	public String setItem(@RequestBody Map<String, Object> param) {
+	public String setItem(@RequestBody Item_dataVO param) {
 		logger.info("JSON() 호출됨!!");
 
-		logger.info(param.toString());
-//		List<Object> text = (List<Object>) param.get("icate_data");
-//		logger.info(text.get(0).toString());
-		for (String del_icate : (List<String>) param.get("del_icate_list")) {
-			adminSVC.delIcate(del_icate);
+		logger.info(param.getDel_icate_list().toString());
+
+		logger.info(param.getIcate_data().toString());
+
+		logger.info(param.getItem_del_list().toString());
+
+		for (String ca_num : param.getDel_icate_list()) {
+			adminSVC.delIcate(ca_num);
 		}
 
-		for (String item_del : (List<String>) param.get("item_del_list")) {//
-			adminSVC.delItem(item_del);
+		for (String i_num : param.getItem_del_list()) {
+			adminSVC.delItem(i_num);
 		}
 
-//		logger.info(String.valueOf(icate_dataVO.get(0).getItem_list()));
+		for (Icate_dataVO data : param.getIcate_data()) {
+			HashMap<String, String> map = new HashMap<String, String>();
+			map.put("ca_name", data.getCa_name());
 
-//		for (Icate_dataVO icate_dataVO : (List<Icate_dataVO>) param.get("icate_data")) {
-//			logger.info(icate_dataVO.getCa_num());
-//		}
-		return "에이잭스 완료";
+			if (data.getCa_num().equals("new")) {
+				data.setCa_num(adminSVC.getCa_num());
+				map.put("ca_num", data.getCa_num());
+				adminSVC.setIcate(map);
+			} else {
+				map.put("ca_num", data.getCa_num());
+				adminSVC.modifyIcate(map);
+			}
+
+			for (String i_name : data.getItem_list())
+				if (i_name != null) {
+					logger.info(i_name);
+					logger.info(map.get("ca_num"));
+					map.put("i_name", i_name);
+					adminSVC.setItem(map);
+				}
+		}
+		return "설정 완료";
 	}
-//
-//	// 게시판 생성
-//	@RequestMapping(value = "/createBoard", method = RequestMethod.POST)
-//	public String delBoard() {
-//		adminDAO.createBoard();
-//		return "redirect:/admin/board";
-//	}
-//
-////게시판 저장
-//	@RequestMapping(value = "/setBoard", method = RequestMethod.POST)
-//	public String setBoard(@RequestParam String catnum, @RequestParam String catname, @RequestParam String btype) {
-//		BcategoryVO bcategoryVO = new BcategoryVO();
-//		bcategoryVO.setBtype(btype);
-//		bcategoryVO.setCatname(catname);
-//		bcategoryVO.setCatnum(catnum);
-//		adminDAO.setBoard(bcategoryVO);
-//		return "redirect:/admin/board";
-//	}
+
+	// 회원 관리 호출
+	@RequestMapping({ "/member", "/member/{reqPage}", "/member/{reqPage}/{searchType}/{keyword}" })
+	public String get_admin_member(@PathVariable(value = "reqPage", required = false) Optional<Integer> reqPage,
+			@PathVariable(value = "searchType", required = false) String searchType,
+			@PathVariable(value = "keyword", required = false) String keyword, HttpSession session, Model model) {
+
+		if (searchType != null) {
+			logger.info("검색 호출");
+			model.addAttribute("memberlist", adminSVC.memberlist(reqPage.orElse(1), searchType, keyword));
+			model.addAttribute("paging", adminSVC.paging(reqPage.orElse(1), searchType, keyword));
+			model.addAttribute("searchType", searchType);
+			model.addAttribute("keyword", keyword);
+		} else {
+			model.addAttribute("memberlist", adminSVC.memberlist(reqPage.orElse(1)));
+			model.addAttribute("paging", adminSVC.paging(reqPage.orElse(1)));
+
+		}
+
+		return "/admin/admin_member";
+	}
+
+	// 강제 탈퇴
+	@PostMapping(value = "/exit", produces = "application/json")
+	@ResponseBody
+	public String exit_member(@RequestBody List<String> delete_list) {
+
+		for (String ucode : delete_list) {
+			adminSVC.exit_member(ucode);
+		}
+
+		return "강퇴완료";
+	}
 
 }
