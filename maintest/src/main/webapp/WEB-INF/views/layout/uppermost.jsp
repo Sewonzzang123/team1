@@ -146,7 +146,7 @@ header ul {
 header ul li {
 	text-align: center;
 	font-size: 0.8em;
-	padding-left: 3em;
+	padding-left: 3em;	
 }
 
 .menu_wrap {
@@ -192,7 +192,6 @@ header ul li {
 			</div>
 
 		</c:if>
-		<c:out value="${contextPath }">${contextPath }</c:out>
 
 		<i class="fas fa-bars navbar_toggleBtn" id="buggerBtn"></i>
 
