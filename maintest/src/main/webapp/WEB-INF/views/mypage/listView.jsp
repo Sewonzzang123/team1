@@ -8,6 +8,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Document</title>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script type="text/javascript"
+	src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <script type="text/javascript">
 	var contextPath = "${pageContext.request.contextPath}";
 </script>
@@ -59,17 +63,6 @@ main {
 	text-decoration-style: solid;
 }
 
-.container {
-	display: inline-flex;
-}
-
-.frame {
-	display: inline-flex;
-	flex-direction: column;
-	align-content: flex-start;
-	/* margin: auto; */
-}
-
 .block {
 	text-align: left;
 	margin-bottom: 30px;
@@ -80,10 +73,47 @@ main {
 	margin-bottom: 40PX;
 }
 
-@media ( max-width : 680px) {
+.frame {
+	width: 350px;
+	margin: 0 auto;
+}
+
+@media ( min-width : 700px) {
 	.container {
-		display: inline-flex;
-		flex-direction: column;
+		display: flex;
+		width: 700px;
+		height: auto;
+		margin: auto;
+	}
+}
+
+@page {
+	size: A4;
+	margin: 0;
+}
+
+@media print {
+	html, body {
+		width: 210mm;
+		height: 297mm;
+	}
+	.page {
+		margin: 0;
+		border: initial;
+		width: initial;
+		min-height: initial;
+		box-shadow: initial;
+		background: initial;
+		page-break-after: always;
+	}
+	.action {
+		display: none;
+	}
+	.container {
+		display: flex;
+		width: 700px;
+		height: auto;
+		margin: auto;
 	}
 }
 </style>
@@ -92,50 +122,52 @@ main {
 <body>
 
 	<main>
-		<h3 class="title">have a good day and a better tomorrow</h3>
-		<div class="container" id="container">
-			<div class="frame">
-				<!-- 카테고리 -->
-				<c:forEach var="category" items="${requestScope.icategory }"
-					begin="0" step="2">
-					<div class="block">
-						<div class="category">${category.CA_NAME }</div>
+		<div class="page">
+			<h3 class="title">have a good day and a better tomorrow</h3>
+			<div class="container" id="container">
+				<div class="frame">
+					<!-- 카테고리 -->
+					<c:forEach var="category" items="${requestScope.icategory }"
+						begin="0" step="2">
+						<div class="block">
+							<div class="category">${category.CA_NAME }</div>
 
-						<!-- 아이템 -->
-						<c:forEach var="listing" items="${requestScope.listing }">
-							<c:if test="${category.CA_NUM == listing.ca_num }">
-								<label><div class="item">
-										<input type="checkbox" name="ckeck" class="ckeck"
-											linum=${listing.linum }
-											<c:if test="${listing.checked eq 'true'}"> checked="true"</c:if>>
-										<div name="i_name" class="i_name">${listing.i_name }</div>
-										<div name="icount" class="icount">${listing.icount }</div>
-									</div></label>
-							</c:if>
-						</c:forEach>
-					</div>
-				</c:forEach>
-			</div>
-			<div class="frame">
-				<c:forEach var="category" items="${requestScope.icategory }"
-					begin="1" step="2">
-					<div class="block">
-						<div class="category">${category.CA_NAME }</div>
+							<!-- 아이템 -->
+							<c:forEach var="listing" items="${requestScope.listing }">
+								<c:if test="${category.CA_NUM == listing.ca_num }">
+									<label><div class="item">
+											<input type="checkbox" name="ckeck" class="ckeck"
+												linum=${listing.linum }
+												<c:if test="${listing.checked eq 'true'}"> checked="true"</c:if>>
+											<div name="i_name" class="i_name">${listing.i_name }</div>
+											<div name="icount" class="icount">${listing.icount }</div>
+										</div></label>
+								</c:if>
+							</c:forEach>
+						</div>
+					</c:forEach>
+				</div>
+				<div class="frame">
+					<c:forEach var="category" items="${requestScope.icategory }"
+						begin="1" step="2">
+						<div class="block">
+							<div class="category">${category.CA_NAME }</div>
 
-						<!-- 아이템 -->
-						<c:forEach var="listing" items="${requestScope.listing }">
-							<c:if test="${category.CA_NUM == listing.ca_num }">
-								<label><div class="item">
-										<input type="checkbox" name="ckeck" class="ckeck"
-											linum=${listing.linum }
-											<c:if test="${listing.checked eq 'true'}"> checked="true"</c:if>>
-										<div name="i_name" class="i_name">${listing.i_name }</div>
-										<div name="icount" class="icount">${listing.icount }</div>
-									</div></label>
-							</c:if>
-						</c:forEach>
-					</div>
-				</c:forEach>
+							<!-- 아이템 -->
+							<c:forEach var="listing" items="${requestScope.listing }">
+								<c:if test="${category.CA_NUM == listing.ca_num }">
+									<label><div class="item">
+											<input type="checkbox" name="ckeck" class="ckeck"
+												linum=${listing.linum }
+												<c:if test="${listing.checked eq 'true'}"> checked="true"</c:if>>
+											<div name="i_name" class="i_name">${listing.i_name }</div>
+											<div name="icount" class="icount">${listing.icount }</div>
+										</div></label>
+								</c:if>
+							</c:forEach>
+						</div>
+					</c:forEach>
+				</div>
 			</div>
 		</div>
 		<div class="action">
