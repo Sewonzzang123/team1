@@ -73,7 +73,7 @@
 }
 
 .b_content th, .b_content td {
-	border-bottom: 1px black solid;
+	border-bottom: 1px #E0E0E0 solid;
 	padding: 15px 0 15px 15px;
 }
 
@@ -105,7 +105,9 @@
 	margin-left: 5px;
 	margin-top: 10px;
 	width: 250px;
-	border-bottom: 1px solid #979797;
+	border-bottom: 1px solid #E0E0E0;
+	display: flex;
+	justify-content: between;
 }
 
 .b_subject_chd>span {
