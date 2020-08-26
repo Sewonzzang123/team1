@@ -49,6 +49,7 @@ public class PackingListController {
 			}
 			logger.info(listing.toString());
 		}
+		
 		ListVO listVO = new ListVO();
 
 		listVO.setLnum(lnum);

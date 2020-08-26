@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +28,6 @@ import com.my.maintest.item.svc.ItemListSVC;
 import com.my.maintest.item.vo.ItemCategoryVO;
 import com.my.maintest.item.vo.ItemVO;
 import com.my.maintest.item.vo.ListVO;
-import com.my.maintest.member.vo.MemberVO;
 
 @Controller
 @RequestMapping("/itemlist")
@@ -40,14 +40,25 @@ public class ItemListController {
 	@Inject
 	ItemListSVC itemListSVC;
 		
-	@GetMapping("category2")
+	@GetMapping({"category2","category2/{lnum}"})
 	public String itemForm2(
+			@PathVariable(value = "lnum", required=false) String lnum,
 			ItemVO itemVO,
 			ItemCategoryVO itemCategoryVO,
 			Model model) {
-		
+		List<ItemVO> itemList = null;
+		List<Map<String, String>> listing= null;
+		Map<String, String> listingVO = null;
+		if(lnum != null) {
+			listing = itemListSVC.loadListing(Long.valueOf(lnum));			
+			itemList = itemListSVC.selectListItem(Long.valueOf(lnum));
+		}else {
+			itemList =	itemListSVC.selectAllItem();
+		}
+
+		model.addAttribute("listing", listing);
 		model.addAttribute("categoryList", itemListSVC.selectAllCategory());
-		model.addAttribute("itemList", itemListSVC.selectAllItem());
+		model.addAttribute("itemList", itemList);
 		
 		return "/packinglist/packingList2";
 	}	
@@ -86,9 +97,8 @@ public class ItemListController {
 			@RequestParam(value="iname", required = false) List<String> iname,
 			@RequestParam(value="icount", required = false) List<String> icount,	
 			@RequestParam(value="icategory", required = false) List<String> icategory,
-			@RequestParam(value="ichecked", required = false) List<String> checked,	
+			@RequestParam(value="checked", required = false) List<String> checked,	
 			Model model) {
-		
 
 		List<Map<String, String>> listing = new ArrayList<Map<String, String>>();
 		if(inum!=null) {
@@ -112,6 +122,50 @@ public class ItemListController {
 		return "/packinglist/saveListForm";
 	}
 	
+	//세션 아이디 받아서 전달만해주면될듯??
+	@PostMapping("/loadListForm")
+	public String uploadListForm(
+			HttpSession session,
+			Model model) {
+		
+		String ucode  = "0";
+		List<ListVO> listVO = null;
+		List<Map<String, String>> listing = null;
+		listVO = itemListSVC.loadList(ucode);
+		long lnum = listVO.get(0).getLnum();
+
+		listing = itemListSVC.loadListing(lnum);
+		List<ItemCategoryVO> icategory = itemListSVC.selectAllCategory();
+		
+		model.addAttribute("lnum", lnum);
+		model.addAttribute("icategory", icategory);
+		model.addAttribute("listVO", listVO);
+		model.addAttribute("listingVO", listing);
+		
+		return "/packinglist/loadListForm";
+	}
+
+	
+	@RequestMapping("/loadListForm/{lnum}")
+	public String getListing(
+			@PathVariable("lnum") long lnum,
+			HttpSession session,
+			Model model) {
+		String ucode  = "0";
+		List<ListVO> listVO = null;
+		List<Map<String, String>> listing = null;
+		listVO = itemListSVC.loadList(ucode);
+		listing = itemListSVC.loadListing(lnum);
+		List<ItemCategoryVO> icategory = itemListSVC.selectAllCategory();
+
+		model.addAttribute("lnum", lnum);
+		model.addAttribute("icategory", icategory);
+		model.addAttribute("listVO", listVO);
+		model.addAttribute("listingVO", listing);
+		
+		
+		return"/packinglist/loadListForm";
+	}
 	
 	
 

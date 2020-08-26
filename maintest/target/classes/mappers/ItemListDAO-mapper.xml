@@ -11,28 +11,21 @@
 	<!-- 선택한 카테고리의 아이템 전체 조회 불러오기x-->
 	<select id="selectAllItem"
 		resultType="ItemVO">
-		select t2.ca_num as "itemCategoryVO.ca_num",
-		t2.ca_name as "itemCategoryVO.ca_name",
-		t1.i_num,
-		t1.i_name,
-		t1.i_description
-		from item t1, i_category t2
-		where t1.ca_num = t2.ca_num
-		<![CDATA[and t1.i_num <1000]]>
+		select ca_num as "itemCategoryVO.ca_num",
+		i_num,
+		i_name,
+		i_description
+		from item t1
+		where <![CDATA[i_num <1000]]>
 	</select>
-	
-	<!-- 사용자의 리스트 목록 불러오기 -->
-	<select id="loadItemList" parameterType="String" resultType="ListVO">
-	select 
-		t1.l_num,
-		t1.ucode as "memberVO.ucode",
-		t1.l_name,
-		t1.i_list,
-		t1.cdate
-		from list t1, member t2
-		where t1.ucode = t2.ucode
-		and t2.ucode = #{ucode}
-	
+	<!-- lnum 선택 후 packinglist창 보여주기 -->
+	<select id="selectListItem" parameterType="long" resultType="ItemVO">
+	select ca_num as "itemCategoryVO.ca_num",
+		i_num,
+		i_name,
+		i_description
+		from item 
+		where lnum=0 or lnum=#{lnum}
 	</select>
 
 		<!-- 사용자의 리스트 이름만 불러오기 -->
@@ -49,7 +42,7 @@
 	<!-- 리스트 저장 : 이름 생성하기 -->
 	<insert id="listNameInsert" parameterType="Map">
 		 insert into list(lnum, ucode, lname)
-    values(lnum_seq.nextval, #{ucode}, #{lname})	
+    values(l_num_seq.nextval, #{ucode}, #{lname})	
 	</insert>
 	
 	<!-- 이름이 저장된 리스트 번호 가져오기 -->
@@ -78,8 +71,8 @@
 	</delete>
 	<!-- new item 저장 >> inum 반환-->
 	<insert id="saveNewItem" parameterType="ItemVO">
-		INSERT INTO ITEM(ca_num, i_num, i_name)
-		VALUES(#{itemCategoryVO.ca_num},I_NUM2_SEQ.nextval,#{i_name})
+		INSERT INTO ITEM(ca_num, i_num, i_name, lnum)
+		VALUES(#{itemCategoryVO.ca_num},I_NUM2_SEQ.nextval,#{i_name},#{lnum})
 		<selectKey keyProperty="i_num" resultType="long"
 			order="AFTER">
 			select I_NUM2_SEQ.currval
@@ -97,5 +90,20 @@ where lnum = #{lnum}
 insert into listing(linum, lnum, i_num, lname, checked, icount)
 values(list_num_seq.nextval, #{lnum}, #{i_num}, #{lname}, #{checked}, #{icount})
 </insert>
+
+<!-- lnum 선택 시 아이템 목록 출력 -->
+<select id="loadListing" parameterType="long" resultType="map">
+ select t1.linum as linum,
+ 				t2.i_name as "itemVO.i_name",
+ 				t1.checked as checked, 
+ 				t1.icount as icount, 
+ 				t3.ca_name as "CategoryVO.ca_name",
+ 				t3.ca_num as "CategoryVO.ca_num",
+ 				t2.i_num as "itemVO.i_num"
+	from listing t1, item t2, i_category t3
+	where t1.i_num = t2.i_num
+	and t2.ca_num = t3.ca_num
+	and t1.lnum=#{lnum}
+</select>
 
 </mapper>

@@ -16,6 +16,9 @@
 		const cancelBtn = document.getElementById("cancelBtn");
 		listBtn.addEventListener("click", listBtn_f);
 		cancelBtn.addEventListener("click", cancelBtn_f);
+		const saveListBtn = document.getElementById("saveListBtn");
+		saveListBtn.addEventListener("click", saveListBtn_f);
+		
 	}
 	function listBtn_f(e) {
 		e.preventDefault();
@@ -101,12 +104,19 @@
 	function cancelBtn_f() {
 		window.close();
 	}
-
+	function saveListBtn_f(){		
+		let frm = document.folderList;		
+		frm.action="http://localhost:9080/pfpkg/packingList/saveList";	
+		frm.submit();
+		
+		
+		}
 </script>
 </head>
 <body>
 	<div id="contentsArea">
-		<form name="folderList" method="post" action="${contextPath }/packingList/saveList">
+		<form name="folderList" method="post" >
+		<%--action="${contextPath }/packingList/saveList" --%>
 			<div class="pop_wrapper"
 				style="width: 440px; height: 530px; padding: 0px;">
 				<div class="pop_header">
@@ -143,7 +153,7 @@
 						</ul>
 					</div>
 					<div class="estimate_button_area">
-						<button class="btn_pop_save" type="submit">저장</button>
+						<input class="btn_pop_save" type="button" id ="saveListBtn" value="저장"/>
 						<input class="btn_pop_cancel" type="button" id="cancelBtn" value="취소"/>
 					</div>
 				</div>
@@ -162,8 +172,5 @@
 			</c:if>
 		</form>
 	</div>
-
-
-
 </body>
 </html>
