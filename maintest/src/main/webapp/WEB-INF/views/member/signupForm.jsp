@@ -9,7 +9,6 @@
 <title>Document</title>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/member/signupForm.css">
-
 </head>
 
 <body>

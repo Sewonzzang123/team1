@@ -12,76 +12,17 @@
 	href="${pageContext.request.contextPath}/css/mypage/main.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/mypage/common2.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/mypage/mypost.css">
 <script src="http://code.jquery.com/jquery-latest.js"></script>
-<script>
-	$(document).ready(function() {
-		$("#allselect").change(allselect);
-		$("#mypost_delete_btn").click(post_delete)
-	});
-
-	function allselect(e) {
-		if (e.target.checked == true) {
-			$(".check").prop("checked", true);
-			console.log("체크됨");
-		} else {
-			$(".check").prop("checked", false);
-			console.log('해제됨');
-			;
-		}
-	}
-
-	function post_delete(e) {
-		var del_list = '';
-
-		for (var i = 0; i < $(".check").length; i++) {
-
-			if ($(".check")[i].checked == true) {
-				del_list = del_list + $(".check")[i].getAttribute('bnum')
-						+ ' / ';
-			}
-		}
-
-		var ajax = new XMLHttpRequest();
-		ajax.onreadystatechange = function() {
-			if (ajax.readyState === ajax.DONE) {
-				if (ajax.status === 200 || ajax.status === 201) {
-					console.log(ajax.responseText);
-				} else {
-					console.error(ajax.responseText);
-				}
-			}
-		};
-		ajax.open("POST",
-				"/${pageContext.request.contextPath}/mypage/del_post", false); //
-		ajax.send(del_list);
-
-		location.reload(true)
-
-	}
+<script type="text/javascript">
+	var contextPath = "${pageContext.request.contextPath}";
+</script>
+<script defer
+	src="${pageContext.request.contextPath}/js/mypage/mypost.js">
+	
 </script>
 <style type="text/css">
-#mypost_delete {
-	display: inline;
-	float: right;
-}
-
-.actionPost {
-	margin-top: 10px;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-}
-
-.checkbox {
-	display: flex;
-	align-items: center;
-}
-
-#mypost_delete>input {
-	width: 120px;
-	text-align: center;
-	padding: 0;
-}
 </style>
 </head>
 <body>
@@ -156,7 +97,5 @@
 
 		</main>
 	</div>
-	<!-- footer -->
-	<footer>footer</footer>
 </body>
 </html>

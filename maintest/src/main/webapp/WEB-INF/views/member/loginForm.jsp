@@ -6,87 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Document</title>
-<style>
-button, input, select, textarea {
-	font-family: Tahoma, Gulim, '굴림', sans-serif;
-}
-
-.actionBtn {
-	align-content: center;
-	text-align: center;
-	margin-top: 20px;
-}
-
-.actionBtn>input {
-	width: 450px;
-	text-align: center;
-	padding: 0;
-	background-color: #5d4fad;
-	border: 0;
-	color: white;
-}
-
-.input_row {
-	margin-bottom: 6px;
-	padding: 8px 35px 9px 11px;
-	position: relative;
-	height: 29px;
-	margin-bottom: 8px;
-	padding: 7px 35px 10px 11px;
-	border: solid 1px #dadada;
-	background: #fff;
-}
-
-.int {
-	width: auto;
-	font-size: 14px;
-	line-height: 16px;
-	position: relative;
-	z-index: 9;
-	width: 100%;
-	height: 16px;
-	padding: 8px 0 6px;
-	color: #000;
-	border: none;
-	background: #fff;
-	-webkit-appearance: none;
-}
-
-.login_form {
-	border: none;
-	margin: auto;
-	width: 450px;
-}
-
-.btn {
-	margin-bottom: 12px;
-	height: 40px;
-	line-height: 40px;
-	font-size: 18px;
-	font-weight: 700;
-}
-
-.linkbar {
-	align-content: center;
-	text-align: center;
-	margin-top: 20px;
-}
-
-.linkbar>a {
-	text-decoration: none;
-	color: #8e8e8e;
-}
-
-.title>a {
-	text-decoration: none;
-	color: #5d4fad;
-}
-
-.errmsg {
-	color: red;
-}
-</style>
+<title>로그인</title>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/member/loginForm.css">
 </head>
 
 <body>

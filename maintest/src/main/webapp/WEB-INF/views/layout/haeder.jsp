@@ -12,11 +12,13 @@
 <c:set var="url_admin" value="${pageContext.request.contextPath }/admin" />
 
 <script type="text/javascript">
+window.onload = function(){
 let buggerBtn = document.querySelector("#buggerBtn");
 let menu = document.querySelector("header ul");
 let menu_wrap = document.querySelector(".menu_wrap");
 let buggerBtn_hide = document.querySelector("#buggerBtn_hide");
 let cover_close = document.querySelector(".cover_close");
+}
 
 buggerBtn.addEventListener("click", () => {
   console.log("buggerBtn Clicked");
@@ -219,9 +221,42 @@ i.navbar_toggleBtn {
 			</div>
 
 		</c:if>
-		<c:out value="${contextPath }">${contextPath }</c:out>
 
 		<i class="fas fa-bars navbar_toggleBtn" id="buggerBtn"></i>
 
 	</div>
 </header>
+<div class="menu_wrap">
+	<div class="hide_wrap">
+		<i class="fa fa-times" id="buggerBtn_hide"></i>
+	</div>
+
+
+	<c:if test="${empty sessionScope.member}">
+		<ul>
+			<li><a href="">리스트 작성</a></li>
+			<li><a href="">게시판</a></li>
+			<li><a href="${pageContext.request.contextPath}/signupForm">회원가입</a></li>
+			<li><a href="${url_login }">로그인</a></li>
+
+		</ul>
+	</c:if>
+
+	<c:if test="${!empty sessionScope.member}">
+
+		<ul>
+			<li><a href="">리스트 작성</a></li>
+			<li><a href="">게시판</a></li>
+			<c:if test="${sessionScope.member.ucode==1}">
+				<li><a href="${url_admin}">관리하기</a></li>
+			</c:if>
+			<li><a href="${url_myPage}">${sessionScope.member.nickname }</a></li>
+			<li><a href="${url_logout }">로그아웃</a></li>
+		</ul>
+
+	</c:if>
+
+</div>
+<!-- 햄버거 버튼 열면 뒤에 깔리는 반투명 검정 배경 -->
+<div class="cover_close"></div>
+</body>

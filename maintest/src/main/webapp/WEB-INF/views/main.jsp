@@ -447,6 +447,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<<<<<<< Upstream, based on origin/master
 <%-- <html lang="ko">
 <head>
 <meta charset="UTF-8">
@@ -463,6 +464,8 @@
 >>>>>>> d5b286f 수정본
 =======
 </html> --%>
+=======
+>>>>>>> 579a007 0826
 <html lang="ko">
 <head>
 <meta charset="UTF-8" />
@@ -481,23 +484,7 @@
 	crossorigin="anonymous" />
 </head>
 <body>
-	<!-- 	<header>
-		<div class="navbar">
-			<div class="logo">
-				<a href=""> <img src="img/perage_logo_3.png" alt="logo" />
-				</a>
-			</div>
-			<div class="top_menu">
-				<ul>
-					<li><a href="">리스트 작성</a></li>
-					<li><a href="">게시판</a></li>
-					<li><a href="">회원가입</a></li>
-					<li><a href="">로그인</a></li>
-				</ul>
-			</div>
-			<i class="fas fa-bars navbar_toggleBtn" id="buggerBtn"></i>
-		</div>
-	</header> -->
+
 	<!-- header -->
 	<%@ include file="/WEB-INF/views/layout/haeder.jsp"%>
 

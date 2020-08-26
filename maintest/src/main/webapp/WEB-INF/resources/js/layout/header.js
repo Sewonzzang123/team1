@@ -2,7 +2,7 @@
  * 
  */
  "use strict";
- let buggerBtn = document.querySelector("#buggerBtn");
+let buggerBtn = document.querySelector("#buggerBtn");
 let menu = document.querySelector("header ul");
 let menu_wrap = document.querySelector(".menu_wrap");
 let buggerBtn_hide = document.querySelector("#buggerBtn_hide");
