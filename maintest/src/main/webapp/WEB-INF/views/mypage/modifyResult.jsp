@@ -67,8 +67,6 @@
 			</div>
 		</main>
 	</div>
-
-	<!-- footer -->
-	<footer>footer</footer>
+	
 </body>
 </html>

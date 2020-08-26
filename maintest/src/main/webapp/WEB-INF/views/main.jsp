@@ -1,18 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<%-- <html lang="ko">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Insert title here</title>
-</head>
-<body>
-	<!-- topmenu -->
-	<%@ include file="/WEB-INF/views/layout/uppermost.jsp"%>
-	메인 ${sessionScope.member.id } 아이디 ${sessionScope.member.nickname }
-</body>
-</html> --%>
 <html lang="ko">
 <head>
 <meta charset="UTF-8" />
@@ -31,23 +19,7 @@
 	crossorigin="anonymous" />
 </head>
 <body>
-	<!-- 	<header>
-		<div class="navbar">
-			<div class="logo">
-				<a href=""> <img src="img/perage_logo_3.png" alt="logo" />
-				</a>
-			</div>
-			<div class="top_menu">
-				<ul>
-					<li><a href="">리스트 작성</a></li>
-					<li><a href="">게시판</a></li>
-					<li><a href="">회원가입</a></li>
-					<li><a href="">로그인</a></li>
-				</ul>
-			</div>
-			<i class="fas fa-bars navbar_toggleBtn" id="buggerBtn"></i>
-		</div>
-	</header> -->
+
 	<!-- header -->
 	<%@ include file="/WEB-INF/views/layout/haeder.jsp"%>
 
