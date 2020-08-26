@@ -6,6 +6,18 @@ let classTag = null;
 function init(){
 	const saveBtn = document.getElementById("saveBtn");
 	saveBtn.addEventListener("click",saveBtn_f);
+	const loadBtn = document.getElementById("loadBtn");
+	loadBtn.addEventListener("click",loadBtn_f);
+	
+	//리스트 불러올시 리스팅에 저장된 아이템들을 -버튼 주기
+	Array.from(document.querySelectorAll('input[type="checkbox"]')).forEach((a)=>{		
+		let itemClassTag = a.nextElementSibling.classList;
+		document.querySelector("."+itemClassTag[0]).parentElement.parentElement.querySelector('.fa-minus').style.display="table-row";
+		document.querySelector("."+itemClassTag[0]).parentElement.parentElement.querySelector('.fa-plus').style.display="none";
+		}
+	);
+
+
 //탭박스 이벤트
 $('.tab_box').hide();
 
@@ -117,9 +129,9 @@ function checkItem(e){
 			
 					let addListItem = document.createElement('li');
 					//여기에 체크박스, 숫자, 마이너스 버튼 생성해야됨
-					let a = '<div><input name="checked" value="false" type="checkbox" onClick="check_f(this)">'+itemNameTag+'<input type="text" name="icount" value="1" max="100"/><div class="edit_number"><input type="button" class="plusBtn" onClick="plus(this)">증가</input><input type="button"  class="minusBtn" onClick="minus(this)">감소</input></div><a href="#"><i class="fas fa-minus" onClick="deletelist_f(this)">';
+					let a = '<div><input type="checkbox" onClick="check_f(this)">'+itemNameTag+'<input type="text" name="icount" value="1" max="100"/><div class="edit_number"><input type="button" class="plusBtn" onClick="plus(this)">증가</input><input type="button"  class="minusBtn" onClick="minus(this)">감소</input></div><a href="#"><i class="fas fa-minus" onClick="deletelist_f(this)">';
 					a += '</i></a></div><input type="hidden" name="icategory" value="'+idTag+'"/>';
-					a += '<input type="hidden" name="inum" value="'+itemNum+'"/><input type="hidden" name="iname" value="'+itemName+'"/><input type="hidden" name="ichecked" value="false"/>';
+					a += '<input type="hidden" name="inum" value="'+itemNum+'"/><input type="hidden" name="iname" value="'+itemName+'"/><input type="hidden" name="checked" value="false"/>';
 					addListItem.innerHTML =a;
 					
 					let inputclass = document.querySelector("."+classTag);
@@ -163,10 +175,10 @@ function checkItem(e){
 
 		if(e.parentElement.firstElementChild.nextElementSibling.getAttribute('selected')=='false'){	
 		e.parentElement.firstElementChild.nextElementSibling.setAttribute('selected','true');
-		e.value="true";
+		e.parentElement.parentElement.lastElementChild.value ="true";
 		}else{
 		e.parentElement.firstElementChild.nextElementSibling.setAttribute('selected','false');
-		e.value="false";
+		e.parentElement.parentElement.lastElementChild.value ="false";
 		}	
 	}
 	
@@ -175,6 +187,15 @@ function checkItem(e){
 		let gsWin=window.open("about:blank","winName",option);
 		let frm = document.form;
 		frm.action="http://localhost:9080/pfpkg/itemlist/saveListForm";
+		frm.target="winName";
+		frm.submit();
+	}
+	
+	function loadBtn_f(){
+		const option 	= "width=570,height=650,location=no,resizable=no";
+		let gsWin=window.open("about:blank","winName",option);
+		let frm = document.form;
+		frm.action="http://localhost:9080/pfpkg/itemlist/loadListForm";
 		frm.target="winName";
 		frm.submit();
 	}

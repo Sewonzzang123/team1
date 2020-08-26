@@ -12,12 +12,14 @@ public interface ItemListDAO {
 	List<ItemCategoryVO> selectAllCategory();
 	//아이템 전체 불러오기
 	List<ItemVO> selectAllItem();
+	//사용자가 리스트불러오기를 선택했을 경우
+	List<ItemVO> selectListItem(long lnum);
 	//사용자의 리스트 불러오기(이름만, 저장하기용)
 	List<ListVO> loadList(String ucode);
-	//사용자의 리스트 불러오기(아이템 리스트까지 전체로)
-	List<ListVO> loadItemList(String ucode);
 	//리스트 이름 생성
 	int listNameInsert(String ucode, String lname);
 	//생성한 이름의 리스트번호 가져오기
 	int getNum(String ucode, String lname);
+	//리스트 불러오기(리스트번호 입력시 아이템들 출력)
+	List<Map<String, String>> loadListing(long lnum);
 }

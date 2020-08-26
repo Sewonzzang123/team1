@@ -26,7 +26,7 @@ public class PackingListSVCImpl implements PackingListSVC{
 			
 		//1) 기존에 있던 아이템들 삭제
 		packingListDAO.deleteListing(lnum);
-		//packingListDAO.deleteNewItem(lnum);
+		packingListDAO.deleteNewItem(lnum);
 		
 		//2) 남아있는 아이템이 있는지 확인
 		if(packingListDAO.countListing(lnum)!=0) {
@@ -34,7 +34,7 @@ public class PackingListSVCImpl implements PackingListSVC{
 		}
 		for(Map<String,String> item: listing ) {
 			//3-1) 만약 inum이 additem 이라면 item table에 새로 생성
-			if(item.get("inum").equals("newitem")) {
+			if(item.get("inum").equals("newitem") || Integer.parseInt(item.get("inum"))>1000) {
 				ItemVO itemVO = new ItemVO();
 				ItemCategoryVO itemCategoryVO = new ItemCategoryVO();
 				//아이템 카테고리 번호
@@ -42,7 +42,7 @@ public class PackingListSVCImpl implements PackingListSVC{
 				itemVO.setItemCategoryVO(itemCategoryVO);
 				//아이템 이름
 				itemVO.setI_name(item.get("iname"));
-				
+				itemVO.setLnum(lnum);
 				packingListDAO.saveNewItem(itemVO);
 				//selectKey를 사용해서 inum을 새로 받았음.			
 				ListingVO listingVO = new ListingVO();

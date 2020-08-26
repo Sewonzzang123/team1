@@ -1,5 +1,6 @@
 package com.my.maintest.item.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,6 +57,16 @@ public class ItemListDAOImplXMLTEST {
 	}
 	
 	@Test
+	@DisplayName("리스트불러오기에서 선택했을 경우")
+//	@Disabled
+	void selectListItem() {
+		List<ItemVO> list = itemListDAO.selectListItem(61);
+		for(ItemVO itemVO : list) {
+			logger.info(itemVO.toString());
+		}
+	}
+	
+	@Test
 	@DisplayName("사용자의 리스트 이름 불러오기")
 	@Disabled
 	void loadList() {
@@ -66,19 +77,7 @@ public class ItemListDAOImplXMLTEST {
 		logger.info(":"+listVO.toString());
 		}
 	}
-	
-	@Test
-	@DisplayName("사용자의 리스트 (아이템포함) 불러오기")
-	@Disabled
-	void loadItemList() {
-		String ucode="0";
-		List<ListVO> list = itemListDAO.loadItemList(ucode);
 		
-		for(ListVO listVO: list) {
-		logger.info(":"+listVO.toString());
-		}
-	}
-	
 	@Test
 	@DisplayName("리스트 이름 생성")
 	@Disabled
@@ -91,9 +90,22 @@ public class ItemListDAOImplXMLTEST {
 	
 	@Test
 	@DisplayName("생성한 리스트 번호")
+	@Disabled
 	void getName() {
 		Map<String, String> map = new HashMap<>();
 		int result = itemListDAO.getNum("0", "리스트2");
 		logger.info(""+result);
+	}
+	
+	@Test
+	@DisplayName("리스트 이름 선택 시 아이템 출력")
+	@Disabled
+	void loadItem() {
+		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+		list = itemListDAO.loadListing((long)10);
+		for(int i=0; i<list.size(); i++) {
+			logger.info(""+list.get(i));
+		}
+		
 	}
 }

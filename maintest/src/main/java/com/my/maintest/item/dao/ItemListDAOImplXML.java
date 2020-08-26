@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.my.maintest.item.vo.ItemCategoryVO;
 import com.my.maintest.item.vo.ItemVO;
 import com.my.maintest.item.vo.ListVO;
+import com.my.maintest.item.vo.ListingVO;
 
 @Repository
 public class ItemListDAOImplXML implements ItemListDAO{
@@ -32,16 +33,19 @@ public class ItemListDAOImplXML implements ItemListDAO{
 		list = sqlSession.selectList("mappers.ItemListDAO-mapper.selectAllItem");
 		return list;
 	}
+	
+//사용자가 리스트불러오기를 선택했을 경우
+	@Override
+	public List<ItemVO> selectListItem(long lnum) {
+		return sqlSession.selectList("mappers.ItemListDAO-mapper.selectListItem",lnum);
+	}
+	
 //사용자의 리스트 불러오기(이름만, 저장하기용)
 	@Override
 	public List<ListVO> loadList(String ucode) {
 		return sqlSession.selectList("mappers.ItemListDAO-mapper.loadList", ucode);
 	}
-//사용자의 리스트 불러오기(아이템 리스트까지 전체로)
-	@Override
-	public List<ListVO> loadItemList(String ucode) {
-		return sqlSession.selectList("mappers.ItemListDAO-mapper.loadItemList", ucode);
-	}
+
 //리스트 이름 생성
 	@Override
 	public int listNameInsert(String ucode, String lname) {
@@ -58,6 +62,13 @@ public class ItemListDAOImplXML implements ItemListDAO{
 		map.put("lname", lname);
 		return sqlSession.selectOne("mappers.ItemListDAO-mapper.getNum",map);
 	}
+
+	@Override
+	public List<Map<String, String>> loadListing(long lnum) {
+		return sqlSession.selectList("mappers.ItemListDAO-mapper.loadListing",lnum);
+	}
+
+
 	
 
 }

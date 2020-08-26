@@ -17,6 +17,8 @@
 			alias="ListVO" />
 					<typeAlias type="com.my.maintest.item.vo.ItemCategoryVO"
 			alias="ItemCategoryVO" />
+				<typeAlias type="com.my.maintest.item.vo.ListingVO"
+			alias="ListingVO" />
 			
 	</typeAliases>
 </configuration>
