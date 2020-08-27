@@ -9,6 +9,17 @@ function init(){
 	const loadBtn = document.getElementById("loadBtn");
 	loadBtn.addEventListener("click",loadBtn_f);
 	
+	//숨김 버튼 클릭시 아이템 숨김
+	document.querySelectorAll('.fa-chevron-down').forEach(i=>{
+			i.addEventListener('click',(e)=>{
+				if(e.target.parentElement.nextElementSibling.style.display=="none"){
+					e.target.parentElement.nextElementSibling.style.display="block";
+				}else{
+					e.target.parentElement.nextElementSibling.style.display="none";
+				}
+			});
+		});
+	
 	//리스트 불러올시 리스팅에 저장된 아이템들을 -버튼 주기
 	Array.from(document.querySelectorAll('input[type="checkbox"]')).forEach((a)=>{		
 		let itemClassTag = a.nextElementSibling.classList;
@@ -85,7 +96,7 @@ $('.tab_menu_btn6').on('click',function(){
 		
 		let newitem = document.createElement('tr');
 		newitem.className +='tab_box  tab_box'+idTag ;
-		newitem.innerHTML = '<td><a href="#"><i class="fas fa-minus" onClick="deletelist2_f(this)" style="display:none"></i><i class="fas fa-plus" onClick="addlist_f(this)"></i></a></td><td><div class="newitem" selected="false">'+add+'</div></td>';
+		newitem.innerHTML = '<td><a href="#"><i class="fas fa-minus" onClick="deletelist2_f(this)" style="display:none"></i><i class="fas fa-plus" onClick="addlist_f(this)"></i></a></td><td><div class="newitem iname" selected="false">'+add+'</div></td>';
 
 		document.querySelector('.tab_box').parentElement.prepend(newitem);		
 		}
@@ -111,7 +122,7 @@ function checkItem(e){
 					
 					let itemid = e.parentElement.parentElement.nextElementSibling.innerHTML;					
 					let split =itemid.split(' ');
-				
+					
 					
 					let itemid2 = e.parentElement.parentElement.nextElementSibling.firstChild;
 					let itemName =  e.parentElement.parentElement.nextElementSibling.firstChild.innerText;
@@ -124,13 +135,24 @@ function checkItem(e){
 					 
 					
 					let itemNameTag = split[0];
-					itemNameTag += ' name="iname" value="'+itemid2.innerText+'" ';
-					for(let n=1; n<split.length; n++){itemNameTag += split[n];}
-			
+					
+					itemNameTag += ' name="iname" value="'+itemid2.innerText+' " ';
+					console.log(itemNameTag);
+					for(let n=1; n<split.length; n++){								 
+							if(n==2){
+							itemNameTag +=" ";
+							}
+							itemNameTag +=split[n];
+							
+					}
+
+					
 					let addListItem = document.createElement('li');
+					addListItem.setAttribute("class","row");
 					//여기에 체크박스, 숫자, 마이너스 버튼 생성해야됨
-					let a = '<div><input type="checkbox" onClick="check_f(this)">'+itemNameTag+'<input type="text" name="icount" value="1" max="100"/><div class="edit_number"><input type="button" class="plusBtn" onClick="plus(this)">증가</input><input type="button"  class="minusBtn" onClick="minus(this)">감소</input></div><a href="#"><i class="fas fa-minus" onClick="deletelist_f(this)">';
-					a += '</i></a></div><input type="hidden" name="icategory" value="'+idTag+'"/>';
+					let a = '<div><input type="checkbox" onClick="check_f(this)">'+itemNameTag+'<input type="text" class="icount" name="icount" value="1" max="100"/><div class="edit_number">';
+					a += '<i class="plusBtn fas fa-caret-up" onClick="plus(this)"></i><i class="minusBtn fas fa-caret-down" onClick="minus(this)"></i></div>';
+					a += '<a href="#" class="deleteItem"><i class="fas fa-minus" onClick="deletelist_f(this)"></i></a></div><input type="hidden" name="icategory" value="'+idTag+'"/>';
 					a += '<input type="hidden" name="inum" value="'+itemNum+'"/><input type="hidden" name="iname" value="'+itemName+'"/><input type="hidden" name="checked" value="false"/>';
 					addListItem.innerHTML =a;
 					
