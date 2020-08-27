@@ -33,16 +33,18 @@
 		ajax.onreadystatechange = function() {
 			if (ajax.readyState === ajax.DONE) {
 				if (ajax.status === 200 || ajax.status === 201) {
-					console.log(ajax.responseText);
+						if (ajax.responseText) {
+					alert("삭제되었습니다.");
+					location.reload(true);
+				}
 				} else {
 					console.error(ajax.responseText);
 				}
 			}
 		};
 		ajax.open("POST",
-				"/${pageContext.request.contextPath}/mypage/del_post", false); //
+				contextPath+"/mypage/del_post", false); //
 		ajax.send(del_list);
 
-		location.reload(true)
 
 	}

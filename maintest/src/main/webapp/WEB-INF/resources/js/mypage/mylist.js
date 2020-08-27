@@ -19,11 +19,12 @@
 			var ajax = new XMLHttpRequest();
 			ajax.onreadystatechange = function() {
 				if (ajax.readyState === ajax.DONE) {
-					if (ajax.status === 200 || ajax.status === 201) {
-						console.log(ajax.responseText);
-					} else {
-						console.error(ajax.responseText);
-					}
+					if (ajax.status === 200 || ajax.status === 201) {						
+						if (ajax.responseText) {
+					alert("삭제되었습니다.");
+					
+				}
+					} 
 				}
 			};
 			ajax.open("POST",
