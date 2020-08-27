@@ -94,7 +94,7 @@
 	width: 100%;
 	height: 33px;
 	box-sizing: border-box;
-	padding-left:75%;
+	padding-left: 75%;
 }
 
 .row {
@@ -134,7 +134,7 @@
 }
 
 .estimate_list_table table {
-	text-align:center;
+	text-align: center;
 	width: 100%;
 }
 
@@ -195,15 +195,18 @@
 .estimate_list_table td {
 	border-color: #f0f0f0;
 }
+
 main {
 	max-width: 800px;
 	min-width: 350px;
 	text-align: center;
 	margin: auto;
 }
+
 .category {
 	font-weight: bold;
 }
+
 .item {
 	display: flex;
 	align-items: flex-end;
@@ -213,41 +216,50 @@ main {
 	margin-bottom: 10px;
 	width: 300px
 }
+
 .item .ckeck {
 	width: 30px;
 	border-bottom: 1px solid darkgray;
 }
+
 .item .i_name {
 	text-align: left;
 	width: 200px;
 	border-bottom: 1px solid darkgray;
 }
+
 .item .icount {
 	width: 30px;
 	border-bottom: 1px solid darkgray;
 }
+
 .del {
 	text-decoration: line-through;
 	text-decoration-color: red;
 	text-decoration-style: solid;
 }
+
 .container {
 	display: inline-flex;
 }
+
 .frame {
 	display: inline-flex;
 	flex-direction: column;
 	align-content: flex-start;
 	/* margin: auto; */
 }
+
 .block {
 	text-align: left;
 	margin-bottom: 30px;
 	width: 350px;
 }
+
 .title {
 	margin-bottom: 40PX;
 }
+
 @media ( max-width : 680px) {
 	.container {
 		display: inline-flex;
@@ -267,17 +279,21 @@ main {
 				<div class="estimate_prod_wrap">
 					<div class="list_select_wrap">
 						<select class="estimate_list_select" onchange="changeList_f(this)">
-						<% int i=0; %>
-							<c:forEach var="list" items="${listVO}">			
-							 <c:if test="${list.lnum eq requestScope.lnum}">
-							 <option value="${list.lnum }" selected="selected">${list.lname }</option>
-							 </c:if>
-							<c:if test="${list.lnum ne requestScope.lnum}">
-								<option value="${list.lnum }">${list.lname }</option>
+							<%
+								int i = 0;
+							%>
+							<c:forEach var="list" items="${listVO}">
+								<c:if test="${list.lnum eq requestScope.lnum}">
+									<option value="${list.lnum }" selected="selected">${list.lname }</option>
 								</c:if>
-						<% i++ ;%>
+								<c:if test="${list.lnum ne requestScope.lnum}">
+									<option value="${list.lnum }">${list.lname }</option>
+								</c:if>
+								<%
+									i++;
+								%>
 							</c:forEach>
-						</select> <span> 리스트 갯수 : <strong><%=i%></strong>개	 
+						</select> <span> 리스트 갯수 : <strong><%=i%></strong>개
 						</span>
 					</div>
 				</div>
@@ -292,31 +308,31 @@ main {
 		<div id="content" class="pop_content_wrap estimate_load_wrap">
 			<div class="estimate_list_table">
 				<div class="container" id="container">
-			<div class="frame">
-				<!-- 카테고리 -->
-				<c:forEach var="category" items="${icategory }"
-					begin="0" step="2">
-					<div class="block">
-						<div class="category">${category.ca_name }</div>
+					<div class="frame">
+						<!-- 카테고리 -->
+						<c:forEach var="category" items="${icategory }" begin="0" step="2">
+							<div class="block">
+								<div class="category">${category.ca_name }</div>
 
-						<!-- 아이템 -->
-						<c:forEach var="listing" items="${requestScope.listingVO }">
-							<c:if test="${category.ca_num == listing.CategoryVO.ca_num }">
-								<label><div class="item">
-										<input type="checkbox" name="ckeck" class="ckeck"
-											linum=${listing.LINUM }
-											<c:if test="${listing.CHECKED eq 'true'}"> checked="true"</c:if>>
-										<div name="i_name" class="i_name">${listing.itemVO.i_name }</div>
-										<div name="icount" class="icount">${listing.ICOUNT }</div>
-									</div></label>
-							</c:if>
+								<!-- 아이템 -->
+								<c:forEach var="listing" items="${requestScope.listingVO }">
+									<c:if test="${category.ca_num == listing.CategoryVO.ca_num }">
+										<label><div class="item">
+												<input type="checkbox" disabled="true" sname="ckeck"
+													class="ckeck" linum=${listing.LINUM }
+													<c:if test="${listing.CHECKED eq 'true'}"> checked="true"</c:if>>
+												<div name="i_name" class="i_name"
+													<c:if test="${listing.CHECKED eq 'true'}"> style="text-decoration-line: line-through"</c:if>>
+													${listing.itemVO.i_name }</div>
+												<div name="icount" class="icount">${listing.ICOUNT }</div>
+											</div></label>
+									</c:if>
+								</c:forEach>
+							</div>
 						</c:forEach>
 					</div>
-				</c:forEach>
-			</div>
-			<div class="frame">
-						<c:forEach var="category" items="${icategory }"
-							begin="1" step="2">
+					<div class="frame">
+						<c:forEach var="category" items="${icategory }" begin="1" step="2">
 							<div class="block">
 								<div class="category">${category.ca_name }</div>
 
@@ -335,13 +351,15 @@ main {
 							</div>
 						</c:forEach>
 					</div>
-		</div>
+				</div>
 			</div>
 		</div>
 		<!--footer-->
 		<div class="pop_footer_t1 row">
 			<div class="grid_col_r">
-				<button type="button" class="btn_upload" onclick="uploadBtn_f()"><span>불러오기</span></button>
+				<button type="button" class="btn_upload" onclick="uploadBtn_f()">
+					<span>불러오기</span>
+				</button>
 				<button type="button" class="btn_pop_close"
 					onclick="window.close();">
 					<i class="fas fa-times"></i> <span>닫기</span>
@@ -351,22 +369,19 @@ main {
 	</div>
 </body>
 <script>
- function changeList_f(e){
-	 console.log(e.value);
-	 let lnum = e.value;
-	 let url = "http://localhost:9080/pfpkg/itemlist/loadListForm/"+lnum;
-	 window.location.href=url;
-	 }
+	function changeList_f(e) {
+		console.log(e.value);
+		let lnum = e.value;
+		let url = "http://localhost:9080/pfpkg/itemlist/loadListForm/" + lnum;
+		window.location.href = url;
+	}
 
-
- 	function uploadBtn_f(){
- 		let lnum = document.querySelector('option[selected="selected"]').value;
-		let url = "http://localhost:9080/pfpkg/itemlist/category2/"+lnum;
+	function uploadBtn_f() {
+		let lnum = document.querySelector('option[selected="selected"]').value;
+		let url = "http://localhost:9080/pfpkg/itemlist/category2/" + lnum;
 		console.log("dd");
 		window.opener.location = url;
 		window.close();
- 	 	}
-	 
- 
-	</script>
+	}
+</script>
 </html>

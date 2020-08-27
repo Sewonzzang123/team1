@@ -9,7 +9,7 @@
 }
 
 .container {
-	width: 300px;
+	width: 340px;
 	height: 800px;
 	box-sizing: border-box;
 	flex: 1;
@@ -28,9 +28,9 @@ dd {
 }
 
 * {
-
 	text-align: center;
 }
+
 i{
 	color:black;
 }
@@ -57,14 +57,6 @@ input[type="text"]{
 
 div[selected="true"]{
 	text-decoration:line-through;
-}
-.edit_number {
-    display: inline-block;
-    width: 13px;
-    font-size: 0;
-    line-height: 0;
-    height: 19px;
-    vertical-align: middle;
 }
 
 .tab_menu_btn >ul>li>div{

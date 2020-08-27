@@ -1,0 +1,68 @@
+@charset "UTF-8";
+
+.tab_menu_container{
+	
+}
+.tab_menu_container>dd {
+	margin: 10px;
+
+}
+
+.tab_menu_container>dd>button {
+	width: 90%;
+	margin-left: 10px;
+
+}
+
+.tab_menu_container>dd .pd_item_list {
+	list-style-type: none;
+}
+
+.tab_menu_container>dd>ul {
+	margin: 10px;
+	padding: 0px;
+}
+
+.row>div {
+	display: flex;
+	margin: 0 10px 5px 10px;
+	border-bottom: 1px solid lightgray;
+}
+
+.row>div:nth-child(1) {
+	padding-top: 5px;
+}
+
+.row>div>.iname {
+	width: 210px;
+	padding-top: 5px;
+}
+
+.row>div>.icount {
+	margin: 3px;
+	border: 1px solid #75ccb9;
+}
+
+.row>div>.icount, .row>div>.edit_number {
+	width: 10%;
+}
+
+.row>div>.deleteItem {
+	width: 10%;
+}
+
+.row>div>.edit_number {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.row>div>.edit_number>.plusBtn, 
+.row>div>.edit_number>.minusBtn {
+	width:50%;
+	height: 15px;
+}
+
+.row>div>.deleteItem>i{
+	width:100%;
+	height:100%;
+}
