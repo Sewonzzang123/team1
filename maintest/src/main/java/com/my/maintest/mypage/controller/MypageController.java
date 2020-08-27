@@ -6,7 +6,6 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.tomcat.util.json.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -36,14 +35,14 @@ public class MypageController {
 		return "/mypage/modifyForm";
 	}
 
-	// 회원정보 수정 호출
+	// �쉶�썝�젙蹂� �닔�젙 �샇異�
 	@RequestMapping("/modifyForm")
 	public String get_modifyForm() {
 
 		return "/mypage/modifyForm";
 	}
 
-	// 비밀번호 변경
+	// 鍮꾨�踰덊샇 蹂�寃�
 	@RequestMapping("/changePW")
 	public String changePW(HttpSession session, @RequestBody String nextpw) {
 
@@ -58,12 +57,12 @@ public class MypageController {
 		return "/mypage/modifyForm";
 	}
 
-	// 회원정보 수정
+	// �쉶�썝�젙蹂� �닔�젙
 	@RequestMapping("/modify")
 	public String modify(HttpSession session, @ModelAttribute MemberVO info, BindingResult result, Model model) {
 
 		if (info.getNickname().trim().length() == 0) {
-			model.addAttribute("err_msg", " * 필수 정보입니다.");
+			model.addAttribute("err_msg", " * �븘�닔 �젙蹂댁엯�땲�떎.");
 			return "/mypage/modifyForm";
 		}
 
@@ -79,19 +78,19 @@ public class MypageController {
 		return "/mypage/modifyResult";
 	}
 
-	// 회원 탈퇴 호출
+	// �쉶�썝 �깉�눜 �샇異�
 	@RequestMapping("/withdrawForm")
 	public String get_withdrawForm() {
 
 		return "/mypage/withdrawForm";
 	}
 
-	// 회원 탈퇴 호출
+	// �쉶�썝 �깉�눜 �샇異�
 	@RequestMapping("/withdraw")
 	public String withdraw(HttpSession session, @RequestParam String pw, Model model) {
 		MemberVO memberVO = (MemberVO) session.getAttribute("member");
 		if (!memberVO.getPw().equals(pw)) {
-			model.addAttribute("err_msg", "* 비밀번호가 일치하지 않습니다.");
+			model.addAttribute("err_msg", "* 鍮꾨�踰덊샇媛� �씪移섑븯吏� �븡�뒿�땲�떎.");
 
 			return "/mypage/withdrawForm";
 		}
@@ -102,7 +101,7 @@ public class MypageController {
 		return "/mypage/withdrawResult";
 	}
 
-	// 내가 쓴 글
+	// �궡媛� �벖 湲�
 	@RequestMapping({ "/mypost", "/mypost/{reqPage}" })
 	public String mypost(@PathVariable(value = "reqPage", required = false) Optional<Integer> reqPage,
 			HttpSession session, Model model) {
@@ -115,7 +114,7 @@ public class MypageController {
 		return "/mypage/mypost";
 	}
 
-	// 글 삭제
+	// 湲� �궘�젣
 	@RequestMapping("/del_post")
 	public String del_post(@RequestBody String del_list, HttpSession session, Model model) {
 
@@ -128,7 +127,7 @@ public class MypageController {
 		return "/mypage/mypost";
 	}
 
-	// 내 리스트
+	// �궡 由ъ뒪�듃
 	@RequestMapping({ "/mylist", "/mylist/{reqPage}" })
 	public String mylist(@PathVariable(value = "reqPage", required = false) Optional<Integer> reqPage,
 			HttpSession session, Model model) {
@@ -145,17 +144,17 @@ public class MypageController {
 		return "/mypage/mylist";
 	}
 
-	// 리스트 삭제
+	// 由ъ뒪�듃 �궘�젣
 	@RequestMapping("/del_list")
 	public String del_list(@RequestBody String lnum, HttpSession session, Model model) {
-		logger.info("삭제 호출됨");
+		logger.info("�궘�젣 �샇異쒕맖");
 		logger.info(lnum);
 		mypageSVC.del_list(lnum);
 
 		return "/mypage/mylist";
 	}
 
-	// 리스트 보기
+	// 由ъ뒪�듃 蹂닿린
 	@RequestMapping("/listview/{lnum}")
 	public String listview(@PathVariable String lnum, HttpSession session, Model model) {
 		model.addAttribute("icategory", mypageSVC.get_category());
@@ -164,20 +163,20 @@ public class MypageController {
 		return "/mypage/listView";
 	}
 
-	// 리스트 보기
+	// 由ъ뒪�듃 蹂닿린
 	@RequestMapping("/check")
 	public void item_check(@RequestBody String linum, HttpSession session, Model model) {
 		mypageSVC.item_check(linum);
-		logger.info("체크호출");
+		logger.info("泥댄겕�샇異�");
 
 //		return "/mypage/listView";
 	}
 
-	// 아이템 체크
+	// �븘�씠�뀥 泥댄겕
 	@RequestMapping("/uncheck")
 	public void item_uncheck(@RequestBody String linum, HttpSession session, Model model) {
 		mypageSVC.item_uncheck(linum);
-		logger.info("언체크호출");
+		logger.info("�뼵泥댄겕�샇異�");
 
 //		return "/mypage/listView";
 	}
