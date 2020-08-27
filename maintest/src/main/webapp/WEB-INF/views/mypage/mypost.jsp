@@ -72,7 +72,8 @@
 
 			<div class="actionPost">
 				<div class="checkbox">
-					<input type="checkbox" name="" id="allselect"> 전체선택
+					<input type="checkbox" name="" id="allselect"><span>
+						전체선택</span>
 				</div>
 				<div id="mypost_delete">
 					<input id="mypost_delete_btn" type="button" value="삭제">

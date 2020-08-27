@@ -22,3 +22,11 @@
 	text-align: center;
 	padding: 0;
 }
+
+#member_table td {
+	vertical-align: middle;
+}
+
+#member_table .check {
+	margin: 3px;
+}

@@ -81,3 +81,7 @@ tbody td {
 tbody td, tbody th {
 	border-bottom: 1px #E0E0E0 solid;
 }
+
+.check {
+	margin: 3px;
+}
