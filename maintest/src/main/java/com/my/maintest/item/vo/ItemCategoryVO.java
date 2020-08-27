@@ -6,5 +6,4 @@ import lombok.Data;
 public class ItemCategoryVO {
 	private long ca_num;
 	private String ca_name;
-
 }

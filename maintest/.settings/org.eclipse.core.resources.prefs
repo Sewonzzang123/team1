@@ -1,2 +1,5 @@
 eclipse.preferences.version=1
+encoding//src/main/java/com/my/maintest/item/controller/ItemListController.java=UTF-8
+encoding//src/main/java/com/my/maintest/item/controller/PackingListController.java=UTF-8
+encoding//src/main/java/com/my/maintest/member/vo/MemberVO.java=UTF-8
 encoding//src/main/java/com/my/maintest/mypage/controller/MypageController.java=UTF-8

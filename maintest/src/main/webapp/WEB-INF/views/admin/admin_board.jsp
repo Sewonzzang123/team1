@@ -20,7 +20,8 @@
 	var contextPath = "${pageContext.request.contextPath}";
 </script>
 <script defer
-	src="${pageContext.request.contextPath}/js/admin/admin_board.js">	
+	src="${pageContext.request.contextPath}/js/admin/admin_board.js">
+	
 </script>
 </head>
 
