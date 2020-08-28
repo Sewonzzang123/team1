@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!-- 공통모듈 -->
-<%@ include file="/WEB-INF/views/included/common_taglib.jsp"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
@@ -20,7 +18,8 @@
 	var contextPath = "${pageContext.request.contextPath}";
 </script>
 <script defer
-	src="${pageContext.request.contextPath}/js/admin/admin_board.js">	
+	src="${pageContext.request.contextPath}/js/admin/admin_board.js">
+	
 </script>
 </head>
 
