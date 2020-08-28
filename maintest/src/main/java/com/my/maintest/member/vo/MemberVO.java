@@ -31,24 +31,10 @@ public class MemberVO {
 	private String tel1; // TEL VARCHAR2(13 BYTE) Yes 3 '-'포함 ex)010-1234-5678
 	private String tel2; // TEL VARCHAR2(13 BYTE) Yes 3 '-'포함 ex)010-1234-5678
 	private String tel3; // TEL VARCHAR2(13 BYTE) Yes 3 '-'포함 ex)010-1234-5678
-<<<<<<< Upstream, based on origin/master
 
 	@NotEmpty(message = "* 필수 정보입니다.")
 	private String pwc;
-
 	private String ucode;
-=======
->>>>>>> b40a0c2 해야할거 List<Map<String, Object>> 를 List<ArrayList<Map<String, Object>>>로 변환하기 참고>> https://developer0513.tistory.com/61
-
-	@NotEmpty(message = "* 필수 정보입니다.")
-	private String pwc;
-
-	private String ucode;
-
-<<<<<<< Upstream, based on origin/master
-}
-=======
 	private Date cdate;
 
 }
->>>>>>> 81b2787 0825
