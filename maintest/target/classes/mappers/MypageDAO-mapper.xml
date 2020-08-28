@@ -27,22 +27,37 @@
 		<!-- select * from(select LNUM , LNAME, CDATE, ucode, row_number() over( 
 			order by LNUM asc) as num from list where ucode=#{ucode}) where num between 
 			#{end_num} and #{str_num} order by num desc -->
-		select * from(select LNUM , LNAME, CDATE, ucode,
+		select t2.LNUM, t3.UCODE, t3.LNAME, t3.CDATE, num,
+		NVL(total_item,0) as
+		total_item, NVL(checked_item,0) as checked_item
+		from(select LNUM ,
+		LNAME, CDATE, ucode,
 		row_number() over(
-		order by LNUM ASC) as num from list where
+		order by LNUM
+		ASC) as num from
+		list where
 		ucode=#{ucode}) t3 left
 		OUTER
-		join (select t1.LNUM,count(*) as total_item from list t1
+		join (select
+		t1.LNUM,count(*) as
+		total_item from list t1
 		,listing t2
-		where t1.lnum=t2.lnum group by t1.lnum) t2 on
+		where
+		t1.lnum=t2.lnum group by
+		t1.lnum) t2 on
 		t3.lnum=t2.lnum
 		left OUTER
-		join ( select t1.LNUM,count(*) as checked_item from list t1,
+		join (
+		select t1.LNUM,count(*)
+		as checked_item from list t1,
 		listing t2
-		where t1.lnum=t2.lnum and t2.checked='true' group by
+		where
+		t1.lnum=t2.lnum and
+		t2.checked='true' group by
 		t1.lnum) t4 on
 		t3.lnum=t4.lnum
-		where num between
+		where num
+		between
 		#{end_num} and #{str_num} order by num
 		desc
 	</select>
@@ -65,7 +80,7 @@
 	<select id="get_listing" parameterType="string"
 		resultType="com.my.maintest.mypage.vo.ListingVO">
 		select * from listing t1, ITEM t2, I_CATEGORY t3 where
-		t1.I_NUM = t2.I_NUM and t2.ca_num = t3.ca_num and lnum=#{lnum}
+		t1.I_NUM = t2.I_NUM and t2.ca_num = t3.ca_num and t1.lnum=#{lnum}
 	</select>
 
 	<update id="item_check" parameterType="string">
