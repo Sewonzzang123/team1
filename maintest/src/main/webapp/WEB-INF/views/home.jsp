@@ -2,6 +2,7 @@
 
     pageEncoding="UTF-8"
     isELIgnored="false"%>
+    
 <%@ page session="false" %>
  	<%@ include file="/WEB-INF/views/included/common.jsp"  %>
 
@@ -14,11 +15,17 @@
 
 
 	<!-- topmenu -->
-	<%@ include file="/WEB-INF/views/layout/uppermost.jsp"%>
+<%-- 	<%@ include file="/WEB-INF/views/layout/uppermost.jsp"%> --%>
+	
+	
+	
 	${sessionScope.member.id }
 	<a href="${contextPath }/mypage/">정민</a>
 	<a href="${contextPath }/board/">대석</a>
 	<P>The time on the server is ${serverTime}.</P>
+
+<%@ include file="/WEB-INF/views/board/fileUploadFrm2.jsp" %>
+
 
 </body>
 </html>

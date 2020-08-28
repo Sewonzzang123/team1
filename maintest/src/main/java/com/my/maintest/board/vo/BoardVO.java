@@ -40,10 +40,6 @@ private  long bgroup;																						  //bGroup  number (5), --답글 그�
 private  long bstep;																																				  //bstep number(5), --답글 순서 
 private  long bindent;																																		 // bindent number(5), --답글 들여쓰기 
 
-
-private int num; // 아래 dbrownum과 용도가 같은듯????
-
-
 private long dbrownum;   //SQL : board "dbrownum" 게시글 목록 row_number() over(order by bgroup asc, bstep desc) as  dbrownum로 생성
 private String bnickname; //SQL : member.nickname as "bnickname"
 			
@@ -215,24 +211,13 @@ public void setBoardFileVO(BoardFileVO boardFileVO) {
 }
 
 
-public int getNum() {
-	return num;
-}
-
-
-public void setNum(int num) {
-	this.num = num;
-}
-
-
 @Override
 public String toString() {
 	return "BoardVO [bnum=" + bnum + ", bcategory=" + bcategory + ", hidcategory=" + hidcategory + ", ucode=" + ucode
 			+ ", btitle=" + btitle + ", bcontent=" + bcontent + ", bhits=" + bhits + ", bcdate=" + bcdate + ", budate="
-			+ budate + ", bgroup=" + bgroup + ", bstep=" + bstep + ", bindent=" + bindent + ", num=" + num + ", dbrownum="
-			+ dbrownum + ", bnickname=" + bnickname + ", files=" + files + ", boardFileVO=" + boardFileVO + "]";
+			+ budate + ", bgroup=" + bgroup + ", bstep=" + bstep + ", bindent=" + bindent + ", dbrownum=" + dbrownum
+			+ ", bnickname=" + bnickname + ", files=" + files + ", boardFileVO=" + boardFileVO + "]";
 }
-
 
 
 
