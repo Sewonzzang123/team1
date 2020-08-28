@@ -20,6 +20,7 @@ public class BoardVO {
 
 
 
+<<<<<<< Upstream, based on branch 'master' of https://github.com/mnj190/team1.git
 private long bnum;																																			  //bnum number primary key, --게시글 번호
 @Valid
 private BcategoryVO bcategory;         						//catNum catName							  //bcategory number , -- 게시판 코드
@@ -47,6 +48,9 @@ private int num; // 아래 dbrownum과 용도가 같은듯????
 private long dbrownum;   //SQL : board "dbrownum" 게시글 목록 row_number() over(order by bgroup asc, bstep desc) as  dbrownum로 생성
 private String bnickname; //SQL : member.nickname as "bnickname"
 			
+=======
+//정민 추가
+>>>>>>> c939ee0 ㅁㄴㅇ
 
 //첨부파일
 
