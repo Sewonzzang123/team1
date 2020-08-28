@@ -23,20 +23,6 @@
 	<!-- header -->
 	<%@ include file="/WEB-INF/views/layout/haeder.jsp"%>
 
-	<div class="menu_wrap">
-		<div class="hide_wrap">
-			<i class="fa fa-times" id="buggerBtn_hide"></i>
-		</div>
-
-		<ul>
-			<li><a href="">리스트 작성</a></li>
-			<li><a href="">게시판</a></li>
-			<li><a href="">회원가입</a></li>
-			<li><a href="">로그인</a></li>
-		</ul>
-	</div>
-	<!-- 햄버거 버튼 열면 뒤에 깔리는 반투명 검정 배경 -->
-	<div class="cover_close"></div>
 	<div class="main_img">
 		<span class="main_text"> Lorem ipsum dolor sit amet,
 			consectetur adipisicing </span>

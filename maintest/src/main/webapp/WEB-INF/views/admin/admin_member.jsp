@@ -94,7 +94,7 @@
 					end="${requestScope.paging.endPage}">
 					<span><a
 						href="${pageContext.request.contextPath}/admin/member/${page }<c:if test="${not empty requestScope.searchType}">/${requestScope.searchType }/${requestScope.keyword }</c:if>
-				">${page }</a></span>
+					">${page }</a></span>
 					<c:set var="page" value="${page+1}" />
 				</c:forEach>
 				<c:if test="${requestScope.paging.next==true }"> | <a

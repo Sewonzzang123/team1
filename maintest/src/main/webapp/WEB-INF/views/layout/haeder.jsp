@@ -226,6 +226,7 @@ i.navbar_toggleBtn {
 
 	</div>
 </header>
+
 <div class="menu_wrap">
 	<div class="hide_wrap">
 		<i class="fa fa-times" id="buggerBtn_hide"></i>
