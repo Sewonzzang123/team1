@@ -28,24 +28,17 @@
 	<main>
 
 		<div class="container">
-			<div class="title">
-				<c:if test=""></c:if>
+			<div class="title">			
 				<legend>게시글 목록</legend>
 			</div>
 			<input type="hidden" id="returnPage" name="returnPage"
 				value="${pagingComponent.pageCriteria.currReqPage}" />
 			<div class="content">
-				<div class="th cols">글번호</div>
-				<div class="th cols">게시판카테고리</div>
+				
 
-				<div class="th cols">제목</div>
-				<div class="th cols">작성자</div>
-				<div class="th cols">조회수</div>
-				<div class="th cols">작성일자</div>
-
-				<c:forEach var="tdata" items="${requestScope.articles}">
-					<div class="td cols">${tdata.dbrownum }</div>
-					<div class="td cols">${tdata.bcategory.catname}</div>
+			<%-- 	<c:forEach var="tdata" items="${requestScope.articles}">
+					<div >${tdata.dbrownum }</div>
+					<div >${tdata.bcategory.catname}</div>
 
 					<div class="td cols">
 						<a
@@ -63,25 +56,37 @@
 
 					<div class="td cols">${tdata.bnickname}</div>
 					<div class="td cols">${tdata.bhits}</div>
-					<div class="td cols">
+					<div class="td cols"> --%>
 
-						<!-- 작성일 당일은 시간으로 나타남.   -->
+		<script type="text/javascript">
 
-						<fmt:formatDate value="${tdata.bcdate}" pattern="yy/MM/dd HH:mm" />
-					</div>
-				</c:forEach>
-				<%-- <c:if test="${tdata.bcdate !=today   }"> </c:if> --%>
-				<%--  <fmt:formatDate value="${tdata.bcdate}" pattern="yy/MM/dd HH:mm"/> </div> --%>
-				<%--  <c:if test="${tdata.bcdate ==today   }">   </c:if>  --%>
 
-			</div>
-
+		
+							</script>
+							
+								 <input type="file" id="thumbnail"	name="files" multiple="multiple" />							
+								<div class="img_wrap">
+									<div class="img_content">
+										
+												<!-- 보여줄 이미지 들어오는 공간 -->
+													<li>
+													<label for="btitle">제목</label> <input name="btitle" type="text" value="${article.btitle }"/> 
+													</li>
+							<li>
+							<label for="bnickname">작성자</label> <input type="text"
+								name="bnickname" readonly
+								value="${articles.nickname }" /></li>
+							
+									</div>
+								</div>
 
 
 
 
 			<div class="btnGrp">
 				<button type="button" id="writeBtn">글쓰기</button>
+				
+				<!-- 페이징 -->
 				<div class="paging">
 					<div>
 						<a
@@ -120,6 +125,7 @@
 			</div>
 
 
+<!-- 검색 -->
 			<div class="searching">
 				<select name="searchType" id="searchType">
 					<option value="A"

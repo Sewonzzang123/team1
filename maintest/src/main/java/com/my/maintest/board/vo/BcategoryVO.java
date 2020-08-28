@@ -1,10 +1,17 @@
 package com.my.maintest.board.vo;
 
+import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+@Entity
 public class BcategoryVO {
-
+	
+	@NotNull
+	@Positive(message="게시판 분류를 선택해주세요.")
 	private String catnum; // CID NUMBER(10,0) No 1 분류코드
+	
 	private String catname; // CNAME VARCHAR2(60 BYTE) No 2 분류명
-	private String btype;
+	private String btype; //게시판 종류 blog/album 타입
 
 	public String getCatnum() {
 		return catnum;

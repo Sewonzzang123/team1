@@ -1,9 +1,15 @@
 package com.my.maintest.board.vo;
 
+import javax.persistence.Entity;
+import javax.validation.constraints.PositiveOrZero;
+
+@Entity
 public class HeadIdCategoryVO {
+	 @PositiveOrZero
 	String hidnum;  
 	String catnum; 
 	String hidname;
+	
 	public String getHidnum() {
 		return hidnum;
 	}

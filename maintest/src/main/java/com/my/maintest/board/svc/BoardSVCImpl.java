@@ -21,6 +21,8 @@ import com.my.maintest.common.paging.PagingComponent;
 import com.my.maintest.common.paging.RecordCriteria;
 import com.my.maintest.common.paging.SearchCriteria;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Service
 public class BoardSVCImpl implements BoardSVC {
 
@@ -58,24 +60,46 @@ public class BoardSVCImpl implements BoardSVC {
 	@Override
 	public List<BoardVO> selectArticles(int reqPage, String searchType, String searchKeyword) {		
 		PagingComponent	pagingComponent = pagingSVC.getPagingComponent(reqPage,searchType,searchKeyword);		
-		
-		System.out.println("board SVC 사용안하는 메소드 호출");
-		
+			
 	return boardDAO.selectArticles(pagingComponent.getRecordCriteria().getRecFrom(), pagingComponent.getRecordCriteria().getRecTo());
 	}
 	
 	
+//게시판 타입 조회 
+	@Override
+	public String selectBtype(int catnum) {	
+	return boardDAO.selectBtype(catnum);
+	}
+
 	
 	//전체게시글 조회 + 페이징 + 검색어 (검색타입/검색어)
 	@Override
-	public List<BoardVO> selectArticlesWithKey(int reqPage, String searchType, String searchKeyword) {
-		PagingComponent pagingComponent = pagingSVC.getPagingComponent(reqPage,searchType,searchKeyword);		
+	public  Map<String, Object>  selectArticlesWithKey(int catnum, int reqPage, String searchType, String searchKeyword) {
 		
-		System.out.println("board SVC  recFrom , recTO SQL범위 설정=== " + pagingComponent.toString());
-		System.out.println("board SVC DAO단에서 읽어오는 데이터 개수" + boardDAO.selectArticlesWithKey(pagingComponent.getRecordCriteria().getRecFrom(), pagingComponent.getRecordCriteria().getRecTo(), searchType, searchKeyword).size());
+	//페이징 		
+			PagingComponent pagingComponent = pagingSVC.getPagingComponent(reqPage,searchType,searchKeyword);
+			
+			
+			
+		 Map<String, Object> map = new HashMap<>();
+			List<BoardVO> list = null;
+		BoardFileVO file = null;
+		 
+		 
+
+		//BoardVO 불러오기
+	 list = boardDAO.selectArticlesWithKey(catnum,pagingComponent.getRecordCriteria().getRecFrom(), pagingComponent.getRecordCriteria().getRecTo(), searchType, searchKeyword);
+	 log.info(list.toString());
 	 
-		return boardDAO.selectArticlesWithKey(pagingComponent.getRecordCriteria().getRecFrom(), pagingComponent.getRecordCriteria().getRecTo(), searchType, searchKeyword);
+	 
+	
 		
+		
+	 //map.put("articles", list); 
+		//map.put("files",file);
+		
+		
+		return map;
 	}
 	
 	

@@ -42,7 +42,7 @@ public class BoardDAOImpl implements BoardDAO {
 	
 	//전체 게시글 조회 + 페이징	
 	@Override
-	public List<BoardVO> selectArticles(int recFrom, int recTo) {
+	public List<BoardVO> selectArticles(long recFrom, long recTo) {
 				
 		Map<String, Object> map = new HashMap<>();
 		
@@ -51,15 +51,34 @@ public class BoardDAOImpl implements BoardDAO {
 		
 		return sqlSession.selectList("mappers.BoardDAO-mapper.selectArticles", map);
 	}
-	//전체게시글 조회 + 페이징 + 검색어 (검색타입/검색어)
+	
+	//게시판 타입 조회 
 	@Override
-	public List<BoardVO> selectArticlesWithKey( int recFrom,int recTo,String searchType, String searchKeyword) {
+	public String selectBtype(long catnum) {		
+		return sqlSession.selectOne("mappers.BoardDAO-mapper.selectBtype", catnum);
+	}
+	
+	
+//갤러리게시판(catnum:2)  썸네일 첨부파일 전체 정보 불러오기 
+	@Override
+	public List<BoardFileVO> selectThumbnailFiles(long catnum) {
+	
+		return sqlSession.selectList("mappers.BoardDAO-mapper.selectThumbnailFiles", catnum)  ;
+	}
+
+
+
+
+//전체게시글 조회 + 페이징 + 검색어 (게시판타입 / 레코드 범위 / 검색타입 / 검색어)
+	@Override
+	public List<BoardVO> selectArticlesWithKey(long catnum,  long recFrom,long recTo,String searchType, String searchKeyword) {
 		Map<String,Object> map = new HashMap<String, Object>();		
 		
 		map.put("recFrom", recFrom);
 		map.put("recTo", recTo);
 		map.put("searchType", searchType);
 		map.put("searchKeyword", searchKeyword);
+		map.put("catnum",catnum);
 
 	
 		return sqlSession.selectList("mappers.BoardDAO-mapper.selectArticlesWithKey", map ) ;
@@ -155,7 +174,6 @@ public int updateBhits(long bnum) {
 			map.put("bstep", bstep);					
 			return sqlSession.update("mappers.BoardDAO-mapper.updateBstep", map );
 		}
-
 
 		
 

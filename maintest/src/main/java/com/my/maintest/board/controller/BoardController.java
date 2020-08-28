@@ -9,6 +9,7 @@ import java.util.Optional;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +39,8 @@ import com.my.maintest.board.vo.HeadIdCategoryVO;
 import com.my.maintest.board.vo.TemporaryVO;
 import com.my.maintest.common.paging.SearchCriteria;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Controller
 @RequestMapping("/board")
 public class BoardController {
@@ -49,7 +52,6 @@ public class BoardController {
 
 	@Inject
 	PagingSVC pagingSVC;
-
 
 
 	// 게시판 카테고리 조회
@@ -109,7 +111,7 @@ public class BoardController {
 
 		System.out.println("getSession" + session.getAttribute("member").toString());
 
-		return "redirect:/board/boardListFrm/1";
+		return "redirect:/board/0";
 	}
 //
 //	// 게시글목록
@@ -126,26 +128,40 @@ public class BoardController {
 //		return "/board/boardListFrm";
 //	}
 
-	// 게시글 목록 (페이징 + 검색)
-	@GetMapping({ "/boardListFrm", "/boardListFrm/{reqPage}", "/boardListFrm/{reqPage}/{searchType}/{searchKeyword}" })
-	public String toSearch(@PathVariable(value = "reqPage", required = false) Optional<Integer> reqPage,
+	// 게시글 전체보기  (페이징 + 검색)
+	@GetMapping({ 
+		"/{catnum}" // 각 게시판으로 이동
+		,"/boardListFrm"
+		, "/boardListFrm/{reqPage}"
+		, "/boardListFrm/{reqPage}/{searchType}/{searchKeyword}" })
+	public String toSearch(
+			
+			@PathVariable(value="catnum", required = false) Optional<Integer> catnum,
+			@PathVariable(value = "reqPage", required = false) Optional<Integer> reqPage,
 			@PathVariable(value = "searchType", required = false) String searchType,
 			@PathVariable(value = "searchKeyword", required = false) String searchKeyword,
-			@ModelAttribute SearchCriteria searchCriteria, Model model) {
+			@ModelAttribute SearchCriteria searchCriteria, Model model) {		
+		
+		// 게시판 타입 읽어오기 		
+		String btype = boardSVC.selectBtype(catnum.orElse(0));
+			Map<String, Object> map = boardSVC.selectArticlesWithKey( catnum.orElse(0), reqPage.orElse(1), searchType, searchKeyword);	
+			
 
-		model.addAttribute("pagingComponent",
-				pagingSVC.getPagingComponent(reqPage.orElse(1), searchType, searchKeyword));
-		model.addAttribute("articles", boardSVC.selectArticlesWithKey(reqPage.orElse(1), searchType, searchKeyword));
 
-		System.out.println("board 컨트롤러 던져줄 값들 req, 써치타입 , 키워드 ===" + reqPage + " +" + searchType + " " + searchKeyword);
-		System.out.println(
-				"board 컨트롤러 페이징 설정 ===" + pagingSVC.getPagingComponent(reqPage.orElse(1), searchType, searchKeyword));
-		System.out.println("board 컨트롤러 읽어오는 데이터 개수===size"
-				+ boardSVC.selectArticlesWithKey(reqPage.orElse(1), searchType, searchKeyword).size());
-
-		return "/board/boardListFrm";
+			model.addAttribute("pagingComponent",	pagingSVC.getPagingComponent(reqPage.orElse(1), searchType, searchKeyword));
+			model.addAttribute("articles", map.get("articles"));
+			model.addAttribute("files", map.get("files"));
+			
+			
+			
+			if(btype.equals("album") ){
+				return "/board/boardGalleryListFrm";
+			}			
+			return "/board/boardListFrm";
 	}
 
+
+	
 	// 게시글 작성 화면
 	@GetMapping("/boardWriteFrm/{returnPage}")
 	public String toboardWriteFrm(@ModelAttribute BoardVO boardVO, @ModelAttribute("returnPage") String returnPage) {
@@ -155,18 +171,13 @@ public class BoardController {
 
 	// 게시글 등록
 	@PostMapping("/write")
-	public String toWrite(@ModelAttribute BoardVO boardVO
-
-	// , BindingResult result
+	public String toWrite(@RequestParam("returnPage") String returnPage, @Valid  @ModelAttribute BoardVO boardVO
+	 , BindingResult result
 	) {
-
-		// if (result.hasErrors()) {
-		// return "/board/boardWriteFrm";
-		// }
-
-		System.out.println(boardVO.getFiles());
-		System.out.println(boardVO.getBtitle());
-
+		
+		 if (result.hasErrors()) {
+		 return "/board/boardWriteFrm/" + returnPage;
+		 }
 		boardSVC.insertArticle(boardVO);
 		return "redirect:/board/boardListFrm";
 	}

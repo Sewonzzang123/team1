@@ -28,9 +28,11 @@ public interface BoardSVC {
 	//전체 게시글 조회 + 페이징 
 	List<BoardVO> selectArticles(int reqPage, String searchType, String searchKeyword);
 	
+	//게시판 타입 조회 
+	String selectBtype(int catnum);
 	
-	//전체게시글 조회 + 페이징 + 검색어 (검색타입/검색어)
-	List<BoardVO> selectArticlesWithKey(int reqPage, String searchType, String searchKeyword);
+	//전체게시글 조회 + 페이징 + 검색어  (게시판타입 / 레코드 범위 / 검색타입 / 검색어)
+	 Map<String, Object> selectArticlesWithKey(int catnum, int reqPage, String searchType, String searchKeyword);
 	
 	// 게시글 열람
 	Map<String, Object> selectArticle(long bnum);	
@@ -50,6 +52,7 @@ public interface BoardSVC {
 	int deleteArticle(long  bnum);
 	//게시글 답글 작성
 	int insertRepliedArticle(BoardVO boardVO);
+	
 	
 
 	

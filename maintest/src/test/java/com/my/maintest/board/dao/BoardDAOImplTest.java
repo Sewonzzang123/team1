@@ -1,3 +1,4 @@
+  
 package com.my.maintest.board.dao;
 
 import java.util.List;
@@ -31,15 +32,15 @@ public class BoardDAOImplTest {
 	BoardDAO boardDAO;
 
 	@Test
-	@DisplayName("寃뚯떆湲� �벑濡�")
-	@Disabled
+	@DisplayName("게시글 등록")
+@Disabled
 	void insertArticle() {
 		
 		for(int i = 1 ; i < 100; i++ ) {
 		String catNum = "2";
 		String hidNum = "1";
 		long uCode = 0;
-		String bTitle = "제목"+i;
+		String bTitle = "제목1"+i;
 		String bContent = "내용111111";
 
 		BcategoryVO BcategoryVO = new BcategoryVO();
@@ -61,22 +62,22 @@ public class BoardDAOImplTest {
 	}
 	
 	@Test
-	@DisplayName("�씠�쟾�떟湲� bstep+1泥섎━ �떟湲� insert �쟾 泥섎━ ")
+	@DisplayName("이전답글 bstep+1처리 답글 insert 전 처리 ")
 	@Disabled
 	void updateBstep() {		
 		long	bgroup =185;
-		long bstep = 0; //�썝湲��뿉 ���븳 �떟湲�		
+		long bstep = 0; //원글에 대한 답글		
 		boardDAO.updateBstep(bgroup, bstep);		
 	}
 	@Test
-	@DisplayName("寃뚯떆湲� �떟湲� �벑濡�")
+	@DisplayName("게시글 답글 등록")
 	@Disabled
 	void insertRepliedArticle() {
 		String catNum = "3";
-		String hidNum = "2";
+		String hidNum =" 2";
 		long uCode = 2;
-		String bTitle = "8/1314:54寃뚯떆湲� �떟湲� �벑濡�";
-		String bContent = "1111寃뚯떆湲� �떟湲� �벑濡�2";
+		String bTitle = "8/1314:54게시글 답글 등록";
+		String bContent = "1111게시글 답글 등록2";
 		long	bgroup =184;
 		long bstep = 0;
 		long bindent = 0 ;
@@ -106,7 +107,7 @@ public class BoardDAOImplTest {
 
 
 	@Test
-	@DisplayName("寃뚯떆湲� �쟾泥댁“�쉶")
+	@DisplayName("게시글 전체조회")
 	@Disabled
 	void selectArticles() {
 		List<BoardVO> list = boardDAO.selectArticles();
@@ -116,7 +117,7 @@ public class BoardDAOImplTest {
 	}
 
 	@Test
-	@DisplayName("寃뚯떆湲� �뿴�엺")
+	@DisplayName("게시글 열람")
 	@Disabled
 	void toRead() {
 		long bNum = 72;
@@ -125,7 +126,7 @@ public class BoardDAOImplTest {
 	}
 
 	@Test
-	@DisplayName("寃뚯떆湲� �궘�젣")
+	@DisplayName("게시글 삭제")
 	@Disabled
 	void toDelete() {
 		long bnum = 74;
@@ -134,7 +135,7 @@ public class BoardDAOImplTest {
 	}
 
 	@Test
-	@DisplayName("議고쉶�닔 媛깆떊")
+	@DisplayName("조회수 갱신")
 	@Disabled
 	void updateBhits() {
 
@@ -143,23 +144,23 @@ public class BoardDAOImplTest {
 	}
 
 	@Test
-	@DisplayName("寃뚯떆湲� �닔�젙")
+	@DisplayName("게시글 수정")
 	@Disabled
 	void updateArticle() {
 		BoardVO boardVO = new BoardVO();
 		boardVO.setBnum(84);
-		boardVO.setBtitle("�닔�젙�맂 �젣紐�");
-		boardVO.setBcontent("�닔�젙�맂 �궡�슜");
+		boardVO.setBtitle("수정된 제목");
+		boardVO.setBcontent("수정된 내용");
 		BcategoryVO bcategory = new BcategoryVO();
 		boardVO.setBcategory(bcategory);
 		boardVO.getBcategory().setCatnum("1");
-		boardVO.setBnickname("愿�由ъ옄");
+		boardVO.setBnickname("관리자");
 		boardDAO.updateArticle(boardVO);
 	}
 	
 	
 	@Test
-	@DisplayName("泥⑤��뙆�씪 �벑濡�")
+	@DisplayName("첨부파일 등록")
 	@Disabled
 	void insertFiles() {
 		
@@ -167,7 +168,7 @@ public class BoardDAOImplTest {
 		BoardFileVO boardFileVO = new BoardFileVO();
 		
 		boardFileVO.setBnum(210);
-		boardFileVO.setFname("�뙆�씪�씠由�");
+		boardFileVO.setFname("파일이름");
 		boardFileVO.setFsize(1008);
 		boardFileVO.setFtype("jpg");
 
@@ -179,7 +180,7 @@ public class BoardDAOImplTest {
 	
 	
 	@Test
-	@DisplayName("泥⑤��뙆�씪 媛��졇�삤湲�")
+	@DisplayName("첨부파일 가져오기")
 	@Disabled
 	void toSelectFiles() {
 		long bnum = 15;
@@ -187,7 +188,7 @@ public class BoardDAOImplTest {
 			}
 	
 	@Test
-	@DisplayName("由ъ뒪�듃 議고쉶 + �럹�씠吏�")
+	@DisplayName("리스트 조회 + 페이징")
 	@Disabled
 	void toSelectArticles1() {
 		
@@ -202,24 +203,40 @@ public class BoardDAOImplTest {
 				
 	}
 	
+
 	@Test
-	@DisplayName("由ъ뒪�듃議고쉶 + �럹�씠吏� + 寃��깋�뼱")
+	@DisplayName("보드타입 ")
+	@Disabled
+	void toGetBtype() {
+	
+		int  catnum = 1;
+		
+		boardDAO.selectBtype(catnum);
+		
+		
+	}
+	
+	@Test
+	@DisplayName("리스트조회 + 페이징 + 검색어 + 보드 카테고리  + 보드타입 ")
+	@Disabled
 	void toSearchKeyword() {
 		
 		int recNumPerPage	= 10;	
 		int reqPage = 1 ;
+		int catnum = 1;
 	RecordCriteria recordCriteria = new RecordCriteria(recNumPerPage, reqPage);
 		int pagingNumsPerPage= 10;
 	PageCriteria pageCriteria = new PageCriteria(reqPage, recordCriteria.getTotalRec(), pagingNumsPerPage);
 	String searchType = "T";	
 	String searchKeyword ="179";
-	boardDAO.selectArticlesWithKey(recordCriteria.getRecFrom(),recordCriteria.getRecTo(), searchType, searchKeyword);
+	boardDAO.selectArticlesWithKey(catnum,recordCriteria.getRecFrom(),recordCriteria.getRecTo(), searchType, searchKeyword);
 		
 	}
 	
 	
 		@Test
-	@DisplayName("留먮㉧由� 移댄뀒怨좊━ 議고쉶 based on bcategory ")
+	@DisplayName("말머리 카테고리 조회 based on bcategory ")
+		@Disabled
 		void selectHId() {
 			
 			long catnum = 2;
@@ -229,6 +246,17 @@ public class BoardDAOImplTest {
 			
 		}
 		
+		@Test
+		@DisplayName("썸네일 첨부파일 전체  ")
+
+		void selectThumbnailFiles() {
+			long catnum=2;
+
+			 List<BoardFileVO>  list = boardDAO.selectThumbnailFiles(catnum);
+			
+			 logger.info(list.toString());
+		
+		}
 		
 		
 }

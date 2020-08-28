@@ -16,10 +16,16 @@
 
 <a href="#">게시판목록</a>
 <div class="btnGrp">
-<a href="${contextPath }/board/tipb" >여행팁</a>
-<a href="${contextPath }/board/qab">QA</a>
-<button type="button" >여행갤러리</a>
+
+<a href="${contextPath }/board/0" >전체글</a>
+<a href="${contextPath }/board/1" >여행팁</a>
+<a href="${contextPath }/board/2">갤러리</a>
+<a href="${contextPath }/board/3">QA</a>
+
 </div>
+
+<%@ include file="/WEB-INF/views/board/fileUploadFrm.jsp" %>
+
 
 <button id="ajaxButton" type="button">Make a request</button>
 
