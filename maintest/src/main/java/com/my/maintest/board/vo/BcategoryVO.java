@@ -11,7 +11,8 @@ public class BcategoryVO {
 	private String catnum; // CID NUMBER(10,0) No 1 분류코드
 	
 	private String catname; // CNAME VARCHAR2(60 BYTE) No 2 분류명
-	private String btype; //게시판 종류 blog/album 타입
+	private String bmemo; //게시판 용도 설명
+		private String btype; //게시판 종류 blog/album 타입
 
 	public String getCatnum() {
 		return catnum;
@@ -37,11 +38,19 @@ public class BcategoryVO {
 		this.btype = btype;
 	}
 
+	public String getBmemo() {
+		return bmemo;
+	}
+
+	public void setBmemo(String bmemo) {
+		this.bmemo = bmemo;
+	}
+
 	@Override
 	public String toString() {
-		return "BcategoryVO [catnum=" + catnum + ", catname=" + catname + ", btype="
-	 + btype
-				+ "]";
+		return "BcategoryVO [catnum=" + catnum + ", catname=" + catname + ", bmemo=" + bmemo + ", btype=" + btype + "]";
 	}
+
+
 
 }

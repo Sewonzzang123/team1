@@ -5,10 +5,24 @@ import javax.validation.constraints.PositiveOrZero;
 
 @Entity
 public class HeadIdCategoryVO {
+
 	 @PositiveOrZero
 	String hidnum;  
 	String catnum; 
+
 	String hidname;
+	
+	
+	public HeadIdCategoryVO() {
+	};
+
+	public HeadIdCategoryVO(String hidnum, String catnum, String hidname) {
+		super();
+		this.hidnum = hidnum;
+		this.catnum = catnum;
+		this.hidname = hidname;
+	}
+
 	
 	public String getHidnum() {
 		return hidnum;
@@ -32,4 +46,5 @@ public class HeadIdCategoryVO {
 	public String toString() {
 		return "HeadIdCategoryVO [hidnum=" + hidnum + ", catnum=" + catnum + ", hidname=" + hidname + "]";
 	}
+
 }

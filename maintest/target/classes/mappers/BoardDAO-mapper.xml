@@ -18,9 +18,9 @@ where t1.catnum = t2.catnum and
 </select>
 
 
+
 <!-- 	// 전체글 조회 (default) -->
 <select id="selectArticles0" resultType="com.my.maintest.board.vo.BoardVO">
-
 select
 dbrownum,
 bnum, 
@@ -57,7 +57,10 @@ from board t1, bcategory t2, member t3, headid t4
 where t1.bcategory = t2.catnum and t1.ucode = t3.ucode and t1.hidcategory = t4.hidnum) 
 order by dbrownum asc
 
+
+
 </select>
+
 
 
 <!-- 	// 전체글 조회 (페이징) -->
@@ -227,6 +230,8 @@ select bnum_seq.currVal from dual
 </selectKey>
 </insert>
 
+
+
 <!-- 첨부파일 등록 -->
 <insert id="insertFiles" parameterType="com.my.maintest.board.vo.BoardFileVO">
 insert into board_upload_file(
@@ -247,6 +252,8 @@ UPLOAD_FILE_FID_SEQ.nextVal,
 #{fdata},
 systimestamp,
 systimestamp)
+
+
 
 
 </insert>
@@ -443,9 +450,11 @@ t3.nickname like '%'||#{searchKeyword}||'%'
 	  <!-- //제목 -->
 <!-- //댓글 작성 -->
 	<!-- //댓글 수정 -->
+	
+
 	<!-- //댓글 삭제 	 -->
 
-	
+
 
 
 

@@ -1,17 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
+
     pageEncoding="UTF-8"
     isELIgnored="false"%>
 <%@ page session="false" %>
  	<%@ include file="/WEB-INF/views/included/common.jsp"  %>
+
 <html>
 <head>
-	<title>Home</title>
+<title>Home</title>
 </head>
 <body>
-<h1>
-	Hello world!  
-</h1>
+	<h1>Hello world!</h1>
 
+<<<<<<< HEAD
 
 
 <a href="#">게시판목록</a>
@@ -61,5 +62,13 @@
 <a href="${contextPath }/"></a>
 
 <P>  The time on the server is ${serverTime}. </P>
+=======
+	<!-- topmenu -->
+	<%@ include file="/WEB-INF/views/layout/uppermost.jsp"%>
+	${sessionScope.member.id }
+	<a href="${contextPath }/mypage/">정민</a>
+	<a href="${contextPath }/board/">대석</a>
+	<P>The time on the server is ${serverTime}.</P>
+>>>>>>> branch 'develop' of https://github.com/mnj190/team1.git
 </body>
 </html>

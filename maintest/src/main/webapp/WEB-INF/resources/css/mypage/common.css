@@ -64,3 +64,25 @@ th, td {
 	line-height: 1.55em;
 	border-bottom: 1px solid #E0E0E0;
 }
+
+.suc_msg {
+	color: green;
+}
+
+.content_sub-title {
+	display: block;
+	margin: 0.5rem 0;
+	padding: 0.25rem 0;
+	font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI",
+		"Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+	font-size: 2em;
+	font-weight: bold;
+	text-transform: uppercase;
+	border-bottom: 1px solid #5d4fad;
+	margin-bottom: 10px;
+}
+
+.err_msg {
+	color: red;
+	margin-left: 0.5em;
+}
