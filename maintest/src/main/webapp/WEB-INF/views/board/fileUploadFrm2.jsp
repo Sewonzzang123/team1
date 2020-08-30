@@ -61,19 +61,25 @@ document.getElementById("gdsimg").addEventListener("change",function(){
 </head>
 <body>
 
-<h2> 케이스 2]</h2>
+<h2> 케이스 2</h2>
     <div class="inputArea">
-        <label for="gdsmimg">이미지</label><input type="file" name="file" id="gdsimg" multiple>
+    <form action="/pfpkg/upload" method="POST" enctype="multipart/form-data">
+        <label for="gdsmimg">이미지</label><input type="file" name=files id="gdsimg" multiple>
         <div class="select_img"><img src="" alt="" ></div>
+        <input type="submit"/>
+        </form>
     </div>
 
 
+<div class="inputArea">
+ <label for="gdsImg">이미지</label>
+ <p>원본 이미지</p>
+ <img src="${contextPath}/resources${boardFileVO.fname}" class="oriImg"/>
+ <p>썸네일</p>
+ <img src="${pathPrefix }${boardFileVO.fthumbnail}" class="thumbImg"/>
+</div>
 
 <%=request.getRealPath("/") %>
-
-
-
-
 
 
 </body>

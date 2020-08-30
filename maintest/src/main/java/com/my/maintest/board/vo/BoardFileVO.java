@@ -17,9 +17,7 @@ public class BoardFileVO {
 	private String fthumbnail;  //thumbnail 이미지 주소 
 	private Timestamp cdate; // CDATE TIMESTAMP(6)
 	private Timestamp udate; // UDATE TIMESTAMP(6)
-	
-	
-	
+
 	
 	
 	public long getFid() {
@@ -75,15 +73,17 @@ public class BoardFileVO {
 	}
 	public void setFthumbnail(String fthumbnail) {
 		this.fthumbnail = fthumbnail;
+		
 	}
 	@Override
 	public String toString() {
-		return "BoardFileVO [fid=" + fid + ", bnum=" + bnum + ", fname=" + fname + ", fsize=" + fsize + ", ftype=" + ftype
-				+ ", fdata=" + Arrays.toString(fdata) + ", fthumbnail=" + fthumbnail + ", cdate=" + cdate + ", udate=" + udate
-				+ "]";
+		return "BoardFileVO [fid=" + fid + ", bnum=" + bnum + ", fname=" + fname + ", fsize=" + fsize + ", ftype="
+				+ ftype + ", fdata=" + Arrays.toString(fdata) + ", fthumbnail=" + fthumbnail + ", cdate=" + cdate
+				+ ", udate=" + udate + "]";
 	}
 
-	
-	
+
 	
 }
+
+

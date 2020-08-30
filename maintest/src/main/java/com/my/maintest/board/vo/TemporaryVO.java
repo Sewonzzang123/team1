@@ -11,6 +11,7 @@ public class TemporaryVO {
 	private String ucode;
 	
 	
+	
 	public String getId() {
 		return id;
 	}

@@ -241,6 +241,7 @@ fname,
 fsize,
 ftype,
 fdata,
+fthumbnail,
 cdate, 
 udate)
 values(
@@ -250,6 +251,7 @@ UPLOAD_FILE_FID_SEQ.nextVal,
 #{fsize},
 #{ftype},
 #{fdata},
+#{fthumbnail},
 systimestamp,
 systimestamp)
 
@@ -328,6 +330,7 @@ bnum,
 fname,
 fsize,
 ftype,
+fthumbnail,
 fdata,
 cdate, 
 udate

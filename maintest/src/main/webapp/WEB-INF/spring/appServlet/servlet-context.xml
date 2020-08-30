@@ -61,11 +61,9 @@
 
 <!-- 업로드 패스 설정 -->
 <beans:bean class="java.lang.String" id="uploadPath">
-<beans:constructor-arg value="D:\JAVAEDU\Tomcat9\wtpwebapps\maintest\picturesUp" /> 
+<!-- 로컬 주소값이므로 나중에 바꿔야함.  -->
+<beans:constructor-arg value="D:\java\mygit\team1\maintest\src\main\webapp\WEB-INF\resources" /> 
 </beans:bean>
-
-
-
 
 <!-- 파일 업로드 -->
 	<beans:bean id="multipartResolver"
@@ -74,14 +72,6 @@
 		<beans:property name="maxUploadSize" 		value="10485760" />
 		<beans:property name="defaultEncoding" 	value="utf-8"/>
 	</beans:bean>
-
-
-
-
-<!--일반 파일 업로드 경로  -->
-
-
-
 
 	<context:component-scan
 		base-package="com.my.maintest" use-default-filters="false">

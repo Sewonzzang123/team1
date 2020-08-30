@@ -16,10 +16,7 @@ import com.my.maintest.board.vo.BcategoryVO;
 import com.my.maintest.board.vo.BoardFileVO;
 import com.my.maintest.board.vo.BoardVO;
 import com.my.maintest.board.vo.HeadIdCategoryVO;
-import com.my.maintest.common.paging.PageCriteria;
 import com.my.maintest.common.paging.PagingComponent;
-import com.my.maintest.common.paging.RecordCriteria;
-import com.my.maintest.common.paging.SearchCriteria;
 
 import lombok.extern.slf4j.Slf4j;
 @Slf4j

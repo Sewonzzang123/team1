@@ -112,9 +112,7 @@ public BoardVO selectArticle(long bnum) {
 public List<BoardFileVO> selectFiles(long bnum) {	
 	List<BoardFileVO> files = null;	
 	files =(sqlSession.selectList("mappers.BoardDAO-mapper.selectFiles", bnum));
-	
-	
-	System.out.println("board DAO 파일 조회 =============================" + files.toString() );	
+		
 	return files;
 }
 
