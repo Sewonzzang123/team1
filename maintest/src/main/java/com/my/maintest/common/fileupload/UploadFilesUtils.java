@@ -10,7 +10,7 @@ import org.springframework.util.FileCopyUtils;
 import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnails;
 @Slf4j
-public class UploadFiles {
+public class UploadFilesUtils {
 
 	static final int THUMB_WIDTH = 300;
 	static final int THUMB_HEIGHT = 300;
@@ -96,7 +96,8 @@ public class UploadFiles {
 		  
 		  makeDir(uploadPath, yearPath, monthPath, datePath);
 		  makeDir(uploadPath, yearPath, monthPath, datePath + "\s");
-		  return datePath; // \2020\08\29
+		  return datePath; 	//D:\java\mygit\team1\maintest\src\main\webapp\WEB-INF\resources\imgUpload\2020\08\31
+
 		 }
 	
 	 private static void makeDir(String uploadPath, String... paths) {
@@ -120,7 +121,7 @@ public class UploadFiles {
 		   File dirPath = new File(uploadPath + path);
 		   //Creates a new File instance by converting the given pathname string into an abstract pathname
 
-		   // 경로의 파일이 존재하지 폴더를 만든다 . 
+		   // 경로의 파일이 존재하지 않으면 폴더를 만든다 . 
 		   if (!dirPath.exists()) {
 		    dirPath.mkdir(); //Creates the directory named by this abstract pathname.
 		   }
