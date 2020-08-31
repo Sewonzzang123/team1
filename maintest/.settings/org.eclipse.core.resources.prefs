@@ -1,8 +1,8 @@
+=\=\=\=\=\=\=
+<<<<<<<=HEAD
+>>>>>>>=branch 'develop' of https\://github.com/mnj190/team1.git
 eclipse.preferences.version=1
-<<<<<<< HEAD
+encoding//src/main/java/com/my/maintest/mypage/controller/MypageController.java=UTF-8
 encoding//src/main/resources/config/mybatis-config.xml=UTF-8
 encoding//src/main/resources/mappers/BoardDAO-mapper.xml=UTF-8
-=======
-encoding//src/main/java/com/my/maintest/mypage/controller/MypageController.java=UTF-8
 encoding/<project>=UTF-8
->>>>>>> branch 'develop' of https://github.com/mnj190/team1.git

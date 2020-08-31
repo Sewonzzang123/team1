@@ -1,6 +1,5 @@
 package com.my.maintest.board.controller;
 
-
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
@@ -40,6 +39,7 @@ import com.my.maintest.board.vo.TemporaryVO;
 import com.my.maintest.common.paging.SearchCriteria;
 
 import lombok.extern.slf4j.Slf4j;
+
 @Slf4j
 @Controller
 @RequestMapping("/board")
@@ -53,7 +53,6 @@ public class BoardController {
 	@Inject
 	PagingSVC pagingSVC;
 
-
 	// 게시판 카테고리 조회
 	@ModelAttribute("bcategoryList")
 	public List<BcategoryVO> getBcategory() {
@@ -61,12 +60,11 @@ public class BoardController {
 		bcategoryVO = boardSVC.selectBcategory();
 		return bcategoryVO;
 	}
-	
+
 	// 게시판 말머리 조회
 	@PostMapping(value = "/headid", produces = "application/json")
-	 @ResponseBody
-	public  ResponseEntity<Map<String, Object>> getHeadIdCategory(
-		@RequestBody HeadIdCategoryVO headIdCategoryVO) {
+	@ResponseBody
+	public ResponseEntity<Map<String, Object>> getHeadIdCategory(@RequestBody HeadIdCategoryVO headIdCategoryVO) {
 		System.out.println("/headid 호출");
 
 		System.out.println("@RequestParam(\"catnum\")" + headIdCategoryVO.getCatnum());
@@ -128,40 +126,33 @@ public class BoardController {
 //		return "/board/boardListFrm";
 //	}
 
-	// 게시글 전체보기  (페이징 + 검색)
-	@GetMapping({ 
-		"/{catnum}" // 각 게시판으로 이동
-		,"/boardListFrm"
-		, "/boardListFrm/{reqPage}"
-		, "/boardListFrm/{reqPage}/{searchType}/{searchKeyword}" })
+	// 게시글 전체보기 (페이징 + 검색)
+	@GetMapping({ "/{catnum}" // 각 게시판으로 이동
+			, "/boardListFrm", "/boardListFrm/{reqPage}", "/boardListFrm/{reqPage}/{searchType}/{searchKeyword}" })
 	public String toSearch(
-			
-			@PathVariable(value="catnum", required = false) Optional<Integer> catnum,
+
+			@PathVariable(value = "catnum", required = false) Optional<Integer> catnum,
 			@PathVariable(value = "reqPage", required = false) Optional<Integer> reqPage,
 			@PathVariable(value = "searchType", required = false) String searchType,
 			@PathVariable(value = "searchKeyword", required = false) String searchKeyword,
-			@ModelAttribute SearchCriteria searchCriteria, Model model) {		
-		
-		// 게시판 타입 읽어오기 		
+			@ModelAttribute SearchCriteria searchCriteria, Model model) {
+
+		// 게시판 타입 읽어오기
 		String btype = boardSVC.selectBtype(catnum.orElse(0));
-			Map<String, Object> map = boardSVC.selectArticlesWithKey( catnum.orElse(0), reqPage.orElse(1), searchType, searchKeyword);	
-			
+		Map<String, Object> map = boardSVC.selectArticlesWithKey(catnum.orElse(0), reqPage.orElse(1), searchType,
+				searchKeyword);
 
+		model.addAttribute("pagingComponent",
+				pagingSVC.getPagingComponent(reqPage.orElse(1), searchType, searchKeyword));
+		model.addAttribute("articles", map.get("articles"));
+		model.addAttribute("files", map.get("files"));
 
-			model.addAttribute("pagingComponent",	pagingSVC.getPagingComponent(reqPage.orElse(1), searchType, searchKeyword));
-			model.addAttribute("articles", map.get("articles"));
-			model.addAttribute("files", map.get("files"));
-			
-			
-			
-			if(btype.equals("album") ){
-				return "/board/boardGalleryListFrm";
-			}			
-			return "/board/boardListFrm";
+		if (btype.equals("album")) {
+			return "/board/boardGalleryListFrm";
+		}
+		return "/board/boardListFrm";
 	}
 
-
-	
 	// 게시글 작성 화면
 	@GetMapping("/boardWriteFrm/{returnPage}")
 	public String toboardWriteFrm(@ModelAttribute BoardVO boardVO, @ModelAttribute("returnPage") String returnPage) {
@@ -171,79 +162,67 @@ public class BoardController {
 
 	// 게시글 등록
 	@PostMapping("/write")
-	public String toWrite(@RequestParam("returnPage") String returnPage, @Valid  @ModelAttribute BoardVO boardVO
-	 , BindingResult result
-	) {
-		
-		 if (result.hasErrors()) {
-		 return "/board/boardWriteFrm/" + returnPage;
-		 }
+	public String toWrite(@RequestParam("returnPage") String returnPage, @Valid @ModelAttribute BoardVO boardVO,
+			BindingResult result) {
+
+		if (result.hasErrors()) {
+			return "/board/boardWriteFrm/" + returnPage;
+		}
 		boardSVC.insertArticle(boardVO);
 		return "redirect:/board/boardListFrm";
 	}
-	
-	
-	
-	//파일 첨부 화면
+
+	// 파일 첨부 화면
 	@GetMapping("/fileUploadFrm")
-	 String toFileUploadFrm() {
-		
-		
+	String toFileUploadFrm() {
+
 		return "/board/fileUploadFrm";
 	}
-	
-	
 
 	// 게시글열람
-	@GetMapping({ "/read/{bnum}/{returnPage}", 
-		"/read/{bnum}/{returnPage}/{searchType}/{searchKeyword}" }) 
-	// returnPage		열람후	리스트로 이동시 돌아갈reqPage																								
-	public String toRead(@PathVariable("bnum") Long bnum
-			, @ModelAttribute("returnPage") String returnPage,
+	@GetMapping({ "/read/{bnum}/{returnPage}", "/read/{bnum}/{returnPage}/{searchType}/{searchKeyword}" })
+	// returnPage 열람후 리스트로 이동시 돌아갈reqPage
+	public String toRead(@PathVariable("bnum") Long bnum, @ModelAttribute("returnPage") String returnPage,
 			@ModelAttribute SearchCriteria searchCriteria, Model model) {
-		
-		// svc는 map 타입을 반환값으로 가짐
-		Map<String, Object> map = boardSVC.selectArticle(bnum);		
-	
-		BoardVO boardVO = (BoardVO)map.get("boardVO");
 
-		// 파일 타입은 List<BoardFileVO>	
-		List<BoardFileVO> files = (List<BoardFileVO>)  map.get("files");
-        
-		model.addAttribute("boardVO", boardVO);		
-		model.addAttribute("files",files);
+		// svc는 map 타입을 반환값으로 가짐
+		Map<String, Object> map = boardSVC.selectArticle(bnum);
+
+		BoardVO boardVO = (BoardVO) map.get("boardVO");
+
+		// 파일 타입은 List<BoardFileVO>
+		List<BoardFileVO> files = (List<BoardFileVO>) map.get("files");
+
+		model.addAttribute("boardVO", boardVO);
+		model.addAttribute("files", files);
 		return "/board/boardReadFrm";
 	}
-	
-	//첨부파일 다운로드
+
+	// 첨부파일 다운로드
 	@GetMapping("/file/{fid}")
-	public ResponseEntity<byte[]> toGetFile(
-			@PathVariable("fid") String fid
-			,Model model			
-			){
-		 ResponseEntity<byte[]> res = null;		 
-		 BoardFileVO boardFileVO = boardSVC.selectFileToDwLoad(fid);
-		 
-		 //응답헤더에 mimetype과 파일 사이즈 정보를 설정
-		 final HttpHeaders headers = new HttpHeaders();
-		 String[] mimeTypes = boardFileVO.getFtype().split("/");
-		 headers.setContentType(new MediaType(mimeTypes[0], mimeTypes[1]));
-		 headers.setContentLength(boardFileVO.getFsize());
-		 
-		 //첨부파일 명이 한글일 경우 깨짐방지
-		 String fileName = null;
-		 try {
+	public ResponseEntity<byte[]> toGetFile(@PathVariable("fid") String fid, Model model) {
+		ResponseEntity<byte[]> res = null;
+		BoardFileVO boardFileVO = boardSVC.selectFileToDwLoad(fid);
+
+		// 응답헤더에 mimetype과 파일 사이즈 정보를 설정
+		final HttpHeaders headers = new HttpHeaders();
+		String[] mimeTypes = boardFileVO.getFtype().split("/");
+		headers.setContentType(new MediaType(mimeTypes[0], mimeTypes[1]));
+		headers.setContentLength(boardFileVO.getFsize());
+
+		// 첨부파일 명이 한글일 경우 깨짐방지
+		String fileName = null;
+		try {
 			fileName = new String(boardFileVO.getFname().getBytes("utf-8"), "ISO-8859-1");
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
 
-		 
-		 //응답헤더에 파일이 있음을 알려줌
-		 headers.setContentDispositionFormData("attachment", fileName);
-		 
-		 res = new ResponseEntity<byte[]>(boardFileVO.getFdata(), headers, HttpStatus.OK);
-				 
+		// 응답헤더에 파일이 있음을 알려줌
+		headers.setContentDispositionFormData("attachment", fileName);
+
+		res = new ResponseEntity<byte[]>(boardFileVO.getFdata(), headers, HttpStatus.OK);
+
 		return res;
 	}
 
@@ -266,11 +245,10 @@ public class BoardController {
 
 	// 게시글수정
 	@PostMapping("/save")
-	public String toSaveChanges(@ModelAttribute BoardVO boardVO
-			,@RequestParam("returnPage") String returnPage
-			, Model model) {
+	public String toSaveChanges(@ModelAttribute BoardVO boardVO, @RequestParam("returnPage") String returnPage,
+			Model model) {
 		boardSVC.updateArticle(boardVO);
-		return "redirect:/board/read/" + boardVO.getBnum() +"/" + returnPage;
+		return "redirect:/board/read/" + boardVO.getBnum() + "/" + returnPage;
 	}
 
 	// 게시글삭제
@@ -300,15 +278,14 @@ public class BoardController {
 
 	// 답글 등록
 	@PostMapping("/reply")
-	public String toReply(@ModelAttribute BoardVO boardVO,
-			@RequestParam("returnPage") String returnPage,
+	public String toReply(@ModelAttribute BoardVO boardVO, @RequestParam("returnPage") String returnPage,
 			BindingResult result) {
-		
+
 //		if (result.hasErrors()) {
 //			return "/board/boardReplyFrm";
 //		}
 		boardSVC.insertRepliedArticle(boardVO);
-		return "redirect:/board/boardListFrm/"+ returnPage;
+		return "redirect:/board/boardListFrm/" + returnPage;
 	}
 
 }
