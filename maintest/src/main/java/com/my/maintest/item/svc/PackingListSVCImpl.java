@@ -54,7 +54,8 @@ public class PackingListSVCImpl implements PackingListSVC{
 				listingVO.setIcount(Integer.parseInt(item.get("icount")));
 				//listing table에 item넣기
 				packingListDAO.insertListing(listingVO);
-			}else {
+			}
+			else{
 				//3-2) inum이 additem이 아니면
 				ListingVO listingVO = new ListingVO();
 				listingVO.setLnum(lnum);

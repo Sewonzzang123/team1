@@ -12,10 +12,11 @@ function init(){
 	//숨김 버튼 클릭시 아이템 숨김
 	document.querySelectorAll('.fa-chevron-down').forEach(i=>{
 			i.addEventListener('click',(e)=>{
-				if(e.target.parentElement.nextElementSibling.style.display=="none"){
-					e.target.parentElement.nextElementSibling.style.display="block";
+
+				if(e.target.nextElementSibling.style.display=="none"){
+					e.target.nextElementSibling.style.display="block";
 				}else{
-					e.target.parentElement.nextElementSibling.style.display="none";
+					e.target.nextElementSibling.style.display="none";
 				}
 			});
 		});
@@ -85,6 +86,7 @@ $('.tab_menu_btn6').on('click',function(){
 	      	idTag = this.id;
 	      	let split = this.className.split(' ');
 	      	classTag = split[0];
+	      	
 	    });
 	});
 	
@@ -96,7 +98,7 @@ $('.tab_menu_btn6').on('click',function(){
 		
 		let newitem = document.createElement('tr');
 		newitem.className +='tab_box  tab_box'+idTag ;
-		newitem.innerHTML = '<td><a href="#"><i class="fas fa-minus" onClick="deletelist2_f(this)" style="display:none"></i><i class="fas fa-plus" onClick="addlist_f(this)"></i></a></td><td><div class="newitem iname" selected="false">'+add+'</div></td>';
+		newitem.innerHTML = '<td><i class="fas fa-minus" onClick="deletelist2_f(this)" style="display:none"></i><i class="fas fa-plus" onClick="addlist_f(this)"></i></td><td><div class="newitem iname" selected="false">'+add+'</div></td>';
 
 		document.querySelector('.tab_box').parentElement.prepend(newitem);		
 		}
@@ -120,24 +122,26 @@ function checkItem(e){
 					let itemNum =null;
 				
 					
-					let itemid = e.parentElement.parentElement.nextElementSibling.innerHTML;					
+					let itemid = e.parentElement.nextElementSibling.innerHTML;					
 					let split =itemid.split(' ');
 					
 					
 					let itemid2 = e.parentElement.parentElement.nextElementSibling.firstChild;
-					let itemName =  e.parentElement.parentElement.nextElementSibling.firstChild.innerText;
+					let inum = e.parentElement.nextElementSibling.firstElementChild.className.split(' ');
+					let itemName =  e.parentElement.nextElementSibling.innerText;
 					
-					if(itemid2.className=='newitem'){
-					 itemNum = itemid2.className;
+					
+					if(inum[0] =='newitem'){
+						itemNum = inum[0];
 					}else{
-					 itemNum = itemid2.className.substring(4);
+						itemNum = inum[0].substring(4);
 					 }
-					 
+					console.log(itemNum);
 					
 					let itemNameTag = split[0];
 					
 					itemNameTag += ' name="iname" value="'+itemid2.innerText+' " ';
-					console.log(itemNameTag);
+
 					for(let n=1; n<split.length; n++){								 
 							if(n==2){
 							itemNameTag +=" ";
@@ -152,7 +156,7 @@ function checkItem(e){
 					//여기에 체크박스, 숫자, 마이너스 버튼 생성해야됨
 					let a = '<div><input type="checkbox" onClick="check_f(this)">'+itemNameTag+'<input type="text" class="icount" name="icount" value="1" max="100"/><div class="edit_number">';
 					a += '<i class="plusBtn fas fa-caret-up" onClick="plus(this)"></i><i class="minusBtn fas fa-caret-down" onClick="minus(this)"></i></div>';
-					a += '<a href="#" class="deleteItem"><i class="fas fa-minus" onClick="deletelist_f(this)"></i></a></div><input type="hidden" name="icategory" value="'+idTag+'"/>';
+					a += '<i class="fas fa-minus deleteItem" onClick="deletelist_f(this)"></i></div><input type="hidden" name="icategory" value="'+idTag+'"/>';
 					a += '<input type="hidden" name="inum" value="'+itemNum+'"/><input type="hidden" name="iname" value="'+itemName+'"/><input type="hidden" name="checked" value="false"/>';
 					addListItem.innerHTML =a;
 					
@@ -163,9 +167,9 @@ function checkItem(e){
 	}
 
 	function deletelist_f(e){
-					document.getElementsByClassName(e.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.nextElementSibling.className)[0].parentElement.previousElementSibling.firstElementChild.firstElementChild.style.display="none";
-					document.getElementsByClassName(e.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.nextElementSibling.className)[0].parentElement.previousElementSibling.firstElementChild.lastElementChild.style.display="inline";				
-					document.getElementsByClassName(e.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.nextElementSibling.className)[1].parentElement.parentElement.remove();								
+					document.getElementsByClassName(e.previousElementSibling.previousElementSibling.previousElementSibling.classList[0])[0].parentElement.previousElementSibling.firstElementChild.style.display="none";
+					document.getElementsByClassName(e.previousElementSibling.previousElementSibling.previousElementSibling.classList[0])[0].parentElement.previousElementSibling.lastElementChild.style.display="inline";				
+					document.getElementsByClassName(e.previousElementSibling.previousElementSibling.previousElementSibling.classList[0])[1].parentElement.parentElement.remove();								
 								
 	}
 	
@@ -173,7 +177,7 @@ function checkItem(e){
 					e.style.display="none";	
 					e.nextElementSibling.style.display="inline";
 				
-					document.getElementsByClassName(e.parentElement.parentElement.nextElementSibling.firstElementChild.className)[1].parentElement.parentElement.remove();	
+					document.getElementsByClassName(e.parentElement.nextElementSibling.firstElementChild.className)[1].parentElement.parentElement.remove();	
 												
 	}
 
@@ -218,6 +222,7 @@ function checkItem(e){
 		let gsWin=window.open("about:blank","winName",option);
 		let frm = document.form;
 		frm.action="http://localhost:9080/pfpkg/itemlist/loadListForm";
+
 		frm.target="winName";
 		frm.submit();
 	}

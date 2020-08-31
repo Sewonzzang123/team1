@@ -97,7 +97,8 @@ main .list .createlist {
 	justify-content: space-between;
 }
 
-main .list .createlist div {
+main .list .createlist .default_list,
+main .list .createlist .user_list {
 	width: 48%;
 	border: 1px solid #ff8080;
 }
@@ -390,5 +391,11 @@ footer .footer_img img {
 		margin-top: 10px;
 		font-size: 0.8em;
 		padding-bottom: 20px;
+	}
+	
+	section .createlist .tab_menu_container>.category_grid{
+	 	width:100%;
+	 	display: grid;
+    grid-template-columns: repeat(2, 1fr);
 	}
 }

@@ -28,6 +28,7 @@ import com.my.maintest.item.svc.ItemListSVC;
 import com.my.maintest.item.vo.ItemCategoryVO;
 import com.my.maintest.item.vo.ItemVO;
 import com.my.maintest.item.vo.ListVO;
+import com.my.maintest.member.vo.MemberVO;
 
 @Controller
 @RequestMapping("/itemlist")
@@ -66,13 +67,16 @@ public class ItemListController {
 
 	@PostMapping(value="/lname", produces = "application/json")
 	@ResponseBody
-	public ResponseEntity<Map> lname(@RequestBody HashMap<String, String> map) {
+	public ResponseEntity<Map> lname(
+			@RequestBody HashMap<String, String> map,
+			HttpSession session) {
 		ResponseEntity<Map> res = null;
 		
 		int result = 0;
-		int lnum= 0; 
+		int lnum= 0;
 		
-		String ucode = map.get("ucode");
+		MemberVO memberVO =(MemberVO)session.getAttribute("member");
+		String ucode = memberVO.getUcode();
 		String lname = map.get("lname");
 		
 		result = itemListSVC.listNameInsert(ucode, lname);
@@ -98,6 +102,7 @@ public class ItemListController {
 			@RequestParam(value="icount", required = false) List<String> icount,	
 			@RequestParam(value="icategory", required = false) List<String> icategory,
 			@RequestParam(value="checked", required = false) List<String> checked,	
+			HttpSession session,
 			Model model) {
 
 		List<Map<String, String>> listing = new ArrayList<Map<String, String>>();
@@ -112,7 +117,8 @@ public class ItemListController {
 			listing.add(i,itemMap);
 			}		
 		}
-		String ucode = "0";
+		MemberVO memberVO =(MemberVO)session.getAttribute("member");
+		String ucode = memberVO.getUcode();
 		List<ListVO> listVO = null;
 		listVO = itemListSVC.loadList(ucode);
 		
@@ -122,13 +128,14 @@ public class ItemListController {
 		return "/packinglist/saveListForm";
 	}
 	
-	//세션 아이디 받아서 전달만해주면될듯??
+
 	@PostMapping("/loadListForm")
 	public String uploadListForm(
 			HttpSession session,
 			Model model) {
 		
-		String ucode  = "0";
+		MemberVO memberVO =(MemberVO)session.getAttribute("member");
+		String ucode = memberVO.getUcode();
 		List<ListVO> listVO = null;
 		List<Map<String, String>> listing = null;
 		listVO = itemListSVC.loadList(ucode);
@@ -151,7 +158,10 @@ public class ItemListController {
 			@PathVariable("lnum") long lnum,
 			HttpSession session,
 			Model model) {
-		String ucode  = "0";
+		
+		MemberVO memberVO =(MemberVO)session.getAttribute("member");
+		String ucode = memberVO.getUcode();
+		
 		List<ListVO> listVO = null;
 		List<Map<String, String>> listing = null;
 		listVO = itemListSVC.loadList(ucode);
@@ -166,7 +176,5 @@ public class ItemListController {
 		
 		return"/packinglist/loadListForm";
 	}
-	
-	
 
 }
