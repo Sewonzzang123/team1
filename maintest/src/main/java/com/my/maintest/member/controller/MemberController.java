@@ -1,8 +1,10 @@
 package com.my.maintest.member.controller;
 
 import java.io.PrintWriter;
+import java.sql.Date;
 
 import javax.inject.Inject;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.util.WebUtils;
 
 import com.my.maintest.member.svc.MemberSVC;
 import com.my.maintest.member.vo.MemberVO;
@@ -81,10 +84,10 @@ public class MemberController {
 //로그인 처리
 	@PostMapping("/login")
 	public String login(@RequestParam("id") String id, @RequestParam("pw") String pw,
-			@RequestParam("reqURI") String reqURI, HttpSession session, Model model) {
+			@RequestParam("login_chk_val") String login_chk_val, @RequestParam("reqURI") String reqURI,
+			HttpSession session, Model model, HttpServletResponse response) {
 		logger.info("String login()호출됨");
-		logger.info("id : " + id);
-		logger.info("pw : " + pw);
+		logger.info(login_chk_val.toString());
 
 		MemberVO memberVO = memberSVC.listOneMember(id);
 
@@ -103,6 +106,19 @@ public class MemberController {
 
 				session.setAttribute("member", memberVO);
 				logger.info("등록완료");
+
+				if (login_chk_val.equals("on")) {
+					Cookie cookie = new Cookie("loginCookie", session.getId());
+					cookie.setPath("/");
+					int amount = 60 * 60 * 24 * 7;
+					cookie.setMaxAge(amount);
+					response.addCookie(cookie);
+					Date sessionLimit = new Date(System.currentTimeMillis() + (1000 * amount));
+					memberSVC.keepLogin(memberVO.getId(), session.getId(), sessionLimit);
+
+					logger.info("쿠키 생성");
+				}
+
 			} else {
 				// 2-2) 비밀번호가 틀린경우
 				model.addAttribute("svr_msg", "비밀번호가 일치하지 않습니다.");
@@ -115,10 +131,29 @@ public class MemberController {
 
 //로그아웃
 	@GetMapping("/logout")
-	public String logout(HttpSession session) {
+	public String logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+
+		MemberVO member = (MemberVO) session.getAttribute("member");
+
+		// 쿠기 확인
+		Cookie loginCookie = WebUtils.getCookie(request, "loginCookie");
+
+		if (loginCookie != null) {
+			// null이 아니면 존재하면!
+			loginCookie.setPath("/");
+			// 쿠키는 없앨 때 유효시간을 0으로 설정하는 것 !!! invalidate같은거 없음.
+			loginCookie.setMaxAge(0);
+			// 쿠키 설정을 적용한다.
+			response.addCookie(loginCookie);
+
+			// 사용자 테이블에서도 유효기간을 현재시간으로 다시 세팅해줘야함.
+			Date date = new Date(System.currentTimeMillis());
+			memberSVC.keepLogin(member.getId(), session.getId(), date);
+		}
 
 		// 세션에 저장된 정보 제거
 		session.invalidate();
+
 		return "redirect:/";
 	}
 

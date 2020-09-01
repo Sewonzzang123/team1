@@ -1,5 +1,6 @@
 package com.my.maintest.member.svc;
 
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -86,6 +87,21 @@ public class MemberSVCImpl implements MemberSVC {
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public int keepLogin(String id, String sessionId, Date age) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		map.put("sessionId", sessionId);
+		map.put("age", age);
+		return memberDAO.keepLogin(map);
+	}
+
+	@Override
+	public MemberVO checkUserWithSessionKey(String sessionId) {
+		// TODO Auto-generated method stub
+		return memberDAO.checkUserWithSessionKey(sessionId);
 	}
 
 }

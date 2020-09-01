@@ -1,5 +1,7 @@
 package com.my.maintest.member.svc;
 
+import java.sql.Date;
+
 import com.my.maintest.member.vo.MemberVO;
 
 public interface MemberSVC {
@@ -24,5 +26,11 @@ public interface MemberSVC {
 
 	// 메일 전송
 	public void sendMail(String to, String subject, String body);
+
+	// 자동 로그인 등록
+	public int keepLogin(String id, String sessionId, Date age);
+
+	// 자동 로그인 확인
+	public MemberVO checkUserWithSessionKey(String sessionId);
 
 }

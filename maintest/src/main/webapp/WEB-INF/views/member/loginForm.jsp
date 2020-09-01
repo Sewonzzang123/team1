@@ -10,7 +10,9 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/member/loginForm.css">
 </head>
-
+<script type="text/javascript">
+	
+</script>
 <body>
 
 
@@ -45,6 +47,16 @@
 							value="로그인"
 							formaction="${pageContext.request.contextPath}/login?reqURI=${reqURI}" />
 					</div>
+
+					<dvi class="check_info">
+					<div class="login_check">
+						<span class="login_check_box"> <input type="checkbox"
+							id="login_chk" name="login_chk" value="off"> <label
+							for="login_chk" id="label_login_chk">로그인 상태 유지</label> <input
+							type="hidden" id="login_chk_val" name="login_chk_val" value="off" />
+						</span>
+					</div>
+					</dvi>
 				</fieldset>
 			</form:form>
 
@@ -58,4 +70,18 @@
 	<!-- footer -->
 
 </body>
+<script type="text/javascript">
+		const login_chk = document.getElementById('login_chk')
+		const login_chk_val = document.getElementById('login_chk_val')
+		login_chk.addEventListener('click', (e) => {
+			console.log(e.target.checked);
+			if (e.target.value == "on") {
+				e.target.value = "off";
+				login_chk_val.value = "off"
+			} else if (e.target.value == "off") {
+				e.target.value = "on"
+				login_chk_val.value = "on"
+			};
+		})
+	</script>
 </html>
