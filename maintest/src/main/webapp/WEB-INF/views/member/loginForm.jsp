@@ -24,6 +24,12 @@
 	integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
 	crossorigin="anonymous"></script>
 </head>
+<<<<<<< Upstream, based on branch 'master' of https://github.com/mnj190/team1.git
+=======
+<script type="text/javascript">
+	
+</script>
+>>>>>>> 0ef8dcd 자동 로그인 추가
 <body>
 
 
@@ -107,6 +113,7 @@
 		</div>
 	</div>
 </body>
+<<<<<<< Upstream, based on branch 'master' of https://github.com/mnj190/team1.git
 
 <script>
   const myModal = document.querySelector('#myModal');
@@ -137,4 +144,20 @@
   })
 </script>
 
+=======
+<script type="text/javascript">
+		const login_chk = document.getElementById('login_chk')
+		const login_chk_val = document.getElementById('login_chk_val')
+		login_chk.addEventListener('click', (e) => {
+			console.log(e.target.checked);
+			if (e.target.value == "on") {
+				e.target.value = "off";
+				login_chk_val.value = "off"
+			} else if (e.target.value == "off") {
+				e.target.value = "on"
+				login_chk_val.value = "on"
+			};
+		})
+	</script>
+>>>>>>> 0ef8dcd 자동 로그인 추가
 </html>
