@@ -8,6 +8,8 @@ function init(){
 	saveBtn.addEventListener("click",saveBtn_f);
 	const loadBtn = document.getElementById("loadBtn");
 	loadBtn.addEventListener("click",loadBtn_f);
+	const downloadBtn = document.getElementById("downloadBtn");
+	downloadBtn.addEventListener("click",downloadBtn_f);
 	
 	//숨김 버튼 클릭시 아이템 숨김
 	document.querySelectorAll('.fa-chevron-down').forEach(i=>{
@@ -106,9 +108,11 @@ $('.tab_menu_btn6').on('click',function(){
 }
 
 function checkItem(e){
-	if(e.trim()==0){
+	if(e.trim().length==0){
 		window.alert("한글자 이상 입력해야합니다!");
 		return false;
+	}else if(!classTag){
+		window.alert("카테고리 선택 후 아이템을 추가하세요!");
 	}
 	return true;
 }
@@ -208,7 +212,7 @@ function checkItem(e){
 		}	
 	}
 	
-	function saveBtn_f(){
+	function saveBtn_f(){		
 		const option 	= "width=465,height=540,location=no,resizable=no";
 		let gsWin=window.open("about:blank","winName",option);
 		let frm = document.form;
@@ -217,18 +221,29 @@ function checkItem(e){
 		frm.submit();
 	}
 	
-	function loadBtn_f(){
-		const option 	= "width=570,height=650,location=no,resizable=no";
+	function loadBtn_f(){		
+		const option 	= "width=570,height=680,location=no,resizable=no";
 		let gsWin=window.open("about:blank","winName",option);
 		let frm = document.form;
 		frm.action="http://localhost:9080/pfpkg/itemlist/loadListForm";
-
 		frm.target="winName";
 		frm.submit();
 	}
 	
-
-
+	function downloadBtn_f(){
+		const option 	= "width=800,height=540,location=no,resizable=no";
+		let gsWin=window.open("about:blank","winName",option);
+		let frm = document.form;
+		frm.action="http://localhost:9080/pfpkg/itemlist/downloadListForm";
+		frm.target="winName";
+		frm.submit();
+	}
+	
+//function goLogin(){
+//	window.alert('로그인이 필요한 기능입니다.');
+//	window.location.href="http://localhost:9080/pfpkg/itemlist/goLogin";
+//	return false;
+//}
 
 
 	

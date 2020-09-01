@@ -9,11 +9,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>main</title>
 <script defer src="${pageContext.request.contextPath}/js/main.js"></script>
-<script defer src="${pageContext.request.contextPath}/js/packinglist/packingList.js?ver=2"></script>
+<script defer src="${pageContext.request.contextPath}/js/packinglist/packingList.js"></script>
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/main.css?ver=2">
+	href="${pageContext.request.contextPath}/css/main.css">
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/packinglist/category.css?ver= 1">
+	href="${pageContext.request.contextPath}/css/packinglist/packingList.css">
 <link
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap"
 	rel="stylesheet" />
@@ -52,7 +52,7 @@
 			<div class="list_wrap">
 				<h3>리스트 작성</h3>
 				<div class="line"></div>
-				<form target="_blank" method="post" name="form">
+				<form target="_blank" method="get" name="form">
 					<div class="createlist">
 						<div class="default_list tab_box_container">
 							<%@ include file="/WEB-INF/views/packinglist/itemList.jsp"%>

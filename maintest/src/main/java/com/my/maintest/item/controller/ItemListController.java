@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -95,8 +96,8 @@ public class ItemListController {
 	}
 
 	//세션추가
-	@RequestMapping(value="/saveListForm", method=RequestMethod.POST)
-	public String inum(
+	@RequestMapping(value="/saveListForm", method=RequestMethod.GET)
+	public String saveListForm(
 			@RequestParam(value="inum" , required = false) List<String> inum,
 			@RequestParam(value="iname", required = false) List<String> iname,
 			@RequestParam(value="icount", required = false) List<String> icount,	
@@ -129,8 +130,8 @@ public class ItemListController {
 	}
 	
 
-	@PostMapping("/loadListForm")
-	public String uploadListForm(
+	@GetMapping("/loadListForm")
+	public String loadListForm(
 			HttpSession session,
 			Model model) {
 		
@@ -176,5 +177,37 @@ public class ItemListController {
 		
 		return"/packinglist/loadListForm";
 	}
-
+	
+//세션추가
+	@GetMapping(value="/downloadListForm")
+	public String downloadListForm(
+			@RequestParam(value="inum" , required = false) List<String> inum,
+			@RequestParam(value="iname", required = false) List<String> iname,
+			@RequestParam(value="icount", required = false) List<String> icount,	
+			@RequestParam(value="icategory", required = false) List<String> icategory,
+			@RequestParam(value="checked", required = false) List<String> checked,	
+			Model model) {
+		
+		List<ItemCategoryVO> category = itemListSVC.selectAllCategory();
+		List<Map<String, String>> listing = new ArrayList<Map<String, String>>();
+		if(inum!=null) {
+		for(int i=0; i<inum.size(); i++) {
+			Map<String, String> itemMap = new HashMap<>();
+			itemMap.put("inum", inum.get(i));
+			itemMap.put("i_name", iname.get(i));
+			itemMap.put("icategory", icategory.get(i));
+			itemMap.put("icount", icount.get(i));
+			itemMap.put("checked", checked.get(i));
+			listing.add(i,itemMap);
+			}		
+		}
+		
+				
+		model.addAttribute("listing", listing);
+		model.addAttribute("category", category);
+		
+		return "/packinglist/downloadListForm";
+	}
+	
+	
 }

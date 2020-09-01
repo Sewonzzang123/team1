@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	
 			<table>
 				<thead>
 					<tr>
@@ -36,9 +35,10 @@
 		
 
 			<div class="list_buttons">
-				<input type="button" id="additem" value="아이템 추가" /><span>|</span> <input
-					type="button" value="저장" id="saveBtn" /> <span>|</span> <input
-					type="button" value="리스트 불러오기" id="loadBtn" /> <span>|</span> <a
-					href="${contextPath }/itemlist/"> 인쇄</a>
+				<input type="button" id="additem" value="아이템 추가" /><span>|</span> 
+				<input type="button" value="저장" 	id="saveBtn"/> <span>|</span>
+				<input type="button" value="리스트 불러오기" id="loadBtn" /> <span>|</span> 
+				<input type="button" value="PDF/인쇄" id="downloadBtn" />
 			</div>
+
 
