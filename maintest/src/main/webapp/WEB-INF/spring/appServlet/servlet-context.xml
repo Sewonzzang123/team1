@@ -32,6 +32,15 @@
 
 	<!-- interceptor 설정 -->
 	<interceptors>
+		<!-- 자동 로그인 -->
+		<interceptor>
+			<!-- 1) 특정 uri지정 -->
+			<mapping path="/**" />
+			<!-- 2) interceptor구현 클래스 -->
+			<beans:bean id="autoLoginInterceptor"
+				class="com.my.maintest.interceptor.AutoLoginInterceptor" />
+		</interceptor>
+
 		<!-- 로그인 세션 확인 -->
 		<interceptor>
 			<!-- 1) 특정 uri지정 -->
@@ -42,7 +51,7 @@
 			<beans:bean id="loginInterceptor"
 				class="com.my.maintest.interceptor.AuthenticationInterceptor" />
 		</interceptor>
-		
+
 		<interceptor>
 			<!-- 1) 특정 uri지정 -->
 			<mapping path="/admin/**/" />
@@ -60,12 +69,17 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 
-<!-- 파일 업로드 -->
+	<beans:bean class="java.lang.String" id="uploadPath">
+		<beans:constructor-arg
+			value="D:\kubg\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\kubg\resources" />
+	</beans:bean>
+
+	<!-- 파일 업로드 -->
 	<beans:bean id="multipartResolver"
-							class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<!-- 파일 업로드 제한 용량설정 10MB 1024*1024*10, 1kb=1024byte, 1mb = 1024kbyte -->					
-		<beans:property name="maxUploadSize" 		value="10485760" />
-		<beans:property name="defaultEncoding" 	value="utf-8"/>
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 파일 업로드 제한 용량설정 10MB 1024*1024*10, 1kb=1024byte, 1mb = 1024kbyte -->
+		<beans:property name="maxUploadSize" value="10485760" />
+		<beans:property name="defaultEncoding" value="utf-8" />
 	</beans:bean>
 
 

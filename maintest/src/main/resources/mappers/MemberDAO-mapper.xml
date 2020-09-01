@@ -29,4 +29,18 @@
 		where
 		id=#{id} and tel=#{tel}
 	</select>
+
+	<update id="keepLogin" parameterType="map">
+		update member set
+		sessionKey = #{sessionId}, sessionLimit = #{age} where
+		id=#{id}
+	</update>
+
+	<select id="checkUserWithSessionKey" parameterType="string"
+		resultType="com.my.maintest.member.vo.MemberVO">
+		select * from member where sessionKey = #{sessionId} and
+		sessionLimit >
+		SYSDATE
+	</select>
+
 </mapper>

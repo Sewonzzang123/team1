@@ -1,5 +1,6 @@
 package com.my.maintest.member.dao;
 
+import java.sql.Date;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -31,7 +32,7 @@ public class MemberDAOImpl implements MemberDAO {
 
 	// 비밀번호 찾기
 	@Override
-	public String findPW(Map<String,String> map) {
+	public String findPW(Map<String, String> map) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("mappers.MemberDAO-mapper.findPW", map);
 	}
@@ -41,6 +42,18 @@ public class MemberDAOImpl implements MemberDAO {
 	public MemberVO listOneMember(String id) {
 
 		return sqlSession.selectOne("mappers.MemberDAO-mapper.listOneMember", id);
+	}
+
+	@Override
+	public int keepLogin(Map<String, Object> map) {
+
+		return sqlSession.update("mappers.MemberDAO-mapper.keepLogin", map);
+	}
+
+	@Override
+	public MemberVO checkUserWithSessionKey(String sessionId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("mappers.MemberDAO-mapper.checkUserWithSessionKey", sessionId);
 	}
 
 }
