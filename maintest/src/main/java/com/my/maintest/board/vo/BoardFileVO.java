@@ -14,7 +14,20 @@ public class BoardFileVO {
 	private long fsize; // FSIZE VARCHAR2(45 BYTE)
 	private String ftype; // FTYPE VARCHAR2(50 BYTE)
 	private byte[] fdata; // FDATA BLOB
-	private String fthumbnail;  //thumbnail 이미지 주소 
+	
+	
+	
+	
+	
+	
+	private String thumbfname;  //thumbnail 이미지 이름	
+	private byte[] thumbfdata;//thumbnail 파일 데이터
+	private long thumbfsize; 
+	
+	
+	
+	
+	
 	private Timestamp cdate; // CDATE TIMESTAMP(6)
 	private Timestamp udate; // UDATE TIMESTAMP(6)
 
@@ -68,20 +81,35 @@ public class BoardFileVO {
 	public void setUdate(Timestamp udate) {
 		this.udate = udate;
 	}
-	public String getFthumbnail() {
-		return fthumbnail;
+	public String getThumbfname() {
+		return thumbfname;
 	}
-	public void setFthumbnail(String fthumbnail) {
-		this.fthumbnail = fthumbnail;
-		
+	public void setThumbfname(String thumbfname) {
+		this.thumbfname = thumbfname;
+	}
+	public byte[] getThumbfdata() {
+		return thumbfdata;
+	}
+	public long getThumbfsize() {
+		return thumbfsize;
+	}
+	public void setThumbfsize(long thumbfsize) {
+		this.thumbfsize = thumbfsize;
+	}
+	public void setThumbfdata(byte[] thumbfdata) {
+		this.thumbfdata = thumbfdata;
 	}
 	@Override
 	public String toString() {
-		return "BoardFileVO [fid=" + fid + ", bnum=" + bnum + ", fname=" + fname + ", fsize=" + fsize + ", ftype="
-				+ ftype + ", fdata=" + Arrays.toString(fdata) + ", fthumbnail=" + fthumbnail + ", cdate=" + cdate
-				+ ", udate=" + udate + "]";
+		return "BoardFileVO [fid=" + fid + ", bnum=" + bnum + ", fname=" + fname + ", fsize=" + fsize + ", ftype=" + ftype
+				+ ", fdata=" + Arrays.toString(fdata) + ", thumbfname=" + thumbfname + ", thumbfdata="
+				+ Arrays.toString(thumbfdata) + ", thumbfsize=" + thumbfsize + ", cdate=" + cdate + ", udate=" + udate + "]";
 	}
 
+	
+	
+	
+	
 
 	
 }

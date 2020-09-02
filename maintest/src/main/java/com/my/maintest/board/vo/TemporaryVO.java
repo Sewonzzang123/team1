@@ -1,5 +1,7 @@
 package com.my.maintest.board.vo;
 
+import java.util.Arrays;
+
 /**
  * @author DSY
  *
@@ -12,6 +14,22 @@ public class TemporaryVO {
 	
 	
 	
+	private String encoded;
+	private String ftype;
+	
+	
+	public String getEncoded() {
+		return encoded;
+	}
+	public void setEncoded(String encoded) {
+		this.encoded = encoded;
+	}
+	public String getFtype() {
+		return ftype;
+	}
+	public void setFtype(String ftype) {
+		this.ftype = ftype;
+	}
 	public String getId() {
 		return id;
 	}
@@ -25,10 +43,7 @@ public class TemporaryVO {
 		this.pw = pw;
 	}
 
-	@Override
-	public String toString() {
-		return "TemporaryVO [id=" + id + ", pw=" + pw + ", nickname=" + nickname + ", ucode=" + ucode + "]";
-	}
+
 	public String getNickname() {
 		return nickname;
 	}
@@ -41,7 +56,12 @@ public class TemporaryVO {
 	public void setUcode(String ucode) {
 		this.ucode = ucode;
 	}
-	
+	@Override
+	public String toString() {
+		return "TemporaryVO [id=" + id + ", pw=" + pw + ", nickname=" + nickname + ", ucode=" + ucode + ", encoded="
+				+ encoded + ", ftype=" + ftype + "]";
+	}
+
 	
 
 }

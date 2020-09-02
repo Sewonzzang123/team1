@@ -74,10 +74,24 @@ document.getElementById("gdsimg").addEventListener("change",function(){
 <div class="inputArea">
  <label for="gdsImg">이미지</label>
  <p>원본 이미지</p>
- <img src="${contextPath}/resources${boardFileVO.fname}" class="oriImg"/>
+ 
+ <%-- 
+           <img id="mypic" src="data:${requestScope.ftype};base64,${requestScope.pic }" alt="" /> --%>
+           
+           
+           
+           <hr> 
+           
+           그림출력
+ <img src="data:${temp.ftype };base64,${temp.encoded }"/>
+ 
+ 
+ 
+<%-- 
+  <img src=" <spring:url value='${pathPrefix }${boardFileVO.fname}'  /> " class="oriImg"/>
  <p>썸네일</p>
- <img src="${pathPrefix }${boardFileVO.fthumbnail}" class="thumbImg"/>
-</div>
+ <img src=" <spring:url value='${pathPrefix }${boardFileVO.fthumbnail}' /> " class="thumbImg"/>
+</div> --%>
 
 <%=request.getRealPath("/") %>
 
