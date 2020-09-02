@@ -75,7 +75,7 @@
 	</select>
 
 	<select id="get_listing" parameterType="string"
-		resultType="ListingVO">
+		resultType="com.my.maintest.mypage.vo.ListingVO">
 		select * from listing t1, ITEM t2, I_CATEGORY t3 where
 		t1.I_NUM = t2.I_NUM and t2.ca_num = t3.ca_num and t1.lnum=#{lnum}
 	</select>

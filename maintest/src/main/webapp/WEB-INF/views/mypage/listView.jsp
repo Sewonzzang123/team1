@@ -130,11 +130,11 @@ main {
 					<c:forEach var="category" items="${requestScope.icategory }"
 						begin="0" step="2">
 						<div class="block">
-							<div class="category">${category.CA_NAME }</div>
+							<div class="category">${category.ca_name }</div>
 
 							<!-- 아이템 -->
 							<c:forEach var="listing" items="${requestScope.listing }">
-								<c:if test="${category.CA_NUM == listing.ca_num }">
+								<c:if test="${category.ca_num == listing.ca_num }">
 									<label><div class="item">
 											<input type="checkbox" name="ckeck" class="ckeck"
 												linum=${listing.linum }
@@ -151,11 +151,11 @@ main {
 					<c:forEach var="category" items="${requestScope.icategory }"
 						begin="1" step="2">
 						<div class="block">
-							<div class="category">${category.CA_NAME }</div>
+							<div class="category">${category.ca_name }</div>
 
 							<!-- 아이템 -->
 							<c:forEach var="listing" items="${requestScope.listing }">
-								<c:if test="${category.CA_NUM == listing.ca_num }">
+								<c:if test="${category.ca_num == listing.ca_num }">
 									<label><div class="item">
 											<input type="checkbox" name="ckeck" class="ckeck"
 												linum=${listing.linum }

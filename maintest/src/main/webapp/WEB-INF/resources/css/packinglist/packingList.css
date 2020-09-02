@@ -20,7 +20,7 @@
 }
 
 .default_list.tab_box_container>.list_buttons {
-	width: 100%;
+	width: inherit;
 }
 
 .default_list.tab_box_container>.list_buttons>input[type="button"] {
