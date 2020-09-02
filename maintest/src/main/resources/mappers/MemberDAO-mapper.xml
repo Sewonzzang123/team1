@@ -3,16 +3,16 @@
 <mapper namespace="mappers.MemberDAO-mapper">
 
 	<select id="listOneMember" parameterType="string"
-		resultType="com.my.maintest.member.vo.MemberVO">
-		select ucode, id, pw,name,tel,nickname from member where id
-		=
-		#{id}
+		resultType="MemberVO">
+		SELECT ucode, id, pw,name,tel,nickname 
+		FROM member 
+		WHERE id = #{id}
 	</select>
 
 	<insert id="signup"
-		parameterType="com.my.maintest.member.vo.MemberVO">
-		insert into member (ucode, id, pw, name, tel, nickname)
-		values(m_ucode_seq.NEXTVAL, #{id}, #{pw}, #{name}, #{tel},
+		parameterType="MemberVO">
+		INSERT into member (ucode, id, pw, name, tel, nickname)
+		VALUES(m_ucode_seq.NEXTVAL, #{id}, #{pw}, #{name}, #{tel},
 		#{nickname})
 	</insert>
 

@@ -3,27 +3,25 @@
 <mapper namespace="mappers.MypageDAO-mapper">
 
 	<!-- 회원정보수정 -->
-	<update id="modify"
-		parameterType="com.my.maintest.member.vo.MemberVO">
-		update member set nickname=#{nickname}, tel=#{tel}
-		where
-		id=#{id}
+	<update id="modify" parameterType="MemberVO">
+		update member
+		set nickname=#{nickname}, tel=#{tel}
+		where id = #{id}
 	</update>
 
 	<update id="changePW" parameterType="string">
 		update member set pw=#{pw}
-		where id=#{id}
+		where id = #{id}
 	</update>
 
 	<delete id="withdraw" parameterType="string">
-		delete member where id =
-		#{id}
+		delete member 
+		where id = #{id}
 	</delete>
 
 
 	<!-- 내 리스트 -->
-	<select id="mylist" parameterType="map"
-		resultType="com.my.maintest.mypage.vo.MylistVO">
+	<select id="mylist" parameterType="map" resultType="MylistVO">
 		<!-- select * from(select LNUM , LNAME, CDATE, ucode, row_number() over( 
 			order by LNUM asc) as num from list where ucode=#{ucode}) where num between 
 			#{end_num} and #{str_num} order by num desc -->
@@ -72,13 +70,12 @@
 		#{lnum}
 	</delete>
 
-	<select id="get_category"
-		resultType="com.my.maintest.mypage.vo.IcategoryVO">
+	<select id="get_category" resultType="ItemCategoryVO">
 		select * from I_CATEGORY
 	</select>
 
 	<select id="get_listing" parameterType="string"
-		resultType="com.my.maintest.mypage.vo.ListingVO">
+		resultType="ListingVO">
 		select * from listing t1, ITEM t2, I_CATEGORY t3 where
 		t1.I_NUM = t2.I_NUM and t2.ca_num = t3.ca_num and t1.lnum=#{lnum}
 	</select>
@@ -99,9 +96,9 @@
 		where ucode=#{ucode}
 	</select>
 
-	<select id="mypost" parameterType="map"
-		resultType="com.my.maintest.board.vo.BoardVO">
-		select t1.bnum,t1.btitle,t1.bcdate,t1.bhits, t2.catname as
+	<select id="mypost" parameterType="map" resultType="BoardVO">
+		select
+		t1.bnum,t1.btitle,t1.bcdate,t1.bhits, t2.catname as
 		"bcategory.catname" from(select
 		bnum , bcategory, btitle, bcdate,
 		bhits,

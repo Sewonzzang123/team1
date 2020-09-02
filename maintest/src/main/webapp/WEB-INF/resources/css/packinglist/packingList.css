@@ -26,6 +26,14 @@
 .default_list.tab_box_container>.list_buttons>input[type="button"] {
 	all: unset;
 }
+
+.default_list> .list_buttons{
+
+   position: absolute;
+    bottom: 0;
+
+}
+
 .default_list i,
 .user_list i{
 	cursor:pointer;

@@ -3,11 +3,11 @@
 <mapper namespace="mappers.BoardDAO-mapper">
 
 <!-- 게시판 카테고리 조회  -->
-<select id="selectBcategory" resultType="com.my.maintest.board.vo.BcategoryVO">
+<select id="selectBcategory" resultType="BcategoryVO">
 select catnum, catname, btype from bcategory
 </select>
 <!-- 게시판 말머리 조회  -->
-<select id="selectHeadIdCategory" parameterType="long" resultType="com.my.maintest.board.vo.HeadIdCategoryVO">
+<select id="selectHeadIdCategory" parameterType="long" resultType="HeadIdCategoryVO">
 
 select t1.hidnum, t1.catnum, t1.hidname
 from headid t1, bcategory t2
@@ -20,7 +20,7 @@ where t1.catnum = t2.catnum and
 
 
 <!-- 	// 전체글 조회 (default) -->
-<select id="selectArticles0" resultType="com.my.maintest.board.vo.BoardVO">
+<select id="selectArticles0" resultType="BoardVO">
 select
 dbrownum,
 bnum, 
@@ -64,7 +64,7 @@ order by dbrownum asc
 
 
 <!-- 	// 전체글 조회 (페이징) -->
-<select id="selectArticles" parameterType="map" resultType="com.my.maintest.board.vo.BoardVO">
+<select id="selectArticles" parameterType="map" resultType="BoardVO">
 
 select
 dbrownum,
@@ -112,7 +112,7 @@ select btype from bcategory where catnum = #{catnum}
 
 
 <!-- 	// 전체글 조회 (페이징 + 검색어) -->
-<select id="selectArticlesWithKey" parameterType="map" resultType="com.my.maintest.board.vo.BoardVO">
+<select id="selectArticlesWithKey" parameterType="map" resultType="BoardVO">
 
 select
 dbrownum,
@@ -205,7 +205,7 @@ where
 
 <!-- 게시글 등록-->
 
-<insert id="insertArticle"  parameterType="com.my.maintest.board.vo.BoardVO">
+<insert id="insertArticle"  parameterType="BoardVO">
 insert into board(
 bnum, 
 bcategory,
@@ -233,7 +233,7 @@ select bnum_seq.currVal from dual
 
 
 <!-- 첨부파일 등록 -->
-<insert id="insertFiles" parameterType="com.my.maintest.board.vo.BoardFileVO">
+<insert id="insertFiles" parameterType="BoardFileVO">
 insert into board_upload_file(
 fid,
 bnum,
@@ -266,7 +266,7 @@ where bgroup = #{bgroup} and bstep > #{bstep}
 </update>
 
 <!-- 답글 등록 -->
-<insert id="insertRepliedArticle" parameterType="com.my.maintest.board.vo.BoardVO">
+<insert id="insertRepliedArticle" parameterType="BoardVO">
 insert into board(
 bnum, 
 bcategory,
@@ -295,7 +295,7 @@ bnum_seq.nextVal,
 
 
 <!-- 	// 글 열람	 -->
-<select id="selectArticle" parameterType="long" resultType="com.my.maintest.board.vo.BoardVO">
+<select id="selectArticle" parameterType="long" resultType="BoardVO">
 
 select t1.bnum, 
  t2.catname   as "bcategory.catname",
@@ -320,7 +320,7 @@ bnum = #{bnum}
 
 
 <!--첨부파일 조회-->
-<select id="selectFiles" parameterType="long" resultType="com.my.maintest.board.vo.BoardFileVO">
+<select id="selectFiles" parameterType="long" resultType="BoardFileVO">
 
 select 
 fid,
@@ -346,7 +346,7 @@ update board set bhits = bhits+1 where bnum = #{bnum}
 
 
 	<!-- //게시글 수정 -->
-	<update id="updateArticle" parameterType="com.my.maintest.board.vo.BoardVO">
+	<update id="updateArticle" parameterType="BoardVO">
 	
 	update board set
 		 bnum = #{bnum},
@@ -371,7 +371,7 @@ update board set bhits = bhits+1 where bnum = #{bnum}
 	
 	<!-- 첨부파일 다운로드 -->
 	
-	<select id="selectFileToDwLoad"  parameterType="long" resultType="com.my.maintest.board.vo.BoardFileVO" >
+	<select id="selectFileToDwLoad"  parameterType="long" resultType="BoardFileVO" >
 	
 select fid, bnum, fname, fsize , ftype, fdata, cdate, udate from board_upload_file where fid = #{fid}
 	

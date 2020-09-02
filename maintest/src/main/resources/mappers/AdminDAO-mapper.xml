@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mappers.AdminDAO-mapper">
 	<select id="getCate"
-		resultType="com.my.maintest.board.vo.BcategoryVO">
+		resultType="BcategoryVO">
 		select catnum,catname,btype,bmemo from bcategory order by catnum
 		<!-- select t1.catnum, t1.catname, t1.btype, t1.bmemo, t2.hidnum as "headIdCategory.hidnum" 
 			, t2.hidname as "headIdCategory.hidname" from bcategory t1 LEFT OUTER JOIN 
@@ -15,13 +15,13 @@
 	</delete>
 
 	<insert id="createBoard"
-		parameterType="com.my.maintest.board.vo.BcategoryVO">
+		parameterType="BcategoryVO">
 		insert into bcategory (catnum, catname, btype, bmemo)
 		values (bnum_seq.NEXTVAL, #{catname}, #{btype}, #{bmemo})
 	</insert>
 
 	<update id="setBoard"
-		parameterType="com.my.maintest.board.vo.BcategoryVO">
+		parameterType="BcategoryVO">
 		update bcategory set catname = #{catname},
 		btype=#{btype}, bmemo=#{bmemo} where catnum=#{catnum}
 	</update>
@@ -47,11 +47,11 @@
 
 	<!-- 아이템 관리 -->
 	<select id="getIcate"
-		resultType="com.my.maintest.item.vo.ItemCategoryVO">
+		resultType="ItemCategoryVO">
 		select * from i_category
 	</select>
 
-	<select id="getItem" resultType="com.my.maintest.item.vo.ItemVO">
+	<select id="getItem" resultType="ItemVO">
 		select ca_num
 		as"itemCategoryVO.ca_num", i_num, i_name from item
 	</select>
@@ -117,7 +117,7 @@
 	</select>
 
 	<select id="memberlist"
-		resultType="com.my.maintest.member.vo.MemberVO"
+		resultType="MemberVO"
 		parameterType="hashMap">
 		select ucode, id, pw, name, tel,
 		nickname, cdate, num
@@ -135,7 +135,7 @@
 	</select>
 
 	<select id="memberlist_ck"
-		resultType="com.my.maintest.member.vo.MemberVO"
+		resultType="MemberVO"
 		parameterType="hashMap">
 		select ucode, id, pw, name, tel,
 		nickname, cdate, num
