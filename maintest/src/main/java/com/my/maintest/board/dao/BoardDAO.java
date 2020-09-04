@@ -33,7 +33,7 @@ public interface BoardDAO {
 	int insertArticle(BoardVO boardVO);
 	//첨부파일 등록
 	int insertFiles(BoardFileVO boardFileVO);
-	//게시글 삭제
+		//게시글 삭제
 	int deleteArticle(long  bnum);
 	//첨부파일 전체 삭제 
 	//cascade 외래키 연동으로 자동삭제

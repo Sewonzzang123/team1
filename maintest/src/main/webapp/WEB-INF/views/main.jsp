@@ -21,7 +21,7 @@
 <body>
 
 	<!-- header -->
-	<%@ include file="/WEB-INF/views/layout/haeder.jsp"%>
+	<%@ include file="/WEB-INF/views/layout/header.jsp"%>
 
 	<div class="main_img">
 		<span class="main_text"> Lorem ipsum dolor sit amet,

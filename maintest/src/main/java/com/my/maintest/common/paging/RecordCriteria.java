@@ -25,17 +25,17 @@ public class RecordCriteria {
 	}
 
 	// 객체 생성할때 요청페이지 번호 + 한페이지에 보여줄 레코드 수를 인자로 받아서 레코드 범위를 산출
-	public RecordCriteria(int recNumPerPage, int reqPage) {
+	public RecordCriteria(long recNumPerPage, long reqPage) {
 		
 		// requestPage 번호 기준으로 sql문 데이터 범위 산출 : sql where between {recFrom} and {recTo}
 		// recTo = reqPage *10
-		this.recTo = reqPage * recNumPerPage;
+		this.recTo = (int) (reqPage * recNumPerPage);
 
 		// recTo - (recNumPerPage-1)
-		this.recFrom = this.recTo - (recNumPerPage - 1);
+		this.recFrom = (int) (this.recTo - (recNumPerPage - 1));
 
 	
-		this.recNumPerPage = recNumPerPage;
+		this.recNumPerPage = (int) recNumPerPage;
 	}
 
 	

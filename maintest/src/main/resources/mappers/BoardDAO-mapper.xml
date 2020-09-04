@@ -111,7 +111,7 @@ select btype from bcategory where catnum = #{catnum}
 </select>
 
 
-<!-- 	// 전체글 조회 (페이징 + 검색어) -->
+<!-- 	// 전체글 조회 (페이징 + 검색어 + 게시판 카테고리 ) -->
 <select id="selectArticlesWithKey" parameterType="map" resultType="com.my.maintest.board.vo.BoardVO">
 
 select
@@ -151,8 +151,6 @@ where t1.bcategory = t2.catnum and t1.ucode = t3.ucode and t1.hidcategory = t4.h
 
 <if test="catnum != 0">
 and t1.bcategory = #{catnum}
-
-
 <if test="searchType != null">
 and 
 <choose>
@@ -334,10 +332,10 @@ bnum,
 fname,
 fsize,
 ftype,
+fdata,
 thumbfname,
 thumbfsize,
 thumbfdata,
-fdata,
 cdate, 
 udate
 from board_upload_file

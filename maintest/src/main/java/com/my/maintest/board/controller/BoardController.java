@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -111,10 +112,11 @@ public class BoardController {
 
 		System.out.println("getSession" + session.getAttribute("member").toString());
 
-		return "redirect:/board/0";
+		return "/board/boardMainFrm";
+				//"redirect:/board/0";
 	}
 //
-//	// 게시글목록
+//	// 게시글 목록보기
 //	@GetMapping({ "/boardListFrm", 
 //																		"/boardListFrm/{reqPage}", 
 //																		"/boardListFrm/{reqPage}/{recNumPerPage}" }) // 보여지는 게시글 수	조정을 위한 값
@@ -128,14 +130,13 @@ public class BoardController {
 //		return "/board/boardListFrm";
 //	}
 
-	// 게시글 전체보기  (페이징 + 검색)
+	// 게시글 목록보기  (페이징 + 검색 + 게시판 카테고리)
 	@GetMapping({ 
 		"/{catnum}" // 각 게시판으로 이동
 		,"/boardListFrm"
 		, "/boardListFrm/{reqPage}"
 		, "/boardListFrm/{reqPage}/{searchType}/{searchKeyword}" })
-	public String toSearch(
-			
+	public String toSearch(			
 			@PathVariable(value="catnum", required = false) Optional<Integer> catnum,
 			@PathVariable(value = "reqPage", required = false) Optional<Integer> reqPage,
 			@PathVariable(value = "searchType", required = false) String searchType,
@@ -144,41 +145,52 @@ public class BoardController {
 		
 		// 게시판 타입 읽어오기 		
 		String btype = boardSVC.selectBtype(catnum.orElse(0));
-			Map<String, Object> map = boardSVC.selectArticlesWithKey( catnum.orElse(0), reqPage.orElse(1), searchType, searchKeyword);	
+		Map<String, Object> map = boardSVC.selectArticlesWithKey( catnum.orElse(0), reqPage.orElse(1), searchType, searchKeyword);	
 			
-
-
 			model.addAttribute("pagingComponent",	pagingSVC.getPagingComponent(reqPage.orElse(1), searchType, searchKeyword));
 			model.addAttribute("articles", map.get("articles"));
 			model.addAttribute("files", map.get("files"));
 			
 			
+			logger.info(map.toString());
 			
-			if(btype.equals("album") ){
+			
+			
+			//게시판 타입별로 해당 타입 게시글 목록 페이지 이동
+			if(btype.equals("album") ){			
 				return "/board/boardGalleryListFrm";
 			}			
-			return "/board/boardListFrm";
+			
+			return "/board/boardBlogListFrm";
 	}
 
 
 	
 	// 게시글 작성 화면
 	@GetMapping("/boardWriteFrm/{returnPage}")
-	public String toboardWriteFrm(@ModelAttribute BoardVO boardVO, @ModelAttribute("returnPage") String returnPage) {
+	public String toboardWriteFrm(
+			@ModelAttribute BoardVO boardVO, 
+			@ModelAttribute("returnPage") String returnPage
+			) {
 
 		return "/board/boardWriteFrm";
 	}
 
 	// 게시글 등록
 	@PostMapping("/write")
-	public String toWrite(@RequestParam("returnPage") String returnPage, @Valid  @ModelAttribute BoardVO boardVO
+	public String toWrite(
+			 HttpServletRequest request
+			,@RequestParam("returnPage") String returnPage, @Valid  @ModelAttribute BoardVO boardVO
 	 , BindingResult result
 	) {
+		
+		
 		
 		 if (result.hasErrors()) {
 		 return "/board/boardWriteFrm/" + returnPage;
 		 }
 		boardSVC.insertArticle(boardVO);
+		
 		return "redirect:/board/boardListFrm";
 	}
 	
@@ -252,7 +264,7 @@ public class BoardController {
 	@ResponseBody
 	public ResponseEntity<String> toDeleteFile(@PathVariable("fid") long fid, Model model) {
 		ResponseEntity<String> responseEntity = null;
-		int result = boardSVC.deleteFile(fid);
+		long result = boardSVC.deleteFile(fid);
 
 		if (result == 1) {
 

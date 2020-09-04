@@ -72,15 +72,12 @@ public class BoardDAOImpl implements BoardDAO {
 //전체게시글 조회 + 페이징 + 검색어 (게시판타입 / 레코드 범위 / 검색타입 / 검색어)
 	@Override
 	public List<BoardVO> selectArticlesWithKey(long catnum,  long recFrom,long recTo,String searchType, String searchKeyword) {
-		Map<String,Object> map = new HashMap<String, Object>();		
-		
+		Map<String,Object> map = new HashMap<String, Object>();				
 		map.put("recFrom", recFrom);
 		map.put("recTo", recTo);
 		map.put("searchType", searchType);
 		map.put("searchKeyword", searchKeyword);
 		map.put("catnum",catnum);
-
-	
 		return sqlSession.selectList("mappers.BoardDAO-mapper.selectArticlesWithKey", map ) ;
 	}
 

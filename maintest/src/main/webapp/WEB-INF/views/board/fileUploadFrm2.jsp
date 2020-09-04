@@ -63,8 +63,16 @@ document.getElementById("gdsimg").addEventListener("change",function(){
 
 <h2> 케이스 2</h2>
     <div class="inputArea">
-    <form action="/pfpkg/upload" method="POST" enctype="multipart/form-data">
-        <label for="gdsmimg">이미지</label><input type="file" name=files id="gdsimg" multiple>
+    <form action="/pfpkg/file/upload1" method="POST" enctype="multipart/form-data">
+        <label for="gdsmimg">이미지</label>
+        
+        
+        
+        <input type="file" name=files id="gdsimg" multiple  accept="image/png, image/jpeg">
+        
+        
+        
+        
         <div class="select_img"><img src="" alt="" ></div>
         <input type="submit"/>
         </form>
@@ -82,9 +90,12 @@ document.getElementById("gdsimg").addEventListener("change",function(){
            
            <hr> 
            
-           그림출력
- <img src="data:${temp.ftype };base64,${temp.encoded }"/>
- 
+ 원본이미지<br>
+ <img src="data:${ftype };base64,${originFdata }"/>
+    <hr> 
+ 썸네일<br>
+ <img src="data:${ftype };base64,${thumbFdata }"/>
+     <hr> 
  
  
 <%-- 

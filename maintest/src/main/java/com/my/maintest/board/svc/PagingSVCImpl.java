@@ -20,7 +20,7 @@ public class PagingSVCImpl implements PagingSVC{
 	@Override
 	public RecordCriteria getRecCriteria(int reqPage,String searchType, String searchKeyword ) {
 	//한페이지에 보여줄 게시글 수 
-	int recNumPerPage = 10; 
+	long recNumPerPage = 10; 
 	RecordCriteria recordCriteria = new RecordCriteria(recNumPerPage, reqPage);
 	//게시글 총수량 
 	recordCriteria.setTotalRec(pagingDAO.selectRecQnty(searchType,searchKeyword));
