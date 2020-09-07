@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+	pageEncoding="UTF-8" isELIgnored="false"%>
+<!-- 공통모듈 -->
+<%@ include file="/WEB-INF/views/included/common.jsp"%>
 
 <c:set var="url_login"
 	value="${pageContext.request.contextPath }/loginForm" />
@@ -189,13 +189,14 @@ i.navbar_toggleBtn {
 			</a>
 		</div>
 
+<c:out value = "${request.getContextPath() }"/>
 		<fmt:bundle basename="">
 			<!-- 로그인 전 -->
 			<c:if test="${empty sessionScope.member}">
 				<div class="top_menu">
 					<ul>
 						<li><a href="">리스트 작성</a></li>
-						<li><a href="">게시판</a></li>
+						<li><a href="${pageContext.request.contextPath}/board">게시판</a></li>
 						<li><a href="${pageContext.request.contextPath}/signupForm">회원가입</a></li>
 						<li><a href="${url_login }">로그인</a></li>
 
@@ -260,4 +261,3 @@ i.navbar_toggleBtn {
 </div>
 <!-- 햄버거 버튼 열면 뒤에 깔리는 반투명 검정 배경 -->
 <div class="cover_close"></div>
-</body>

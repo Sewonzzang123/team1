@@ -33,13 +33,13 @@ public class BoardDAOImplTest {
 
 	@Test
 	@DisplayName("게시글 등록")
-@Disabled
+	@Disabled
 	void insertArticle() {
 		
-		for(int i = 1 ; i < 100; i++ ) {
-		String catNum = "2";
+		for(int i = 1 ; i < 20; i++ ) {
+		String catNum = "1";
 		String hidNum = "1";
-		long uCode = 0;
+		long uCode = 5;
 		String bTitle = "제목1"+i;
 		String bContent = "내용111111";
 
@@ -199,7 +199,7 @@ public class BoardDAOImplTest {
 	PageCriteria pageCriteria = new PageCriteria(reqPage, recordCriteria.getTotalRec(), pagingNumsPerPage);
 	
 	
-		boardDAO.selectArticles(recordCriteria.getRecFrom(), recordCriteria.getRecTo());
+		//(recordCriteria.getRecFrom(), recordCriteria.getRecTo());
 				
 	}
 	
@@ -218,21 +218,36 @@ public class BoardDAOImplTest {
 	
 	@Test
 	@DisplayName("리스트조회 + 페이징 + 검색어 + 보드 카테고리  + 보드타입 ")
-	@Disabled
+	//@Disabled
 	void toSearchKeyword() {
-		
 		int recNumPerPage	= 10;	
 		int reqPage = 1 ;
-		int catnum = 1;
 	RecordCriteria recordCriteria = new RecordCriteria(recNumPerPage, reqPage);
-		int pagingNumsPerPage= 10;
+	int pagingNumsPerPage= 10;
 	PageCriteria pageCriteria = new PageCriteria(reqPage, recordCriteria.getTotalRec(), pagingNumsPerPage);
-	String searchType = "T";	
-	String searchKeyword ="179";
-	boardDAO.selectArticlesWithKey(catnum,recordCriteria.getRecFrom(),recordCriteria.getRecTo(), searchType, searchKeyword);
-		
-	}
 	
+	
+	
+	String searchType = null;	
+	String searchKeyword ="테스트";	
+	String btype = "album";
+	int catnum =2;			;
+	
+	
+	
+	List<BoardVO> list = boardDAO.selectArticlesWithKey_Blog( catnum,recordCriteria.getRecFrom(),recordCriteria.getRecTo(), searchType, searchKeyword);
+	List<BoardVO> list1 = boardDAO.selectArticlesWithKey_Album( catnum,recordCriteria.getRecFrom(),recordCriteria.getRecTo(), searchType, searchKeyword);	
+
+	
+	
+	System.out.println("list사이즈 " + list.size());
+	System.out.println("list1사이즈 " +list1.size());
+	
+	
+	
+	//System.out.println("list1 " +list1.toString());
+	
+	}
 	
 		@Test
 	@DisplayName("말머리 카테고리 조회 based on bcategory ")
@@ -246,17 +261,6 @@ public class BoardDAOImplTest {
 			
 		}
 		
-		@Test
-		@DisplayName("썸네일 첨부파일 전체  ")
-
-		void selectThumbnailFiles() {
-			long catnum=2;
-
-			 List<BoardFileVO>  list = boardDAO.selectThumbnailFiles(catnum);
-			
-			 logger.info(list.toString());
-		
-		}
 		
 		
 }

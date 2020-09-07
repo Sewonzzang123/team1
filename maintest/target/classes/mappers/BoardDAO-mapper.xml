@@ -99,20 +99,21 @@ t1.bgroup,
 t1.bstep,
 t1.bIndent
 from board t1, bcategory t2, member t3, headid t4
-where t1.bcategory = t2.catnum and t1.ucode = t3.ucode and t1.hidcategory = t4.hidnum) 
+where t1.bcategory = t2.catnum and t1.ucode = t3.ucode and t1.hidcategory = t4.hidnum
+and t1.bcategory = #{catnum}) 
 where dbrownum between #{recFrom} and #{recTo}
 order by dbrownum asc
 
 </select>
 
 <!--게시판 타입 조회   -->
-<select id="selectBtype" parameterType="long" resultType="String">
-select btype from bcategory where catnum = #{catnum}
+<select id="selectBtype" parameterType="long" resultType="com.my.maintest.board.vo.BcategoryVO">
+select btype,catname,catnum, bmemo from bcategory where catnum = #{catnum}
 </select>
 
 
 <!-- 	// 전체글 조회 (페이징 + 검색어 + 게시판 카테고리 ) -->
-<select id="selectArticlesWithKey" parameterType="map" resultType="com.my.maintest.board.vo.BoardVO">
+<select id="selectArticlesWithKey_Blog" parameterType="map" resultType="com.my.maintest.board.vo.BoardVO">
 
 select
 dbrownum,
@@ -151,6 +152,7 @@ where t1.bcategory = t2.catnum and t1.ucode = t3.ucode and t1.hidcategory = t4.h
 
 <if test="catnum != 0">
 and t1.bcategory = #{catnum}
+</if>
 <if test="searchType != null">
 and 
 <choose>
@@ -184,7 +186,7 @@ nickname like '%'||#{searchKeyword}||'%'
 </when>
 </choose>
 </if>
-</if>
+
 ) 
 where dbrownum between #{recFrom} and #{recTo}
 order by dbrownum asc
@@ -192,12 +194,91 @@ order by dbrownum asc
 </select>
 
 <!--갤러리게시판(catnum:2)  썸네일 첨부파일 정보 불러오기 -->
-<select id="selectThumbnailFiles" parameterType="long" resultType="com.my.maintest.board.vo.BoardFileVO">
-select t2.fid, t1.bnum, t2.fname,t2.fsize, t2.ftype, t2.fdata, t2.cdate, t2.udate, t1.bcategory 
-from board t1 LEFT OUTER   join board_upload_file t2
-on t1.bnum = t2.bnum
-where 
- t1.bcategory = #{catnum}
+<select id="selectArticlesWithKey_Album" parameterType="map" resultType="com.my.maintest.board.vo.BoardVO">
+
+select 
+dbrownum,
+bnum, 
+catname  	as "bcategory.catname" ,
+catnum 		as "bcategory.catnum",
+hidname 	as "hidcategory.hidname",
+hidnum 		as  "hidcategory.hidnum", 
+nickname 	as "bnickname", 
+btitle,
+bcontent, 
+bHits,
+bcdate,
+budate,
+ftype 		as "thumbnailVO.thumbftype",
+thumbfname 	as "thumbnailVO.thumbfname",
+thumbfdata 	as "thumbnailVO.thumbfdata",
+thumbfsize 	as "thumbnailVO.thumbfsize"
+from 
+(select row_number() over(order by bgroup desc, bstep asc) as dbrownum, 
+t1.bnum, 
+t2.catname,
+t2.catnum,
+ t4.hidname, 
+ t4.hidnum,
+ t3.nickname, 
+ t1.ucode,
+ t1.bhits,
+ t1.btitle, 
+ t1.bcontent, 
+t1.bcdate,
+t1.budate,
+t5.ftype,
+t5.thumbfname,
+t5.thumbfdata,
+t5.thumbfsize
+from board t1, bcategory t2, member t3, headid t4, board_upload_file t5
+where t1.bcategory = t2.catnum and t1.ucode = t3.ucode and t1.hidcategory = t4.hidnum and t1.bnum = t5.bnum
+
+
+and t5.thumbfname != 'null'
+
+
+<if test="catnum != 0">
+and t1.bcategory = #{catnum}
+</if>
+<if test="searchType != null">
+and 
+<choose>
+<!--전체  -->
+<when test="searchType == 'A'.toString() ">
+(btitle  like '%'||#{searchKeyword}||'%' or
+bcontent like '%'||#{searchKeyword}||'%' or
+nickname like '%'||#{searchKeyword}||'%')
+</when>
+
+<!--제목+ 내용  -->
+<when test="searchType == 'TC'.toString() ">
+(btitle  like '%'||#{searchKeyword}||'%' or
+bcontent like '%'||#{searchKeyword}||'%')
+</when>
+
+
+<!--제목  -->
+<when test="searchType == 'T'.toString() ">
+btitle  like '%'||#{searchKeyword}||'%'
+</when>
+
+<!--내용  -->
+<when test="searchType == 'C'.toString() ">
+bcontent like '%'||#{searchKeyword}||'%'
+</when>
+
+<!--작성자  -->
+<when test="searchType == 'N'.toString() ">
+nickname like '%'||#{searchKeyword}||'%'
+</when>
+</choose>
+</if>
+
+) 
+where dbrownum between #{recFrom} and #{recTo}
+order by dbrownum asc
+
 </select>
 
 
@@ -251,9 +332,9 @@ UPLOAD_FILE_FID_SEQ.nextVal,
 #{fsize},
 #{ftype},
 #{fdata},
-#{thumbfname},
-#{thumbfsize},
-#{thumbfdata},
+#{thumbnailVO.thumbfname},
+#{thumbnailVO.thumbfsize},
+#{thumbnailVO.thumbfdata},
 systimestamp,
 systimestamp)
 
@@ -392,29 +473,22 @@ where bnum = #{bnum}
 
 <!-- 페이징  -->
 <!-- 레코드 총수량 구하기  -->
-<select id="selectRecQnty"  parameterType="map"  resultType="int">
+<!-- 앨범레코드 총수량 구하기  -->
+<select id="selectRecQnty_Album"  parameterType="map"  resultType="int">
 select count(*) 
 
 from  
 
-(select row_number() over(order by bgroup desc, bstep asc) as dbrownum, 
-t1.bnum, 
-t2.catname,
-t2.catnum,
- t4.hidname, 
- t4.hidnum,
- t3.nickname, 
- t1.ucode,
- t1.bhits,
- t1.btitle, 
- t1.bcontent, 
-t1.bcdate,
-t1.budate,
-t1.bgroup,
-t1.bstep,
-t1.bIndent
-from board t1, bcategory t2, member t3, headid t4
-where t1.bcategory = t2.catnum and t1.ucode = t3.ucode and t1.hidcategory = t4.hidnum  
+(select 
+t1.bnum
+from board t1, bcategory t2, member t3, headid t4, board_upload_file t5
+where t1.bcategory = t2.catnum and t1.ucode = t3.ucode and t1.hidcategory = t4.hidnum and t1.bnum = t5.bnum
+and t5.thumbfname != 'null'
+
+<if test="catnum != 0">
+and t1.bcategory = #{catnum}
+</if> 
+
 <if test="searchType != null">
 and  
 
@@ -452,18 +526,54 @@ t3.nickname like '%'||#{searchKeyword}||'%'
 )
 </select>
 
-	<!-- //글 검색	 -->
-	  <!-- //말머리	 -->
-	  <!-- //제목 -->
-<!-- //댓글 작성 -->
-	<!-- //댓글 수정 -->
-	
+<!-- 블로그 타입 레코드 총수량 구하기  -->
+<select id="selectRecQnty_Blog"  parameterType="map"  resultType="int">
+select count(*)
+from  
+(select 
+t1.bnum
+from board t1, bcategory t2, member t3, headid t4
+where t1.bcategory = t2.catnum and t1.ucode = t3.ucode and t1.hidcategory = t4.hidnum
+<if test="catnum != 0">
+and t1.bcategory = #{catnum}
+</if> 
 
-	<!-- //댓글 삭제 	 -->
+<if test="searchType != null">
+and  
+
+<choose>
+<!--전체  -->
+<when test="searchType == 'A'.toString() ">
+(t1.btitle  like '%'||#{searchKeyword}||'%' or
+t1.bcontent like '%'||#{searchKeyword}||'%' or
+t3.nickname like '%'||#{searchKeyword}||'%')
+</when>
+
+<!--제목+ 내용  -->
+<when test="searchType == 'TC'.toString() ">
+(t1.btitle  like '%'||#{searchKeyword}||'%' or
+t1.bcontent like '%'||#{searchKeyword}||'%')
+</when>
 
 
+<!--제목  -->
+<when test="searchType == 'T'.toString() ">
+t1.btitle  like '%'||#{searchKeyword}||'%' 
+</when>
 
+<!--내용  -->
+<when test="searchType == 'C'.toString() ">
+t1.bcontent like '%'||#{searchKeyword}||'%' 
+</when>
 
+<!--작성자  -->
+<when test="searchType == 'N'.toString() ">
+t3.nickname like '%'||#{searchKeyword}||'%'
+</when>
+</choose>
+</if>
+)
+</select>
 
 
 

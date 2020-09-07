@@ -16,9 +16,9 @@ package com.my.maintest.common.paging;
  */
 public class PageCriteria {
 
-	private int currReqPage;
+	private long currReqPage;
 	
-	private int pagingNumsPerPage;
+	private long pagingNumsPerPage;
 	private int totalPagingNums;
 	private int pagingNumFrom;
 	private int pagingNumTo;
@@ -33,7 +33,7 @@ public class PageCriteria {
 	}
 
 	// 총레코드 수 와 페이징으로 나타날 번호 수 를 인자로 받아 총페이지수 / 페이징 끝번호 / 페이징 시작번호를 산출
-	public PageCriteria(int reqPage, int totalRec, int pagingNumsPerPage) {
+	public PageCriteria(long reqPage, int totalRec, int pagingNumsPerPage) {
 		//요청한 페이지를 저장 --> 현재 페이지를 나타냄
 		this.currReqPage = reqPage;
 		
@@ -68,7 +68,7 @@ public class PageCriteria {
 	
 	
 
-	public int getPagingNumsPerPage() {
+	public long getPagingNumsPerPage() {
 		return pagingNumsPerPage;
 	}
 
@@ -113,7 +113,7 @@ public class PageCriteria {
 		this.endPagingNum = endPagingNum;
 	}
 
-	public int getCurrReqPage() {
+	public long getCurrReqPage() {
 		return currReqPage;
 	}
 

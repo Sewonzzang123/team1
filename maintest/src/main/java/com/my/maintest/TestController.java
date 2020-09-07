@@ -114,9 +114,9 @@ public class TestController {
 		//---------------------------------------------------------------------------------------------------------------
 		// VO 생성
 		BoardFileVO boardFileVO = new BoardFileVO();		
-		boardFileVO.setThumbfname(genThumbfname);			
-		boardFileVO.setThumbfdata(thumbfdata);		
-		boardFileVO.setThumbfsize(thumbfsize);
+//		boardFileVO.setThumbfname(genThumbfname);			
+//		boardFileVO.setThumbfdata(thumbfdata);		
+//		boardFileVO.setThumbfsize(thumbfsize);
 		
 		//원본 파일 정보 저장
 		boardFileVO.setFname(genFname);				
@@ -124,7 +124,7 @@ public class TestController {
 		boardFileVO.setFdata(fdata);
 		boardFileVO.setFsize(fsize);			
 		
-		boardFileVO.setBnum(141);
+		boardFileVO.setBnum(4);
 		//썸네일 파일 축소 및 주소 가져오기 
 		
 //		boardFileVO.getFthumbnail();
@@ -141,10 +141,10 @@ public class TestController {
 		 files = boardDAO.selectFiles(bnum);		  
 
 			 byte[] encodedOriginFdata = Base64.encodeBase64(files.get(0).getFdata());
-			 byte[] encodedThumbFdata = Base64.encodeBase64(files.get(0).getThumbfdata());
+//			 byte[] encodedThumbFdata = Base64.encodeBase64(files.get(0).getThumbfdata());
 			 model.addAttribute("ftype", files.get(0).getFtype());
 			 model.addAttribute("originFdata",new String(encodedOriginFdata));			 
-			 model.addAttribute("thumbFdata",new String(encodedThumbFdata));			 
+//			 model.addAttribute("thumbFdata",new String(encodedThumbFdata));			 
 		
 		return "home";
 		
@@ -211,24 +211,24 @@ BufferedImage _thumbFile = 	UploadFilesUtils.makeThumbnail(file.getAbsolutePath(
 		baos.close();		
 		byte[] thumbfdata = baos.toByteArray(); 					
 
-		BoardFileVO boardFileVO = new BoardFileVO();		
-		boardFileVO.setThumbfname(genThumbfname);			
-		boardFileVO.setThumbfdata(thumbfdata);		
-		boardFileVO.setThumbfsize(baos.size());
+	//	BoardFileVO boardFileVO = new BoardFileVO();		
+		//boardFileVO.setThumbfname(genThumbfname);			
+		//boardFileVO.setThumbfdata(thumbfdata);		
+		//boardFileVO.setThumbfsize(baos.size());
 		
 		//원본 파일 정보 저장
-		boardFileVO.setFname(genFname);				
-		boardFileVO.setFtype(ftype);
-		boardFileVO.setFdata(fdata);
-		boardFileVO.setFsize(fsize);			
-		
-		boardFileVO.setBnum(104);
+//		boardFileVO.setFname(genFname);				
+//		boardFileVO.setFtype(ftype);
+//		boardFileVO.setFdata(fdata);
+//		boardFileVO.setFsize(fsize);			
+//		
+//		boardFileVO.setBnum(104);
 		//썸네일 파일 축소 및 주소 가져오기 
 		
 //		boardFileVO.getFthumbnail();
 		
 		//원본파일 저장
-		boardDAO.insertFiles(boardFileVO);			
+//		boardDAO.insertFiles(boardFileVO);			
 		
 
 
@@ -239,10 +239,10 @@ BufferedImage _thumbFile = 	UploadFilesUtils.makeThumbnail(file.getAbsolutePath(
  files = boardDAO.selectFiles(bnum);		  
 
 	 byte[] encodedOriginFdata = Base64.encodeBase64(files.get(0).getFdata());
-	 byte[] encodedThumbFdata = Base64.encodeBase64(files.get(0).getThumbfdata());
+//	 byte[] encodedThumbFdata = Base64.encodeBase64(files.get(0).getThumbfdata());
 	 model.addAttribute("ftype", files.get(0).getFtype());
 	 model.addAttribute("originFdata",new String(encodedOriginFdata));			 
-	 model.addAttribute("thumbFdata",new String(encodedThumbFdata));			 
+//	 model.addAttribute("thumbFdata",new String(encodedThumbFdata));			 
 			
 		}
 		

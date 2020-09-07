@@ -23,12 +23,14 @@ public interface BoardSVC {
 	List<BoardVO> selectArticles() ;	
 	// 게시글 열람		
 	//전체 게시글 조회 + 페이징 
-	List<BoardVO> selectArticles(int reqPage, String searchType, String searchKeyword);	
+	List<BoardVO> selectArticles(String btype,int catnum, int reqPage, long recNumPerPage,String searchType, String searchKeyword);	
 	//게시판 타입 조회 
-	String selectBtype(long catnum);	
+	BcategoryVO selectBtype(long catnum);	
 	//전체게시글 조회 + 페이징 + 검색어  (게시판타입 / 레코드 범위 / 검색타입 / 검색어)
-	 Map<String, Object> selectArticlesWithKey(long catnum, int reqPage, String searchType, String searchKeyword);	
-	// 게시글 열람
+	Map<String,Object> selectArticlesWithKey(String btype,long catnum, int reqPage,long recNumPerPage, String searchType, String searchKeyword);	
+	//갤러리게시판(catnum:2)  썸네일 첨부파일 정보 불러오기 
+	 List<BoardFileVO> selectThumbnailFiles(int catnum);	 
+	 // 게시글 열람
 	Map<String, Object> selectArticle(long bnum);		
 	//게시글 등록
 	long insertArticle(BoardVO boardVO);		

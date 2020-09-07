@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 import javax.inject.Inject;
 
 import org.apache.commons.io.output.ByteArrayOutputStream;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.imgscalr.Scalr;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,7 @@ import com.my.maintest.board.vo.BcategoryVO;
 import com.my.maintest.board.vo.BoardFileVO;
 import com.my.maintest.board.vo.BoardVO;
 import com.my.maintest.board.vo.HeadIdCategoryVO;
+import com.my.maintest.board.vo.ThumbnailVO;
 import com.my.maintest.common.paging.PagingComponent;
 
 import lombok.extern.slf4j.Slf4j;
@@ -61,43 +63,80 @@ public class BoardSVCImpl implements BoardSVC {
 	
 	//전체글 조회 + 페이징
 	@Override
-	public List<BoardVO> selectArticles(int reqPage, String searchType, String searchKeyword) {		
-		PagingComponent	pagingComponent = pagingSVC.getPagingComponent(reqPage,searchType,searchKeyword);		
+	public List<BoardVO> selectArticles(String btype, int catnum, int reqPage,long recNumPerPage, String searchType, String searchKeyword) {		
+		PagingComponent	pagingComponent = pagingSVC.getPagingComponent(btype,catnum , reqPage, recNumPerPage,searchType,searchKeyword);		
 			
-	return boardDAO.selectArticles(pagingComponent.getRecordCriteria().getRecFrom(), pagingComponent.getRecordCriteria().getRecTo());
+	return boardDAO.selectArticles(catnum, pagingComponent.getRecordCriteria().getRecFrom(), pagingComponent.getRecordCriteria().getRecTo());
 	}
 	
 	
 //게시판 타입 조회 
 	@Override
-	public String selectBtype(long catnum) {	
+	public BcategoryVO selectBtype(long catnum) {	
 	return boardDAO.selectBtype(catnum);
 	}
 
 	
-	//전체게시글 조회 + 페이징 + 검색어 (검색타입/검색어)
+	//전체게시글 조회 + 페이징 + 검색어 (검색타입/검색어) 게시판타입 분기 : 앨범/블로그
 	@Override
-	public  Map<String, Object>  selectArticlesWithKey(long catnum, int reqPage, String searchType, String searchKeyword) {
+	public  Map<String,Object> selectArticlesWithKey(String btype, long catnum, int reqPage,long recNumPerPage, String searchType, String searchKeyword) {
+	
+	
 		
-	//페이징 		
-			PagingComponent pagingComponent = pagingSVC.getPagingComponent(reqPage,searchType,searchKeyword);
-			
-			
-		Map<String, Object> map = new HashMap<>();
-		List<BoardVO> list = null;
-		BoardFileVO file = null;
+		//페이징 		
+	PagingComponent pagingComponent = pagingSVC.getPagingComponent(btype,catnum, reqPage, recNumPerPage, searchType,searchKeyword);
+		 
+	log.info("catnum     =   " + catnum);
+	log.info("pagingComponent.getRecordCriteria().getRecFrom()     =   " + pagingComponent.getRecordCriteria().getRecFrom());
+	log.info("pagingComponent.getRecordCriteria().getRecTo()     =   " +pagingComponent.getRecordCriteria().getRecTo() );
+	log.info("pagingComponent.getPageCriteria().getPagingNumFrom()    =   " +pagingComponent.getPageCriteria().getPagingNumFrom());
+	log.info("pagingComponent.getPageCriteria().getPagingNumTo()      =   " +pagingComponent.getPageCriteria().getPagingNumTo() );
+	log.info("searchType    =   " +searchType );
+	log.info("searchKeyword    =   " +searchKeyword );
+	
+	
+	
+	
+	List<BoardVO> list = null;	
+	if(btype.equals("album")) {
+		list = boardDAO.selectArticlesWithKey_Album(catnum,pagingComponent.getRecordCriteria().getRecFrom(), pagingComponent.getRecordCriteria().getRecTo(), searchType, searchKeyword);
 		
-		//BoardVO 불러오기
-	 list = boardDAO.selectArticlesWithKey(catnum,pagingComponent.getRecordCriteria().getRecFrom(), pagingComponent.getRecordCriteria().getRecTo(), searchType, searchKeyword);
-	 log.info(list.toString());
+		// base64 
+		for(int i = 0 ; i < list.size(); i++) {					
+			log.info(list.get(i).getThumbnailVO().getThumbfname());
+			//fdata 인코딩
+			byte[] encoded = Base64.encodeBase64(list.get(i).getThumbnailVO().getThumbfdata());
+			//file 타입 추출 image/jpg --> jpg
+			String thumbftype = (list.get(i).getThumbnailVO().getThumbftype()).split("/")[1];
+			list.get(i).getThumbnailVO().setThumbftype(thumbftype);
+			list.get(i).getThumbnailVO().setBase64encoded(new String(encoded));
+			// 주의 base64 인코딩 후 String 타입으로 반환 해야함.
+		}
 		
-	 map.put("articles", list); 
-	 map.put("files",file);
-		
-		
-		return map;
+	}else {
+		list = boardDAO.selectArticlesWithKey_Blog(catnum,pagingComponent.getRecordCriteria().getRecFrom(), pagingComponent.getRecordCriteria().getRecTo(), searchType, searchKeyword);
 	}
 	
+	log.info("list.size()    =   " +list.size() );
+	for(BoardVO vo : list) {
+	System.out.println("list.get(0).getBtitle() = "+vo.getBtitle());
+	
+	}
+	
+	Map<String,Object> map = new HashMap<>();
+	map.put("pagingComponent", pagingComponent);
+	map.put("list", list);
+	
+	
+	return map;
+	}
+	
+	
+	
+	 //갤러리 게시판 썸네일 목록 호출 : 게시판 타입이 album일 때 호출
+	public List<BoardFileVO> selectThumbnailFiles(int catnum){		
+	return	boardDAO.selectThumbnailFiles(catnum);		
+	}
 	
 
 	// 게시글 열람
@@ -139,8 +178,6 @@ public class BoardSVCImpl implements BoardSVC {
 		return result;
 	}
 	
-	
-	
 	//첨부파일 등록	
 public void insertFiles(List<MultipartFile> files, long bnum, String catnum)  {	
 
@@ -149,7 +186,7 @@ public void insertFiles(List<MultipartFile> files, long bnum, String catnum)  {
 	for(int i = 0 ; i < files.size(); i++ ) {			
 		//저장객체 per one file
 		
-		String btype = boardDAO.selectBtype(Long.parseLong(catnum));
+		BcategoryVO bcategoryVO = boardDAO.selectBtype(Long.parseLong(catnum));
 		
 		try {			
 			//원본 파일 정보 추출
@@ -184,9 +221,10 @@ public void insertFiles(List<MultipartFile> files, long bnum, String catnum)  {
 			boardFileVO.setFdata(fdata);
 			
 			
+			
 		//첫번째 첨부한 이미지 파일 썸네일생성	
 			//원본파일 정보			
-			if(btype.equals("album") && i == 0 ) {					
+			if(bcategoryVO.getBtype().equals("album") && i == 0 ) {					
 				//접두사 + _thumb_+원본파일명(저장할 썸네일 파일이름)
 				String genThumbfname = prefixFname + "-thumb_" + originalFileName;				
 					//---------------------------------------------------------------------------------------------------------------
@@ -203,9 +241,12 @@ public void insertFiles(List<MultipartFile> files, long bnum, String catnum)  {
 					long thumbfsize = baos.size();
 					baos.close();		
 					
-					boardFileVO.setThumbfname(genThumbfname);			
-					boardFileVO.setThumbfdata(thumbfdata);		
-					boardFileVO.setThumbfsize(thumbfsize);
+					ThumbnailVO thumbnailVO = new ThumbnailVO();
+					boardFileVO.setThumbnailVO(thumbnailVO);
+					
+					boardFileVO.getThumbnailVO().setThumbfname(genThumbfname);
+					boardFileVO.getThumbnailVO().setThumbfdata(thumbfdata);		
+					boardFileVO.getThumbnailVO().setThumbfsize(thumbfsize);
 					}
 			
 			if(boardFileVO.getFsize() > 0  ) {

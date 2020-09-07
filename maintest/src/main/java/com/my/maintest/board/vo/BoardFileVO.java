@@ -17,22 +17,12 @@ public class BoardFileVO {
 	private String ftype; // FTYPE VARCHAR2(50 BYTE)
 	private byte[] fdata; // FDATA BLOB
 	
-	
-	
-	
-	
-	
-	private String thumbfname;  //thumbnail 이미지 이름	
-	private byte[] thumbfdata;//thumbnail 파일 데이터
-	private long thumbfsize; 
-	
-	
-	
-	
+	private ThumbnailVO thumbnailVO; //섬네일
 	
 	private Timestamp cdate; // CDATE TIMESTAMP(6)
 	private Timestamp udate; // UDATE TIMESTAMP(6)
 
+	
 	
 
 	

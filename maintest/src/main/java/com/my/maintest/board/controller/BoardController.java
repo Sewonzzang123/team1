@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -38,6 +39,7 @@ import com.my.maintest.board.vo.BoardVO;
 //import com.my.maintest.board.vo.TestVO;
 import com.my.maintest.board.vo.HeadIdCategoryVO;
 import com.my.maintest.board.vo.TemporaryVO;
+import com.my.maintest.common.paging.PagingComponent;
 import com.my.maintest.common.paging.SearchCriteria;
 
 import lombok.extern.slf4j.Slf4j;
@@ -63,7 +65,7 @@ public class BoardController {
 		return bcategoryVO;
 	}
 	
-	// 게시판 말머리 조회
+	// 게시판 말머리 조회(ajax)
 	@PostMapping(value = "/headid", produces = "application/json")
 	 @ResponseBody
 	public  ResponseEntity<Map<String, Object>> getHeadIdCategory(
@@ -90,52 +92,14 @@ public class BoardController {
 		return res;
 	}
 
-	// 임시 로그인 + 리스트 페이지
-	@GetMapping("")
-	String toLoginfrm() {
-		return "/loginForm";
-	}
 
-	// 로그인 처리 및 세션
-	@GetMapping("/login")
-	String toLogin(@RequestParam("id") String id, @RequestParam("pw") String pw, HttpSession session, Model model) {
-
-		System.out.println("String login()호출됨");
-		TemporaryVO tmpVO = new TemporaryVO();
-
-		tmpVO.setId(id);
-		tmpVO.setPw(pw);
-		tmpVO.setNickname("홍길동");
-		tmpVO.setUcode("5");
-
-		session.setAttribute("member", tmpVO);
-
-		System.out.println("getSession" + session.getAttribute("member").toString());
-
-		return "/board/boardMainFrm";
-				//"redirect:/board/0";
-	}
-//
-//	// 게시글 목록보기
-//	@GetMapping({ "/boardListFrm", 
-//																		"/boardListFrm/{reqPage}", 
-//																		"/boardListFrm/{reqPage}/{recNumPerPage}" }) // 보여지는 게시글 수	조정을 위한 값
-//																																																			
-//	public String toboardListFrm(@PathVariable(value = "reqPage", required = false) Optional<Integer> reqPage,
-//			@PathVariable(value = "recNumPerPage", required = false) String recNumPerPage, Model model) {
-//
-//		model.addAttribute("articles", boardSVC.selectArticles(reqPage.orElse(1)));
-//		model.addAttribute("pagingComponent", boardSVC.getPagingComponent(reqPage.orElse(1)));
-//
-//		return "/board/boardListFrm";
-//	}
 
 	// 게시글 목록보기  (페이징 + 검색 + 게시판 카테고리)
-	@GetMapping({ 
-		"/{catnum}" // 각 게시판으로 이동
-		,"/boardListFrm"
-		, "/boardListFrm/{reqPage}"
-		, "/boardListFrm/{reqPage}/{searchType}/{searchKeyword}" })
+	@GetMapping({
+		""
+		,"/{catnum}" // 각 게시판으로 이동
+		, "/{catnum}/{reqPage}"
+		, "/{catnum}/{reqPage}/{searchType}/{searchKeyword}" })
 	public String toSearch(			
 			@PathVariable(value="catnum", required = false) Optional<Integer> catnum,
 			@PathVariable(value = "reqPage", required = false) Optional<Integer> reqPage,
@@ -144,25 +108,21 @@ public class BoardController {
 			@ModelAttribute SearchCriteria searchCriteria, Model model) {		
 		
 		// 게시판 타입 읽어오기 		
-		String btype = boardSVC.selectBtype(catnum.orElse(0));
-		Map<String, Object> map = boardSVC.selectArticlesWithKey( catnum.orElse(0), reqPage.orElse(1), searchType, searchKeyword);	
-			
-			model.addAttribute("pagingComponent",	pagingSVC.getPagingComponent(reqPage.orElse(1), searchType, searchKeyword));
-			model.addAttribute("articles", map.get("articles"));
-			model.addAttribute("files", map.get("files"));
-			
-			
-			logger.info(map.toString());
-			
-			
-			
-			//게시판 타입별로 해당 타입 게시글 목록 페이지 이동
-			if(btype.equals("album") ){			
-				return "/board/boardGalleryListFrm";
-			}			
-			
-			return "/board/boardBlogListFrm";
-	}
+		BcategoryVO bcategoryVO = boardSVC.selectBtype(catnum.orElse(0));
+		
+		
+		
+		//표시할 게시글 수
+		long recNumPerPage = 10;
+		
+		Map<String,Object> map = boardSVC.selectArticlesWithKey(bcategoryVO.getBtype(), catnum.orElse(0), reqPage.orElse(1), recNumPerPage, searchType, searchKeyword);	
+		
+		model.addAttribute("boardVO",(List<BoardVO>)map.get("list"));
+		model.addAttribute("pagingComponent",(PagingComponent)map.get("pagingComponent"));
+		model.addAttribute("bcategoryVO", bcategoryVO);
+		return 
+					"/board/boardMainFrm";
+			}
 
 
 	
@@ -183,8 +143,6 @@ public class BoardController {
 			,@RequestParam("returnPage") String returnPage, @Valid  @ModelAttribute BoardVO boardVO
 	 , BindingResult result
 	) {
-		
-		
 		
 		 if (result.hasErrors()) {
 		 return "/board/boardWriteFrm/" + returnPage;

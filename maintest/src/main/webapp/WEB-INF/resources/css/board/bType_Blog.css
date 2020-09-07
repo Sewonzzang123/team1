@@ -49,7 +49,7 @@ i.navbar_toggleBtn {
  .main_img {
   width: 100%;
   height: 50vh;
-  background: url(../../img/polynesia-3021072_1920.jpg);
+  background-image: url(../../img/polynesia-3021072_1920.jpg);
   background-size: cover;
 } 
 
@@ -488,7 +488,7 @@ i.navbar_toggleBtn {
 .main_img {
   width: 100%;
   height: 50vh;
-  background: url(../img/polynesia-3021072_1920.jpg);
+  background: url(../../img/polynesia-3021072_1920.jpg);
   background-size: cover;
 }
 
@@ -926,7 +926,7 @@ i.navbar_toggleBtn {
 .main_img {
   width: 100%;
   height: 50vh;
-  background: url(../img/polynesia-3021072_1920.jpg);
+  background: url(../../img/polynesia-3021072_1920.jpg);
   background-size: cover;
 }
 
@@ -1364,7 +1364,7 @@ i.navbar_toggleBtn {
 .main_img {
   width: 100%;
   height: 50vh;
-  background: url(../img/polynesia-3021072_1920.jpg);
+  background: url(../../img/polynesia-3021072_1920.jpg);
   background-size: cover;
 }
 
@@ -1802,7 +1802,7 @@ i.navbar_toggleBtn {
 .main_img {
   width: 100%;
   height: 50vh;
-  background: url(../img/polynesia-3021072_1920.jpg);
+  background: url(../../img/polynesia-3021072_1920.jpg);
   background-size: cover;
 }
 
@@ -2240,7 +2240,7 @@ i.navbar_toggleBtn {
 .main_img {
   width: 100%;
   height: 50vh;
-  background: url(../img/polynesia-3021072_1920.jpg);
+  background: url(../../img/polynesia-3021072_1920.jpg);
   background-size: cover;
 }
 

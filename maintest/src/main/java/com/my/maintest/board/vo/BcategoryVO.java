@@ -12,7 +12,10 @@ public class BcategoryVO {
 	
 	private String catname; // CNAME VARCHAR2(60 BYTE) No 2 분류명
 	private String bmemo; //게시판 용도 설명
-		private String btype; //게시판 종류 blog/album 타입
+	private String btype; //게시판 종류 blog/album 타입
+	
+	
+	
 
 	public String getCatnum() {
 		return catnum;

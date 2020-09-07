@@ -19,11 +19,26 @@ public class PagingDAOImpl  implements PagingDAO{
 //페이징
 		//레코드 총 수량 구하기 
 		@Override
-		public int selectRecQnty(String searchType, String searchKeyword) {		
+		public int selectRecQnty_Blog(long catnum, String searchType, String searchKeyword) {		
 			Map<String, Object> map = new HashMap<>();
+			
+			
+			map.put("catnum", catnum);
 			map.put("searchType", searchType);
 			map.put("searchKeyword", searchKeyword);
-			return sqlSession.selectOne("mappers.BoardDAO-mapper.selectRecQnty", map);
+			return sqlSession.selectOne("mappers.BoardDAO-mapper.selectRecQnty_Blog", map);
 		}
-	
+
+		
+		
+		@Override
+		public int selectRecQnty_Album(long catnum, String searchType, String searchKeyword) {		
+			Map<String, Object> map = new HashMap<>();
+			
+			
+			map.put("catnum", catnum);
+			map.put("searchType", searchType);
+			map.put("searchKeyword", searchKeyword);
+			return sqlSession.selectOne("mappers.BoardDAO-mapper.selectRecQnty_Album", map);
+		}
 }
