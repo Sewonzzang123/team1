@@ -8,13 +8,10 @@
 <fmt:formatDate value="${now }" pattern="yy/MM/dd" var="today" />
  --%>
 <!-- css/javascript  -->
-<link rel="stylesheet"	href="${contextPath }/css/board/bType_Gallery.css?ver=${today}">
 <script defer type="text/javascript" src="${contextPath }/js/board/boardListFrm.js"></script>
 
-
-
 <div class="gallery_list">
-	<ul>
+<ul> 
 	<!-- data 들어오는 부분 loop-->
 		<c:forEach var="tdata" items="${requestScope.boardVO}">
 			<li class="inner">
@@ -38,5 +35,5 @@
 					</div>
 			</a></li>
 		</c:forEach>
-	</ul>
+	</ul> 
 </div>

@@ -23,7 +23,7 @@ public class AdminSVCImpl implements AdminSVC {
 
 	@Override
 	public List<BcategoryVO> getCate() {
-		// TODO Auto-generated method stub
+		
 		return adminDAO.getCate();
 	}
 
@@ -35,13 +35,13 @@ public class AdminSVCImpl implements AdminSVC {
 
 	@Override
 	public int createBoard(BcategoryVO bcategoryVO) {
-		// TODO Auto-generated method stub
+		
 		return adminDAO.createBoard(bcategoryVO);
 	}
 
 	@Override
 	public int setBoard(BcategoryVO bcategoryVO) {
-		// TODO Auto-generated method stub
+		
 		return adminDAO.setBoard(bcategoryVO);
 	}
 
@@ -53,7 +53,7 @@ public class AdminSVCImpl implements AdminSVC {
 
 	@Override
 	public int setHead(HeadIdCategoryVO headIdCategoryVO) {
-		// TODO Auto-generated method stub
+		
 		return adminDAO.setHead(headIdCategoryVO);
 	}
 
@@ -65,49 +65,49 @@ public class AdminSVCImpl implements AdminSVC {
 
 	@Override
 	public List<ItemCategoryVO> getIcate() {
-		// TODO Auto-generated method stub
+		
 		return adminDAO.getIcate();
 	}
 
 	@Override
 	public List<ItemVO> getItem() {
-		// TODO Auto-generated method stub
+		
 		return adminDAO.getItem();
 	}
 
 	@Override
 	public int delIcate(String ca_num) {
-		// TODO Auto-generated method stub
+		
 		return adminDAO.delIcate(ca_num);
 	}
 
 	@Override
 	public int delItem(String i_num) {
-		// TODO Auto-generated method stub
+		
 		return adminDAO.delItem(i_num);
 	}
 
 	@Override
 	public String getCa_num() {
-		// TODO Auto-generated method stub
+		
 		return adminDAO.getCa_num();
 	}
 
 	@Override
 	public int setIcate(HashMap<String, String> map) {
-		// TODO Auto-generated method stub
+		
 		return adminDAO.setIcate(map);
 	}
 
 	@Override
 	public int modifyIcate(HashMap<String, String> map) {
-		// TODO Auto-generated method stub
+		
 		return adminDAO.modifyIcate(map);
 	}
 
 	@Override
 	public int setItem(HashMap<String, String> map) {
-		// TODO Auto-generated method stub
+		
 		return adminDAO.setItem(map);
 	}
 
@@ -178,7 +178,7 @@ public class AdminSVCImpl implements AdminSVC {
 
 	@Override
 	public int exit_member(String ucode) {
-		// TODO Auto-generated method stub
+		
 		return adminDAO.exit_member(ucode);
 	}
 }

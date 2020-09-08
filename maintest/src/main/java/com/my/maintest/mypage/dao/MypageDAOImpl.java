@@ -23,7 +23,7 @@ public class MypageDAOImpl implements MypageDAO {
 
 	@Override
 	public int modify(MemberVO memberVO) {
-		// TODO Auto-generated method stub
+		
 		return sqlSession.update("mappers.MypageDAO-mapper.modify", memberVO);
 	}
 
@@ -57,37 +57,37 @@ public class MypageDAOImpl implements MypageDAO {
 
 	@Override
 	public int del_list(String lnum) {
-		// TODO Auto-generated method stub
+		
 		return sqlSession.delete("mappers.MypageDAO-mapper.del_list", lnum);
 	}
 
 	@Override
 	public List<IcategoryVO> get_category() {
-		// TODO Auto-generated method stub
+		
 		return sqlSession.selectList("mappers.MypageDAO-mapper.get_category");
 	}
 
 	@Override
 	public List<ListingVO> get_listing(String lnum) {
-		// TODO Auto-generated method stub
+		
 		return sqlSession.selectList("mappers.MypageDAO-mapper.get_listing", lnum);
 	}
 
 	@Override
 	public int item_check(String linum) {
-		// TODO Auto-generated method stub
+		
 		return sqlSession.update("mappers.MypageDAO-mapper.item_check", linum);
 	}
 
 	@Override
 	public int item_uncheck(String linum) {
-		// TODO Auto-generated method stub
+		
 		return sqlSession.selectOne("mappers.MypageDAO-mapper.item_uncheck", linum);
 	}
 
 	@Override
 	public int total_post(String ucode) {
-		// TODO Auto-generated method stub
+		
 		return sqlSession.selectOne("mappers.MypageDAO-mapper.total_post", ucode);
 	}
 

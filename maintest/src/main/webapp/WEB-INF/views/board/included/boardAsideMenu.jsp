@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 	<!-- 공통모듈 -->
 <%@ include file="/WEB-INF/views/included/common.jsp"%>
+
+
 <nav>
         <div class="nav_wrap">
           <div class="category">

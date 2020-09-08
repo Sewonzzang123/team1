@@ -8,7 +8,6 @@
 <fmt:formatDate value="${now }" pattern="yy/MM/dd" var="today" /> --%>
 
 <!-- css/javascript  -->
-<link rel="stylesheet"	href="${contextPath }/css/board/bType_Blog.css?ver=${today}">
 <%-- <script defer type="text/javascript"	src="${contextPath }/js/board/boardBlogListFrm.js"></script> --%>
 
 <table>

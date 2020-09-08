@@ -252,7 +252,7 @@ nickname like '%'||#{searchKeyword}||'%')
 </when>
 
 <!--제목+ 내용  -->
-<when test="searchType == 'TC'.toString() ">
+<when test="searchType =='TC'.toString() ">
 (btitle  like '%'||#{searchKeyword}||'%' or
 bcontent like '%'||#{searchKeyword}||'%')
 </when>
@@ -337,10 +337,6 @@ UPLOAD_FILE_FID_SEQ.nextVal,
 #{thumbnailVO.thumbfdata},
 systimestamp,
 systimestamp)
-
-
-
-
 </insert>
 
 
@@ -406,7 +402,6 @@ bnum = #{bnum}
 
 <!--첨부파일 조회-->
 <select id="selectFiles" parameterType="long" resultType="com.my.maintest.board.vo.BoardFileVO">
-
 select 
 fid,
 bnum,
@@ -418,7 +413,8 @@ thumbfname,
 thumbfsize,
 thumbfdata,
 cdate, 
-udate
+udate,
+isThumb
 from board_upload_file
 where bnum = #{bnum}
 </select>
@@ -450,10 +446,21 @@ update board set bhits = bhits+1 where bnum = #{bnum}
 	
 	
 	<!--  첨부파일 일부 삭제  -->
-	<delete id="deleteFile" parameterType="long">
-	
-	delete from board_upload_file where fid = #{fid}
-	
+	<delete id="deleteFile" parameterType="map">	
+	<!--<choose>
+	 <when test="isThumb == 'true'.toString()">	
+	update board_upload_file 
+set 
+fname ='null',
+fsize='null',
+ftype='null',
+fdata='null'	
+	where fid = #{fid}	
+	</when>
+<otherwise> -->
+delete from board_upload_file where fid = #{fid}
+<!-- </otherwise>
+	</choose> -->
 	</delete>
 	
 	

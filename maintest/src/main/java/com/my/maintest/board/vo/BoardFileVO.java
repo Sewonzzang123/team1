@@ -15,12 +15,11 @@ public class BoardFileVO {
 	private String fname; // FNAME VARCHAR2(150 BYTE)
 	private long fsize; // FSIZE VARCHAR2(45 BYTE)
 	private String ftype; // FTYPE VARCHAR2(50 BYTE)
-	private byte[] fdata; // FDATA BLOB
-	
-	private ThumbnailVO thumbnailVO; //섬네일
-	
+	private byte[] fdata; // FDATA BLOB	
 	private Timestamp cdate; // CDATE TIMESTAMP(6)
 	private Timestamp udate; // UDATE TIMESTAMP(6)
+	private boolean isthumb; //썸네일 유무 
+	private ThumbnailVO thumbnailVO; //섬네일
 
 	
 	

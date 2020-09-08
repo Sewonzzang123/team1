@@ -188,76 +188,53 @@ i.navbar_toggleBtn {
 				src="<%=request.getContextPath()%>/img/perage_logo_3.png" alt="logo" />
 			</a>
 		</div>
-
-<c:out value = "${request.getContextPath() }"/>
+		<c:out value="${request.getContextPath() }" />
 		<fmt:bundle basename="">
-			<!-- 로그인 전 -->
-			<c:if test="${empty sessionScope.member}">
-				<div class="top_menu">
-					<ul>
-						<li><a href="">리스트 작성</a></li>
-						<li><a href="${pageContext.request.contextPath}/board">게시판</a></li>
-						<li><a href="${pageContext.request.contextPath}/signupForm">회원가입</a></li>
-						<li><a href="${url_login }">로그인</a></li>
-
-					</ul>
-				</div>
-			</c:if>
-
-		</fmt:bundle>
-
-		<!-- 로그인 후  -->
-		<c:if test="${!empty sessionScope.member}">
-
 			<div class="top_menu">
 				<ul>
 					<li><a href="">리스트 작성</a></li>
-					<li><a href="">게시판</a></li>
-					<c:if test="${sessionScope.member.ucode==1}">
-						<li><a href="${url_admin}">관리하기</a></li>
+					<li><a href="${pageContext.request.contextPath}/board">게시판</a></li>
+					<!-- 로그인 전 -->
+					<c:if test="${empty sessionScope.member}">
+						<li><a href="${pageContext.request.contextPath}/signupForm">회원가입</a></li>
+						<li><a href="${url_login }">로그인</a></li>
 					</c:if>
-					<li><a href="${url_myPage}">${sessionScope.member.nickname }</a></li>
-					<li><a href="${url_logout }">로그아웃</a></li>
+					<!-- 로그인 후  -->
+					<c:if test="${!empty sessionScope.member}">
+						<c:if test="${sessionScope.member.ucode==1}">
+							<li><a href="${url_admin}">관리하기</a></li>
+						</c:if>
+						<li><a href="${url_myPage}">${sessionScope.member.nickname }</a></li>
+						<li><a href="${url_logout }">로그아웃</a></li>
+					</c:if>
 				</ul>
 			</div>
-
-		</c:if>
-
-		<i class="fas fa-bars navbar_toggleBtn" id="buggerBtn"></i>
-
+			<i class="fas fa-bars navbar_toggleBtn" id="buggerBtn"></i>
+		</fmt:bundle>
 	</div>
 </header>
+
+
 
 <div class="menu_wrap">
 	<div class="hide_wrap">
 		<i class="fa fa-times" id="buggerBtn_hide"></i>
 	</div>
-
-
-	<c:if test="${empty sessionScope.member}">
-		<ul>
-			<li><a href="">리스트 작성</a></li>
-			<li><a href="">게시판</a></li>
+	<ul>
+		<li><a href="">리스트 작성</a></li>
+		<li><a href="${pageContext.request.contextPath}/board">게시판</a></li>
+		<c:if test="${empty sessionScope.member}">
 			<li><a href="${pageContext.request.contextPath}/signupForm">회원가입</a></li>
 			<li><a href="${url_login }">로그인</a></li>
-
-		</ul>
-	</c:if>
-
-	<c:if test="${!empty sessionScope.member}">
-
-		<ul>
-			<li><a href="">리스트 작성</a></li>
-			<li><a href="">게시판</a></li>
+		</c:if>
+		<c:if test="${!empty sessionScope.member}">
 			<c:if test="${sessionScope.member.ucode==1}">
 				<li><a href="${url_admin}">관리하기</a></li>
 			</c:if>
 			<li><a href="${url_myPage}">${sessionScope.member.nickname }</a></li>
 			<li><a href="${url_logout }">로그아웃</a></li>
-		</ul>
-
-	</c:if>
-
+		</c:if>
+	</ul>
 </div>
 <!-- 햄버거 버튼 열면 뒤에 깔리는 반투명 검정 배경 -->
 <div class="cover_close"></div>

@@ -26,7 +26,7 @@ public class PagingDAOImpl  implements PagingDAO{
 			map.put("catnum", catnum);
 			map.put("searchType", searchType);
 			map.put("searchKeyword", searchKeyword);
-			return sqlSession.selectOne("mappers.BoardDAO-mapper.selectRecQnty_Blog", map);
+			return sqlSession.selectOne("mappers.PagingDAO-mapper.selectRecQnty_Blog", map);
 		}
 
 		
@@ -39,6 +39,6 @@ public class PagingDAOImpl  implements PagingDAO{
 			map.put("catnum", catnum);
 			map.put("searchType", searchType);
 			map.put("searchKeyword", searchKeyword);
-			return sqlSession.selectOne("mappers.BoardDAO-mapper.selectRecQnty_Album", map);
+			return sqlSession.selectOne("mappers.PagingDAO-mapper.selectRecQnty_Album", map);
 		}
 }

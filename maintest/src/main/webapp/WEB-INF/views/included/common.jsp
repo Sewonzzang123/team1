@@ -24,7 +24,7 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
 
 <!-- bootStrap css  -->
-<link rel="stylesheet" href="${contextPath }/webjars/bootstrap/4.5.0/css/bootstrap.css">
+<%-- <link rel="stylesheet" href="${contextPath }/webjars/bootstrap/4.5.0/css/bootstrap.css">  --%>
 
 <!--폰트-->
 <link

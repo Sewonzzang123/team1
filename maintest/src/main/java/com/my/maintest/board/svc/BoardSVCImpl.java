@@ -81,7 +81,9 @@ public class BoardSVCImpl implements BoardSVC {
 	@Override
 	public  Map<String,Object> selectArticlesWithKey(String btype, long catnum, int reqPage,long recNumPerPage, String searchType, String searchKeyword) {
 	
-	
+		if(btype.equals("album")) {
+			recNumPerPage = 8;
+		}
 		
 		//페이징 		
 	PagingComponent pagingComponent = pagingSVC.getPagingComponent(btype,catnum, reqPage, recNumPerPage, searchType,searchKeyword);
@@ -99,6 +101,7 @@ public class BoardSVCImpl implements BoardSVC {
 	
 	List<BoardVO> list = null;	
 	if(btype.equals("album")) {
+		
 		list = boardDAO.selectArticlesWithKey_Album(catnum,pagingComponent.getRecordCriteria().getRecFrom(), pagingComponent.getRecordCriteria().getRecTo(), searchType, searchKeyword);
 		
 		// base64 
@@ -232,6 +235,7 @@ public void insertFiles(List<MultipartFile> files, long bnum, String catnum)  {
 					InputStream in = files.get(0).getInputStream();
 					BufferedImage originalImage = ImageIO.read(in);
 					BufferedImage thumbnail = Scalr.resize(originalImage, 257, 257);		
+		
 					//---------------------------------------------------------------------------------------------------------------
 					// 썸네일 db저장을 위한 byte 데이터 및 사이즈 가져오기
 					ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -278,8 +282,16 @@ public void insertFiles(List<MultipartFile> files, long bnum, String catnum)  {
 	}
 	//첨부파일 일부 삭제 
 		@Override
-		public long deleteFile(long fid) {		
-			return	boardDAO.deleteFile(fid);
+		public long deleteFile(long fid, String isThumb) {		
+			return	boardDAO.deleteFile(fid, isThumb);
+			
+			//썸네일 파일 남겨 놓아야함. 
+			
+			
+			
+			
+			
+			
 		}
 		
 		//첨부파일 다운로드

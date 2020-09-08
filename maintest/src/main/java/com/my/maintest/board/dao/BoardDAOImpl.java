@@ -155,8 +155,13 @@ public int updateBhits(long bnum) {
 
 	//첨부파일 일부 삭제 
 	@Override
-	public int deleteFile(long fid) {		
-		return sqlSession.delete("mappers.BoardDAO-mapper.deleteFile",fid);
+	public int deleteFile(long fid, String isThumb) {				
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("fid", fid);
+		map.put("isThumb", isThumb);		
+		
+		
+		return sqlSession.delete("mappers.BoardDAO-mapper.deleteFile",map);
 	}
 //첨부파일 다운로드
 	@Override

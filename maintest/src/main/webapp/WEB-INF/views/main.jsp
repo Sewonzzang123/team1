@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	
-	
+
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -47,20 +47,21 @@
 				<div class="line"></div>
 				<div class="tip_list">
 					<ul>
-					<!-- begin : data 들어오는 곳  -->			
-					
-					<c:forEach var="tdata" items="${requestScope.tipBoardVO }" >
-						<li><a href="${contextPath }/read/${tdata.bnum}">
-								<div class="qna_title">
-									<span> ${tdata.btitle }</span>									
-									 <span> <fmt:formatDate value="${tdata.budate }" pattern="MM/dd" /> </span>
-								</div>
-						</a></li>
+						<!-- begin : data 들어오는 곳  -->
+
+						<c:forEach var="tdata" items="${requestScope.tipBoardVO }">
+							<li><a href="${contextPath }/board/read/${tdata.bnum}">
+									<div class="qna_title">
+										<span> ${tdata.btitle }</span> <span> <fmt:formatDate
+												value="${tdata.budate }" pattern="MM/dd" />
+										</span>
+									</div>
+							</a></li>
 						</c:forEach>
-						
-					<!-- end : data 들어오는 곳  -->
-						
-						
+
+						<!-- end : data 들어오는 곳  -->
+
+
 					</ul>
 				</div>
 				<div class="more">
@@ -75,18 +76,19 @@
 				<div class="line"></div>
 				<div class="qna_list">
 					<ul>
-						<!-- begin : data 들어오는 곳  -->					
-					<c:if test="${empty qaBoardVO}"> 게시글 없음  </c:if>
-					<c:forEach var="qdata" items="${requestScope.qaBoardVO }" >
-						<li><a href="${contextPath }/read/${qdata.bnum}">
-								<div class="qna_title">
-									<span> ${qdata.btitle }</span>									
-									 <span> <fmt:formatDate value="${qdata.budate }" pattern="MM/dd" /> </span>
-								</div>
-						</a></li>
+						<!-- begin : data 들어오는 곳  -->
+						<c:if test="${empty qaBoardVO}"> 게시글 없음  </c:if>
+						<c:forEach var="qdata" items="${requestScope.qaBoardVO }">
+							<li><a href="${contextPath }/board/read/${qdata.bnum}">
+									<div class="qna_title">
+										<span> ${qdata.btitle }</span> <span> <fmt:formatDate
+												value="${qdata.budate }" pattern="MM/dd" />
+										</span>
+									</div>
+							</a></li>
 						</c:forEach>
-						
-							<!-- end : data 들어오는 곳  -->
+
+						<!-- end : data 들어오는 곳  -->
 					</ul>
 				</div>
 				<div class="more">
@@ -100,25 +102,26 @@
 				<h3>갤러리</h3>
 				<div class="line"></div>
 				<div class="gallery_list">
+
+
 					<ul>
-					
-					<!-- begin : data 들어오는 곳  -->	
-					<c:forEach var="gdata" items="${requestScope.galBoardVO }" >
-						<li class="inner"><a href="${contextPath }/read/${gdata.bnum}">
-								<div class="li_img">
-									<img
-										src="data:${gdata.thumbnailVO.thumbftype };base64,${gdata.thumbnailVO.base64encoded}"
-										alt="" />
-								</div>
-								<div class="li_text">
-									<div class="li_text_poa">
-										<h4 class="li_text_head">${gdata.btitle }</h4>
-										<p class="li_text_summary">${gdata.bcontent }</p>
+						<!-- data 들어오는 부분 loop-->
+						<c:forEach var="gdata" items="${requestScope.galBoardVO}">
+							<li class="inner"><a
+								href="${contextPath }/board/read/${gdata.bnum}">
+									<div class="li_img">
+										<img name=""
+											src="data:${gdata.thumbnailVO.thumbftype };base64,${gdata.thumbnailVO.base64encoded}"
+											alt="" />
 									</div>
-								</div>
-						</a></li>
+									<div class="li_text">
+										<div class="li_text_poa">
+											<h5 class="li_text_head">${gdata.btitle }</h5>
+											<p class="li_text_summary">${gdata.bcontent}</p>
+										</div>
+									</div>
+							</a></li>
 						</c:forEach>
-							<!-- end : data 들어오는 곳  -->
 					</ul>
 				</div>
 				<div class="more">

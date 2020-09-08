@@ -8,7 +8,6 @@ public class SearchCriteria {
 	private String searchKeyword;
 	
 	public SearchCriteria() {
-		// TODO Auto-generated constructor stub
 	}
 	public SearchCriteria( String searchType,String searchKeyword ) {
 			this.searchType = searchType;

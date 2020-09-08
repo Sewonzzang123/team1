@@ -34,13 +34,13 @@ public class MemberSVCImpl implements MemberSVC {
 	// 로그인
 	@Override
 	public int login() {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 
 	@Override
 	public int logout() {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 

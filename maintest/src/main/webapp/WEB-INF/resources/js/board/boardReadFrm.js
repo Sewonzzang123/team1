@@ -118,13 +118,13 @@ document.getElementById("bcontent").setAttribute("readonly",true);
     const searchType = document.getElementById("searchType").value;
    	const searchKeyword = document.getElementById("searchKeyword").value;   	
     const returnPage = document.getElementById("returnPage").value;       
-    const url = `/pfpkg/board/boardListFrm/${returnPage}/${searchType}/${searchKeyword}`;
+    const catnum = document.getElementById("catnum").value;       
+    const url = `/pfpkg/board/${catnum}/${returnPage}/${searchType}/${searchKeyword}`;
     
    window.location.href=url;     
      
      }
-     
-     
+   
      //저장버튼     
       function   saveBtn_f(e){        
     
@@ -146,16 +146,17 @@ document.getElementById("bcontent").setAttribute("readonly",true);
      console.log(e.target);
        if(e.target.tagName != "I") return false;
        const iTag = e.target;
-       const fid = iTag.getAttribute("data-fid");
+       const fid= iTag.getAttribute("data-fid");
        
-       
+      const isthumb = iTag.getAttribute("data-isthumb");
+             
      if(confirm("삭제하시겠습니까?")) {   
      //AJAX사용
      // XMLHttpRequest 객체 새성
      const xhttp = new XMLHttpRequest();
      
      //서비스 요청
-     const uri = `http://localhost:9080/pfpkg/board/deleteFile/${fid}`;
+     const uri = `http://localhost:9080/pfpkg/board/deleteFile/${fid}/${isthumb}`;
      
      xhttp.open("get", uri)
      xhttp.send();

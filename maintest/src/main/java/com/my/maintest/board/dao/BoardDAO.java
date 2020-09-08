@@ -42,7 +42,7 @@ public interface BoardDAO {
 	//게시글  수정
 	int updateArticle(BoardVO boardVO);
 	//첨부파일 일부 삭제 
-	int deleteFile(long fid); 
+	int deleteFile(long fid, String isThumb); 
 	//첨부파일 다운로드
 	BoardFileVO selectFileToDwLoad(long fid);	
 	//게시글 답글 작성

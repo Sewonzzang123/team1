@@ -127,12 +127,22 @@ public class BoardController {
 
 	
 	// 게시글 작성 화면
-	@GetMapping("/boardWriteFrm/{returnPage}")
+	@GetMapping("/boardWriteFrm/{catnum}/{returnPage}")
 	public String toboardWriteFrm(
 			@ModelAttribute BoardVO boardVO, 
-			@ModelAttribute("returnPage") String returnPage
+			@PathVariable ("catnum")  int catnum		
+			, @ModelAttribute("returnPage") String returnPage
+			,Model model
 			) {
-
+		
+	
+		
+		
+	// 게시판 타입 읽어오기 		
+			BcategoryVO bcategoryVO = boardSVC.selectBtype(catnum);
+			bcategoryVO.setCatname("글쓰기");			
+			model.addAttribute("bcategoryVO", bcategoryVO);
+		
 		return "/board/boardWriteFrm";
 	}
 
@@ -140,32 +150,28 @@ public class BoardController {
 	@PostMapping("/write")
 	public String toWrite(
 			 HttpServletRequest request
-			,@RequestParam("returnPage") String returnPage, @Valid  @ModelAttribute BoardVO boardVO
+			,@RequestParam("returnPage") String returnPage
+			, @Valid  @ModelAttribute BoardVO boardVO
 	 , BindingResult result
+	 ,Model model
 	) {
 		
 		 if (result.hasErrors()) {
-		 return "/board/boardWriteFrm/" + returnPage;
+		 return "/board/boardWriteFrm";		 		 
 		 }
 		boardSVC.insertArticle(boardVO);
 		
-		return "redirect:/board/boardListFrm";
+		return "redirect:/board";
 	}
 	
-	
-	
-	//파일 첨부 화면
-	@GetMapping("/fileUploadFrm")
-	 String toFileUploadFrm() {
-		
-		
-		return "/board/fileUploadFrm";
-	}
+
 	
 	
 
 	// 게시글열람
-	@GetMapping({ "/read/{bnum}/{returnPage}", 
+	@GetMapping({
+		"/read/{bnum}",
+		"/read/{bnum}/{returnPage}", 
 		"/read/{bnum}/{returnPage}/{searchType}/{searchKeyword}" }) 
 	// returnPage		열람후	리스트로 이동시 돌아갈reqPage																								
 	public String toRead(@PathVariable("bnum") Long bnum
@@ -184,6 +190,11 @@ public class BoardController {
 		model.addAttribute("files",files);
 		return "/board/boardReadFrm";
 	}
+	
+	
+	//TODO 게시글 임시 저장 구현
+	//TODO 게시글 댓글 구현
+	//TODO 각 VO 유효성 검사 구현
 	
 	//첨부파일 다운로드
 	@GetMapping("/file/{fid}")
@@ -218,11 +229,15 @@ public class BoardController {
 	}
 
 	// 첨부파일 일부 삭제
-	@GetMapping("/deleteFile/{fid}")
+	@GetMapping("/deleteFile/{fid}/{isthumb}")
 	@ResponseBody
-	public ResponseEntity<String> toDeleteFile(@PathVariable("fid") long fid, Model model) {
+	public ResponseEntity<String> toDeleteFile(
+			@PathVariable("fid") long fid
+			,@PathVariable(value="isthumb", required = false) String  isThumb			
+			, Model model) {
 		ResponseEntity<String> responseEntity = null;
-		long result = boardSVC.deleteFile(fid);
+		
+		long result = boardSVC.deleteFile(fid,isThumb);
 
 		if (result == 1) {
 

@@ -32,7 +32,7 @@ public class MemberDAOImpl implements MemberDAO {
 	// 비밀번호 찾기
 	@Override
 	public String findPW(Map<String,String> map) {
-		// TODO Auto-generated method stub
+		
 		return sqlSession.selectOne("mappers.MemberDAO-mapper.findPW", map);
 	}
 

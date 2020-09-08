@@ -24,7 +24,7 @@
 	<a href="${contextPath }/board/">대석</a>
 	<P>The time on the server is ${serverTime}.</P>
 
-<%@ include file="/WEB-INF/views/board/fileUploadFrm2.jsp" %>
+
 
 
 </body>

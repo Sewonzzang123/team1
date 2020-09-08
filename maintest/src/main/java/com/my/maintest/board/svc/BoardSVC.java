@@ -40,7 +40,7 @@ public interface BoardSVC {
 	//게시글  수정
 	long  updateArticle(BoardVO boardVO);
 	//첨부파일 일부 삭제 
-	long deleteFile(long fid); 
+	long deleteFile(long fid, String isThumb); 
 	//첨부파일 다운로드
 	BoardFileVO selectFileToDwLoad(String fid);	
 	//게시글 삭제

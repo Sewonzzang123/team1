@@ -369,6 +369,11 @@ footer .footer_img img {
 	section .gallery_list ul .inner {
 		width: 25%;
 	}
+	
+  section .gallery_list ul .inner a {
+    display: block;
+  } 
+	
 	section .gallery_list ul .inner .li_img {
 		position: relative;
 		width: 100%;

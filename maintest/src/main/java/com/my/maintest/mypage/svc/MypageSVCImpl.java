@@ -80,25 +80,25 @@ public class MypageSVCImpl implements MypageSVC {
 
 	@Override
 	public List<IcategoryVO> get_category() {
-		// TODO Auto-generated method stub
+
 		return mypageDAO.get_category();
 	}
 
 	@Override
 	public List<ListingVO> get_listing(String lnum) {
-		// TODO Auto-generated method stub
+	
 		return mypageDAO.get_listing(lnum);
 	}
 
 	@Override
 	public int item_check(String linum) {
-		// TODO Auto-generated method stub
+	
 		return mypageDAO.item_check(linum);
 	}
 
 	@Override
 	public int item_uncheck(String linum) {
-		// TODO Auto-generated method stub
+
 		return mypageDAO.item_uncheck(linum);
 	}
 
