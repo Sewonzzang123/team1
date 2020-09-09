@@ -28,9 +28,7 @@
 		<div class="main_wrap">
 			
 				<!-- 게시판 카테고리 메뉴  -->
-		<%@ include file="/WEB-INF/views/board/included/boardAsideMenu.jsp"%>
-		
-		
+		<%@ include file="/WEB-INF/views/board/included/boardAsideMenu.jsp"%>	
 		
 		<div class="container">
 			<div class="content">
@@ -80,12 +78,8 @@
 				
 							<li><label for="bcontent"></label>
 							
-							<%--  <textarea
-									name="bcontent" rows="10" placeholder="내용 입력">${boardVO.bcontent }</textarea> --%>
-									
-									<div contenteditable="true"></div>
-									
-									
+ <textarea
+									name="bcontent" rows="10" placeholder="내용 입력">${boardVO.bcontent }</textarea> 
 										<form:errors cssClass="bound_error" path="bcontent"></form:errors>			
 										
 										

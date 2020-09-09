@@ -9,9 +9,6 @@ import com.my.maintest.board.vo.BcategoryVO;
 import com.my.maintest.board.vo.BoardFileVO;
 import com.my.maintest.board.vo.BoardVO;
 import com.my.maintest.board.vo.HeadIdCategoryVO;
-import com.my.maintest.common.paging.PageCriteria;
-import com.my.maintest.common.paging.PagingComponent;
-import com.my.maintest.common.paging.RecordCriteria;
 
 public interface BoardSVC {
 	
@@ -32,10 +29,10 @@ public interface BoardSVC {
 	 List<BoardFileVO> selectThumbnailFiles(int catnum);	 
 	 // 게시글 열람
 	Map<String, Object> selectArticle(long bnum);		
-	//게시글 등록
-	long insertArticle(BoardVO boardVO);		
-	//첨부파일 등록 +  썸네일 생성 및 등록
-	
+	//게시글 등록(게시글 원글 and 답글)
+	long insertArticle(BoardVO boardVO);
+
+	//첨부파일 등록 +  썸네일 생성 및 등록	
 	void insertFiles(List<MultipartFile> files, long bnum, String catnum);	
 	//게시글  수정
 	long  updateArticle(BoardVO boardVO);

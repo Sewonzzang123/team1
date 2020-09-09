@@ -1,0 +1,128 @@
+  * {
+            margin: 0px;
+
+
+
+            box-sizing: border-box;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        li {
+            list-style-type: none;
+        }
+
+        .innerRe {
+            margin: 50px;
+
+            font-size: 0.8em;
+        }
+
+        .innerRe_wrapper {
+            /* display: flex;
+            justify-bcomment: center; */
+        }
+
+
+        .innerRe_wrapper .children {
+            margin-left: 60px;
+        }
+
+        .innerRe_wrapper .bcomment {
+            width: 100%;
+            display: grid;
+            grid-template-columns: minmax(20%, 80px) 1fr minmax(10%, 80px);
+        }
+
+
+
+
+        .innerRe_wrapper .bcomment .ellipsis {
+            text-align: center;
+            position: relative;
+
+        }
+
+
+
+        .innerRe_wrapper .bcomment .ellipsis>a {
+            width: 50%;
+            display: block;
+            margin: 0px auto;
+        }
+
+
+        /*  클릭으로 대체할 것 */
+
+        .innerRe_wrapper .bcomment .ellipsis a:hover+.ellipsis.hiddenMenu {
+            display: block;
+            background-color: blueviolet;
+        }
+
+        .innerRe_wrapper .bcomment .ellipsis.hiddenMenu {
+            display: none;
+
+        }
+
+        .innerRe_wrapper .bcomment .ellipsis.hiddenMenu div {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            /* border: 1px solid #aaaaaa; */
+            left: 20px;
+            font-size: 0.8em;
+            width: 50px;
+            box-shadow: 5px 5px 15px #aaaaaa;
+        }
+
+        .innerRe_wrapper .bcomment .profile {
+            text-align: center;
+
+        }
+
+        .innerRe_wrapper .bcomment .profile img {
+            vertical-align: middle;
+            width: 70px;
+            height: 70px;
+            border-radius: 50px 50px;
+            background-color: blueviolet;
+
+        }
+
+
+        .innerRe_wrapper .bcomment .userinfo .typing {
+            border-bottom: 1px solid lightgray;
+
+        }
+
+        .innerRe_wrapper .bcomment .innerRe_area {
+            display: grid;
+            grid-template-columns: 20% 1fr;
+        }
+
+
+
+
+
+.typing:empty::before {
+    content: attr(data-placeholder);
+    display: block;
+    color: lightgray;    
+}
+.typing{
+    border-bottom: lightgray;
+}
+/* .typing.typable {
+    border-bottom: 1px solid black;
+} */
+.innerRe_wrapper .bcomment .userinfo .rbtnGrp { 
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+.innerRe_wrapper .bcomment .userinfo .hidden { 
+   display: none;
+}

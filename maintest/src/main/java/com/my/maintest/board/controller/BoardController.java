@@ -9,10 +9,8 @@ import java.util.Optional;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -38,7 +36,6 @@ import com.my.maintest.board.vo.BoardFileVO;
 import com.my.maintest.board.vo.BoardVO;
 //import com.my.maintest.board.vo.TestVO;
 import com.my.maintest.board.vo.HeadIdCategoryVO;
-import com.my.maintest.board.vo.TemporaryVO;
 import com.my.maintest.common.paging.PagingComponent;
 import com.my.maintest.common.paging.SearchCriteria;
 
@@ -70,20 +67,13 @@ public class BoardController {
 	 @ResponseBody
 	public  ResponseEntity<Map<String, Object>> getHeadIdCategory(
 		@RequestBody HeadIdCategoryVO headIdCategoryVO) {
-		System.out.println("/headid 호출");
-
-		System.out.println("@RequestParam(\"catnum\")" + headIdCategoryVO.getCatnum());
 		ResponseEntity<Map<String, Object>> res = null;
-
 		List<HeadIdCategoryVO> list = boardSVC.selectHeadIdCategory(headIdCategoryVO.getCatnum());
 		Map<String, Object> map = new HashMap<>();
-
 		if (list != null & list.size() > 0) {
-
 			map.put("rtcode", "00");
 			map.put("hidcategory", list);
 			res = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
-
 		} else {
 			map.put("rtcode", "01");
 			res = new ResponseEntity<Map<String, Object>>(map, HttpStatus.BAD_REQUEST);
@@ -109,12 +99,8 @@ public class BoardController {
 		
 		// 게시판 타입 읽어오기 		
 		BcategoryVO bcategoryVO = boardSVC.selectBtype(catnum.orElse(0));
-		
-		
-		
 		//표시할 게시글 수
-		long recNumPerPage = 10;
-		
+		long recNumPerPage = 10;		
 		Map<String,Object> map = boardSVC.selectArticlesWithKey(bcategoryVO.getBtype(), catnum.orElse(0), reqPage.orElse(1), recNumPerPage, searchType, searchKeyword);	
 		
 		model.addAttribute("boardVO",(List<BoardVO>)map.get("list"));
@@ -152,8 +138,8 @@ public class BoardController {
 			 HttpServletRequest request
 			,@RequestParam("returnPage") String returnPage
 			, @Valid  @ModelAttribute BoardVO boardVO
-	 , BindingResult result
-	 ,Model model
+			, BindingResult result
+			,Model model
 	) {
 		
 		 if (result.hasErrors()) {
@@ -184,7 +170,7 @@ public class BoardController {
 		BoardVO boardVO = (BoardVO)map.get("boardVO");
 
 		// 파일 타입은 List<BoardFileVO>	
-		List<BoardFileVO> files = (List<BoardFileVO>)  map.get("files");
+		List<BoardFileVO> files = ((List<BoardFileVO>)  map.get("files"));
         
 		model.addAttribute("boardVO", boardVO);		
 		model.addAttribute("files",files);
@@ -263,7 +249,7 @@ public class BoardController {
 	public String toDeleteArticle(@PathVariable("bnum") int bnum, Model model) {
 
 		boardSVC.deleteArticle(bnum);
-		return "redirect:/board/boardListFrm";
+		return "redirect:/board";
 	}
 
 	// 답글 작성 화면
@@ -285,9 +271,9 @@ public class BoardController {
 
 	// 답글 등록
 	@PostMapping("/reply")
-	public String toReply(@ModelAttribute BoardVO boardVO,
-			@RequestParam("returnPage") String returnPage,
-			BindingResult result) {
+	public String toReply(@ModelAttribute BoardVO boardVO,			
+			BindingResult result,
+			@RequestParam("returnPage") String returnPage) {
 		
 //		if (result.hasErrors()) {
 //			return "/board/boardReplyFrm";
@@ -295,5 +281,7 @@ public class BoardController {
 		boardSVC.insertRepliedArticle(boardVO);
 		return "redirect:/board/boardListFrm/"+ returnPage;
 	}
+	
 
+	
 }

@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.my.maintest.board.dao.BoardDAO;
+import com.my.maintest.board.vo.BCommentVO;
 import com.my.maintest.board.vo.BcategoryVO;
 import com.my.maintest.board.vo.BoardFileVO;
 import com.my.maintest.board.vo.BoardVO;
@@ -104,6 +105,7 @@ public class BoardSVCImpl implements BoardSVC {
 		
 		list = boardDAO.selectArticlesWithKey_Album(catnum,pagingComponent.getRecordCriteria().getRecFrom(), pagingComponent.getRecordCriteria().getRecTo(), searchType, searchKeyword);
 		
+		
 		// base64 
 		for(int i = 0 ; i < list.size(); i++) {					
 			log.info(list.get(i).getThumbnailVO().getThumbfname());
@@ -163,7 +165,7 @@ public class BoardSVCImpl implements BoardSVC {
 		return map;
 	}
 
-	// 게시글 등록
+	//게시글 등록(게시글 원글 and 답글)
 	@Transactional 	
 	@Override
 	public long insertArticle(BoardVO boardVO) {		
@@ -262,6 +264,9 @@ public void insertFiles(List<MultipartFile> files, long bnum, String catnum)  {
 	}	
 	}
 
+
+
+
 	// 게시글 수정
 	@Transactional
 	@Override
@@ -330,6 +335,7 @@ public void insertFiles(List<MultipartFile> files, long bnum, String catnum)  {
 		return result;	
 
 	}
+
 	
 	
 	

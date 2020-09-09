@@ -22,7 +22,7 @@
         function writeBtn_f(e){ 
         e.preventDefault();
             console.log("글등록 버튼 클릭");
-        writeFrm.submit();
+            writeFrm.submit();
     		 }
     		 
     		 

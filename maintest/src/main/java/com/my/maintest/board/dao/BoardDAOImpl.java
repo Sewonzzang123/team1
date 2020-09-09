@@ -115,6 +115,10 @@ public class BoardDAOImpl implements BoardDAO {
 		return sqlSession.insert("mappers.BoardDAO-mapper.insertArticle", boardVO);
 	}
 	
+
+
+	
+	
 //첨부파일 등록
 	@Override
 	public int insertFiles(BoardFileVO boardFileVO) {		
@@ -199,7 +203,7 @@ public int updateBhits(long bnum) {
 			return sqlSession.update("mappers.BoardDAO-mapper.updateBstep", map );
 		}
 
-		
+
 
 		
 

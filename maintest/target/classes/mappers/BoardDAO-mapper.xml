@@ -189,13 +189,12 @@ nickname like '%'||#{searchKeyword}||'%'
 
 ) 
 where dbrownum between #{recFrom} and #{recTo}
-order by dbrownum asc
+order by dbrownum desc
 
 </select>
 
 <!--갤러리게시판(catnum:2)  썸네일 첨부파일 정보 불러오기 -->
 <select id="selectArticlesWithKey_Album" parameterType="map" resultType="com.my.maintest.board.vo.BoardVO">
-
 select 
 dbrownum,
 bnum, 
@@ -277,7 +276,7 @@ nickname like '%'||#{searchKeyword}||'%'
 
 ) 
 where dbrownum between #{recFrom} and #{recTo}
-order by dbrownum asc
+order by dbrownum desc
 
 </select>
 
@@ -295,17 +294,17 @@ bcontent,
 bgroup
 )
 values(
-bnum_seq.nextVal,
+b_bnum_seq.nextVal,
 #{bcategory.catnum}, 
 #{hidcategory.hidnum},
 #{ucode},
 #{btitle},
 #{bcontent},
-bnum_seq.nextVal
+b_bnum_seq.nextVal
 )
 
 <selectKey keyProperty="bnum" resultType="int" order="AFTER">
-select bnum_seq.currVal from dual
+select b_bnum_seq.currVal from dual
 </selectKey>
 </insert>
 
@@ -360,7 +359,7 @@ bstep,
 bindent
 )
 values(
-bnum_seq.nextVal,
+b_bnum_seq.nextVal,
 #{bcategory.catnum},
 #{hidcategory.hidnum},
 #{ucode},

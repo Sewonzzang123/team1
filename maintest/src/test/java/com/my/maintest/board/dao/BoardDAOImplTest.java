@@ -218,7 +218,7 @@ public class BoardDAOImplTest {
 	
 	@Test
 	@DisplayName("리스트조회 + 페이징 + 검색어 + 보드 카테고리  + 보드타입 ")
-	//@Disabled
+	@Disabled
 	void toSearchKeyword() {
 		int recNumPerPage	= 10;	
 		int reqPage = 1 ;

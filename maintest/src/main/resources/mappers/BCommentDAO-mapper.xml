@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.BCommentDAO-mapper">
+
+
+<!-- 댓글 등록(inner Comment) -->
+<insert id="insertBComment" parameterType="com.my.maintest.board.vo.BCommentVO" >
+insert into bcomment (
+BCNUM
+,UCODE
+,PUCODE
+,BNUM
+,BCCONTENT
+,BCGROUP
+,CDATE
+,UDATE
+)
+values(
+bcomment_bcNum_seq.nextVal
+,#{ucode }
+,#{pucode }
+,#{bnum }
+,#{bccontent }
+,bcomment_bcNum_seq.currVal
+,systimestamp
+,systimestamp
+)
+
+<selectKey keyProperty="pnickname" resultType="String" order="AFTER"> 
+select nickname as "pnickname" from member where ucode =#{ pucode}
+</selectKey>
+
+</insert>
+
+<insert id="">
+insert into bcomment (
+BCNUM
+,UCODE
+,PUCODE
+,BNUM
+,BCCONTENT
+,BCGROUP
+,BCINDENT
+,BCSTEP
+,BCGOOD
+,BCBAD
+,CDATE
+,UDATE
+)
+values(
+bcomment_bcNum_seq.nextVal
+,#{ucode }
+,#{pucode }
+,#{bnum }
+,#{bccontent }
+,bcomment_bcNum_seq.currVal
+,0
+,0
+,0
+,0
+,systimestamp
+,systimestamp
+)
+
+</insert>
+
+
+
+
+
+</mapper>

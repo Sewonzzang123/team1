@@ -32,13 +32,13 @@ public interface BoardDAO {
 	int updateBhits(long bnum);
 	//게시글 등록
 	int insertArticle(BoardVO boardVO);
+
 	//첨부파일 등록
 	int insertFiles(BoardFileVO boardFileVO);
 		//게시글 삭제
 	int deleteArticle(long  bnum);
 	//첨부파일 전체 삭제 
-	//cascade 외래키 연동으로 자동삭제
-		
+	//cascade 외래키 연동으로 자동삭제		
 	//게시글  수정
 	int updateArticle(BoardVO boardVO);
 	//첨부파일 일부 삭제 
@@ -50,17 +50,6 @@ public interface BoardDAO {
 	//게시글 bstep +1 처리 (답글 등록 순위)  높을수록 오래된 답글
 	int updateBstep(long bgroup, long bstep);
 		
-	
-	
-	//글 검색
-
-	
-	  //말머리
-	
-	  //제목
-	//댓글 작성
-	//댓글 수정
-	//댓글 삭제 
 	
 	
 	

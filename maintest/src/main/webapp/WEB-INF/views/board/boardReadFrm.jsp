@@ -33,39 +33,26 @@
 							<div class="content">
 
 								<hr>
-								<form id="readModFrm" name="readModFrm" method="POST"
-									enctype="multipart/form-data"
-									action="${contextPath}/board/save">
-									<input type="hidden" id="bnum" name="bnum"
-										value="${requestScope.boardVO.bnum }" /> 
-										<input type="hidden"
-										id="returnPage" name="returnPage"
-										value="${requestScope.returnPage}" /> 
-										<input type="hidden"
-										id="searchType" name="searchType"
-										value="${requestScope.searchCriteria.searchType }" />
-										 <input
-										type="hidden" id="searchKeyword" name="searchKeyword"
-										value="${requestScope.searchCriteria.searchKeyword }" /> 
-										<input
-										type="hidden" id="catnum" name="catnum"
-										value="${requestScope.bcategoryVO.catnum }" />
-
+								<form id="readModFrm" name="readModFrm" method="POST"			enctype="multipart/form-data"	action="${contextPath}/board/save">
+									<input type="hidden" id="bnum" name="bnum" 	value="${requestScope.boardVO.bnum }" /> 
+									<input		type="hidden" id="ucode" name="ucode" 	value="${requestScope.boardVO.ucode }" />
+										<input type="hidden" id="returnPage" name="returnPage"	value="${requestScope.returnPage}" /> 
+										<input type="hidden" id="searchType" name="searchType"		value="${requestScope.searchCriteria.searchType }" />
+										 <input	type="hidden" id="searchKeyword" name="searchKeyword"  	value="${requestScope.searchCriteria.searchKeyword }" /> 
+										<input		type="hidden" id="catnum" name="catnum" 	value="${requestScope.bcategoryVO.catnum }" />
+										
 
 									<ul>
-										<li class="selectGrp"><select name="bcategory.catnum"
-											id="bcategory" disabled="disabled"><option
-													class="readMode"
-													value="${requestScope.boardVO.bcategory.catnum }" selected>${requestScope.boardVO.bcategory.catname }</option>
-												<c:forEach var="bcate"
-													items="${requestScope.bcategoryList }">
+										<li class="selectGrp">
+										<select name="bcategory.catnum"
+											id="bcategory" disabled="disabled">
+											<option	class="readMode"		value="${requestScope.boardVO.bcategory.catnum }" selected>${requestScope.boardVO.bcategory.catname }</option>
+												<c:forEach var="bcate"	items="${requestScope.bcategoryList }">
 													<option value="${bcate.catnum }">${bcate.catname }</option>
 												</c:forEach>
 										</select> <select name="hidcategory.hidnum" id="hidcategory"
 											disabled="disabled">
-												<option class="readMode"
-													value="${boardVO.hidcategory.hidnum }" selected>${boardVO.hidcategory.hidname }</option>
-
+												<option class="readMode"	value="${boardVO.hidcategory.hidnum }" selected>${boardVO.hidcategory.hidname }</option>
 												<c:forEach var="hid" items="${requestScope.hidcategoryList}">
 													<option value="${hid.hidnum }">${hid.hidname }</option>
 												</c:forEach>
@@ -73,17 +60,13 @@
 										<li><label for="">제목</label><input type="text"
 											id="btitle" name="btitle"
 											value="${requestScope.boardVO.btitle }" readonly></li>
-										<li><label for="">작성자</label><input type="text"
-											id="bnickname" name="bnickname"
+										<li><label for="">작성자</label><input type="text"		id="bnickname" name="bnickname"
 											value="${requestScope.boardVO.bnickname }" readonly /></li>
-										<li><label>작성일자</label> <fmt:formatDate
-												value="${requestScope.boardVO.bcdate }"
+										<li><label>작성일자</label> <fmt:formatDate	value="${requestScope.boardVO.bcdate }"
 												pattern="yy/MM/dd HH:mm" /></li>
-										<li><label>조회수</label> <c:out
-												value="${requestScope.boardVO.bhits }" /></li>
+										<li><label>조회수</label> <c:out	value="${requestScope.boardVO.bhits }" /></li>
 
-										<li><textarea id="bcontent" name="bcontent" cols="30"
-												rows="5" placeholder="내용 입력" readonly>${requestScope.boardVO.bcontent }</textarea></li>
+										<li><textarea id="bcontent" name="bcontent" cols="30" rows="5" placeholder="내용 입력" readonly>${requestScope.boardVO.bcontent }</textarea></li>
 										<li><c:if test="${empty requestScope.files }">
 												<label for="">첨부목록</label>
 												<div>
@@ -125,6 +108,13 @@
 										<button id="listBtn" type="button">목록</button>
 									</div>
 								</form>
+								
+								
+								
+								<%@ include file="/WEB-INF/views/board/boardReplyInner.jsp" %>
+								
+								
+								
 							</div>
 						</div>
 
