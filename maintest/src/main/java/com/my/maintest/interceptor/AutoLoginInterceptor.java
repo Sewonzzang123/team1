@@ -40,11 +40,9 @@ public class AutoLoginInterceptor extends HandlerInterceptorAdapter {
 				if (memberVO != null) {// 그런 사용자가 있다면
 					// 세션을 생성시켜 준다.
 					session.setAttribute("member", memberVO);
-
 				}
 			}
 		}
-
 		return true;
 	}
 

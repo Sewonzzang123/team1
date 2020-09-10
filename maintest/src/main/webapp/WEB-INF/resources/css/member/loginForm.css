@@ -78,3 +78,8 @@ button, input, select, textarea {
 .errmsg {
 	color: red;
 }
+
+.login_check_box {
+	display: flex;
+	align-items: center;
+}
