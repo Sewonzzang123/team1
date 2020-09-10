@@ -23,8 +23,6 @@
 			alias="MemberVO" />
 		<typeAlias type="com.my.maintest.board.vo.BoardVO"
 			alias="BoardVO" />
-		<typeAlias type="com.my.maintest.mypage.vo.MylistVO"
-			alias="MylistVO" />
 		<typeAlias type="com.my.maintest.board.vo.BcategoryVO"
 			alias="BcategoryVO" />
 		<typeAlias type="com.my.maintest.board.vo.HeadIdCategoryVO"

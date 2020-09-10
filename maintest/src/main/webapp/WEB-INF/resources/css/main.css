@@ -398,4 +398,9 @@ footer .footer_img img {
 	 	display: grid;
     grid-template-columns: repeat(2, 1fr);
 	}
+	section .createlist .default_list>.default_table{
+	 	width:100%;
+	 	display: grid;
+    grid-template-columns: repeat(2, 1fr);
+	}
 }

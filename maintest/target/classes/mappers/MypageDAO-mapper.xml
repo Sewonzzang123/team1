@@ -21,11 +21,11 @@
 
 
 	<!-- 내 리스트 -->
-	<select id="mylist" parameterType="map" resultType="MylistVO">
+	<select id="mylist" parameterType="map" resultType="ListVO">
 		<!-- select * from(select LNUM , LNAME, CDATE, ucode, row_number() over( 
 			order by LNUM asc) as num from list where ucode=#{ucode}) where num between 
 			#{end_num} and #{str_num} order by num desc -->
-		select t2.LNUM, t3.UCODE, t3.LNAME, t3.CDATE, num,
+		select t3.LNUM, t3.UCODE, t3.LNAME, t3.CDATE, num,
 		NVL(total_item,0) as
 		total_item, NVL(checked_item,0) as checked_item
 		from(select LNUM ,
@@ -66,8 +66,7 @@
 	</select>
 
 	<delete id="del_list" parameterType="string">
-		delete list where lnum =
-		#{lnum}
+		delete list where lnum = #{lnum}
 	</delete>
 
 	<select id="get_category" resultType="ItemCategoryVO">
@@ -75,7 +74,7 @@
 	</select>
 
 	<select id="get_listing" parameterType="string"
-		resultType="com.my.maintest.mypage.vo.ListingVO">
+		resultType="ListingVO">
 		select * from listing t1, ITEM t2, I_CATEGORY t3 where
 		t1.I_NUM = t2.I_NUM and t2.ca_num = t3.ca_num and t1.lnum=#{lnum}
 	</select>

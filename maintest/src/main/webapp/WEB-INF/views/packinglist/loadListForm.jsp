@@ -59,15 +59,15 @@
 
 								<!-- 아이템 -->
 								<c:forEach var="listing" items="${requestScope.listingVO }">
-									<c:if test="${category.ca_num == listing.CategoryVO.ca_num }">
+									<c:if test="${category.ca_num == listing.ca_num }">
 										<label><div class="item">
 												<input type="checkbox" disabled="true" sname="ckeck"
-													class="ckeck" linum=${listing.LINUM }
-													<c:if test="${listing.CHECKED eq 'true'}"> checked="true"</c:if>>
+													class="ckeck" linum=${listing.linum }
+													<c:if test="${listing.checked eq 'true'}"> checked="true"</c:if>>
 												<div name="i_name" class="i_name"
-													<c:if test="${listing.CHECKED eq 'true'}"> style="text-decoration-line: line-through"</c:if>>
-													${listing.itemVO.i_name }</div>
-												<div name="icount" class="icount">${listing.ICOUNT }</div>
+													<c:if test="${listing.checked eq 'true'}"> style="text-decoration-line: line-through"</c:if>>
+													${listing.i_name }</div>
+												<div name="icount" class="icount">${listing.icount }</div>
 											</div></label>
 									</c:if>
 								</c:forEach>
@@ -81,13 +81,15 @@
 
 								<!-- 아이템 -->
 								<c:forEach var="listing" items="${requestScope.listingVO }">
-									<c:if test="${category.ca_num == listing.CategoryVO.ca_num }">
+									<c:if test="${category.ca_num == listing.ca_num }">
 										<label><div class="item">
-												<input type="checkbox" name="ckeck" class="ckeck"
-													linum=${listing.LINUM }
+												<input type="checkbox" disabled="true" name="ckeck" class="ckeck"
+													linum=${listing.linum }
 													<c:if test="${listing.checked eq 'true'}"> checked="true"</c:if>>
-												<div name="i_name" class="i_name">${listing.itemVO.i_name }</div>
-												<div name="icount" class="icount">${listing.ICOUNT }</div>
+												<div name="i_name" class="i_name"
+													<c:if test="${listing.checked eq 'true'}"> style="text-decoration-line: line-through"</c:if>>
+													${listing.i_name }</div>
+												<div name="icount" class="icount">${listing.icount }</div>
 											</div></label>
 									</c:if>
 								</c:forEach>

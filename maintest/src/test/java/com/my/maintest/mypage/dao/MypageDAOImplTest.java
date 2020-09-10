@@ -14,10 +14,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.my.maintest.board.vo.BoardVO;
+import com.my.maintest.item.vo.ItemCategoryVO;
+import com.my.maintest.item.vo.ListVO;
+import com.my.maintest.item.vo.ListingVO;
 import com.my.maintest.member.vo.MemberVO;
-import com.my.maintest.mypage.vo.IcategoryVO;
-import com.my.maintest.mypage.vo.ListingVO;
-import com.my.maintest.mypage.vo.MylistVO;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/spring/*.xml" })
@@ -73,9 +73,9 @@ public class MypageDAOImplTest {
 		int str_num = 80;
 		int end_num = 0;
 
-		List<MylistVO> list = (List<MylistVO>) mypageDAO.mylist(ucode, str_num, end_num);
+		List<ListVO> list = (List<ListVO>) mypageDAO.mylist(ucode, str_num, end_num);
 
-		for (MylistVO vo : list) {
+		for (ListVO vo : list) {
 			logger.info(vo.toString());
 		}
 
@@ -99,17 +99,17 @@ public class MypageDAOImplTest {
 	@Disabled
 	void del_list() {
 
-		String l_num = "34";
+		String l_num = "52";
 
 		mypageDAO.del_list(l_num);
-		logger.info("실행됨");
+		logger.info(""+mypageDAO.total_list("2"));
 	}
 
 	@Test
 	@DisplayName("아이템 카테고리")
 	@Disabled
 	void get_category() {
-		IcategoryVO categoryVO = new IcategoryVO();
+		ItemCategoryVO categoryVO = new ItemCategoryVO();
 
 		mypageDAO.get_category();
 		logger.info(mypageDAO.get_category().toString());
@@ -121,7 +121,7 @@ public class MypageDAOImplTest {
 	void get_listing() {
 		ListingVO listingVO = new ListingVO();
 
-		String lnum = "56";
+		String lnum = "1";
 		mypageDAO.get_category();
 		logger.info(mypageDAO.get_listing(lnum).toString());
 	}
@@ -139,7 +139,7 @@ public class MypageDAOImplTest {
 
 	@Test
 	@DisplayName("마이포스트")
-//	@Disabled
+	@Disabled
 	void mypost() {
 		String ucode = "34";
 		int str_num = 5;

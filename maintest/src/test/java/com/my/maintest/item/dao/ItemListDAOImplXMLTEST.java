@@ -20,6 +20,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.my.maintest.item.vo.ItemCategoryVO;
 import com.my.maintest.item.vo.ItemVO;
 import com.my.maintest.item.vo.ListVO;
+import com.my.maintest.item.vo.ListingVO;
+import com.my.maintest.member.vo.MemberVO;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/*.xml"})
@@ -58,7 +60,7 @@ public class ItemListDAOImplXMLTEST {
 	
 	@Test
 	@DisplayName("리스트불러오기에서 선택했을 경우")
-//	@Disabled
+	@Disabled
 	void selectListItem() {
 		List<ItemVO> list = itemListDAO.selectListItem(61);
 		for(ItemVO itemVO : list) {
@@ -80,32 +82,67 @@ public class ItemListDAOImplXMLTEST {
 		
 	@Test
 	@DisplayName("리스트 이름 생성")
-	@Disabled
+//	@Disabled
 	void listNameInsert() {
-		Map<String, String> map = new HashMap<>();
-		int result = itemListDAO.listNameInsert("0", "리스트2");
-		Assertions.assertEquals(1, result);
+		ListVO listVO = new ListVO();
+		MemberVO memberVO = new MemberVO();
+		memberVO.setUcode("1");
+		listVO.setMemberVO(memberVO);
+		listVO.setLname("test1");
+		int result = itemListDAO.listNameInsert(listVO);
+		logger.info(""+listVO.getLnum());
 		
 	}
-	
-	@Test
-	@DisplayName("생성한 리스트 번호")
-	@Disabled
-	void getName() {
-		Map<String, String> map = new HashMap<>();
-		int result = itemListDAO.getNum("0", "리스트2");
-		logger.info(""+result);
-	}
+
 	
 	@Test
 	@DisplayName("리스트 이름 선택 시 아이템 출력")
 	@Disabled
 	void loadItem() {
-		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+		List<ListingVO> list = null;
 		list = itemListDAO.loadListing((long)10);
 		for(int i=0; i<list.size(); i++) {
 			logger.info(""+list.get(i));
 		}
 		
+	}
+	
+	//list에 아이템 넣기
+	@Test
+	@DisplayName("기존 list에있는 아이템들 삭제")
+	@Disabled
+	void deleteListing() {
+		long lnum=1;
+		itemListDAO.deleteListing(lnum);
+		Assertions.assertEquals(0,itemListDAO.countListing(lnum));
+		
+	}
+	
+	@Test
+	@DisplayName("newitem이면 item테이블에 추가")
+	@Disabled
+	void saveNewItem() {
+		ItemVO itemVO = new ItemVO();
+		ItemCategoryVO itemCategoryVO = new ItemCategoryVO();
+		itemCategoryVO.setCa_num(1);
+		itemVO.setItemCategoryVO(itemCategoryVO);
+		itemVO.setI_name("test1");
+		logger.info(""+itemVO.toString());
+		itemListDAO.saveNewItem(itemVO);
+		logger.info(""+itemVO.getI_num());		
+	}
+	
+	@Test
+	@DisplayName("listing에 아이템 정보 넣기")
+	@Disabled
+	void insertListing() {
+		ListingVO listingVO = new ListingVO();
+		listingVO.setI_num("1000");
+		listingVO.setChecked("false");
+		listingVO.setIcount(3);
+		listingVO.setLname("ㄹㅇㄹㄴㅇㄹㄴㄹㅇ");
+		listingVO.setLnum(1);
+		
+		itemListDAO.insertListing(listingVO);
 	}
 }

@@ -3,24 +3,50 @@
 .default_list.tab_box_container, .user_list.tab_menu_container {
 	overflow-y: scroll;
 }
-
-.default_list.tab_box_container>table {
+	
+	.tab_box {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  position: relative;
+  overflow: hidden;
+}
+.tab_box:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 51%;
+  right: 51%;
+  bottom: 0;
+  background: lightgray;
+  height: 2px;
+  -webkit-transition-property: left, right;
+  transition-property: left, right;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+}
+.tab_box:hover:before, .tab_box:focus:before, .tab_box:active:before {
+  left: 0;
+  right: 0;
+}
+ .tab_box {
+  display: grid;
+	grid-template-columns: 1fr 6fr;
+	grid-auto-rows: minmax(20px, auto);
+	margin-bottom: 4;
+      }
+.default_list.tab_box_container>.default_table {
 	width: 100%;
 	margin-top: 10px;
 }
 
-.default_list.tab_box_container>table>thead>tr {
-	display: grid;
-	grid-template-columns: 1fr 6fr;
-	grid-auto-rows: minmax(20px, auto);
-}
 
 .default_list.tab_box_container>table>tbody>tr:hover {
 	background-color: lightgray;
-}
-
-.default_list.tab_box_container>.list_buttons {
-	width: inherit;
 }
 
 .default_list.tab_box_container>.list_buttons>input[type="button"] {
@@ -28,9 +54,12 @@
 }
 
 .default_list> .list_buttons{
-
-   position: absolute;
-    bottom: 0;
+		width:inherit;
+		max-width: 400px;
+		padding-right: 20px;
+  	position: absolute;
+  	bottom: 1px;
+  	background-color:white;
 
 }
 
@@ -58,13 +87,21 @@
 .category_grid dd>ul>li>div {
 	display: flex;
 }
+.row{
+	margin:0px;
+}
 
-.row>div>.icount, .row>div>.edit_number {
+.row>div>.icount {
 	width: 20%;
+}
+.row>div>.edit_number{
+	width:20;
 }
 
 .row>div>div[selected="true"] {
 	text-decoration: line-through;
+	text-decoration-color:red;
+	
 }
 
 .row>div>.iname {
@@ -82,12 +119,30 @@
 	padding: 0px;
 }
 
+.tab_menu_container{
+	background-color:#f0f0f0;
+}
+.tab_menu_btn{
+	background-color: white;
+}
+.tab_menu_btn.on{
+	background-color: #553de8;
+	color:white;
+}
+
+.row>div>.deleteItem{
+	margin-right:3px;
+}
+
 .row>div {
+	width:100%;
 	display: flex;
-	margin: 0 20px 5px 20px;
 	border-bottom: 1px solid lightgray;
+	background-color:white;
+	
 }
 
 .row>div:nth-child(1) {
 	padding-top: 5px;
 }
+

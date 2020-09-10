@@ -14,7 +14,7 @@ import com.my.maintest.item.vo.ItemVO;
 import com.my.maintest.item.vo.ListVO;
 import com.my.maintest.item.vo.ListingVO;
 
-@Repository
+@Repository 
 public class ItemListDAOImplXML implements ItemListDAO{
 
 	@Inject
@@ -40,7 +40,7 @@ public class ItemListDAOImplXML implements ItemListDAO{
 		return sqlSession.selectList("mappers.ItemListDAO-mapper.selectListItem",lnum);
 	}
 	
-//사용자의 리스트 불러오기(이름만, 저장하기용)
+	//사용자의 리스트 불러오기(이름만, 저장하기용)
 	@Override
 	public List<ListVO> loadList(String ucode) {
 		return sqlSession.selectList("mappers.ItemListDAO-mapper.loadList", ucode);
@@ -48,26 +48,46 @@ public class ItemListDAOImplXML implements ItemListDAO{
 
 //리스트 이름 생성
 	@Override
-	public int listNameInsert(String ucode, String lname) {
-		Map<String, String> map = new HashMap<>();
-		map.put("ucode", ucode);
-		map.put("lname", lname);
-		return sqlSession.insert("mappers.ItemListDAO-mapper.listNameInsert", map);
-	}
-//생성한 이름의 리스트번호 가져오기
-	@Override
-	public int getNum(String ucode, String lname) {
-		Map<String, String> map = new HashMap<>();
-		map.put("ucode", ucode);
-		map.put("lname", lname);
-		return sqlSession.selectOne("mappers.ItemListDAO-mapper.getNum",map);
+	public int listNameInsert(ListVO listVO) {
+		return sqlSession.insert("mappers.ItemListDAO-mapper.listNameInsert", listVO);
 	}
 
+
 	@Override
-	public List<Map<String, String>> loadListing(long lnum) {
+	public List<ListingVO> loadListing(long lnum) {
 		return sqlSession.selectList("mappers.ItemListDAO-mapper.loadListing",lnum);
 	}
 
+//리스트 아이템 저장
+	//기존에 있던 아이템들 삭제
+	@Override
+	public int deleteListing(long lnum) {
+		return sqlSession.delete("mappers.ItemListDAO-mapper.deleteListing", lnum);
+	}
+	@Override
+	public int deleteNewItem(long lnum) {
+		return sqlSession.delete("mappers.ItemListDAO-mapper.deleteNewItem", lnum);
+	}
+	@Override
+	public int countListing(long lnum) {
+		return sqlSession.selectOne("mappers.ItemListDAO-mapper.countListing", lnum);
+	}
+	//새로운 아이템 item table에 넣기
+	@Override
+	public int saveNewItem(ItemVO itemVO) {
+		return sqlSession.insert("mappers.ItemListDAO-mapper.saveNewItem", itemVO);
+	}
+
+	
+	//listing table에 item넣기
+	@Override
+	public String getListname(long lnum) {		
+		return sqlSession.selectOne("mappers.ItemListDAO-mapper.getListname", lnum);
+	}
+	@Override
+	public int insertListing(ListingVO listingVO) {		
+		return sqlSession.insert("mappers.ItemListDAO-mapper.insertListing", listingVO);
+	}
 
 	
 

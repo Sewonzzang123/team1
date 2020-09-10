@@ -4,10 +4,10 @@ import java.util.List;
 
 import com.my.maintest.board.vo.BoardVO;
 import com.my.maintest.common.paging.Paging;
+import com.my.maintest.item.vo.ItemCategoryVO;
+import com.my.maintest.item.vo.ListVO;
+import com.my.maintest.item.vo.ListingVO;
 import com.my.maintest.member.vo.MemberVO;
-import com.my.maintest.mypage.vo.IcategoryVO;
-import com.my.maintest.mypage.vo.ListingVO;
-import com.my.maintest.mypage.vo.MylistVO;
 
 public interface MypageSVC {
 	// 회원 정보 수정
@@ -20,7 +20,7 @@ public interface MypageSVC {
 	public int withdraw(String id);
 
 	// 마이리스트
-	public List<MylistVO> mylist(int reqPage, String ucode);
+	public List<ListVO> mylist(int reqPage, String ucode);
 
 	// 마이리스트 페이징
 	public Paging mylist_paging(int reqPage, String ucode);
@@ -29,7 +29,7 @@ public interface MypageSVC {
 	public int del_list(String lnum);
 
 	// 카테고리 불러오기
-	public List<IcategoryVO> get_category();
+	public List<ItemCategoryVO> get_category();
 
 	// 아이템 불러오기
 	public List<ListingVO> get_listing(String lnum);

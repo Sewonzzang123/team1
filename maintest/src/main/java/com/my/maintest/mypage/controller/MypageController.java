@@ -3,7 +3,6 @@ package com.my.maintest.mypage.controller;
 import java.util.Optional;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.my.maintest.member.vo.MemberVO;
@@ -131,7 +129,7 @@ public class MypageController {
 	@RequestMapping({ "/mylist", "/mylist/{reqPage}" })
 	public String mylist(@PathVariable(value = "reqPage", required = false) Optional<Integer> reqPage,
 			HttpSession session, Model model) {
-
+		
 		MemberVO memberVO = (MemberVO) session.getAttribute("member");
 		String ucode = memberVO.getUcode();
 		logger.info(memberVO.toString());
@@ -143,14 +141,16 @@ public class MypageController {
 
 		return "/mypage/mylist";
 	}
+	
 
+	
 	// 由ъ뒪�듃 �궘�젣
 	@RequestMapping("/del_list")
 	public String del_list(@RequestBody String lnum, HttpSession session, Model model) {
 		logger.info("�궘�젣 �샇異쒕맖");
 		logger.info(lnum);
 		mypageSVC.del_list(lnum);
-
+				
 		return "/mypage/mylist";
 	}
 
@@ -158,6 +158,7 @@ public class MypageController {
 	@RequestMapping("/listview/{lnum}")
 	public String listview(@PathVariable String lnum, HttpSession session, Model model) {
 		model.addAttribute("icategory", mypageSVC.get_category());
+
 		model.addAttribute("listing", mypageSVC.get_listing(lnum));
 
 		return "/mypage/listView";
@@ -165,7 +166,7 @@ public class MypageController {
 
 	// 由ъ뒪�듃 蹂닿린
 	@RequestMapping("/check")
-	public void item_check(@RequestBody String linum, HttpSession session, Model model) {
+	public void item_check(@RequestBody String linum, Model model) {
 		mypageSVC.item_check(linum);
 		logger.info("泥댄겕�샇異�");
 
@@ -174,7 +175,7 @@ public class MypageController {
 
 	// �븘�씠�뀥 泥댄겕
 	@RequestMapping("/uncheck")
-	public void item_uncheck(@RequestBody String linum, HttpSession session, Model model) {
+	public void item_uncheck(@RequestBody String linum, Model model) {
 		mypageSVC.item_uncheck(linum);
 		logger.info("�뼵泥댄겕�샇異�");
 

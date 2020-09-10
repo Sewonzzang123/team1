@@ -1,127 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ include file="/WEB-INF/views/included/common_taglib.jsp"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Document</title>
-<script src="http://code.jquery.com/jquery-latest.js"></script>
+<title>PDF/인쇄 페이지</title>
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
 <script type="text/javascript"
 	src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-<script type="text/javascript">
-	var contextPath = "${pageContext.request.contextPath}";
-</script>
-<script defer
-	src="${pageContext.request.contextPath}/js/mypage/listView.js">
-</script>
-<style>
-main {
-	max-width: 800px;
-	min-width: 350px;
-	text-align: center;
-	margin: auto;
-}
-
-.category {
-	font-weight: bold;
-}
-
-.item {
-	display: flex;
-	align-items: flex-end;
-	align-content: center;
-	justify-content: left;
-	padding-left: 30px;
-	margin-bottom: 10px;
-	width: 300px
-}
-
-.item .ckeck {
-	width: 30px;
-	border-bottom: 1px solid darkgray;
-
-}
-
-.item .i_name {
-	text-align: left;
-	width: 200px;
-	border-bottom: 1px solid darkgray;
-}
-
-.item .icount {
-	width: 30px;
-	border-bottom: 1px solid darkgray;
-}
-
-.del {
-	text-decoration: line-through;
-	text-decoration-color: red;
-	text-decoration-style: solid;
-}
-
-.block {
-	text-align: left;
-	margin-bottom: 30px;
-	width: 350px;
-}
-
-.title {
-	margin-bottom: 40PX;
-}
-
-.frame {
-	width: 350px;
-	margin: 0 auto;
-}
-
-@media ( min-width : 700px) {
-	.container {
-		display: flex;
-		width: 700px;
-		height: auto;
-		margin: auto;
-	}
-}
-
-@page {
-	size: A4;
-	margin: 0;
-}
-
-@media print {
-	html, body {
-		width: 210mm;
-		height: 297mm;
-	}
-	.page {
-		margin: 0;
-		border: initial;
-		width: initial;
-		min-height: initial;
-		box-shadow: initial;
-		background: initial;
-		page-break-after: always;
-	}
-	.action {
-		display: none;
-	}
-	.container {
-		display: flex;
-		width: 700px;
-		height: auto;
-		margin: auto;
-	}
-}
-</style>
+<script defer src="${contextPath}/js/mypage/listView.js"></script>
+<link href="${contextPath }/css/packinglist/downloadListForm.css" rel="stylesheet"/>
 </head>
 <body>
 
-	<main>
-		
+	<main>		
 		<div class="page">
 			<h3 class="title">have a good day and a better tomorrow</h3>
 			<div class="container" id="container">

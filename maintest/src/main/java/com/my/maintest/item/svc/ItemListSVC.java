@@ -6,6 +6,7 @@ import java.util.Map;
 import com.my.maintest.item.vo.ItemCategoryVO;
 import com.my.maintest.item.vo.ItemVO;
 import com.my.maintest.item.vo.ListVO;
+import com.my.maintest.item.vo.ListingVO;
 
 public interface ItemListSVC {
 	//아이템 카테고리 불러오기
@@ -16,10 +17,10 @@ public interface ItemListSVC {
 	List<ItemVO> selectListItem(long lnum);
 	//사용자의 리스트 불러오기(이름)
 	List<ListVO> loadList(String ucode);
-//리스트 이름 생성
-	int listNameInsert(String ucode, String lname);
-	//생성한 이름의 리스트번호 가져오기
-	int getNum(String ucode, String lname);
+	//리스트 이름 생성
+	int listNameInsert(ListVO listVO);
 	//리스트 불러오기(리스트번호 입력시 아이템들 출력)
-	List<Map<String, String>> loadListing(long lnum);
+	List<ListingVO> loadListing(long lnum);
+	//아이템 리스트에 넣기
+	int insertListing(ListVO listVO, List<Map<String,String>> listing);
 }

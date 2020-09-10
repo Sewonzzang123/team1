@@ -9,11 +9,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>main</title>
 <script defer src="${pageContext.request.contextPath}/js/main.js"></script>
-<script defer src="${pageContext.request.contextPath}/js/packinglist/packingList.js"></script>
+<script>
+var getid = null;
+if('${sessionScope.member.id}'.trim() == null){
+	 getid  = null;
+	}
+	else{
+	 getid ='${sessionScope.member.id}';}
+</script>
+<script defer src="${pageContext.request.contextPath}/js/packinglist/packingList.js?ver=335"></script>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/main.css">
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/packinglist/packingList.css">
+	href="${pageContext.request.contextPath}/css/packinglist/packingList.css? ver=2">
 <link
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap"
 	rel="stylesheet" />

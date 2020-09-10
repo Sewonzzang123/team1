@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,7 @@ import com.my.maintest.item.dao.ItemListDAO;
 import com.my.maintest.item.svc.ItemListSVC;
 import com.my.maintest.item.vo.ItemCategoryVO;
 import com.my.maintest.item.vo.ItemVO;
+import com.my.maintest.item.vo.ListingVO;
 
 @Controller
 public class FrontController {
@@ -33,21 +35,30 @@ public class FrontController {
 			@PathVariable(value = "lnum", required=false) String lnum,
 			ItemVO itemVO,
 			ItemCategoryVO itemCategoryVO,
-			Model model) {
+			Model model,
+			HttpSession session) {
 		List<ItemVO> itemList = null;
-		List<Map<String, String>> listing= null;
+		List<ListingVO> listing= null;
 		Map<String, String> listingVO = null;
+		
+		
+		
 		if(lnum != null) {
 			listing = itemListSVC.loadListing(Long.valueOf(lnum));			
 			itemList = itemListSVC.selectListItem(Long.valueOf(lnum));
+			//기존 session을 지우고
+			session.removeAttribute("listing");
+	
 		}else {
 			itemList =	itemListSVC.selectAllItem();
 		}
+		
 		List<ItemCategoryVO> categoryList = itemListSVC.selectAllCategory();
 		model.addAttribute("listing", listing);
 		model.addAttribute("categoryList", categoryList);
 		model.addAttribute("itemList", itemList);
-
+		
+	
 		return "main";
 	}
 

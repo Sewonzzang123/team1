@@ -55,8 +55,15 @@
 							<td class="title"><a
 								href="${pageContext.request.contextPath}/mypage/listview/${list.lnum}"
 								onclick="window.open(this.href,'','width=1000, height=620, scrollbars=yes'); return false;">${list.lname }</a></td>
-							<td>${list.checked_item }/${list.total_item }[
-								${list.checked_item/list.total_item*100}% ]</td>
+							<td>
+							<c:if test="${list.total_item eq 0 }">0/0[ 0% ]</c:if>
+							<c:if test="${list.total_item ne 0 }">
+							${list.checked_item }/${list.total_item }[							
+								<fmt:formatNumber value="${list.checked_item/list.total_item}"
+									type="percent" maxFractionDigits="1"/>
+								]</c:if>
+								</td>
+								
 							<td><fmt:formatDate value="${list.cdate }"
 									pattern="yyyy/MM/dd" /></td>
 							<td><input type="button" class="mylist_btn"

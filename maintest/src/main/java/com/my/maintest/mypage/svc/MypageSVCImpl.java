@@ -10,11 +10,11 @@ import org.springframework.stereotype.Repository;
 
 import com.my.maintest.board.vo.BoardVO;
 import com.my.maintest.common.paging.Paging;
+import com.my.maintest.item.vo.ItemCategoryVO;
+import com.my.maintest.item.vo.ListVO;
+import com.my.maintest.item.vo.ListingVO;
 import com.my.maintest.member.vo.MemberVO;
 import com.my.maintest.mypage.dao.MypageDAO;
-import com.my.maintest.mypage.vo.IcategoryVO;
-import com.my.maintest.mypage.vo.ListingVO;
-import com.my.maintest.mypage.vo.MylistVO;
 
 @Repository
 public class MypageSVCImpl implements MypageSVC {
@@ -45,7 +45,7 @@ public class MypageSVCImpl implements MypageSVC {
 	}
 
 	@Override
-	public List<MylistVO> mylist(int reqPage, String ucode) {
+	public List<ListVO> mylist(int reqPage, String ucode) {
 		Paging paging = new Paging();
 		paging.setTotalRec(mypageDAO.total_list(ucode));
 		paging.setReqPage(reqPage);
@@ -79,7 +79,7 @@ public class MypageSVCImpl implements MypageSVC {
 	}
 
 	@Override
-	public List<IcategoryVO> get_category() {
+	public List<ItemCategoryVO> get_category() {
 		// TODO Auto-generated method stub
 		return mypageDAO.get_category();
 	}

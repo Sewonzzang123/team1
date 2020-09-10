@@ -6,19 +6,13 @@ window.addEventListener("load", init);
 		cancelBtn.addEventListener("click", cancelBtn_f);
 		const saveListBtn = document.getElementById("saveListBtn");
 		saveListBtn.addEventListener("click", saveListBtn_f);
-		
+		 
 	}
-	function listBtn_f(e) {
-		e.preventDefault();
-		
-		let nameTag = document.getElementById('estimate_box_txt').value;
 
-		console.log(nameTag);
-		//이름 입력
-		if (!nameTag.trim()) {
-			window.alert("이름을 입력해주세요.");
-			return;
-		}
+	
+	function listBtn_f() {	
+		let nameTag = document.getElementById('estimate_box_txt').value;
+		if(!checkName()){return false;}
 
 		//AJAX 사용
 		//1)XMLHTTPRequest 객체 생성
@@ -88,16 +82,23 @@ window.addEventListener("load", init);
 		xhttp.send(result);
 
 	}
-
+	function checkName(){
+		let nameTag = document.getElementById('estimate_box_txt').value;
+		if(!nameTag.trim())
+		{window.alert('이름을 입력하세요.'); document.getElementById('estimate_box_txt').value=""; return false;}
+		else if(nameTag.trim().length>10 || nameTag.trim().length<2)
+		{window.alert('2글자 이상10글자 이하로 입력하세요.'); document.getElementById('estimate_box_txt').value="";  return false;}
+		return true;
+	}
 	function cancelBtn_f() {
 		window.close();
 	}
 	function saveListBtn_f(){		
-
+		if(!window.confirm("리스트를 저장하시겠습니까?")){return false;}
 		window.opener.name = "parentPage";
 		let frm = document.folderList;	
 		frm.target="parentPage";	
-		frm.action="http://localhost:9080/pfpkg/packingList/saveList";	
+		frm.action="http://localhost:9080/pfpkg/itemlist/saveList";	
 		frm.submit();
 		window.close();
 

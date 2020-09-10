@@ -3,10 +3,10 @@ package com.my.maintest.mypage.dao;
 import java.util.List;
 
 import com.my.maintest.board.vo.BoardVO;
+import com.my.maintest.item.vo.ItemCategoryVO;
+import com.my.maintest.item.vo.ListVO;
+import com.my.maintest.item.vo.ListingVO;
 import com.my.maintest.member.vo.MemberVO;
-import com.my.maintest.mypage.vo.IcategoryVO;
-import com.my.maintest.mypage.vo.ListingVO;
-import com.my.maintest.mypage.vo.MylistVO;
 
 public interface MypageDAO {
 
@@ -20,7 +20,7 @@ public interface MypageDAO {
 	public int withdraw(String id);
 
 	// 마이리스트
-	public List<MylistVO> mylist(String ucode, int str_num, int end_num);
+	public List<ListVO> mylist(String ucode, int str_num, int end_num);
 
 	// 총 리스트 수 구하기
 	public int total_list(String ucode);
@@ -29,7 +29,7 @@ public interface MypageDAO {
 	public int del_list(String lnum);
 
 	// 아이템 카테고리 불러오기
-	public List<IcategoryVO> get_category();
+	public List<ItemCategoryVO> get_category();
 
 	// 아이템 불러오기
 	public List<ListingVO> get_listing(String lnum);
