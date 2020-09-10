@@ -3,7 +3,7 @@
 <mapper namespace="mappers.BCommentDAO-mapper">
 
 
-<!-- 댓글 등록(inner Comment) -->
+<!-- 부모 댓글 등록(inner Comment) -->
 <insert id="insertBComment" parameterType="com.my.maintest.board.vo.BCommentVO" >
 insert into bcomment (
 BCNUM
@@ -26,13 +26,21 @@ bcomment_bcNum_seq.nextVal
 ,systimestamp
 )
 
-<selectKey keyProperty="pnickname" resultType="String" order="AFTER"> 
-select nickname as "pnickname" from member where ucode =#{ pucode}
-</selectKey>
 
 </insert>
 
-<insert id="">
+
+<!-- 부모 댓글의 자식 댓글 등록  -->
+<!-- 1. 자식 댓글 등록전 이전에 등록된 자식 댓글들의 bcstep을 +1  -->
+<update id="updateBcstep" parameterType="long">
+update bcomment set bcstep = bcstep +1 
+where bcgroup = #{bcgroup}  
+and bcindent = 1 
+and bcstep >=  0
+</update>
+
+<!-- 2. 자식 댓글 등록  -->
+<insert id="insertReBComment" parameterType="com.my.maintest.board.vo.BCommentVO" >
 insert into bcomment (
 BCNUM
 ,UCODE
@@ -41,9 +49,6 @@ BCNUM
 ,BCCONTENT
 ,BCGROUP
 ,BCINDENT
-,BCSTEP
-,BCGOOD
-,BCBAD
 ,CDATE
 ,UDATE
 )
@@ -53,16 +58,56 @@ bcomment_bcNum_seq.nextVal
 ,#{pucode }
 ,#{bnum }
 ,#{bccontent }
-,bcomment_bcNum_seq.currVal
-,0
-,0
-,0
-,0
+,#{bcgroup}
+,1
 ,systimestamp
 ,systimestamp
 )
-
 </insert>
+
+
+
+
+
+
+
+<!--댓글목록 불러오기  -->
+<select id="selectBComments" parameterType="map" resultType="com.my.maintest.board.vo.BCommentVO">
+select 
+dbrownum
+,bcnum
+,ucode
+,nickname   
+,pucode
+,pnickname
+,bnum
+,bccontent
+,bcgroup
+,bcindent
+,bcstep
+,bcgood
+,bcbad
+,udate
+from
+(select row_number() over(order by t1.bcgroup desc, t1.bcstep asc) as dbrownum,
+t1.bcnum
+,t1.ucode
+,t3.nickname 
+,t1.pucode
+,(select nickname from member where ucode = t1.pucode) pnickname 
+,t1.bnum
+,t1. bccontent
+,t1.bcgroup
+,t1.bcindent
+,t1.bcstep
+,t1.bcgood
+,t1.bcbad
+,t1.udate
+FROM BCOMMENT t1, board t2, member t3
+where t1.bnum = t2.bnum and t1.ucode = t3.ucode
+and t1.bnum = #{bnum}) 
+where  dbrownum  between #{recFrom} and #{recTo} 
+</select>
 
 
 

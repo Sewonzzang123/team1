@@ -47,24 +47,17 @@
 
 
 
-        .innerRe_wrapper .bcomment .ellipsis>a {
-            width: 50%;
+        .innerRe_wrapper .bcomment .ellipsis>i {
+            width: 20px;
+            height:20px;
             display: block;
             margin: 0px auto;
+            cursor: pointer;
         }
 
 
-        /*  클릭으로 대체할 것 */
 
-        .innerRe_wrapper .bcomment .ellipsis a:hover+.ellipsis.hiddenMenu {
-            display: block;
-            background-color: blueviolet;
-        }
 
-        .innerRe_wrapper .bcomment .ellipsis.hiddenMenu {
-            display: none;
-
-        }
 
         .innerRe_wrapper .bcomment .ellipsis.hiddenMenu div {
             display: flex;
@@ -122,7 +115,16 @@
     justify-content: flex-end;
 }
 
+.innerRe_wrapper .bcomment .btn{
+  border: 1px solid #ff8080;
+  color: #ff8080;
+  border-radius: 3px;
+  width: 50px;
+  height: 25px;
+  margin-bottom: 5px;  
+}
 
-.innerRe_wrapper .bcomment .userinfo .hidden { 
+.innerRe_wrapper .bcomment .ellipsis .hidden { 
    display: none;
 }
+

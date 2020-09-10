@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 public class BCommentVO {
 	
+private long dbrownum;
 private long bcnum;																									//	BCNUM	NUMBER
 private long ucode;																										//	UCODE	NUMBER
 private String nickname;

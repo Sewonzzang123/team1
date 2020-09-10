@@ -40,6 +40,7 @@
 										<input type="hidden" id="searchType" name="searchType"		value="${requestScope.searchCriteria.searchType }" />
 										 <input	type="hidden" id="searchKeyword" name="searchKeyword"  	value="${requestScope.searchCriteria.searchKeyword }" /> 
 										<input		type="hidden" id="catnum" name="catnum" 	value="${requestScope.bcategoryVO.catnum }" />
+										<input		type="hidden" id="reqPage" name="reqPage" 	value="1" />
 										
 
 									<ul>
