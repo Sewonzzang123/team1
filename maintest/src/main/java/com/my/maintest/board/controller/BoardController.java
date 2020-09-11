@@ -147,22 +147,23 @@ public class BoardController {
 		 }
 		boardSVC.insertArticle(boardVO);
 		
-		return "redirect:/board";
+		return "redirect:/board/read/" + boardVO.getBnum();
 	}
-	
-
-	
 	
 
 	// 게시글열람
 	@GetMapping({
-		"/read/{bnum}",
-		"/read/{bnum}/{returnPage}", 
-		"/read/{bnum}/{returnPage}/{searchType}/{searchKeyword}" }) 
+		"/read/{catnum}/{bnum}",
+		"/read/{catnum}/{bnum}/{returnPage}", 
+		"/read/{catnum}/{bnum}/{returnPage}/{searchType}/{searchKeyword}" }) 
 	// returnPage		열람후	리스트로 이동시 돌아갈reqPage																								
-	public String toRead(@PathVariable("bnum") Long bnum
-			, @ModelAttribute("returnPage") String returnPage,
-			@ModelAttribute SearchCriteria searchCriteria, Model model) {
+	public String toRead(@PathVariable("bnum") Long bnum,
+			@PathVariable("catnum") int catnum,
+			@ModelAttribute("returnPage") String returnPage,
+			@ModelAttribute SearchCriteria searchCriteria, Model model) {		
+		
+		//System.out.println("catnum" + catnum);
+//		BcategoryVO bcategoryVO = boardSVC.selectBtype(catnum.orElse(0));
 		
 		// svc는 map 타입을 반환값으로 가짐
 		Map<String, Object> map = boardSVC.selectArticle(bnum);		
@@ -174,6 +175,8 @@ public class BoardController {
         
 		model.addAttribute("boardVO", boardVO);		
 		model.addAttribute("files",files);
+		//model.addAttribute("bcategoryVO", bcategoryVO);
+		
 		return "/board/boardReadFrm";
 	}
 	
@@ -181,6 +184,10 @@ public class BoardController {
 	//TODO 게시글 임시 저장 구현
 	//TODO 게시글 댓글 구현
 	//TODO 각 VO 유효성 검사 구현
+	//TODO 관리자 페이지 게시판 추가 구현
+	//TODO 내가쓴글 클릭시 게시글 열람 가능하게 구현
+	//TODO BoardVO 썸네일 컬럼 추가 반영
+	
 	
 	//첨부파일 다운로드
 	@GetMapping("/file/{fid}")

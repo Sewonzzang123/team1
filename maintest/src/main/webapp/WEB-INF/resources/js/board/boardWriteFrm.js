@@ -29,7 +29,7 @@
     		 //목록으로 버튼     
     	function   listBtn_f(e){
     const returnPage = document.getElementById("returnPage").value;
-    const url = `/pfpkg/board/boardListFrm/${returnPage}`;
+    const url = `/pfpkg/board/${returnPage}`;
     window.location.href=url;     
      		}
      		

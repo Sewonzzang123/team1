@@ -32,11 +32,16 @@
 					<div class="section_table">
 					
 						<input type="hidden" id="returnPage" name="returnPage"
-							value="${pagingComponent.pageCriteria.currReqPage}" /> <input
-							type="hidden" id="catnum" name="catnum"
+							value="${pagingComponent.pageCriteria.currReqPage}" /> 
+							
+							<input 	type="hidden" id="catnum" name="catnum"
 							value="${requestScope.bcategoryVO.catnum}" />
+							
+							
 						<c:if test="${requestScope.bcategoryVO.btype == 'album' }">
-							<c:import url="/WEB-INF/views/board/boardGalleryListFrm.jsp"></c:import>
+							<c:import url="/WEB-INF/views/board/boardGalleryListFrm.jsp">
+							<c:param name="catnum" value="${requestScope.bcategoryVO.catnum}" />
+							</c:import>
 						</c:if>
 						<c:if test="${requestScope.bcategoryVO.btype != 'album'  }">
 							<c:import url="/WEB-INF/views/board/boardBlogListFrm.jsp"></c:import>

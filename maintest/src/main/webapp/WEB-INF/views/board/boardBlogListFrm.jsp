@@ -26,9 +26,7 @@
 			<tr>
 				<td>${tdata.dbrownum }</td>
 				<td>${tdata.bcategory.catname}</td>
-
-				<td class="title"><a
-					href="${contextPath }/board/read/${tdata.bnum}/${pagingComponent.pageCriteria.currReqPage}/${pagingComponent.searchCriteria.searchType}/${pagingComponent.searchCriteria.searchKeyword}"
+				<td class="title"><a	href="${contextPath }/board/read/${tdata.bcategory.catnum}/${tdata.bnum}/${pagingComponent.pageCriteria.currReqPage}/${pagingComponent.searchCriteria.searchType}/${pagingComponent.searchCriteria.searchKeyword}"
 					id="btitle"> <!-- 페이징 넘버 반영해서 리스트버튼 누르면 같은 페이지로  --> <c:if
 							test="${tdata.bstep != 0  }">
 							<span style="padding-left:${tdata.bindent *20+10}px; ">└${tdata.btitle}</span>

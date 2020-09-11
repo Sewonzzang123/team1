@@ -38,7 +38,7 @@
 						<a href=""> 게시글 작성 </a>
 					</h2>					
 					<form:form id="writeFrm" name="writeFrm" method="POST"
-						enctype="multipart/form-data" action="${contextPath}/board/write"
+						enctype="multipart/form-data" action="${contextPath}/board/write/"
 						modelAttribute="boardVO">
 						
 						<input type="hidden" id="returnPage" name="returnPage"

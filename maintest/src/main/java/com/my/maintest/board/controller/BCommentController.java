@@ -57,7 +57,6 @@ public class BCommentController {
 		//2.등록 요청		
 		ResponseEntity<Map> res = null;		
 		int result = bCommentSVC.insertBComment(bCommentVO);
-	
 	 
 		Map<String, Object> map = new HashMap<>();	
 		if (result == 1) {			
@@ -68,7 +67,7 @@ public class BCommentController {
 			
 			
 			
-			System.out.println(list.size());
+			System.out.println("댓글 사이즈 " + list.size());
 			
 			
 			

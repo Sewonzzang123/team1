@@ -13,7 +13,7 @@
 	<main>
 		<!-- uppermost  메뉴  -->
 		<%@ include file="/WEB-INF/views/layout/header.jsp"%>
-		<!-- 메인 베너 _ 이미지  + hidden 요소 catnum, returnPage-->
+		<!-- 메인 베너 _ 이미지  
 		<%@ include file="/WEB-INF/views/layout/mainbanner.jsp"%>
 
 

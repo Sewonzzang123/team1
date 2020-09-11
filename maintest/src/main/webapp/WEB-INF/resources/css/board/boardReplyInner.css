@@ -1,4 +1,4 @@
-  * {
+* {
             margin: 0px;
 
 
@@ -15,20 +15,29 @@
         }
 
         .innerRe {
-            margin: 50px;
 
+           
+           height: 100%;
+            /* margin: 50px; */
             font-size: 0.8em;
+
+            width: 100%;
         }
 
         .innerRe_wrapper {
-            /* display: flex;
-            justify-bcomment: center; */
+            width: 80%;
+            margin: 0px auto;
+            padding-right: 30px;
+            height: 100vh;
         }
 
 
+
+        /* 자식댓글 indent */
         .innerRe_wrapper .children {
             margin-left: 60px;
         }
+
 
         .innerRe_wrapper .bcomment {
             width: 100%;
@@ -36,95 +45,127 @@
             grid-template-columns: minmax(20%, 80px) 1fr minmax(10%, 80px);
         }
 
-
-
-
-        .innerRe_wrapper .bcomment .ellipsis {
-            text-align: center;
-            position: relative;
-
+        .innerRe_wrapper  .hidden {
+            display: none; 
         }
 
-
-
-        .innerRe_wrapper .bcomment .ellipsis>i {
-            width: 20px;
-            height:20px;
-            display: block;
-            margin: 0px auto;
-            cursor: pointer;
-        }
-
-
-
-
-
-        .innerRe_wrapper .bcomment .ellipsis.hiddenMenu div {
-            display: flex;
-            flex-direction: column;
-            position: absolute;
-            /* border: 1px solid #aaaaaa; */
-            left: 20px;
-            font-size: 0.8em;
-            width: 50px;
-            box-shadow: 5px 5px 15px #aaaaaa;
-        }
-
+        /* 프로필 사진 CSS */
         .innerRe_wrapper .bcomment .profile {
             text-align: center;
-
         }
 
+
+					/* 작성자 인포 및 답글쓰기 layout */
+				       .innerRe_wrapper .bcomment .userinfo .udate ,
+        .innerRe_wrapper .bcomment .innerRe_area   {
+            display: grid;
+            grid-template-columns: 20% 1fr;
+        }
+            .innerRe_wrapper .bcomment .userinfo .udate .btn.reReply{
+           border:none;
+           background-color:white;
+           color: black;           
+           margin:0px;
+           padding:0px;
+            }
+        .innerRe_wrapper .bcomment .userinfo .udate span        {        
+        display:flex;
+        flex-direction: column;
+        justify-content: center;        
+        }
         .innerRe_wrapper .bcomment .profile img {
             vertical-align: middle;
             width: 70px;
             height: 70px;
             border-radius: 50px 50px;
             background-color: blueviolet;
-
         }
 
+        /* 공통CSS 끝  */
 
-        .innerRe_wrapper .bcomment .userinfo .typing {
-            border-bottom: 1px solid lightgray;
-
+        /* 댓글 CSS  */
+        /* ellipsis 버튼 CSS  */                
+   
+        .innerRe_wrapper .bcomment .ellipsis {
+            text-align: center;
+            position: relative;
         }
 
-        .innerRe_wrapper .bcomment .innerRe_area {
+        .innerRe_wrapper .bcomment .ellipsis>i {
+            display: block;
+            width: 20px;
+            height: 20px;
+            margin: 0px auto;
+            cursor: pointer;
+        }
+
+        /* 수정 삭제 버튼 CSS  */
+        .innerRe_wrapper .bcomment .hiddenMenu div {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+           
+            left: 20px;
+            font-size: 0.8em;
+            width: 50px;
+            box-shadow: 5px 5px 15px #aaaaaa;
+        } 
+
+        /* 댓글 작성창 CSS */        
+         .innerRe_wrapper .filloutHere{
+         width: 100%;
             display: grid;
-            grid-template-columns: 20% 1fr;
+            grid-template-columns: minmax(20%, 80px) 1fr ;
+         }
+         
+         .innerRe_wrapper .filloutHere .profile img {
+            vertical-align: middle;
+            width: 70px;
+            height: 70px;
+            border-radius: 50px 50px;
+            background-color: blueviolet;
+        }
+        
+        .innerRe_wrapper .filloutHere .userinfo .typing {
+            border-bottom: 1px solid lightgray;
+            min-height: 2em;
+            padding: 10px;
+        }
+
+        .innerRe_wrapper .filloutHere .userinfo .typing:empty::before {
+            content: attr(data-placeholder);
+            display: block;
+            color: lightgray;
+        }
+
+
+	   .innerRe_wrapper .filloutHere .userinfo .typing.disabled {
+          font-weight: bold;
+        }
+
+        .innerRe_wrapper .filloutHere .userinfo .typing.typable {
+            border-bottom: 1px solid black;
         }
 
 
 
 
 
-.typing:empty::before {
-    content: attr(data-placeholder);
-    display: block;
-    color: lightgray;    
-}
-.typing{
-    border-bottom: lightgray;
-}
-/* .typing.typable {
-    border-bottom: 1px solid black;
-} */
-.innerRe_wrapper .bcomment .userinfo .rbtnGrp { 
-    display: flex;
-    justify-content: flex-end;
-}
+        .innerRe_wrapper .filloutHere .userinfo .rbtnGrp.shown{
+            display: flex;
+            justify-content: flex-end;
+        }
 
-.innerRe_wrapper .bcomment .btn{
-  border: 1px solid #ff8080;
-  color: #ff8080;
-  border-radius: 3px;
-  width: 50px;
-  height: 25px;
-  margin-bottom: 5px;  
-}
 
-.innerRe_wrapper .bcomment .ellipsis .hidden { 
-   display: none;
-}
 
+
+
+	/* 버튼 CSS */
+        .innerRe_wrapper .bcomment .btn {
+            border: 1px solid #ff8080;
+            color: #ff8080;
+            border-radius: 3px;
+            width: 50px;
+            height: 25px;
+            margin-bottom: 5px;
+        }

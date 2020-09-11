@@ -8,14 +8,14 @@
 <fmt:formatDate value="${now }" pattern="yy/MM/dd" var="today" />
  --%>
 <!-- css/javascript  -->
-<script defer type="text/javascript" src="${contextPath }/js/board/boardListFrm.js"></script>
+<%-- <script defer type="text/javascript" src="${contextPath }/js/board/boardListFrm.js"></script> --%>
 
 <div class="gallery_list">
 <ul> 
 	<!-- data 들어오는 부분 loop-->
 		<c:forEach var="tdata" items="${requestScope.boardVO}">
 			<li class="inner">
-			<a href="${contextPath }/board/read/${tdata.bnum}">
+			<a href="${contextPath }/board/read/${tdata.bcategory.catnum}/${tdata.bnum}/${pagingComponent.pageCriteria.currReqPage}/${pagingComponent.searchCriteria.searchType}/${pagingComponent.searchCriteria.searchKeyword}">
 					<div class="li_img">
 						<img name=""
 							src="data:${tdata.thumbnailVO.thumbftype };base64,${tdata.thumbnailVO.base64encoded}"
