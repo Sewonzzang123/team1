@@ -76,8 +76,7 @@
 								<th class="btype">게시판 유형</th>
 								<td class="btype_input_box"><select id="btype_input"
 									class="info">
-										<option value="blog"
-											<c:if test="${bcate.btype == 'blog' }">selected</c:if>>자유게시판</option>
+										<option value="blog">자유게시판</option>
 										<option value="album"
 											<c:if test="${bcate.btype == 'album' }">selected</c:if>>사진게시판</option>
 								</select></td>

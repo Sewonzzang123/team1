@@ -30,7 +30,7 @@ public class BoardVO {
 	private String btitle; // btitle varchar2(60) NOT NULL, --게시글 제목
 //	@NotNull
 	@Size(min = 4, max = 1500, message = "본문은 최소 4자,  최대 1500자까지 입력가능합니다.")
-	private byte[] bcontent; // bcontent varchar2(500) NOT NULL, -- 게시글 내용
+	private String bcontent; // bcontent varchar2(500) NOT NULL, -- 게시글 내용
 	private String tcontent; // bcontent varchar2(500) NOT NULL, -- 게시글 내용
 	private long bhits; // bhits number NOT NULL, --조회수
 	private Timestamp bcdate; // bCdate timestamp NOT NULL, --생성일

@@ -169,43 +169,43 @@ public class BoardController {
 		return "/board/boardWriteFrm";
 	}
 
-	// 게시글 등록
-	@PostMapping("/write")
-	public String toWrite(@RequestParam String bcontent_area, @RequestParam(value = "thumbnail") String thumb_img_name,
-			@ModelAttribute BoardVO boardVO) throws Exception {
-
-		boardVO.setBcontent(bcontent_area.getBytes("UTF-8"));
-
-		// 썸네일 등록
-		if (!thumb_img_name.equals("null")) {
-
-			String pathName = "C:\\Users\\Administrator\\git\\team1\\maintest\\src\\main\\webapp\\resources\\photo\\"
-					+ thumb_img_name;
-			// 썸네일로 만들 파일
-			File thumb_img_file = new File(pathName);
-			// 썸네일을 담을 파일
-			File thumbnail = new File(
-					"C:\\Users\\Administrator\\git\\team1\\maintest\\src\\main\\webapp\\resources\\photo\\썸네일_"
-							+ thumb_img_name);
-
-			// 대상 파일을 리사징 후 썸네일 파일에 저장
-			if (thumb_img_file.exists()) {
-				// 썸네일
-				thumbnail.getParentFile().mkdir();
-
-				Thumbnails.of(thumb_img_file).size(300, 300).toFile(thumbnail);
-
-				boardVO.setThumbnail(Files.readAllBytes(thumbnail.toPath()));
-			}
-		} else {
-			boardVO.setThumbnail(null);
-		}
-
-		boardSVC.insertArticle(boardVO);
-		String bnum = String.valueOf(boardVO.getBnum());
-
-		return "redirect:/board/read/" + bnum;
-	}
+//	// 게시글 등록
+//	@PostMapping("/write")
+//	public String toWrite(@RequestParam String bcontent_area, @RequestParam(value = "thumbnail") String thumb_img_name,
+//			@ModelAttribute BoardVO boardVO) throws Exception {
+//
+//		boardVO.setBcontent(bcontent_area.getBytes("UTF-8"));
+//
+//		// 썸네일 등록
+//		if (!thumb_img_name.equals("null")) {
+//
+//			String pathName = "C:\\Users\\Administrator\\git\\team1\\maintest\\src\\main\\webapp\\resources\\photo\\"
+//					+ thumb_img_name;
+//			// 썸네일로 만들 파일
+//			File thumb_img_file = new File(pathName);
+//			// 썸네일을 담을 파일
+//			File thumbnail = new File(
+//					"C:\\Users\\Administrator\\git\\team1\\maintest\\src\\main\\webapp\\resources\\photo\\썸네일_"
+//							+ thumb_img_name);
+//
+//			// 대상 파일을 리사징 후 썸네일 파일에 저장
+//			if (thumb_img_file.exists()) {
+//				// 썸네일
+//				thumbnail.getParentFile().mkdir();
+//
+//				Thumbnails.of(thumb_img_file).size(300, 300).toFile(thumbnail);
+//
+//				boardVO.setThumbnail(Files.readAllBytes(thumbnail.toPath()));
+//			}
+//		} else {
+//			boardVO.setThumbnail(null);
+//		}
+//
+//		boardSVC.insertArticle(boardVO);
+//		String bnum = String.valueOf(boardVO.getBnum());
+//
+//		return "redirect:/board/read/" + bnum;
+//	}
 
 	// 파일 첨부 화면
 	@GetMapping("/fileUploadFrm")
@@ -230,7 +230,7 @@ public class BoardController {
 //		logger.info(boardVO.getBcontent().toString());
 //		String test = new String(boardVO.getBcontent());
 //		logger.info(test);
-		boardVO.setTcontent(new String(boardVO.getBcontent(), "UTF-8"));
+//		boardVO.setTcontent(new String(boardVO.getBcontent(), "UTF-8"));
 //		logger.info(boardVO.getTcontent());
 		// 파일 타입은 List<BoardFileVO>
 		List<BoardFileVO> files = (List<BoardFileVO>) map.get("files");
