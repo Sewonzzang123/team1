@@ -5,3 +5,4 @@ eclipse.preferences.version=1
 encoding//src/main/java/com/my/maintest/mypage/controller/MypageController.java=UTF-8
 encoding//src/main/resources/config/mybatis-config.xml=UTF-8
 encoding//src/main/resources/mappers/BoardDAO-mapper.xml=UTF-8
+encoding/<project>=UTF-8

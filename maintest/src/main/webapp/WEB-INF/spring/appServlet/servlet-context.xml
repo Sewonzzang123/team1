@@ -21,6 +21,7 @@
 	<resources mapping="/js/**" location="/WEB-INF/resources/js/" />
 	<resources mapping="/img/**"
 		location="/WEB-INF/resources/img/" />
+	<resources mapping="/photo/**" location="/resources/photo/" />
 
 	<!-- 웹컴포넌트 라이브러리 url매핑 -->
 	<resources mapping="/webjars/**"
