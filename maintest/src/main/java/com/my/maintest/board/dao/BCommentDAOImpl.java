@@ -27,17 +27,15 @@ public class BCommentDAOImpl implements BCommentDAO{
 		return sqlSession.insert("mappers.BCommentDAO-mapper.insertBComment", bCommentVO);
 	}
 	
-//자식 댓글 등록 (inner) 
+	//자식 댓글 등록 (inner) 
 	// 기 등록된 자식댓글의 BCSTEP +1 처리 
 	@Override
-	public int updateBcstep(long bcgroup) {
-		
+	public int updateBcstep(long bcgroup) {		
 		return sqlSession.update("mappers.BCommentDAO-mapper.updateBcstep", bcgroup);
 	}
 	//자식  댓글 등록 처리
 	@Override
 	public int insertReBComment(BCommentVO bCommentVO) {
-		// TODO Auto-generated method stub
 		return sqlSession.insert("mappers.BCommentDAO-mapper.insertReBComment", bCommentVO);
 	}
 	

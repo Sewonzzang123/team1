@@ -42,7 +42,7 @@
         .innerRe_wrapper .bcomment {
             width: 100%;
             display: grid;
-            grid-template-columns: minmax(20%, 80px) 1fr minmax(10%, 80px);
+            grid-template-columns: repeat(1,minmax(20%, 80px) 1fr minmax(10%, 80px));
         }
 
         .innerRe_wrapper  .hidden {
@@ -50,13 +50,15 @@
         }
 
         /* 프로필 사진 CSS */
-        .innerRe_wrapper .bcomment .profile {
+        .innerRe_wrapper .bcomment .profile,
+         .innerRe_wrapper .fillout .profile {
             text-align: center;
         }
+        
+      
 
-
-					/* 작성자 인포 및 답글쓰기 layout */
-				       .innerRe_wrapper .bcomment .userinfo .udate ,
+		/* 작성자 인포 및 답글쓰기 layout */
+		 .innerRe_wrapper .bcomment .userinfo .udate ,
         .innerRe_wrapper .bcomment .innerRe_area   {
             display: grid;
             grid-template-columns: 20% 1fr;
@@ -103,8 +105,7 @@
         .innerRe_wrapper .bcomment .hiddenMenu div {
             display: flex;
             flex-direction: column;
-            position: absolute;
-           
+            position: absolute;           
             left: 20px;
             font-size: 0.8em;
             width: 50px;
@@ -112,13 +113,15 @@
         } 
 
         /* 댓글 작성창 CSS */        
-         .innerRe_wrapper .filloutHere{
-         width: 100%;
+         .innerRe_wrapper .filloutHere>.fillout{
+         	
+         	width: 100%;
             display: grid;
             grid-template-columns: minmax(20%, 80px) 1fr ;
          }
          
-         .innerRe_wrapper .filloutHere .profile img {
+         
+         .innerRe_wrapper .filloutHere>.fillout .profile img {
             vertical-align: middle;
             width: 70px;
             height: 70px;
@@ -126,24 +129,24 @@
             background-color: blueviolet;
         }
         
-        .innerRe_wrapper .filloutHere .userinfo .typing {
+        .innerRe_wrapper .filloutHere>.fillout .userinfo .typing {
             border-bottom: 1px solid lightgray;
             min-height: 2em;
             padding: 10px;
         }
 
-        .innerRe_wrapper .filloutHere .userinfo .typing:empty::before {
+        .innerRe_wrapper .filloutHere>.fillout .userinfo .typing:empty::before {
             content: attr(data-placeholder);
             display: block;
             color: lightgray;
         }
 
 
-	   .innerRe_wrapper .filloutHere .userinfo .typing.disabled {
+	   .innerRe_wrapper .filloutHere>.fillout .userinfo .typing.disabled {
           font-weight: bold;
         }
 
-        .innerRe_wrapper .filloutHere .userinfo .typing.typable {
+        .innerRe_wrapper .filloutHere>.fillout .userinfo .typing.typable {
             border-bottom: 1px solid black;
         }
 
@@ -157,6 +160,14 @@
         }
 
 
+
+
+		/* inner 댓글의 댓글 */
+		.innerRe_wrapper .bcomment>.filloutHere {
+		display:grid;
+			grid-template-columns: 1/4;
+		
+		}
 
 
 

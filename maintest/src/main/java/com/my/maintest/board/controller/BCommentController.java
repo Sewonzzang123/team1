@@ -37,10 +37,20 @@ public class BCommentController {
 	BCommentSVC bCommentSVC;
 	
 	
-	
-	@GetMapping("")
-	public String toTest() {		
-		return "/board/boardReplyInner";
+	//댓글 불러오기 
+	@GetMapping(value={
+			"/{bnum}",
+			"/{bnum}/{reqPage"}, produces="application/json")
+	public ResponseEntity<Map> toGetListInner(
+			@PathVariable("bnum") long bnum,
+			@PathVariable("reqPage") Optional<Integer> reqPage		
+			) {
+		ResponseEntity<Map> res = null;		
+		Map<String, Object>map = new HashMap<>();
+		
+		bCommentSVC.selectBComments(bnum,(long)reqPage.orElse(1), REC_NUM_PER_PAGE, PAGING_NUM_PER_PAGE);
+		
+		return res;
 	}
 	
 	//부모 댓글등록 (inner)
@@ -50,12 +60,15 @@ public class BCommentController {
 			@PathVariable("reqPage") Optional<Integer> reqPage
 		,HttpServletRequest request
 			) {				
+		ResponseEntity<Map> res = null;		
+		
+		
 		//1.작성자 UCODE 셋팅
 		MemberVO memberVO = (MemberVO)request.getSession(false).getAttribute("member");				
 		bCommentVO.setUcode(Integer.parseInt(memberVO.getUcode()));		
 		
+		
 		//2.등록 요청		
-		ResponseEntity<Map> res = null;		
 		int result = bCommentSVC.insertBComment(bCommentVO);
 	 
 		Map<String, Object> map = new HashMap<>();	
@@ -64,12 +77,6 @@ public class BCommentController {
 			System.out.println(" bCommentVO.getBnum()  == = = = " + bCommentVO.getBnum());
 			
 			List<BCommentVO> list = bCommentSVC.selectBComments(bCommentVO.getBnum(),reqPage.orElse(1), REC_NUM_PER_PAGE, PAGING_NUM_PER_PAGE);
-			
-			
-			
-			System.out.println("댓글 사이즈 " + list.size());
-			
-			
 			
 			map.put("result", "OK");
 			map.put("list", list);
@@ -83,17 +90,22 @@ public class BCommentController {
 	
 	
 	//자식댓글 등록 
-	@PostMapping(value="/replyC/{reqPage}", produces="application/json")
+	@PostMapping(value={"/replyP", "/replyC/{reqPage}"}, produces="application/json")
 	public ResponseEntity<Map> toReplyInnerOnCmt(
 			@Valid @RequestBody BCommentVO bCommentVO,
 			@PathVariable("reqPage") Optional<Integer> reqPage
 			,HttpServletRequest request		
 			){
 		ResponseEntity<Map> res = null;	
-		int result = bCommentSVC.insertReBComment(bCommentVO);		
+		
+		//1.작성자 UCODE 셋팅
+		MemberVO memberVO = (MemberVO)request.getSession(false).getAttribute("member");				
+		bCommentVO.setUcode(Integer.parseInt(memberVO.getUcode()));		
+		//2.등록 요청		
+		int result = bCommentSVC.insertReBComment(bCommentVO);
+		
 		Map<String, Object> map = new HashMap<>();
-		if(result >= 0) {
-			
+		if(result >= 0) {			
 			List<BCommentVO> list = bCommentSVC.selectBComments(bCommentVO.getBnum(),reqPage.orElse(1), REC_NUM_PER_PAGE, PAGING_NUM_PER_PAGE);
 			map.put("result", "OK");
 			map.put("list", list);			

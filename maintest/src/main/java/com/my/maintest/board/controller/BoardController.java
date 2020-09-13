@@ -29,8 +29,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.my.maintest.board.svc.BCommentSVC;
 import com.my.maintest.board.svc.BoardSVC;
 import com.my.maintest.board.svc.PagingSVC;
+import com.my.maintest.board.vo.BCommentVO;
 import com.my.maintest.board.vo.BcategoryVO;
 import com.my.maintest.board.vo.BoardFileVO;
 import com.my.maintest.board.vo.BoardVO;
@@ -45,6 +47,11 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/board")
 public class BoardController {
 
+	//*  하나의 페이징 넘버 페이지에 보여줄 레코드수 : recNumPerPage
+	final long  REC_NUM_PER_PAGE = 10;	
+	//한 페이지에 보여줄 페이징 수 
+	final long  PAGING_NUM_PER_PAGE = 10;	
+	
 	Logger logger = LoggerFactory.getLogger(BoardController.class);
 
 	@Inject
@@ -53,6 +60,8 @@ public class BoardController {
 	@Inject
 	PagingSVC pagingSVC;
 
+	@Inject
+	BCommentSVC bCommentSVC;
 
 	// 게시판 카테고리 조회
 	@ModelAttribute("bcategoryList")
@@ -106,6 +115,9 @@ public class BoardController {
 		model.addAttribute("boardVO",(List<BoardVO>)map.get("list"));
 		model.addAttribute("pagingComponent",(PagingComponent)map.get("pagingComponent"));
 		model.addAttribute("bcategoryVO", bcategoryVO);
+		
+		
+		
 		return 
 					"/board/boardMainFrm";
 			}
@@ -120,9 +132,6 @@ public class BoardController {
 			, @ModelAttribute("returnPage") String returnPage
 			,Model model
 			) {
-		
-	
-		
 		
 	// 게시판 타입 읽어오기 		
 			BcategoryVO bcategoryVO = boardSVC.selectBtype(catnum);
@@ -162,9 +171,7 @@ public class BoardController {
 			@ModelAttribute("returnPage") String returnPage,
 			@ModelAttribute SearchCriteria searchCriteria, Model model) {		
 		
-		//System.out.println("catnum" + catnum);
-//		BcategoryVO bcategoryVO = boardSVC.selectBtype(catnum.orElse(0));
-		
+	
 		// svc는 map 타입을 반환값으로 가짐
 		Map<String, Object> map = boardSVC.selectArticle(bnum);		
 	
@@ -172,10 +179,14 @@ public class BoardController {
 
 		// 파일 타입은 List<BoardFileVO>	
 		List<BoardFileVO> files = ((List<BoardFileVO>)  map.get("files"));
-        
+		
+		//inner댓글 리스트 불러오기 
+		List<BCommentVO> list = bCommentSVC.selectBComments(bnum, 1, REC_NUM_PER_PAGE, PAGING_NUM_PER_PAGE);
+		
+		
 		model.addAttribute("boardVO", boardVO);		
 		model.addAttribute("files",files);
-		//model.addAttribute("bcategoryVO", bcategoryVO);
+		model.addAttribute("innerList", list);
 		
 		return "/board/boardReadFrm";
 	}

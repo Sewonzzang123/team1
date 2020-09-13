@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.my.maintest.board.dao.BCommentDAO;
 import com.my.maintest.board.vo.BCommentVO;
@@ -30,6 +31,7 @@ public int insertBComment(BCommentVO bCommentVO) {
 
 
 //자식댓글 등록
+@Transactional
 @Override
 public int insertReBComment(BCommentVO bCommentVO) {
 	// 기 등록된 자식댓글의 BCSTEP +1 처리 
