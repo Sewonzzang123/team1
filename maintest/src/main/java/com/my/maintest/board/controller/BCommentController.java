@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.my.maintest.board.svc.BCommentSVC;
+import com.my.maintest.board.vo.BCoVoteVO;
 import com.my.maintest.board.vo.BCommentVO;
 import com.my.maintest.member.vo.MemberVO;
 
@@ -38,20 +40,25 @@ public class BCommentController {
 	
 	
 	//댓글 불러오기 
+		
 	@GetMapping(value={
 			"/{bnum}",
-			"/{bnum}/{reqPage"}, produces="application/json")
+			"/{bnum}/{reqPage}"} , produces = "application/json")
+	@ResponseBody
 	public ResponseEntity<Map> toGetListInner(
 			@PathVariable("bnum") long bnum,
 			@PathVariable("reqPage") Optional<Integer> reqPage		
 			) {
 		ResponseEntity<Map> res = null;		
-		Map<String, Object>map = new HashMap<>();
-		
-		bCommentSVC.selectBComments(bnum,(long)reqPage.orElse(1), REC_NUM_PER_PAGE, PAGING_NUM_PER_PAGE);
-		
+		Map<String, Object> map = new HashMap<>();				
+			List<BCommentVO> list = bCommentSVC.selectBComments(bnum,reqPage.orElse(1), REC_NUM_PER_PAGE, PAGING_NUM_PER_PAGE);
+		 map.put("result", "OK");
+			map.put("list", list);
+			res = new ResponseEntity<Map>(map, HttpStatus.OK);
 		return res;
 	}
+	
+	
 	
 	//부모 댓글등록 (inner)
 	@PostMapping(value={"/replyP", "/replyP/{reqPage}"} ,produces="application/json")
@@ -90,7 +97,7 @@ public class BCommentController {
 	
 	
 	//자식댓글 등록 
-	@PostMapping(value={"/replyP", "/replyC/{reqPage}"}, produces="application/json")
+	@PostMapping(value={"/replyC", "/replyC/{reqPage}"}, produces="application/json")
 	public ResponseEntity<Map> toReplyInnerOnCmt(
 			@Valid @RequestBody BCommentVO bCommentVO,
 			@PathVariable("reqPage") Optional<Integer> reqPage
@@ -117,4 +124,94 @@ public class BCommentController {
 		return res;
 
 }
+	
+	
+	//댓글 수정 
+	@PostMapping(value= {"/modify", "/modify/{reqPage}"}, produces="application/json")
+	public ResponseEntity<Map> toModify(
+			@Valid @RequestBody BCommentVO bCommentVO,
+			@PathVariable("reqPage") Optional<Integer> reqPage,
+			HttpServletRequest request
+			){
+		ResponseEntity<Map> res = null;	
+		
+		int result = bCommentSVC.updateBccontent(bCommentVO);
+		
+		Map<String, Object> map = new HashMap<>();
+		if(result >= 0) {
+			List<BCommentVO> list = bCommentSVC.selectBComments(bCommentVO.getBnum(),reqPage.orElse(1), REC_NUM_PER_PAGE, PAGING_NUM_PER_PAGE);
+			map.put("result", "OK");
+			map.put("list", list);			
+			res = new ResponseEntity<Map>(map,HttpStatus.OK);			
+		}else {
+			map.put("result", "NG");
+			res = new ResponseEntity<Map>(map,HttpStatus.OK);		
+			
+		}
+		return res;
+	}
+	
+	
+	//댓글 삭제
+	@PostMapping(value= {"/delete", "/delete/{reqPage}"}, produces="application/json")
+	public ResponseEntity<Map> toDelete(
+			@Valid @RequestBody BCommentVO bCommentVO,
+			@PathVariable("reqPage") Optional<Integer> reqPage,
+			HttpServletRequest request
+			){
+		ResponseEntity<Map> res = null;	
+		
+		
+		int result = bCommentSVC.deleteBComment(bCommentVO.getBcnum());
+		
+		Map<String, Object> map = new HashMap<>();
+		if(result >= 0) {
+			List<BCommentVO> list = bCommentSVC.selectBComments(bCommentVO.getBnum(),reqPage.orElse(1), REC_NUM_PER_PAGE, PAGING_NUM_PER_PAGE);
+			map.put("result", "OK");
+			map.put("list", list);			
+			res = new ResponseEntity<Map>(map,HttpStatus.OK);			
+		}else {
+			map.put("result", "NG");
+			res = new ResponseEntity<Map>(map,HttpStatus.OK);		
+			
+		}
+		
+		return res;
+	}
+	
+	
+	
+	//선호도 투표
+	@PostMapping(value= {"/vote/{reqPage}" },produces="application/json")
+	public ResponseEntity<Map> toVote(
+			@Valid @RequestBody BCoVoteVO bCoVoteVO,
+			@PathVariable("reqPage") Optional<Integer> reqPage,
+			HttpServletRequest request		
+			){
+		ResponseEntity<Map> res = null;
+		
+		MemberVO memberVO = (MemberVO)request.getSession(false).getAttribute("member");
+		bCoVoteVO.setUcode(Long.parseLong(memberVO.getUcode()));
+		
+	 int result = 	bCommentSVC.updateVote(bCoVoteVO);
+	 Map<String, Object> map = new HashMap<>();
+	 if(result >= 0) {
+			List<BCommentVO> list = bCommentSVC.selectBComments(bCoVoteVO.getBnum(),reqPage.orElse(1), REC_NUM_PER_PAGE, PAGING_NUM_PER_PAGE);
+			map.put("result", "OK");
+			map.put("list", list);			
+			res = new ResponseEntity<Map>(map,HttpStatus.OK);			
+		}else {
+			map.put("result", "NG");
+			res = new ResponseEntity<Map>(map,HttpStatus.OK);		
+			
+		}
+	 
+		
+		
+		return res ;
+		
+	}
+	
+	
+	
 }

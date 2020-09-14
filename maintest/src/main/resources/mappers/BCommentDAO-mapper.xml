@@ -11,7 +11,7 @@ BCNUM
 ,PUCODE
 ,BNUM
 ,BCCONTENT
-,BCGROUP
+,BCGRP
 ,CDATE
 ,UDATE
 )
@@ -34,7 +34,7 @@ bcomment_bcNum_seq.nextVal
 <!-- 1. 자식 댓글 등록전 이전에 등록된 자식 댓글들의 bcstep을 +1  -->
 <update id="updateBcstep" parameterType="long">
 update bcomment set bcstep = bcstep +1 
-where bcgroup = #{bcgroup}  
+where bcgrp = #{bcgrp}  
 and bcindent = 1 
 and bcstep >=  0
 </update>
@@ -47,7 +47,8 @@ BCNUM
 ,PUCODE
 ,BNUM
 ,BCCONTENT
-,BCGROUP
+,BCGRP
+,bcstep
 ,BCINDENT
 ,CDATE
 ,UDATE
@@ -58,17 +59,13 @@ bcomment_bcNum_seq.nextVal
 ,#{pucode }
 ,#{bnum }
 ,#{bccontent }
-,#{bcgroup}
+,#{bcgrp}
+,1
 ,1
 ,systimestamp
 ,systimestamp
 )
 </insert>
-
-
-
-
-
 
 
 <!--댓글목록 불러오기  -->
@@ -82,14 +79,14 @@ dbrownum
 ,pnickname
 ,bnum
 ,bccontent
-,bcgroup
+,bcgrp
 ,bcindent
 ,bcstep
 ,bcgood
 ,bcbad
 ,udate
 from
-(select row_number() over(order by t1.bcgroup desc, t1.bcstep asc) as dbrownum,
+(select row_number() over(order by t1.bcgrp desc, t1.bcstep asc) as dbrownum,
 t1.bcnum
 ,t1.ucode
 ,t3.nickname 
@@ -97,7 +94,7 @@ t1.bcnum
 ,(select nickname from member where ucode = t1.pucode) pnickname 
 ,t1.bnum
 ,t1. bccontent
-,t1.bcgroup
+,t1.bcgrp
 ,t1.bcindent
 ,t1.bcstep
 ,t1.bcgood
@@ -110,7 +107,42 @@ where  dbrownum  between #{recFrom} and #{recTo}
 </select>
 
 
+<!-- 댓글 수정 -->
+<update id="updateBccontent" parameterType="com.my.maintest.board.vo.BCommentVO" >
+update bcomment set bccontent = #{bccontent} where bcnum = #{bcnum}
+</update>
 
+
+<!--댓글 삭제  -->
+<delete id="deleteBComment" parameterType="long">
+delete bcomment where bcnum = #{bcnum}
+</delete>
+
+<!-- 선호도 투표 -->
+<update id="updateVote" parameterType="com.my.maintest.board.vo.BCoVoteVO">
+<![CDATA[ 
+merge into bcVote using dual on (BNUM = #{bnum} AND BCNUM= #{bcnum} AND ucode = #{ucode}  )
+when matched then 
+update set voted = #{voted}
+WHEN not matched then 
+INSERT (bcgbnum,BNUM,bcnum,ucode,voted) 
+values(
+bcvote_bcgbnum_seq.nextVal,
+#{bnum},
+ #{bcnum},
+  #{ucode},
+  #{voted})
+]]>
+</update>
+
+<!-- 댓글 선호도 투표수 갱신 _ good-->
+<update id="updateGoodQnty" parameterType="long">
+update bcomment set bcgood = (select count(*) from bcvote where voted = 'good' and bcnum = #{bcnum}  )  where bcnum = #{bcnum}
+</update>
+<!-- 댓글 선호도 투표수 갱신 _ bad-->
+<update id="updateBadQnty" parameterType="long">
+update bcomment set bcbad = (select count(*) from bcvote where voted = 'bad' and bcnum = #{bcnum} )  where bcnum = #{bcnum}
+</update>
 
 
 </mapper>

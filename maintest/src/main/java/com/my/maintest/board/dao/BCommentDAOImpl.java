@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.my.maintest.board.vo.BCoVoteVO;
 import com.my.maintest.board.vo.BCommentVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -52,6 +53,35 @@ public class BCommentDAOImpl implements BCommentDAO{
 		 map.put("recFrom", recFrom);
 		 map.put("recTo", recTo);		 
 		return sqlSession.selectList("mappers.BCommentDAO-mapper.selectBComments", map);
+	}
+
+	
+	//댓글 수정
+	@Override
+	public int updateBccontent(BCommentVO bCommentVO) {
+		return sqlSession.update("mappers.BCommentDAO-mapper.updateBccontent", bCommentVO);
+	}
+	//댓글 삭제 
+	@Override
+	public int deleteBComment(long bcnum) {
+		return sqlSession.delete("mappers.BCommentDAO-mapper.deleteBComment", bcnum);
+	}
+
+	//댓글 선호도 투표
+	@Override
+	public int updateVote(BCoVoteVO bCoVoteVO) {
+
+		return sqlSession.update("mappers.BCommentDAO-mapper.updateVote", bCoVoteVO);
+	}
+//good 투표수 갱신
+	@Override
+	public int updateGoodQnty(long bcnum) {
+		return sqlSession.update("mappers.BCommentDAO-mapper.updateGoodQnty" , bcnum);
+	}
+//ad 투표수 갱신
+	@Override
+	public int updateBadQnty(long bcnum) {
+		return sqlSession.update("mappers.BCommentDAO-mapper.updateBadQnty" , bcnum);
 	}
 
 	

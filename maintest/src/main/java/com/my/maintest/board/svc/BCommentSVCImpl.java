@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.my.maintest.board.dao.BCommentDAO;
+import com.my.maintest.board.dao.BoardDAO;
+import com.my.maintest.board.vo.BCoVoteVO;
 import com.my.maintest.board.vo.BCommentVO;
 import com.my.maintest.common.paging.PagingComponent;
 
@@ -35,7 +37,12 @@ public int insertBComment(BCommentVO bCommentVO) {
 @Override
 public int insertReBComment(BCommentVO bCommentVO) {
 	// 기 등록된 자식댓글의 BCSTEP +1 처리 
-	bCommentDAO.updateBcstep(bCommentVO.getBcgroup());
+	
+	
+	System.out.println("bCommentVO.getBcgrp() =================" + bCommentVO.getBcgrp());
+	
+	
+	bCommentDAO.updateBcstep(bCommentVO.getBcgrp());
 	//자식댓글 등록
 	int result = bCommentDAO.insertReBComment(bCommentVO);	
 	return result;
@@ -48,15 +55,37 @@ public int insertReBComment(BCommentVO bCommentVO) {
 public List<BCommentVO> selectBComments( long bnum, long reqPage, long recNumPerPage,long  pagingNumsPerPage) {
 	 List<BCommentVO> list = null;	 	 
 	 PagingComponent pagingComponent = new PagingComponent(reqPage, recNumPerPage, pagingNumsPerPage);
-	 System.out.println("reqPage==============" + reqPage);
-	 System.out.println("bnum==============" + bnum);
-	 System.out.println("pagingComponent.getRecordCriteria().getRecFrom()==============" + pagingComponent.getRecordCriteria().getRecFrom());
-	 System.out.println("pagingComponent.getRecordCriteria().getRecTo()==============" + pagingComponent.getRecordCriteria().getRecTo());
-	 
-	 
+
 	 	list = bCommentDAO.selectBComments(bnum, pagingComponent.getRecordCriteria().getRecFrom(),pagingComponent.getRecordCriteria().getRecTo());
 	 	return list;
 }
+
+//댓글 수정
+@Override
+public int updateBccontent(BCommentVO bCommentVO) {
+	return bCommentDAO.updateBccontent(bCommentVO);
+}
+
+//댓글 삭제 
+@Override
+public int deleteBComment(long bcnum) {
+	return bCommentDAO.deleteBComment(bcnum);
+}
+
+//댓글 선호도 투표
+@Transactional
+@Override
+public int updateVote(BCoVoteVO bCoVoteVO) {
+	int result = bCommentDAO.updateVote(bCoVoteVO);	
+	
+	//선호도 투표 후 투표 총수량 갱신
+	
+	bCommentDAO.updateGoodQnty(bCoVoteVO.getBcnum());
+	bCommentDAO.updateBadQnty(bCoVoteVO.getBcnum());	
+	return result ;
+}
+
+
 
 
 }
