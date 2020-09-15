@@ -135,13 +135,12 @@ bcvote_bcgbnum_seq.nextVal,
 ]]>
 </update>
 
-<!-- 댓글 선호도 투표수 갱신 _ good-->
-<update id="updateGoodQnty" parameterType="long">
-update bcomment set bcgood = (select count(*) from bcvote where voted = 'good' and bcnum = #{bcnum}  )  where bcnum = #{bcnum}
-</update>
-<!-- 댓글 선호도 투표수 갱신 _ bad-->
-<update id="updateBadQnty" parameterType="long">
-update bcomment set bcbad = (select count(*) from bcvote where voted = 'bad' and bcnum = #{bcnum} )  where bcnum = #{bcnum}
+<!-- 댓글 선호도 투표수 갱신 _ good or bad-->
+<update id="updateGoodBadQnty" parameterType="com.my.maintest.board.vo.BCoVoteVO">
+update bcomment set 
+bcgood = (select count(*) good from (select * from BCVote where bcnum = #{bcnum} and voted='GOOD')),
+bcbad = (select count(*) good from (select * from BCVote where bcnum =  #{bcnum} and voted='BAD')) 
+where bcnum = #{bcnum}
 </update>
 
 

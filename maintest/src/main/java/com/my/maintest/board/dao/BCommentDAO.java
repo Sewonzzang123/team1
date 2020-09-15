@@ -33,8 +33,7 @@ public interface BCommentDAO {
 	int updateVote(BCoVoteVO bCoVoteVO);
 
 //good and bad 투표수 갱신
-int updateGoodQnty(long bcnum);
-int updateBadQnty(long bcnum);
+	int updateGoodBadQnty(BCoVoteVO bCoVoteVO);
 
 
 }

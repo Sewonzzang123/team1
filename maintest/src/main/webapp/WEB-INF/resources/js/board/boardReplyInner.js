@@ -1,18 +1,5 @@
-
-
-//if(clickedTag.classList.contains("typing")){
-//  console.log("clickedTag.closest('filloutHere').parentElement.getAttribute('ata-bcnum') ==  == " +clickedTag.closest("filloutHere").parentElement.getAttribute("data-bcnum"));
-//  if(clickedTag.closest("filloutHere").parentElement.getAttribute("data-bcnum")
-//	 !=  e.target.closest("filloutHere").parentElement.getAttribute("data-bcnum")){    	
-//  	  clickedTag.nextElementSibling.classList.add("hidden");
-//	   clickedTag.nextElementSibling.classList.remove("shown");
-//	   clickedTag.textContent ="";
-//	   clickedTag.setAttribute("contenteditable", "false");
-//	   clickedTag.classList.remove("typable");    	       
-//  }    	   
-//}
-
 	'use strict'
+
  //controller 상호 전달 인수s
  const reqPage = document.getElementById("reqPage").value;
  const bnum = document.getElementById("bnum").value;
@@ -23,6 +10,8 @@ const wrtTag = document.getElementById("filloutHere");
 const replaceableAreaTag = document.getElementById("replaceableArea")
 const innerRe_wrapperTag =  document.querySelector(".innerRe_wrapper")
 
+//목록 불러오기 
+list_f();
 //마우스 해당구역 벗어날때 메뉴 히든 처리 
 // 현재 이벤트가 일어나는 구역 
 let clickedTag;// 이전에 클릭한 tag
@@ -70,9 +59,9 @@ hideNowOpenedMenu_f(e);
 
 //wrapper 전역 클릭 이벤트 감지 
 function bcommentTags_f(e){
-console.log(" 댓글 목록 안에서 클릭한 타켓 ====[" + e.target.tagName+"]");
+console.log(" 댓글 목록 안에서 클릭한 타켓 ====[" + e.target.className+"]");
     //작성창 이벤트 
-    //등록 취소 버튼 이벤트 
+    //등록 및 취소 버튼 이벤트 
     wrtTag_f(e);
 
 	//ellipsis 버튼 클릭
@@ -83,7 +72,8 @@ console.log(" 댓글 목록 안에서 클릭한 타켓 ====[" + e.target.tagName
     //작성창 추가
     replyWriting_f(e);
     
-    //등록 취소 이벤트 
+    //선호 비선호 투표
+    voteGoodBad(e);
 
 	
 }
@@ -112,18 +102,10 @@ function wrtTag_f(e){
     }
 }//wrtTag_f
 
-
-
-
-
-
-
 //부모&자식 댓글 파트
 //ellipsis 버튼 클릭 이벤트 	
 function ellipsisBtn_f(e){       
-    if(e.target.classList.contains("fa-ellipsis-v")  && e.target.tagName == 'I'){           
-    	
-    	
+    if(e.target.classList.contains("fa-ellipsis-v")  && e.target.tagName == 'I'){               	
         //새로이 찍은 태그가 속한 댓글의 bcnum
      	nowClickedBcNum  =  e.target.closest(".bcomment").parentElement.getAttribute("data-bcnum");
         // 최초 클릭 clickedTag  == undefined
@@ -142,7 +124,6 @@ function ellipsisBtn_f(e){
                     
   }
      
-
 }
 
 
@@ -161,7 +142,7 @@ function modDelBtn_f(e){
             str += `<div class="typed typing" contenteditable="true" data-placeholder="댓글 입력..." > ${_bccontent}</div>`
             str += `<div class=" rbtnGrp shown" id="rbtnGrp"> `
             str += `<button class="btn" id="rwriteBtn" onClick="mod_f(this)">수정</button>`
-            str += `<button class="btn" id="rcancelBtn" onClick="cancel_f(this)">취소</button>`
+            str += `<button class="btn" id="rcancelBtn" onClick="list_f(this)">취소</button>`
             str += `</div>`
             str += `</div>`
             str += `</div>`
@@ -182,7 +163,7 @@ function modDelBtn_f(e){
 
 
 //댓글 수정 취소 
-function cancel_f(e){
+function list_f(e){
 	const xhttp = new XMLHttpRequest();
 	xhttp.addEventListener("readystatechange", ajaxCall);
 	const url = `http://localhost:9080/pfpkg/bcomment/${bnum}/${reqPage}`;
@@ -218,7 +199,11 @@ function mod_f(e){
 //댓글 삭제 처리
 function del_f(bcnum){
 	const xhttp = new XMLHttpRequest();
-	xhttp.addEventListener("readystatechange", ajaxCall);	
+	xhttp.addEventListener("readystatechange", function(e){
+		
+		
+		
+	});	
 	
 	let reqMsg = {};
     reqMsg.bnum = bnum;
@@ -256,7 +241,7 @@ if(e.target.closest(".bcomment").parentElement.childElementCount  < 2){
 }
 
 
-
+//댓글 입력창 추가 메소드 
 function addWindow(e){
 
 let nickname = document.getElementById("IRnickname").textContent
@@ -281,9 +266,6 @@ e.target.closest(".bcomment").parentElement.innerHTML += str;
 }
 
 
-   
-
-//종하요 
 //등록 취소 버튼 이벤트 추가(onclick= method on button tag)
 //입력창 등록 취소  버튼 
 function rbtnGrpTag_f(e){  
@@ -408,6 +390,7 @@ xhttp.send();
           
             if(jsonObj.result ==  'OK'){
                 console.log("댓글등록 성공 및 목록가져와서 나타내기") 
+                
                 showUpList(jsonObj.list);
             }else{
                 console.log("등록 실패")
@@ -436,10 +419,10 @@ function showUpList(list){
                 		    str += `<div class="userinfo">`
                 		        str += `<div>`
                 		        	 str += `<span class="IRnickname" data-nickname="${data.ucode }">${data.nickname}</span>`
-                		            str += `<span class="goodOrBad"><a href=""><i class="far fa-thumbs-up"></i></a></span>`
-                		            str += `<span class="goodOrBad"><a href=""><i class="far fa-thumbs-down"></i></a></span>`
+                		            str += `<span class="goodOrBad"><i class="far fa-thumbs-up"></i>${data.bcgood}</span>`
+                		            str += `<span class="goodOrBad"><i class="far fa-thumbs-down"></i>${data.bcbad}</span>`
                 		        str += `</div>`
-                		        str += `<div class="udate"><span>${data.udate}</span><button class="btn reReply"  >답글쓰기</button></div>`
+                		        str += `<div class="udate"><span><fmt:formatDate value="${data.udate}" pattern="MM/dd"/></span><button class="btn reReply"  >답글쓰기</button></div>`
                 		        str += `<div class="innerRe_area">`
                 		            str += `<span class="IRnickname">${data.pnickname}</span>`
                 		            	 str += `<div class="typed" contenteditable="false">${data.bccontent}</div>`                    		      
@@ -456,8 +439,35 @@ function showUpList(list){
                 		    str += `</div>`
                 		str += `</div>`                   	
                 	str += `</div>`                   	
-                	replaceableAreaTag.innerHTML +=  str;  
-                	
+                	replaceableAreaTag.innerHTML +=  str;                  	
                 	str = '';         
                 })  
 } //showUpList
+
+
+//댓글 선호 비선호 처리 메소드 
+function voteGoodBad(e){
+	if(e.target.classList.contains("far") && e.target.tagName == 'I'){
+	const xhttp = new XMLHttpRequest();
+	xhttp.addEventListener("readystatechange", ajaxCall)	
+const reqMsg = {};
+	reqMsg.bnum = bnum;
+	reqMsg.bcnum = e.target.closest(".bcomment").parentElement.getAttribute("data-bcnum");
+
+	let voted = '';
+	if(e.target.classList.contains("fa-thumbs-up")){		
+		reqMsg.voted = 'GOOD'		
+	}else if(e.target.classList.contains("fa-thumbs-down") ){
+		reqMsg.voted = 'BAD'					
+    }
+	
+	const intoJson = JSON.stringify(reqMsg);
+	
+	const url = `http://localhost:9080/pfpkg/bcomment/vote/${reqPage}`
+	xhttp.open("post" , url)
+	xhttp.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
+	xhttp.send(intoJson);
+	
+	}
+
+}

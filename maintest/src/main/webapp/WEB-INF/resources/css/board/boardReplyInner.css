@@ -69,6 +69,10 @@
             grid-template-columns: 20% 20% 1fr;
         	 }
         
+         .innerRe_wrapper .bcomment .userinfo i {
+        margin-left:10px;
+        cursor: pointer;
+        }
         
             .innerRe_wrapper .bcomment .userinfo .udate .btn.reReply{
            border:none;
@@ -87,7 +91,7 @@
             width: 70px;
             height: 70px;
             border-radius: 50px 50px;
-            background-color: blueviolet;
+            background-color: none;
         }
 
         /* 공통CSS 끝  */
@@ -132,7 +136,7 @@
             width: 70px;
             height: 70px;
             border-radius: 50px 50px;
-            background-color: blueviolet;
+            background-color: none;
         }
         
         .innerRe_wrapper .filloutHere.bcomment .userinfo .typing {

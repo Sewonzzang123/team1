@@ -27,4 +27,9 @@ public interface BCommentSVC {
 	//댓글 선호도 투표
 	int updateVote(BCoVoteVO bCoVoteVO);
 	
+	
+	
+	
+	
+	
 }

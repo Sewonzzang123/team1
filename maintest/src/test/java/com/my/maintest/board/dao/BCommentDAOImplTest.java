@@ -13,6 +13,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.my.maintest.board.vo.BCoVoteVO;
 import com.my.maintest.board.vo.BCommentVO;
+import com.my.maintest.board.vo.VoteGoodBad;
 import com.my.maintest.common.paging.PagingComponent;
 
 
@@ -45,31 +46,7 @@ public class BCommentDAOImplTest {
 			System.out.println(bCommentVO.getNickname());
 		}
 		
-		
-		
-		//자식 댓글 등록
-		
-		@Test
-		@DisplayName("자식댓글 등록(inner Comment)")
-		@Disabled
-		void insertbcomment1() {
 			
-			
-	BCommentVO bCommentVO = new BCommentVO();			
-			bCommentVO.setUcode(2);
-			bCommentVO.setPucode(0);
-			bCommentVO.setBnum(6);
-			bCommentVO.setBcgrp(284);
-			bCommentVO.setBccontent(" 원글 6 / 부모댓글 284에 대한 자식댓글 등록테스트 2" );
-					
-			bCommentDAO.updateBcstep(bCommentVO.getBcgrp());
-			
-			
-			bCommentDAO.insertReBComment(bCommentVO);
-			
-			
-			
-		}
 		
 		
 		//댓글 목록 불러오기 
@@ -130,23 +107,27 @@ public class BCommentDAOImplTest {
 		@Test
 		@DisplayName("선호도 투표")
 		void toVote() {
-			
-																			
 		 long				bnum = 7;																//	bnum number not null,
 		long				bcnum = 73;														//	bcnum number not null,
-			 long				ucode = 4;															//	ucode number not null unique,
-			 String 		voted = "good";																//	voted varchar(10) check(voted = 'good' or voted='bad'),
+			 long				ucode = 3;															//	ucode number not null unique,
+		
+				
+				
 				
 			 BCoVoteVO bCoVoteVO = new BCoVoteVO();
 			 bCoVoteVO.setBnum(bnum);
 			 bCoVoteVO.setBcnum(bcnum);
 			 bCoVoteVO.setUcode(ucode);
-			 bCoVoteVO.setVoted(voted);
-			bCommentDAO.updateVote(bCoVoteVO);
+			 bCoVoteVO.setVoted(VoteGoodBad.GOOD);
+			 
+			 System.out.println(bCoVoteVO.toString());
+			 
+			 
+			bCommentDAO.updateVote(bCoVoteVO);		
 			
+			bCommentDAO.updateGoodBadQnty(bCoVoteVO);
+}
 			 
-			 
-		}
-	
+			
 
 }

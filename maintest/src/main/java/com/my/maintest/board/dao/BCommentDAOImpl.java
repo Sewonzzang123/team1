@@ -70,18 +70,13 @@ public class BCommentDAOImpl implements BCommentDAO{
 	//댓글 선호도 투표
 	@Override
 	public int updateVote(BCoVoteVO bCoVoteVO) {
-
 		return sqlSession.update("mappers.BCommentDAO-mapper.updateVote", bCoVoteVO);
 	}
-//good 투표수 갱신
+	
+//good  or bad 투표수 갱신
 	@Override
-	public int updateGoodQnty(long bcnum) {
-		return sqlSession.update("mappers.BCommentDAO-mapper.updateGoodQnty" , bcnum);
-	}
-//ad 투표수 갱신
-	@Override
-	public int updateBadQnty(long bcnum) {
-		return sqlSession.update("mappers.BCommentDAO-mapper.updateBadQnty" , bcnum);
+	public int updateGoodBadQnty(BCoVoteVO bCoVoteVO) {
+		return sqlSession.update("mappers.BCommentDAO-mapper.updateGoodBadQnty", bCoVoteVO);
 	}
 
 	

@@ -190,8 +190,13 @@ public class BCommentController {
 			){
 		ResponseEntity<Map> res = null;
 		
+		
+		
+		
 		MemberVO memberVO = (MemberVO)request.getSession(false).getAttribute("member");
 		bCoVoteVO.setUcode(Long.parseLong(memberVO.getUcode()));
+		
+		log.info(bCoVoteVO.toString());
 		
 	 int result = 	bCommentSVC.updateVote(bCoVoteVO);
 	 Map<String, Object> map = new HashMap<>();
@@ -202,12 +207,8 @@ public class BCommentController {
 			res = new ResponseEntity<Map>(map,HttpStatus.OK);			
 		}else {
 			map.put("result", "NG");
-			res = new ResponseEntity<Map>(map,HttpStatus.OK);		
-			
+			res = new ResponseEntity<Map>(map,HttpStatus.OK);					
 		}
-	 
-		
-		
 		return res ;
 		
 	}

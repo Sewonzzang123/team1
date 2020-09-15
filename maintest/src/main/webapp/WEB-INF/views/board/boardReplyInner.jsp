@@ -51,7 +51,7 @@
 
             <!-- inner comment -->
             <div class="bcomment_wrapper" id="replaceableArea">
-			<c:forEach var="data" items="${requestScope.innerList}">
+<%-- 			<c:forEach var="data" items="${requestScope.innerList}">
 			  <c:if test="${data.bcindent==0 }">
               <div class="parent" data-bcnum="${data.bcnum}">
               </c:if>
@@ -64,8 +64,8 @@
                         <div class="userinfo">
                             <div>
                                 <span class="IRnickname" data-nickname="${data.ucode }">${data.nickname}</span> 
-                                <span class="goodOrBad"><a href=""><i class="far fa-thumbs-up"></i></a></span>
-                                <span class="goodOrBad"><a href=""><i class="far fa-thumbs-down"></i></a></span>
+                                <span class="goodOrBad"><i class="far fa-thumbs-up"></i>${data.bcgood }</span>
+                                <span class="goodOrBad"><i class="far fa-thumbs-down"></i>${data.bcbad }</span>
                             </div>
                             <div class="udate"><span>
                             <fmt:formatDate value="${data.udate}" pattern="MM/dd"/></span>
@@ -87,7 +87,7 @@
                         </div>
                       </div> 
     			 </div><!-- parent/childeren  -->
-			</c:forEach>
+			</c:forEach> --%>
 		</div><!-- bcomment_wrapper  -->
 	</div><!-- innerRe_wrapper  -->
 </div><!-- innerRe -->

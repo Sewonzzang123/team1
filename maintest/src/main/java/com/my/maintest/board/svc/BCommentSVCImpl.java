@@ -75,13 +75,9 @@ public int deleteBComment(long bcnum) {
 //댓글 선호도 투표
 @Transactional
 @Override
-public int updateVote(BCoVoteVO bCoVoteVO) {
+public int updateVote(BCoVoteVO bCoVoteVO) {	
 	int result = bCommentDAO.updateVote(bCoVoteVO);	
-	
-	//선호도 투표 후 투표 총수량 갱신
-	
-	bCommentDAO.updateGoodQnty(bCoVoteVO.getBcnum());
-	bCommentDAO.updateBadQnty(bCoVoteVO.getBcnum());	
+  bCommentDAO.updateGoodBadQnty(bCoVoteVO);
 	return result ;
 }
 
