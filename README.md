@@ -3,11 +3,11 @@
 team1_poroject
 
 ▶buildPath 설정 
-JRE SYSTEM LIBRARY : JavaSE-1.8(jdk-14.0.1)
+JRE SYSTEM LIBRARY : jdk-14
 
 ▶java compiler 
-compiler compliance lever : 1.8
+compiler compliance lever : 14
 
 ▶project facets
 Dynamic Web Module 4.0
-Java 1.8
+Java 14
