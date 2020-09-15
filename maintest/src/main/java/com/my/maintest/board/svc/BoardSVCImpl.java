@@ -88,17 +88,6 @@ public class BoardSVCImpl implements BoardSVC {
 		
 		//페이징 		
 	PagingComponent pagingComponent = pagingSVC.getPagingComponent(btype,catnum, reqPage, recNumPerPage, searchType,searchKeyword);
-		 
-	log.info("catnum     =   " + catnum);
-	log.info("pagingComponent.getRecordCriteria().getRecFrom()     =   " + pagingComponent.getRecordCriteria().getRecFrom());
-	log.info("pagingComponent.getRecordCriteria().getRecTo()     =   " +pagingComponent.getRecordCriteria().getRecTo() );
-	log.info("pagingComponent.getPageCriteria().getPagingNumFrom()    =   " +pagingComponent.getPageCriteria().getPagingNumFrom());
-	log.info("pagingComponent.getPageCriteria().getPagingNumTo()      =   " +pagingComponent.getPageCriteria().getPagingNumTo() );
-	log.info("searchType    =   " +searchType );
-	log.info("searchKeyword    =   " +searchKeyword );
-	
-	
-	
 	
 	List<BoardVO> list = null;	
 	if(btype.equals("album")) {

@@ -2,11 +2,17 @@
 	pageEncoding="UTF-8" isELIgnored="false"%>
 <!-- 공통모듈 -->
 <%@ include file="/WEB-INF/views/included/common.jsp"%>
+<!DOCTYPE html>
+<html lang="ko">
 
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>게시글 작성</title>
 <link rel="stylesheet"
 	href="${contextPath }/css/board/boardMainFrm.css?ver=${today}">
-<%-- <link rel="stylesheet"
-	href="${contextPath}/css/board/boardWriteFrm.css?ver=${today}"> --%>
+<link rel="stylesheet"
+	href="${contextPath}/css/board/boardWriteFrm.css?ver=${today}">
 <script defer type="text/javascript"
 	src="${contextPath }/js/board/boardWriteFrm.js?ver=${today}"></script>
 <link rel="stylesheet"
@@ -15,10 +21,6 @@
 
 <body>
 	<main>
-			<!-- uppermost  메뉴  -->
-		<%@ include file="/WEB-INF/views/layout/header.jsp"%>
-		<!-- 메인 베너 _ 이미지  + hidden 요소 catnum, returnPage-->
-		<%@ include file="/WEB-INF/views/layout/mainbanner.jsp"%>
 		<div class="main_wrap">
 			<!-- 게시판 카테고리 메뉴  -->
 			<%@ include file="/WEB-INF/views/board/included/boardAsideMenu.jsp"%>
@@ -27,17 +29,21 @@
 				<div class="content">
 					<section>
 						<div class="section_wrap">
-						
+							<h2>
+								<a href="">게시글 작성 </a>
+							</h2>
 							<form:form id="writeFrm" name="writeFrm" method="POST"
 								enctype="multipart/form-data"
-								action="${contextPath}/board/write/" modelAttribute="boardVO">
+								action="${contextPath}/board/modify" modelAttribute="boardVO">
 
+								<input type="hidden" id="bnum" name="bnum"
+									value="${requestScope.boardVO.bnum}" />
 								<input type="hidden" id="returnPage" name="returnPage"
 									value="${requestScope.returnPage}" />
 								<input type="hidden" id="ucode" name="ucode"
 									value="${sessionScope.member.ucode  }" />
 								<input type="hidden" id="catnum" name="catnum"
-									value="${requestScope.bcategoryVO.catnum}" />
+									value="${requestScope.boardVO.bcategory.catnum}" />
 								<input type="hidden" id="hidnum" name="hidnum"
 									value="${requestScope.boardVO.hidcategory.hidnum}" />
 
@@ -48,7 +54,7 @@
 											<c:forEach var="bcate" items="${bcategoryList }">
 												<c:if test="${bcate.catnum != 0}">
 													<option value="${bcate.catnum }"
-														<c:if test="${bcate.catnum == requestScope.catnum}">selected</c:if>>${bcate.catname }</option>
+														<c:if test="${bcate.catnum == requestScope.boardVO.bcategory.catnum}">selected</c:if>>${bcate.catname }</option>
 												</c:if>
 											</c:forEach>
 
@@ -79,7 +85,7 @@
 
 									<li class="bcontent_li"><label for="bcontent"></label> <input
 										type="hidden" class="bcontent" name="bcontent_area">
-										<div class="bcontent_area" contenteditable="true">${boardVO.bcontent }</div>
+										<div class="bcontent_area" contenteditable="true">${boardVO.tcontent }</div>
 										<form:errors cssClass="bound_error" path="bcontent"></form:errors></li>
 
 									<li>
@@ -91,9 +97,7 @@
 
 									<li>
 										<div class="btnGrp">
-											<button id="tmpWriteBtn" class="btn" type="button">임시저장</button>
-											<button id="writeBtn22222222222222222" class="btn" type="button">등록</button>
-											<button id="listBtn" class="btn" type="button">목록으로</button>
+											<button id="modifyBtn" class="btn" type="button">등록</button>
 										</div>
 									</li>
 								</ul>
@@ -105,4 +109,73 @@
 		</div>
 	</main>
 </body>
+
+<script type="text/javascript">
+	/* 사진 추가 */
+	const add_img_btn = document.querySelector('.add_img_btn');
+	const add_img = document.querySelector('.add_img');
+	const bcontent_area = document.querySelector('.bcontent_area');
+	add_img_btn.addEventListener('click', (e) => {
+		e.preventDefault();
+		add_img.click();
+		console.log('클릭됨');
+		}
+	)
+	
+	add_img.addEventListener("change", (e) => {
+	    if (e.target.files && e.target.files[0]) {		
+		  console.log('이벤트');
+	      var formData = new FormData();	
+	      formData.append("file", e.target.files[0]);	
+	      console.log(formData);
+	
+	      var ajax = new XMLHttpRequest();
+	      ajax.onreadystatechange = function () {
+	        if (ajax.readyState === ajax.DONE) {
+	          if (ajax.status === 200
+	            || ajax.status === 201) {
+	            const url = ajax.responseText;
+	            console.log(url);
+	            
+	            const img = document
+	              .createElement('img');
+	            img.classList.add('added_img')
+	            img.setAttribute("src",
+	              '${pageContext.request.contextPath}/photo/'
+	              + url);
+	            img.setAttribute("name", url);
+	
+	            bcontent_area.append(img);
+	          } else {
+	            console.error(ajax.responseText);	
+	          }
+	        }
+	      };
+	      ajax
+	        .open(
+	          "POST",
+	          "${pageContext.request.contextPath}/board/setphoto",
+	          true); //
+	      ajax.send(formData);
+	    }
+	  })
+	  
+	  
+	/* 등록 */
+	const writeFrm = document.querySelector('#writeFrm');
+	const modifyBtn = document.querySelector('#modifyBtn');
+	const bcontent = document.querySelector('.bcontent');
+	modifyBtn.addEventListener("click", (e) => {
+		console.log('등록');
+		bcontent.value = bcontent_area.innerHTML;
+		
+		const thumbnail_name = document.querySelector('.added_img')
+		if (thumbnail_name != null) {
+			const thumbnail = document.querySelector('.thumbnail');
+			thumbnail.value = thumbnail_name.getAttribute('name');
+		}
+		
+		writeFrm.submit();				
+		})
+</script>
 </html>

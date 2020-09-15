@@ -14,9 +14,6 @@ import lombok.Data;
 @Data
 @Entity
 public class BoardVO {
-
-
-
 private long bnum;																																			  //bnum number primary key, --게시글 번호
 @Valid
 private BcategoryVO bcategory;         						//catNum catName							  //bcategory number , -- 게시판 코드
@@ -29,31 +26,24 @@ private long ucode;																																						  //ucode number NOT NU
 private String btitle;																																						  //btitle varchar2(60) NOT NULL, --게시글 제목
 @NotNull
 @Size(min=4, max=1500, message="본문은 최소 4자,  최대 1500자까지 입력가능합니다.")
-private String bcontent;																																  //bcontent varchar2(500) NOT NULL, -- 게시글 내용    
+private byte[]  bcontent;																																  //bcontent varchar2(500) NOT NULL, -- 게시글 내용
+private String tcontent;
 private  long bhits;																																					  //bhits number NOT NULL, --조회수
 private Timestamp bcdate;																												  //bCdate timestamp NOT NULL, --생성일
 private Timestamp budate;																										  //bUdate  timestamp NOT NULL, --수정일
 private  long bgroup;																						  //bGroup  number (5), --답글 그룹번호
 private  long bstep;																																				  //bstep number(5), --답글 순서 
 private  long bindent;																																		 // bindent number(5), --답글 들여쓰기 
-
 private long dbrownum;   //SQL : board "dbrownum" 게시글 목록 row_number() over(order by bgroup asc, bstep desc) as  dbrownum로 생성
 private String bnickname; //SQL : member.nickname as "bnickname"
 			
 
 //첨부파일
 
+private byte[] thumbnail; // 썸네일
 private List<MultipartFile>  files;
 private BoardFileVO boardFileVO;
 private ThumbnailVO thumbnailVO; //섬네일
 
  
-
-
-
-
-
-
-
-
 }

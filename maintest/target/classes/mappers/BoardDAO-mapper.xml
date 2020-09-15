@@ -583,7 +583,11 @@ t3.nickname like '%'||#{searchKeyword}||'%'
 
 
 
-
+	<!-- 썸네일 가져오기 -->
+	<select id="getThumbnail"
+		resultType="com.my.maintest.board.vo.BoardFileVO">
+		select * from board_upload_file
+	</select>
 
 
 </mapper>

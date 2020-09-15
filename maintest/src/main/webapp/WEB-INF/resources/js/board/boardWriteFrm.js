@@ -1,21 +1,97 @@
 'use strict'
-
-
-        const writeBtn = document.getElementById("writeBtn");
-        const writeFrm = document.getElementById("writeFrm");
+	/* 등록 */		
+	const writeFrm = document.querySelector('#writeFrm');
+	const writeBtn = document.querySelector('#writeBtn');
+	const bcontent = document.querySelector('.bcontent');
+	writeBtn.addEventListener("click", (e) => {
+		console.log('등록');
+		bcontent.value = bcontent_area.innerHTML;
+		
+		const thumbnail_name = document.querySelector('.added_img')
+		if (thumbnail_name != null) {
+			const thumbnail = document.querySelector('.thumbnail');
+			thumbnail.value = thumbnail_name.getAttribute('name');
+		}
+		
+		writeFrm.submit();				
+		})
+		
+		/* 사진 추가 */
+	const add_img_btn = document.querySelector('.add_img_btn');
+	const add_img = document.querySelector('.add_img');
+	const bcontent_area = document.querySelector('.bcontent_area');
+	add_img_btn.addEventListener('click', (e) => {
+		e.preventDefault();
+		add_img.click();
+		console.log('클릭됨');
+		}
+	)
+	
+	add_img.addEventListener("change", (e) => {
+	    if (e.target.files && e.target.files[0]) {		
+		  console.log('이벤트');
+	      var formData = new FormData();	
+	      formData.append("file", e.target.files[0]);	
+	      console.log(formData);
+	
+	      var ajax = new XMLHttpRequest();
+	      ajax.onreadystatechange = function () {
+	        if (ajax.readyState === ajax.DONE) {
+	          if (ajax.status === 200
+	            || ajax.status === 201) {
+	            const url = ajax.responseText;
+	            console.log(url);
+	            
+	            const img = document
+	              .createElement('img');
+	            img.classList.add('added_img')
+	            img.setAttribute("src",
+	              '${pageContext.request.contextPath}/photo/'
+	              + url);
+	            img.setAttribute("name", url);
+	
+	            bcontent_area.append(img);
+	          } else {
+	            console.error(ajax.responseText);	
+	          }
+	        }
+	      };
+	      ajax
+	        .open(
+	          "POST",
+	          "${pageContext.request.contextPath}/board/setphoto",
+	          true); //
+	      ajax.send(formData);
+	    }
+	  })
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
         const listBtn = document.getElementById("listBtn");
    
         const filesBoxTag = document.getElementById("filesBox");      
         const filesTag = document.getElementById("files");
         		
-			  const bCateTag = document.getElementById("bcategory")
-				const hidCateTag = document.getElementById("hidcategory")
+		    const bCateTag = document.getElementById("bcategory")
+			const hidCateTag = document.getElementById("hidcategory")
 				        //게시판 분류 카테고리 별 말머리 연동 ajax
     		bCateTag.addEventListener("change", getHeadid_f);
         
-        writeBtn.addEventListener("click", writeBtn_f);
-        listBtn.addEventListener("click", listBtn_f);       
-        filesBoxTag.addEventListener("click", filesBoxTag_f);
+        //writeBtn.addEventListener("click", writeBtn_f);
+        //listBtn.addEventListener("click", listBtn_f);       
+        //filesBoxTag.addEventListener("click", filesBoxTag_f);
   
         
         //게시글 등록버튼
@@ -46,6 +122,7 @@
    			    filesTag.addEventListener("change", (e) => {
 
                 console.log(e.target.files);
+                
                 const imgContentTag = document.querySelector(".img_content");
                 imgContentTag.innerHTML = "";
                 Array.from(e.target.files).forEach(function (file) {
@@ -68,8 +145,6 @@
                     newDiv2.appendChild(newDiv3);
                     newDiv1.appendChild(newDiv2);
                     imgContentTag.appendChild(newDiv1);
-
-
                 })
             })
 

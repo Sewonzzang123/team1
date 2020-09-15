@@ -1,15 +1,16 @@
 package com.my.maintest.board.controller;
 
 
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.my.maintest.board.svc.BCommentSVC;
 import com.my.maintest.board.svc.BoardSVC;
@@ -42,6 +45,7 @@ import com.my.maintest.common.paging.PagingComponent;
 import com.my.maintest.common.paging.SearchCriteria;
 
 import lombok.extern.slf4j.Slf4j;
+import net.coobird.thumbnailator.Thumbnails;
 @Slf4j
 @Controller
 @RequestMapping("/board")
@@ -70,7 +74,7 @@ public class BoardController {
 		bcategoryVO = boardSVC.selectBcategory();
 		return bcategoryVO;
 	}
-	
+
 	// 게시판 말머리 조회(ajax)
 	@PostMapping(value = "/headid", produces = "application/json")
 	 @ResponseBody
@@ -111,15 +115,10 @@ public class BoardController {
 		//표시할 게시글 수
 		long recNumPerPage = 10;		
 		Map<String,Object> map = boardSVC.selectArticlesWithKey(bcategoryVO.getBtype(), catnum.orElse(0), reqPage.orElse(1), recNumPerPage, searchType, searchKeyword);	
-		
 		model.addAttribute("boardVO",(List<BoardVO>)map.get("list"));
 		model.addAttribute("pagingComponent",(PagingComponent)map.get("pagingComponent"));
 		model.addAttribute("bcategoryVO", bcategoryVO);
-		
-		
-		
-		return 
-					"/board/boardMainFrm";
+		return 	"/board/boardMainFrm";
 			}
 
 
@@ -137,28 +136,90 @@ public class BoardController {
 			BcategoryVO bcategoryVO = boardSVC.selectBtype(catnum);
 			bcategoryVO.setCatname("글쓰기");			
 			model.addAttribute("bcategoryVO", bcategoryVO);
+			
+			model.addAttribute("catnum", catnum);//정민
 		
 		return "/board/boardWriteFrm";
 	}
 
+	// 사진등록
+	@ResponseBody
+	@RequestMapping(value = "/setphoto", produces = "application/String;charset=utf8")
+	public String set_photo(MultipartHttpServletRequest mtf) throws Exception {
+		Map<String, String> result = new HashMap<>();
+		logger.info("사진업로드허출");
+		// 파일 태그
+		String fileTag = "file";
+		// 업로드 파일이 저장될 경로
+		String filePath = "C:\\Users\\Administrator\\git\\team1\\maintest\\src\\main\\webapp\\resources\\photo\\";
+		// 파일 이름
+		MultipartFile file = mtf.getFile(fileTag);
+		String fileName = file.getOriginalFilename();
+
+		try {
+			file.transferTo(new File(filePath + fileName));
+		} catch (Exception e) {
+			System.out.println("업로드 오류");
+		}
+
+		result.putIfAbsent("url", filePath + fileName);
+		logger.info(filePath + fileName);
+		return fileName;
+	}
+	// 게시글 등록
+//	@PostMapping("/write")
+//	public String toWrite(
+//			 HttpServletRequest request
+//			,@RequestParam("returnPage") String returnPage
+//			, @Valid  @ModelAttribute BoardVO boardVO
+//			, BindingResult result
+//			,Model model
+//	) {
+//		
+//		 if (result.hasErrors()) {
+//		 return "/board/boardWriteFrm";		 		 
+//		 }
+//		boardSVC.insertArticle(boardVO);
+//		
+//		return "redirect:/board/read/" + boardVO.getBnum();
+//	}
+	
 	// 게시글 등록
 	@PostMapping("/write")
-	public String toWrite(
-			 HttpServletRequest request
-			,@RequestParam("returnPage") String returnPage
-			, @Valid  @ModelAttribute BoardVO boardVO
-			, BindingResult result
-			,Model model
-	) {
-		
-		 if (result.hasErrors()) {
-		 return "/board/boardWriteFrm";		 		 
-		 }
+	public String toWrite(@RequestParam String bcontent_area, @RequestParam(value = "thumbnail") String thumb_img_name,
+			@ModelAttribute BoardVO boardVO) throws Exception {
+
+		boardVO.setBcontent(bcontent_area.getBytes("UTF-8"));
+
+		// 썸네일 등록
+		if (!thumb_img_name.equals("null")) {
+
+			String pathName = "C:\\Users\\Administrator\\git\\team1\\maintest\\src\\main\\webapp\\resources\\photo\\"
+					+ thumb_img_name;
+			// 썸네일로 만들 파일
+			File thumb_img_file = new File(pathName);
+			// 썸네일을 담을 파일
+			File thumbnail = new File(
+					"C:\\Users\\Administrator\\git\\team1\\maintest\\src\\main\\webapp\\resources\\photo\\썸네일_" + thumb_img_name);
+
+			// 대상 파일을 리사징 후 썸네일 파일에 저장
+			if (thumb_img_file.exists()) {
+				// 썸네일
+				thumbnail.getParentFile().mkdir();
+
+				Thumbnails.of(thumb_img_file).size(300, 300).toFile(thumbnail);
+
+				boardVO.setThumbnail(Files.readAllBytes(thumbnail.toPath()));
+			}
+		} else {
+			boardVO.setThumbnail(null);
+		}
+
 		boardSVC.insertArticle(boardVO);
-		
-		return "redirect:/board/read/" + boardVO.getBnum();
+		String bnum = String.valueOf(boardVO.getBnum());
+
+		return "redirect:/board/read/" + bnum;
 	}
-	
 
 	// 게시글열람
 	@GetMapping({
@@ -169,14 +230,13 @@ public class BoardController {
 	public String toRead(@PathVariable("bnum") Long bnum,
 			@PathVariable("catnum") int catnum,
 			@ModelAttribute("returnPage") String returnPage,
-			@ModelAttribute SearchCriteria searchCriteria, Model model) {		
+			@ModelAttribute SearchCriteria searchCriteria, Model model)  throws UnsupportedEncodingException{		
 		
 	
 		// svc는 map 타입을 반환값으로 가짐
-		Map<String, Object> map = boardSVC.selectArticle(bnum);		
-	
+		Map<String, Object> map = boardSVC.selectArticle(bnum);			
 		BoardVO boardVO = (BoardVO)map.get("boardVO");
-
+		boardVO.setTcontent(new String(boardVO.getBcontent(), "UTF-8"));//정민
 		// 파일 타입은 List<BoardFileVO>	
 		List<BoardFileVO> files = ((List<BoardFileVO>)  map.get("files"));
 		
@@ -239,8 +299,7 @@ public class BoardController {
 			@PathVariable("fid") long fid
 			,@PathVariable(value="isthumb", required = false) String  isThumb			
 			, Model model) {
-		ResponseEntity<String> responseEntity = null;
-		
+		ResponseEntity<String> responseEntity = null;		
 		long result = boardSVC.deleteFile(fid,isThumb);
 
 		if (result == 1) {
@@ -254,12 +313,79 @@ public class BoardController {
 	}
 
 	// 게시글수정
-	@PostMapping("/save")
-	public String toSaveChanges(@ModelAttribute BoardVO boardVO
-			,@RequestParam("returnPage") String returnPage
-			, Model model) {
+//	@PostMapping("/save")
+//	public String toSaveChanges(@ModelAttribute BoardVO boardVO
+//			,@RequestParam("returnPage") String returnPage
+//			, Model model) {
+//		boardSVC.updateArticle(boardVO);
+//		return "redirect:/board/read/" + boardVO.getBnum() +"/" + returnPage;
+//	}
+//
+//	// 게시글삭제
+//	@GetMapping("/delete/{bnum}")
+//	public String toDeleteArticle(@PathVariable("bnum") int bnum, Model model) {
+//
+//		boardSVC.deleteArticle(bnum);
+//		return "redirect:/board";
+//	}
+
+	// 게시글수정
+	@GetMapping("/modifyFrm/{bnum}")
+	public String toModifyFrm(@PathVariable("bnum") int bnum, Model model) throws UnsupportedEncodingException {
+		logger.info("수정호출");
+
+		Map<String, Object> map = boardSVC.selectArticle(bnum);
+
+		BoardVO boardVO = (BoardVO) map.get("boardVO");
+		boardVO.setTcontent(new String(boardVO.getBcontent(), "UTF-8"));
+		// 파일 타입은 List<BoardFileVO>
+		List<BoardFileVO> files = ((List<BoardFileVO>) map.get("files"));
+
+		model.addAttribute("boardVO", boardVO);
+		model.addAttribute("files", files);
+
+		logger.info(boardVO.toString());
+
+//		model.addAttribute("boardVO", boardVO);
+		return "/board/boardModifyFrm";
+	}
+//게시글 수정처리
+	@PostMapping("/modify")
+	public String toModify(@RequestParam String bcontent_area, @RequestParam(value = "thumbnail") String thumb_img_name,
+			@ModelAttribute BoardVO boardVO) throws IOException {
+		logger.info("수정호출");
+		logger.info(boardVO.toString());
+
+		boardVO.setBcontent(bcontent_area.getBytes("UTF-8"));
+
+		// 썸네일 등록
+		if (!thumb_img_name.equals("null")) {
+
+			String pathName = "C:\\Users\\Administrator\\git\\team1\\maintest\\src\\main\\webapp\\resources\\photo\\"
+					+ thumb_img_name;
+			// 썸네일로 만들 파일
+			File thumb_img_file = new File(pathName);
+			// 썸네일을 담을 파일
+			File thumbnail = new File(
+					"C:\\Users\\Administrator\\git\\team1\\maintest\\src\\main\\webapp\\resources\\photo\\썸네일_" + thumb_img_name);
+
+			// 대상 파일을 리사징 후 썸네일 파일에 저장
+			if (thumb_img_file.exists()) {
+				// 썸네일
+				thumbnail.getParentFile().mkdir();
+
+				Thumbnails.of(thumb_img_file).size(300, 300).toFile(thumbnail);
+
+				boardVO.setThumbnail(Files.readAllBytes(thumbnail.toPath()));
+			}
+		} else {
+			boardVO.setThumbnail(null);
+		}
+
+		String bnum = String.valueOf(boardVO.getBnum());
 		boardSVC.updateArticle(boardVO);
-		return "redirect:/board/read/" + boardVO.getBnum() +"/" + returnPage;
+
+		return "redirect:/board/read/" + bnum;
 	}
 
 	// 게시글삭제
@@ -274,16 +400,13 @@ public class BoardController {
 	@GetMapping("/boardReplyFrm/{bnum}/{returnPage}")
 	public String toboardReplyFrm(@PathVariable("bnum") long bnum, @ModelAttribute("returnPage") String returnPage,
 			Model model) {
-
 		Map<String, Object> map = null;
 		map = boardSVC.selectArticle(bnum);
 		// 맵안에서 게시글데이터를 가져와 가공한다.
 		BoardVO boardVO = (BoardVO) map.get("boardVO");
 		boardVO.setBtitle("[답글]" + boardVO.getBtitle());
-		boardVO.setBcontent("[원글]" + boardVO.getBcontent());
-
+		boardVO.setTcontent("[원글]" + boardVO.getTcontent());
 		model.addAttribute("boardVO", boardVO);
-
 		return "/board/boardReplyFrm";
 	}
 
@@ -300,6 +423,5 @@ public class BoardController {
 		return "redirect:/board/boardListFrm/"+ returnPage;
 	}
 	
-
 	
 }

@@ -51,6 +51,9 @@ public interface BoardDAO {
 	int updateBstep(long bgroup, long bstep);
 		
 	
+	// 텍스트 이미지 게시판 수정 시작
+	List<BoardFileVO> getThumbnail();
+
 	
 	
 	

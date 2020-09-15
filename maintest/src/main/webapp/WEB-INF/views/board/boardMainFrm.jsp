@@ -17,10 +17,7 @@
 		<%@ include file="/WEB-INF/views/layout/header.jsp"%>
 		<!-- 메인 베너 _ 이미지  + hidden 요소 catnum, returnPage-->
 		<%@ include file="/WEB-INF/views/layout/mainbanner.jsp"%>
-
-
 		<div class="main_wrap">
-
 			<!-- 게시판 카테고리 메뉴  -->
 			<%@ include file="/WEB-INF/views/board/included/boardAsideMenu.jsp"%>
 

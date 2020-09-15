@@ -349,10 +349,6 @@
     <artifactId>imgscalr-lib</artifactId>
     <version>4.2</version>
 </dependency>
-
-		
-		
-		
 		
 
 		<!-- JPA(Java Persitence API) Validation 시작 -->

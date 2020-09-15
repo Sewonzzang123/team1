@@ -115,10 +115,6 @@ public class BoardDAOImpl implements BoardDAO {
 		return sqlSession.insert("mappers.BoardDAO-mapper.insertArticle", boardVO);
 	}
 	
-
-
-	
-	
 //첨부파일 등록
 	@Override
 	public int insertFiles(BoardFileVO boardFileVO) {		
@@ -174,9 +170,6 @@ public int updateBhits(long bnum) {
 		return sqlSession.selectOne("mappers.BoardDAO-mapper.selectFileToDwLoad", fid);
 	}
 
-
-
-
 		// 게시글 삭제
 		@Override
 		public int deleteArticle(long bnum) {			
@@ -202,12 +195,14 @@ public int updateBhits(long bnum) {
 			map.put("bstep", bstep);					
 			return sqlSession.update("mappers.BoardDAO-mapper.updateBstep", map );
 		}
-
-
-
 		
+	// 텍스트 이미지 게시판 수정 시작
+		// 썸네일 가져오기
+		@Override
+		public List<BoardFileVO> getThumbnail() {
 
-
+			return sqlSession.selectList("mappers.BoardDAO-mapper.getThumbnail");
+		}
 
 
 	}

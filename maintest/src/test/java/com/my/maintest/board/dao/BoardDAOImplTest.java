@@ -56,7 +56,7 @@ public class BoardDAOImplTest {
 		  boardVO.getHidcategory().setHidnum(hidNum);
 		  
 		  boardVO.setUcode(uCode); boardVO.setBtitle(bTitle);
-		  boardVO.setBcontent(bContent);
+		  boardVO.setTcontent(bContent);
 		  boardDAO.insertArticle(boardVO);
 		}
 	}
@@ -96,7 +96,7 @@ public class BoardDAOImplTest {
 		  
 		  boardVO.setUcode(uCode); 
 		  boardVO.setBtitle(bTitle);
-		  boardVO.setBcontent(bContent);
+		  boardVO.setTcontent(bContent);
 		  boardVO.setBgroup(bgroup);
 		  boardVO.setBstep(bstep);
 		  boardVO.setBindent(bindent);
@@ -150,7 +150,7 @@ public class BoardDAOImplTest {
 		BoardVO boardVO = new BoardVO();
 		boardVO.setBnum(84);
 		boardVO.setBtitle("수정된 제목");
-		boardVO.setBcontent("수정된 내용");
+		boardVO.setTcontent("수정된 내용");
 		BcategoryVO bcategory = new BcategoryVO();
 		boardVO.setBcategory(bcategory);
 		boardVO.getBcategory().setCatnum("1");
