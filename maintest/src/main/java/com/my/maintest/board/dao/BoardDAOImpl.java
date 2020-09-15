@@ -41,42 +41,66 @@ public class BoardDAOImpl implements BoardDAO {
 
 	// 전체 게시글 조회 + 페이징
 	@Override
-	public List<BoardVO> selectArticles(long recFrom, long recTo) {
+	public List<BoardVO> selectArticles(int catnum, long recFrom, long recTo) {
 
 		Map<String, Object> map = new HashMap<>();
 
 		map.put("recFrom", recFrom);
 		map.put("recTo", recTo);
+		map.put("catnum", catnum);
 
 		return sqlSession.selectList("mappers.BoardDAO-mapper.selectArticles", map);
 	}
 
 	// 게시판 타입 조회
 	@Override
-	public String selectBtype(long catnum) {
+	public BcategoryVO selectBtype(long catnum) {
 		return sqlSession.selectOne("mappers.BoardDAO-mapper.selectBtype", catnum);
 	}
 
 //갤러리게시판(catnum:2)  썸네일 첨부파일 전체 정보 불러오기 
 	@Override
 	public List<BoardFileVO> selectThumbnailFiles(long catnum) {
-
 		return sqlSession.selectList("mappers.BoardDAO-mapper.selectThumbnailFiles", catnum);
 	}
 
-//전체게시글 조회 + 페이징 + 검색어 (게시판타입 / 레코드 범위 / 검색타입 / 검색어)
+//전체게시글 조회 + 페이징 + 검색어 (블로그타입게시판 / 레코드 범위 / 검색타입 / 검색어)
 	@Override
-	public List<BoardVO> selectArticlesWithKey(long catnum, long recFrom, long recTo, String searchType,
+	public List<BoardVO> selectArticlesWithKey_Blog(long catnum, long recFrom, long recTo, String searchType,
 			String searchKeyword) {
 		Map<String, Object> map = new HashMap<String, Object>();
-
+		map.put("catnum", catnum);
 		map.put("recFrom", recFrom);
 		map.put("recTo", recTo);
 		map.put("searchType", searchType);
 		map.put("searchKeyword", searchKeyword);
-		map.put("catnum", catnum);
 
-		return sqlSession.selectList("mappers.BoardDAO-mapper.selectArticlesWithKey", map);
+		System.out.println("catnum       ============== " + catnum);
+		System.out.println("recFrom       ============== " + recFrom);
+		System.out.println("recTo       ============== " + recTo);
+		System.out.println("searchType       ============== " + searchType);
+		System.out.println("searchKeyword       ============== " + searchKeyword);
+		return sqlSession.selectList("mappers.BoardDAO-mapper.selectArticlesWithKey_Blog", map);
+	}
+
+	// 전체게시글 조회 + 페이징 + 검색어 (앨범타입게시판 (썸네일 포함) / 레코드 범위 / 검색타입 / 검색어)
+	@Override
+	public List<BoardVO> selectArticlesWithKey_Album(long catnum, long recFrom, long recTo, String searchType,
+			String searchKeyword) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("catnum", catnum);
+		map.put("recFrom", recFrom);
+		map.put("recTo", recTo);
+		map.put("searchType", searchType);
+		map.put("searchKeyword", searchKeyword);
+
+		System.out.println("catnum    Key_Album   ============== " + catnum);
+		System.out.println("recFrom     Key_Album  ============== " + recFrom);
+		System.out.println("recTo       Key_Album============== " + recTo);
+		System.out.println("searchType       Key_Album============== " + searchType);
+		System.out.println("searchKeyword       Key_Album============== " + searchKeyword);
+
+		return sqlSession.selectList("mappers.BoardDAO-mapper.selectArticlesWithKey_Album", map);
 	}
 
 	// 게시글 등록
@@ -104,7 +128,6 @@ public class BoardDAOImpl implements BoardDAO {
 		List<BoardFileVO> files = null;
 		files = (sqlSession.selectList("mappers.BoardDAO-mapper.selectFiles", bnum));
 
-		System.out.println("board DAO 파일 조회 =============================" + files.toString());
 		return files;
 	}
 
@@ -123,8 +146,12 @@ public class BoardDAOImpl implements BoardDAO {
 
 	// 첨부파일 일부 삭제
 	@Override
-	public int deleteFile(long fid) {
-		return sqlSession.delete("mappers.BoardDAO-mapper.deleteFile", fid);
+	public int deleteFile(long fid, String isThumb) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("fid", fid);
+		map.put("isThumb", isThumb);
+
+		return sqlSession.delete("mappers.BoardDAO-mapper.deleteFile", map);
 	}
 
 //첨부파일 다운로드
@@ -157,25 +184,6 @@ public class BoardDAOImpl implements BoardDAO {
 		map.put("bgroup", bgroup);
 		map.put("bstep", bstep);
 		return sqlSession.update("mappers.BoardDAO-mapper.updateBstep", map);
-	}
-
-	// 썸네일 가져오기
-	@Override
-	public List<BoardFileVO> getThumbnail() {
-		// TODO Auto-generated method stub
-		return sqlSession.selectList("mappers.BoardDAO-mapper.getThumbnail");
-	}
-
-	@Override
-	public BoardFileVO getpost() {
-		// TODO Auto-generated method stub
-		return sqlSession.selectOne("mappers.BoardDAO-mapper.getpost");
-	}
-
-	@Override
-	public int setpost(BoardFileVO boardFileVO) {
-		// TODO Auto-generated method stub
-		return sqlSession.insert("mappers.BoardDAO-mapper.setpost", boardFileVO);
 	}
 
 }

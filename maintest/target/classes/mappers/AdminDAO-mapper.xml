@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mappers.AdminDAO-mapper">
-	<select id="getCate"
-		resultType="BcategoryVO">
+	<select id="getCate" resultType="BcategoryVO">
 		select catnum,catname,btype,bmemo from bcategory order by catnum
 		<!-- select t1.catnum, t1.catname, t1.btype, t1.bmemo, t2.hidnum as "headIdCategory.hidnum" 
 			, t2.hidname as "headIdCategory.hidname" from bcategory t1 LEFT OUTER JOIN 
@@ -14,15 +13,16 @@
 		catnum=${catnum}
 	</delete>
 
-	<insert id="createBoard"
-		parameterType="BcategoryVO">
-		insert into bcategory (catnum, catname, btype, bmemo)
-		values (bnum_seq.NEXTVAL, #{catname}, #{btype}, #{bmemo})
+	<insert id="createBoard" parameterType="BcategoryVO">
+		insert into bcategory
+		(catnum, catname, btype, bmemo)
+		values (bnum_seq.NEXTVAL, #{catname},
+		#{btype}, #{bmemo})
 	</insert>
 
-	<update id="setBoard"
-		parameterType="BcategoryVO">
-		update bcategory set catname = #{catname},
+	<update id="setBoard" parameterType="BcategoryVO">
+		update bcategory set catname
+		= #{catname},
 		btype=#{btype}, bmemo=#{bmemo} where catnum=#{catnum}
 	</update>
 
@@ -46,13 +46,12 @@
 	</delete>
 
 	<!-- 아이템 관리 -->
-	<select id="getIcate"
-		resultType="ItemCategoryVO">
+	<select id="getIcate" resultType="ItemCategoryVO">
 		select * from i_category
 	</select>
 
 	<select id="getItem" resultType="ItemVO">
-		select ca_num as"itemCategoryVO.ca_num", i_num, i_name 
+		select ca_num as"itemCategoryVO.ca_num", i_num, i_name
 		from item
 		 <![CDATA[where i_num<1000    ]]>
 	</select>
@@ -86,8 +85,9 @@
 	</update>
 
 	<insert id="setItem" parameterType="hashMap">
-		insert into item (ca_num, i_num, i_name, lnum) 
-		values (#{ca_num }, I_NUM_SEQ.nextval, #{i_name}, 0)
+		insert into item (ca_num,
+		i_num, i_name)
+		values (#{ca_num }, I_NUM_SEQ.nextval, #{i_name})
 	</insert>
 
 	<select id="total_member" resultType="int">
@@ -117,8 +117,7 @@
 		</if>
 	</select>
 
-	<select id="memberlist"
-		resultType="MemberVO"
+	<select id="memberlist" resultType="MemberVO"
 		parameterType="hashMap">
 		select ucode, id, pw, name, tel,
 		nickname, cdate, num
@@ -135,8 +134,7 @@
 		desc
 	</select>
 
-	<select id="memberlist_ck"
-		resultType="MemberVO"
+	<select id="memberlist_ck" resultType="MemberVO"
 		parameterType="hashMap">
 		select ucode, id, pw, name, tel,
 		nickname, cdate, num

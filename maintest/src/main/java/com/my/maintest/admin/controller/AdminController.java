@@ -190,5 +190,4 @@ public class AdminController {
 		return "강퇴완료";
 	}
 
-
 }

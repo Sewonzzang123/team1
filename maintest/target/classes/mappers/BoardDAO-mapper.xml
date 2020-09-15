@@ -344,14 +344,30 @@
 	<select id="selectArticle" parameterType="long"
 		resultType="com.my.maintest.board.vo.BoardVO">
 
-		select * from board where bnum = #{bnum}
+		<!-- select * from board where bnum = #{bnum} -->
 
-		<!-- select t1.bnum, t2.catname as "bcategory.catname", t2.catnum as "bcategory.catnum", 
-			t4.hidname as "hidcategory.hidname", t4.hidnum as "hidcategory.hidnum", t3.nickname 
-			as bnickname, t1.ucode, t1.bhits, t1.btitle, t1.bcontent, t1.bcdate, t1.budate, 
-			t1.bgroup, t1.bstep, t1.bIndent from board t1, bcategory t2, member t3, headid 
-			t4 where t1.bcategory = t2.catnum and t1.ucode = t3.ucode and t1.hidcategory 
-			= t4.hidnum and bnum = #{bnum} -->
+		select t1.bnum,
+		t2.catname as "bcategory.catname",
+		t2.catnum as
+		"bcategory.catnum",
+		t4.hidname as "hidcategory.hidname",
+		t4.hidnum as
+		"hidcategory.hidnum",
+		t3.nickname as bnickname,
+		t1.ucode,
+		t1.bhits,
+		t1.btitle,
+		t1.bcontent,
+		t1.bcdate,
+		t1.budate,
+		t1.bgroup,
+		t1.bstep,
+		t1.bIndent
+		from board t1, bcategory t2, member t3, headid t4
+		where
+		t1.bcategory = t2.catnum and t1.ucode = t3.ucode and t1.hidcategory =
+		t4.hidnum and
+		bnum = #{bnum}
 
 	</select>
 
@@ -390,14 +406,12 @@
 		parameterType="com.my.maintest.board.vo.BoardVO">
 
 		update board set
-		bnum = #{bnum},
 		bcategory=
 		#{bcategory.catnum},
 		hidcategory= #{hidcategory.hidnum},
-		ucode = (select
-		ucode from member where nickname = #{bnickname}),
 		btitle= #{btitle},
-		bcontent= #{bcontent},
+		bcontent=
+		#{bcontent},
 		budate=systimestamp
 		where bnum = #{bnum}
 
