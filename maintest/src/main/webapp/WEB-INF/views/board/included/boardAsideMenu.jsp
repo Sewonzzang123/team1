@@ -10,11 +10,13 @@
             <div class="category_now">
               <div class="now_wrap">
               	<c:choose >
-              	<c:when test="${requestScope.bcategoryVO.catnum != 0 }">
-                <h2>${requestScope.bcategoryVO.catname }</h2>              	          	
+              	<c:when test="${requestScope.bcategoryVO.catnum != 0 }">              	
+              		<a	href="${pageContext.request.contextPath}/board/${requestScope.bcategoryVO.catnum }"> 
+              		${requestScope.bcategoryVO.catname }</a>                       	          	
               	</c:when>    
               	<c:otherwise>
-              	 <h2>전체글</h2>
+              	<a	href="${pageContext.request.contextPath}/board"> 
+              	 전체글</a>    
               	 </c:otherwise>
               	</c:choose>
                 <div class="underline"></div>

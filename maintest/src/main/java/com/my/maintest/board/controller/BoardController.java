@@ -123,6 +123,7 @@ public class BoardController {
 
 
 	
+	
 	// 게시글 작성 화면
 	@GetMapping("/boardWriteFrm/{catnum}/{returnPage}")
 	public String toboardWriteFrm(
@@ -145,8 +146,12 @@ public class BoardController {
 	// 사진등록
 	@ResponseBody
 	@RequestMapping(value = "/setphoto", produces = "application/String;charset=utf8")
-	public String set_photo(MultipartHttpServletRequest mtf) throws Exception {
-		Map<String, String> result = new HashMap<>();
+	public String set_photo(
+			MultipartHttpServletRequest mtf
+			) throws Exception {
+		Map<String, String> result = new HashMap<>();		
+		
+		
 		logger.info("사진업로드허출");
 		// 파일 태그
 		String fileTag = "file";
@@ -184,15 +189,20 @@ public class BoardController {
 //		return "redirect:/board/read/" + boardVO.getBnum();
 //	}
 	
+	
+	
 	// 게시글 등록
 	@PostMapping("/write")
-	public String toWrite(@RequestParam String bcontent_area, @RequestParam(value = "thumbnail") String thumb_img_name,
-			@ModelAttribute BoardVO boardVO) throws Exception {
-
+	public String toWrite(@RequestParam String bcontent_area, 
+			@RequestParam(value = "thumbnail") String thumb_img_name,
+			@ModelAttribute BoardVO boardVO
+			) throws Exception {		
 		boardVO.setBcontent(bcontent_area.getBytes("UTF-8"));
 
 		// 썸네일 등록
 		if (!thumb_img_name.equals("null")) {
+			
+			
 
 			String pathName = "C:\\Users\\Administrator\\git\\team1\\maintest\\src\\main\\webapp\\resources\\photo\\"
 					+ thumb_img_name;
@@ -232,6 +242,11 @@ public class BoardController {
 			@ModelAttribute("returnPage") String returnPage,
 			@ModelAttribute SearchCriteria searchCriteria, Model model)  throws UnsupportedEncodingException{		
 		
+		
+		// 게시판 타입 읽어오기 		
+		BcategoryVO bcategoryVO = boardSVC.selectBtype(catnum);
+		
+		
 	
 		// svc는 map 타입을 반환값으로 가짐
 		Map<String, Object> map = boardSVC.selectArticle(bnum);			
@@ -239,14 +254,14 @@ public class BoardController {
 		boardVO.setTcontent(new String(boardVO.getBcontent(), "UTF-8"));//정민
 		// 파일 타입은 List<BoardFileVO>	
 		List<BoardFileVO> files = ((List<BoardFileVO>)  map.get("files"));
-		
+			
 		//inner댓글 리스트 불러오기 
 		List<BCommentVO> list = bCommentSVC.selectBComments(bnum, 1, REC_NUM_PER_PAGE, PAGING_NUM_PER_PAGE);
-		
-		
+				
 		model.addAttribute("boardVO", boardVO);		
 		model.addAttribute("files",files);
 		model.addAttribute("innerList", list);
+		model.addAttribute("bcategoryVO", bcategoryVO);
 		
 		return "/board/boardReadFrm";
 	}
@@ -343,10 +358,7 @@ public class BoardController {
 
 		model.addAttribute("boardVO", boardVO);
 		model.addAttribute("files", files);
-
 		logger.info(boardVO.toString());
-
-//		model.addAttribute("boardVO", boardVO);
 		return "/board/boardModifyFrm";
 	}
 //게시글 수정처리

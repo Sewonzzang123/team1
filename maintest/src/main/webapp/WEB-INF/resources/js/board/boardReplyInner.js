@@ -2,8 +2,10 @@
 
  //controller 상호 전달 인수s
  const reqPage = document.getElementById("reqPage").value;
- const bnum = document.getElementById("bnum").value;
+ //const bnum = document.getElementById("bnum").value;
  const origin_pucode = document.getElementById("ucode").value;
+ 
+ 
 
 //작성창 
 const wrtTag = document.getElementById("filloutHere");
@@ -26,27 +28,25 @@ innerRe_wrapperTag.addEventListener("click",bcommentTags_f)
 
 innerRe_wrapperTag.addEventListener("mouseover",function(e){
 //부모 태그가 없을때 익셉션 처리
-	if( e.target.className =='innerRe_wrapper'){
-		console.log("부모요소없음");return;}
-	
+	if(e.target.closest(".bcomment") == undefined) 
+	{console.log("nulll들어옴" + e.target.tagName + e.target.className) 
+		return;
+		}
 	tagNowOn = e.target.className;
 	bcNumNowOn =e.target.closest(".bcomment").parentElement.getAttribute("data-bcnum");
 	
-
-//작성창 bcnum 리딩 익셉션처리
-if( e.target.closest(".bcomment") == null) {
- bcNumNowOn = '';
- return;} 
-
-if(clickedTag == undefined ) return;
-
+	if(clickedTag == undefined ) return;
 
 //댓글 리스트 
-if(clickedTag.classList.contains("fas")){       
-if(clickedBcNum !=e.target.closest(".bcomment").parentElement.getAttribute("data-bcnum") 
+if(clickedTag.classList.contains("fas") ){
+	
+if(clickedBcNum != bcNumNowOn 
 // ||e.target.closest(".bcomment").parentElement.getAttribute("data-bcnum") == undefined
 ){     	
-   //clickedTag.nextElementSibling.classList.add("hidden")   
+	
+	
+	
+   clickedTag.nextElementSibling.classList.add("hidden")   
    }
 }
 
@@ -105,7 +105,11 @@ function wrtTag_f(e){
 //부모&자식 댓글 파트
 //ellipsis 버튼 클릭 이벤트 	
 function ellipsisBtn_f(e){       
-    if(e.target.classList.contains("fa-ellipsis-v")  && e.target.tagName == 'I'){               	
+    if(e.target.classList.contains("fa-ellipsis-v")  && e.target.tagName == 'I'){      
+    	
+    	   console.log("ellipsisBtn_f : clicked BCNum:  전 " +clickedBcNum )
+    	
+    	
         //새로이 찍은 태그가 속한 댓글의 bcnum
      	nowClickedBcNum  =  e.target.closest(".bcomment").parentElement.getAttribute("data-bcnum");
         // 최초 클릭 clickedTag  == undefined
@@ -113,15 +117,17 @@ function ellipsisBtn_f(e){
             //클릭타겟이 바뀌면 BCNum도 같이 바뀌어야함.
             clickedTag = e.target; 
             clickedBcNum = nowClickedBcNum ;
+            
+          
         //다른 ellipsis 버튼을 클랙했을때 
         } else if(clickedBcNum != nowClickedBcNum){
                 clickedTag.nextElementSibling.classList.add("hidden");
                 clickedTag = e.target;
-                clickedBcNum = clickedBcNum;
+                clickedBcNum = clickedTag.closest(".bcomment").parentElement.getAttribute("data-bcnum");
          }
             //버튼 visible
            clickedTag.nextElementSibling.classList.remove("hidden");    
-                    
+ 
   }
      
 }
@@ -131,13 +137,13 @@ function ellipsisBtn_f(e){
 function modDelBtn_f(e){
 	let _bccontent = e.closest(".bcomment").parentElement.querySelector(".typed").textContent;
 	let bcnum = e.closest(".bcomment").parentElement.getAttribute("data-bcnum");
-	
+	let nickname = document.getElementById("IRnickname").textContent
     switch(e.textContent){
         case "수정": 
         if(e.tagName == 'BUTTON'){         
             let str = ''; 
             str += `<div class="filloutHere bcomment" >`;
-            str += `<div class="profile"><img src="../img/1.png" alt=""></div>`;
+            str += `<div class="profile"><div  class="profileImg">${nickname.substring(0,1) }</div></div>`;
             str += `<div class="userinfo">`;            
             str += `<div class="typed typing" contenteditable="true" data-placeholder="댓글 입력..." > ${_bccontent}</div>`
             str += `<div class=" rbtnGrp shown" id="rbtnGrp"> `
@@ -250,7 +256,7 @@ let str = '';
 
 str += `<div class="filloutHere bcomment" >`;
 
-str += `<div class="profile"><img src="../img/1.png" alt=""></div>`;
+str += `<div class="profile"><div  class="profileImg">${nickname.substring(0,1) }</div></div>`;
 str += `<div class="userinfo">`;
 str += `<div><span class="IRnickname">${nickname }</span></div>`;
 str += `<div class="typing" contenteditable="false" data-placeholder="댓글 입력..."></div>`
@@ -401,6 +407,12 @@ xhttp.send();
 //댓글 리스트 표현
 function showUpList(list){
  //값들어왔을때 화면처리 할 코드  
+	
+	
+	let nickname = document.getElementById("IRnickname").textContent
+	
+	
+	
               replaceableAreaTag.innerHTML ='';              
              Array.from(list).forEach(data=>{                 	
                 	let str ='';
@@ -412,10 +424,9 @@ function showUpList(list){
                 		//자식댓글일 경우
                 		console.log("자식 댓글")
                 		str += `<div class="children" data-bcnum="${data.bcnum}" data-bcgrp="${data.bcgrp}">`                          
-                    }
-                	
+                    }                	
                 		str += `<div class="bcomment">`
-                		    str += `<div class="profile"><img src="#" alt=""></div>`
+                		    str += `<div class="profile"> <div  class="profileImg">${data.nickname.substring(0,1) }</div></div>`
                 		    str += `<div class="userinfo">`
                 		        str += `<div>`
                 		        	 str += `<span class="IRnickname" data-nickname="${data.ucode }">${data.nickname}</span>`
@@ -428,6 +439,8 @@ function showUpList(list){
                 		            	 str += `<div class="typed" contenteditable="false">${data.bccontent}</div>`                    		      
                 		        str += `</div>`
                 		    str += `</div>`
+                		    	
+                		    	if (window.sessionStorage) {               		    	
                 		     str += ` <div class="ellipsis"><i class="fas fa-ellipsis-v"  ></i>`       
                 		        str += `<!-- 수정/삭제 히든메뉴 -->`
                 		        	str += ` <div class="ellipsis  hiddenMenu hidden" >`
@@ -437,13 +450,15 @@ function showUpList(list){
                 		            str += `</div>`
                 		        str += `</div>`
                 		    str += `</div>`
+                		    	}                		   	
+                		    	
                 		str += `</div>`                   	
                 	str += `</div>`                   	
                 	replaceableAreaTag.innerHTML +=  str;                  	
                 	str = '';         
                 })  
 } //showUpList
-
+//Math.floor(Math.random()*16777215).toString(16);
 
 //댓글 선호 비선호 처리 메소드 
 function voteGoodBad(e){

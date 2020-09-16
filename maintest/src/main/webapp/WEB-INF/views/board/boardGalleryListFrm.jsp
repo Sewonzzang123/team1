@@ -3,13 +3,6 @@
 <!-- 공통모듈 -->
 <%@ include file="/WEB-INF/views/included/common.jsp"%>
 
-<!-- 오늘 날짜 불러오기 -->
-<%-- <jsp:useBean id="now" class="java.util.Date" />
-<fmt:formatDate value="${now }" pattern="yy/MM/dd" var="today" />
- --%>
-<!-- css/javascript  -->
-<%-- <script defer type="text/javascript" src="${contextPath }/js/board/boardListFrm.js"></script> --%>
-
 <div class="gallery_list">
 <ul> 
 	<!-- data 들어오는 부분 loop-->

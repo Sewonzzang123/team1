@@ -1,37 +1,26 @@
 'use strict'
-	/* 등록 */		
-	const writeFrm = document.querySelector('#writeFrm');
-	const writeBtn = document.querySelector('#writeBtn');
-	const bcontent = document.querySelector('.bcontent');
-	writeBtn.addEventListener("click", (e) => {
-		console.log('등록');
-		bcontent.value = bcontent_area.innerHTML;
-		
-		const thumbnail_name = document.querySelector('.added_img')
-		if (thumbnail_name != null) {
-			const thumbnail = document.querySelector('.thumbnail');
-			thumbnail.value = thumbnail_name.getAttribute('name');
-		}
-		
-		writeFrm.submit();				
-		})
+	
 		
 		/* 사진 추가 */
 	const add_img_btn = document.querySelector('.add_img_btn');
+	
 	const add_img = document.querySelector('.add_img');
 	const bcontent_area = document.querySelector('.bcontent_area');
 	add_img_btn.addEventListener('click', (e) => {
 		e.preventDefault();
+		//input 파일 태그 클릭 == 파일 브라우저 창 팝업
 		add_img.click();
 		console.log('클릭됨');
 		}
 	)
 	
+	//파일첨부 되었을때 
 	add_img.addEventListener("change", (e) => {
 	    if (e.target.files && e.target.files[0]) {		
-		  console.log('이벤트');
+		  console.log(' 첨부 처리이벤트');
 	      var formData = new FormData();	
 	      formData.append("file", e.target.files[0]);	
+	      
 	      console.log(formData);
 	
 	      var ajax = new XMLHttpRequest();
@@ -42,30 +31,45 @@
 	            const url = ajax.responseText;
 	            console.log(url);
 	            
-	            const img = document
-	              .createElement('img');
+	            const img = document.createElement('img');
 	            img.classList.add('added_img')
-	            img.setAttribute("src",
-	              '${pageContext.request.contextPath}/photo/'
-	              + url);
+	            img.setAttribute("src", 
+	            		
+	            		//${pageContext.request.contextPath}
+	            
+	           '/pfpkg/photo/' + url);
 	            img.setAttribute("name", url);
 	
 	            bcontent_area.append(img);
 	          } else {
-	            console.error(ajax.responseText);	
+	        	  
+	        	  console.log("200아님 201 아님 ")
+	          //  console.error(ajax.responseText);	
 	          }
 	        }
 	      };
-	      ajax
-	        .open(
-	          "POST",
-	          "${pageContext.request.contextPath}/board/setphoto",
-	          true); //
+	      ajax.open( "POST", "/pfpkg/board/setphoto", true); 
 	      ajax.send(formData);
 	    }
 	  })
 		
 		
+		/* 등록 */		
+	const Frm = document.querySelector('#Frm');
+	const writeBtn = document.querySelector('#writeBtn');
+	const bcontent = document.querySelector('.bcontent');
+	writeBtn.addEventListener("click", (e) => {
+		console.log('등록');
+		bcontent.value = bcontent_area.innerHTML;
+		
+		const thumbnail_name = document.querySelector('.added_img')
+		if (thumbnail_name != null) {
+			//const thumbnail = document.querySelector('.thumbnail');
+			//thumbnail.value = thumbnail_name.getAttribute('name');
+		}
+		
+		Frm.submit();				
+		})
 		
 		
 		
@@ -74,21 +78,15 @@
 		
 		
 		
+		/*
 		
 		
 		
-		
-		
-        const listBtn = document.getElementById("listBtn");
-   
+        const listBtn = document.getElementById("listBtn");   
         const filesBoxTag = document.getElementById("filesBox");      
         const filesTag = document.getElementById("files");
         		
-		    const bCateTag = document.getElementById("bcategory")
-			const hidCateTag = document.getElementById("hidcategory")
-				        //게시판 분류 카테고리 별 말머리 연동 ajax
-    		bCateTag.addEventListener("change", getHeadid_f);
-        
+		
         //writeBtn.addEventListener("click", writeBtn_f);
         //listBtn.addEventListener("click", listBtn_f);       
         //filesBoxTag.addEventListener("click", filesBoxTag_f);
@@ -98,7 +96,7 @@
         function writeBtn_f(e){ 
         e.preventDefault();
             console.log("글등록 버튼 클릭");
-            writeFrm.submit();
+            Frm.submit();
     		 }
     		 
     		 
@@ -152,12 +150,21 @@
     
     }
     	   
-    	   
-     		
+    	   		 
+     	*/
      		
      		
 //보드 카테고리에 맞는 말머리 불러오기 
 //ajax
+		
+		
+const bCateTag = document.getElementById("bcategory")
+const hidCateTag = document.getElementById("hidcategory")
+	        //게시판 분류 카테고리 별 말머리 연동 ajax
+bCateTag.addEventListener("change", getHeadid_f);
+        
+     		
+
 function	getHeadid_f(e){   	 	
   const bCateTagVal = bCateTag.value;
   
@@ -198,6 +205,5 @@ function	getHeadid_f(e){
   xhttp.send(jsObjToJson);     	
      	
      	}
-     		 
-     	
+     
      		

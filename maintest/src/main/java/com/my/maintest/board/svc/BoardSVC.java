@@ -44,6 +44,9 @@ public interface BoardSVC {
 	long deleteArticle(long  bnum);
 	//게시글 답글 작성
 	long insertRepliedArticle(BoardVO boardVO);
+	
+	
+	
 
 	
 }

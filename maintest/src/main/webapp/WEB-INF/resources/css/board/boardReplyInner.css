@@ -1,7 +1,6 @@
 * {
             margin: 0px;
-
-
+	
 
             box-sizing: border-box;
         }
@@ -14,21 +13,22 @@
             list-style-type: none;
         }
 
-        .innerRe {
-
-           
+        .innerRe{           
            height: 100%;
-            /* margin: 50px; */
-            font-size: 0.8em;
-
+            margin-top: 30px;
+            font-size: 0.9em;
+						display:flex;
             width: 100%;
+            
+       
         }
 
-        .innerRe_wrapper {
-            width: 80%;
-            margin: 0px auto;
+        .innerRe_wrapper{
+        	justify-content:flex-end;
+            width: 100%;
+            margin-left: 30px ;
             padding-right: 30px;
-            height: 100vh;
+            height: auto;
         }
 
 
@@ -40,9 +40,10 @@
 
 
         .innerRe_wrapper .bcomment_wrapper .bcomment {
+        	margin-top:15px;
             width: 100%;
             display: grid;
-            grid-template-columns: repeat(1,minmax(20%, 80px) 1fr minmax(10%, 80px));
+            grid-template-columns: repeat(1,minmax(10%, 80px) 1fr minmax(10%, 80px));
         }
 
         .innerRe_wrapper  .hidden {
@@ -61,12 +62,12 @@
 	
         .innerRe_wrapper .bcomment .innerRe_area   {
             display: grid;
-            grid-template-columns: 20% 1fr;
+            grid-template-columns: minmax(50px,10%) 1fr;
         }
         
         	 .innerRe_wrapper .bcomment .userinfo .udate {
              display: grid;
-            grid-template-columns: 20% 20% 1fr;
+            grid-template-columns: minmax(50px,10%) 20% 1fr;
         	 }
         
          .innerRe_wrapper .bcomment .userinfo i {
@@ -86,12 +87,16 @@
         flex-direction: column;
         justify-content: center;        
         }
-        .innerRe_wrapper .bcomment .profile img {
+        
+        /* 프로필이미지 */
+        .innerRe_wrapper .bcomment .profile .profileImg {
+        display:inline-block;'
             vertical-align: middle;
-            width: 70px;
-            height: 70px;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
             border-radius: 50px 50px;
-            background-color: none;
+            background-color: lightgray;            
         }
 
         /* 공통CSS 끝  */
@@ -127,7 +132,8 @@
          .innerRe_wrapper .filloutHere.bcomment{
          	width: 100%;
             display: grid;
-            grid-template-columns: minmax(20%, 80px) 1fr ;
+            grid-template-columns: minmax(50px, 10%) 1fr ;
+            padding: 3px;
          }
          
          

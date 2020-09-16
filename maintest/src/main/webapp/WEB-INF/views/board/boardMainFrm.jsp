@@ -4,10 +4,10 @@
 <%@ include file="/WEB-INF/views/included/common.jsp"%>
 
 <!-- css/javascript  -->
-<link rel="stylesheet"
-	href="${contextPath }/css/board/boardMainFrm.css?ver=${today}">
-<script defer type="text/javascript"
-	src="${contextPath }/js/board/boardMainFrm.js"></script>
+<link rel="stylesheet" 	href="${contextPath }/css/board/boardMainFrm.css?ver=${today}">
+	<link rel="stylesheet" 	href="${contextPath}/css/board/button.css?ver=2"> 
+	
+<script defer type="text/javascript"	src="${contextPath }/js/board/boardMainFrm.js"></script>
 <title>Board Main</title>
 
 </head>

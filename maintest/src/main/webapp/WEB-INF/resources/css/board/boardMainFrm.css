@@ -74,9 +74,15 @@ i.navbar_toggleBtn {
 }
 
 .main_wrap nav .nav_wrap .category_now .now_wrap {
-  color: white;
+
   display: table-cell;
   vertical-align: middle;
+}
+
+
+.main_wrap nav .nav_wrap .category_now .now_wrap a {
+  color: white;
+
 }
 
 .main_wrap nav .nav_wrap .category_now .now_wrap .underline {
@@ -2245,6 +2251,10 @@ footer .footer_img img {
   .main_wrap .section_wrap {
     margin-top: 65px;
   }
+
+
+
+
 
   .main_wrap nav .nav_wrap .category ul {
     list-style: none;

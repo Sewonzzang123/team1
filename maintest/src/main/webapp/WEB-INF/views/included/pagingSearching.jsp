@@ -54,5 +54,5 @@
 	</form>
 	<input type="text" name="searchKeyword" id="searchKeyword"
 		value="${pagingComponent.searchCriteria.searchKeyword}">
-	<button type="button" id="searchBtn">검색</button>
+	<button type="button" class="btn" id="searchBtn">검색</button>
 </div>
