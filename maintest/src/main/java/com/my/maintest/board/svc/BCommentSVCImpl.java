@@ -56,7 +56,8 @@ public List<BCommentVO> selectBComments( long bnum, long reqPage, long recNumPer
 	 List<BCommentVO> list = null;	 	 
 	 PagingComponent pagingComponent = new PagingComponent(reqPage, recNumPerPage, pagingNumsPerPage);
 
-	 	list = bCommentDAO.selectBComments(bnum, pagingComponent.getRecordCriteria().getRecFrom(),pagingComponent.getRecordCriteria().getRecTo());
+	int RecFrom = 1;
+	 	list = bCommentDAO.selectBComments(bnum,RecFrom,pagingComponent.getRecordCriteria().getRecTo());
 	 	return list;
 }
 

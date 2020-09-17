@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Insert title here</title>
 
-<link rel="stylesheet" href="${contextPath }/css/board/boardReplyInner.css?ver=2">
+<link rel="stylesheet" href="${contextPath }/css/board/boardReplyInner.css?ver=3">
 <script defer type="text/javascript" src="${contextPath }/js/board/boardReplyInner.js?ver=2"></script>
 
 
@@ -31,10 +31,10 @@
                     <div><span class="IRnickname" id="IRnickname">${sessionScope.member.nickname }</span></div>
                     <c:choose>
                     <c:when test="${! empty sessionScope.member }">
-                    <div class="typing" contenteditable="false" data-placeholder="댓글 입력..."></div>
+                    <div class="typing isLogin" contenteditable="false"  data-isLogin="true" data-placeholder="댓글 입력..."></div>
                     </c:when>
                       <c:when test="${empty sessionScope.member}">
-                      <div class="typing disabled" contenteditable="false" data-placeholder="로그인 후 이용가능..."></div>                  
+                      <div class="typing disabled" contenteditable="false"  data-isLogin="false" data-placeholder="로그인 후 이용가능..."></div>                  
                      </c:when>                    
                     </c:choose>
                     <div class=" rbtnGrp hidden" id="rbtnGrp">                        
@@ -46,11 +46,14 @@
             
             
             <!-- 댓글 목록-->
-
             <!-- inner comment -->
             <div class="bcomment_wrapper" id="replaceableArea">
-
-		</div><!-- bcomment_wrapper  -->
+					<!--ajax data  -->
+					
+					
+					
+					</div><!-- bcomment_wrapper  -->
+			<button type="button"  class="btn btn-showMore"  id="showMoreBtn" onClick="showMore_f(this)"  data-innerRqPage="1">더보기</button> 
 	</div><!-- innerRe_wrapper  -->
 </div><!-- innerRe -->
 

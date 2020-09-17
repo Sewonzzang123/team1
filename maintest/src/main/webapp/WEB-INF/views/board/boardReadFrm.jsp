@@ -16,7 +16,7 @@
 	<main>
 		<!-- uppermost  메뉴  -->
 		<%@ include file="/WEB-INF/views/layout/header.jsp"%>
-		<!-- 메인 베너 _ 이미지  + hidden 요소 catnum, returnPage-->
+		<!-- 메인 베너 _ 이미지  + hidden 요소 catnum, reqPage-->
 		<%@ include file="/WEB-INF/views/layout/mainbanner.jsp"%>
 		<div class="main_wrap">
 			<!-- 게시판 카테고리 메뉴  -->
@@ -26,36 +26,32 @@
 				<div class="acticle_wrap">
 					<div class="hidden_area">					
 					
-						<input type="hidden" id="bnum" name="bnum"
-							value="${requestScope.boardVO.bnum }" /> 			
-							<input type="hidden"
-							id="ucode" name="ucode" value="${requestScope.boardVO.ucode }" />
-						<input type="hidden" id="returnPage" name="returnPage"
-							value="${requestScope.returnPage}" /> <input type="hidden"
-							id="searchType" name="searchType"
-							value="${requestScope.searchCriteria.searchType }" /> <input
-							type="hidden" id="searchKeyword" name="searchKeyword"
-							value="${requestScope.searchCriteria.searchKeyword }" /> <input
-							type="hidden" id="catnum" name="catnum"
-							value="${requestScope.boardVO.bcategory.catnum }" /> <input
-							type="hidden" id="reqPage" name="reqPage" value="1" />							
+						<input type="hidden" id="bnum" name="bnum" value="${requestScope.boardVO.bnum }" /> 			
+							<input type="hidden"				id="ucode" name="ucode" value="${requestScope.boardVO.ucode }" />
+							<input type="hidden" id="returnPage" name="returnPage"		value="${requestScope.returnPage}" />
+							 <input type="hidden"			id="searchType" name="searchType"		value="${requestScope.searchCriteria.searchType }" /> 
+							 <input		type="hidden" id="searchKeyword" name="searchKeyword"			value="${requestScope.searchCriteria.searchKeyword }" /> 
+							<input			type="hidden" id="catnum" name="catnum"	value="${requestScope.boardVO.bcategory.catnum }" /> 
+							<%-- <input				type="hidden" id="reqPage" name="reqPage" value="${requestScope.reqPage }" />		 --%>
+							<input type="hidden" id="hidnum" name="hidnum"				value="${requestScope.boardVO.hidcategory.hidnum}" />
+																				
 							
 					</div>
 					
 		<div class="article_top_btn">
 						<div class="left_area">
-							<input type="button" class="article_rep_btn article_btn"
+							<input type="button" class="btn article_rep_btn article_btn"
 									value="답글"></input>
 							<c:if
 								test="${requestScope.boardVO.ucode == sessionScope.member.ucode}">
-								<input type="button" class="article_del_btn article_btn"
+								<input type="button" class="btn article_del_btn article_btn"
 									value="수정"></input>
-								<input type="button" class="article_mod_btn article_btn"
+								<input type="button" class="btn article_mod_btn article_btn"
 									value="삭제"></input>
 							</c:if>
 						</div>
 						<div class="right_area">
-							<input type="button" class="article_list_btn article_btn"
+							<input type="button" class=" btn  article_list_btn article_btn"
 								value="목록"></input>
 						</div>
 					</div> 
@@ -126,9 +122,9 @@
 						<div class="left_area">
 							<c:if
 								test="${requestScope.boardVO.ucode == sessionScope.member.ucode}">
-								<input type="button" class="article_del_btn article_btn"
+								<input type="button" class="btn  article_del_btn article_btn"
 									value="수정"></input>
-								<input type="button" class="article_mod_btn article_btn"
+								<input type="button" class=" btn  article_mod_btn article_btn"
 									value="삭제"></input>
 							</c:if>
 						</div>

@@ -8,7 +8,8 @@
 	<!-- data 들어오는 부분 loop-->
 		<c:forEach var="tdata" items="${requestScope.boardVO}">
 			<li class="inner">
-			<a href="${contextPath }/board/read/${tdata.bcategory.catnum}/${tdata.bnum}/${pagingComponent.pageCriteria.currReqPage}/${pagingComponent.searchCriteria.searchType}/${pagingComponent.searchCriteria.searchKeyword}">
+			<a href="${contextPath }/board/read/${tdata.bcategory.catnum}/${tdata.bnum}
+			/${pagingComponent.pageCriteria.currReqPage}/${pagingComponent.searchCriteria.searchType}/${pagingComponent.searchCriteria.searchKeyword}">
 					<div class="li_img">
 						<img name=""
 							src="data:${tdata.thumbnailVO.thumbftype };base64,${tdata.thumbnailVO.base64encoded}"

@@ -36,8 +36,8 @@
 		<interceptor>
 			<!-- 1) 특정 uri지정 -->
 			<mapping path="/mypage/**/" />
-			<mapping path="/board/writeForm/**" />
-			<mapping path="/board/reply/**" />
+			<mapping path="/board/boardWriteFrm/**" />
+			<mapping path="/board/boardReplyFrm/**" />
 			<!-- 2) interceptor구현 클래스 -->
 			<beans:bean id="loginInterceptor"
 				class="com.my.maintest.interceptor.AuthenticationInterceptor" />

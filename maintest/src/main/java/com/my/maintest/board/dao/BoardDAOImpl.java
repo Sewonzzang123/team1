@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Repository;
 
 import com.my.maintest.board.vo.BcategoryVO;
@@ -79,11 +80,7 @@ public class BoardDAOImpl implements BoardDAO {
 		map.put("searchType", searchType);
 		map.put("searchKeyword", searchKeyword);
 		
-		System.out.println("catnum       ============== " +catnum );
-		System.out.println("recFrom       ============== " +recFrom );
-		System.out.println("recTo       ============== " + recTo);
-		System.out.println("searchType       ============== " +searchType );
-		System.out.println("searchKeyword       ============== " +searchKeyword );
+		
 		return sqlSession.selectList("mappers.BoardDAO-mapper.selectArticlesWithKey_Blog", map ) ;
 	}
 
@@ -97,11 +94,7 @@ public class BoardDAOImpl implements BoardDAO {
 		map.put("searchType", searchType);
 		map.put("searchKeyword", searchKeyword);
 		
-		System.out.println("catnum    Key_Album   ============== " +catnum );
-		System.out.println("recFrom     Key_Album  ============== " +recFrom );
-		System.out.println("recTo       Key_Album============== " + recTo);
-		System.out.println("searchType       Key_Album============== " +searchType );
-		System.out.println("searchKeyword       Key_Album============== " +searchKeyword );
+		
 		
 		return sqlSession.selectList("mappers.BoardDAO-mapper.selectArticlesWithKey_Album", map ) ;
 	}
@@ -140,6 +133,9 @@ public List<BoardFileVO> selectFiles(long bnum) {
 //게시글 조회수 갱신
 @Override
 public int updateBhits(long bnum) {
+	
+	System.out.println("조회수 갱신  ============== ");
+	
 	return sqlSession.update("mappers.BoardDAO-mapper.updateBhits",bnum);
 }
 

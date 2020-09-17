@@ -17,11 +17,14 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
+		
+
+		logger.info("인터셉터 작동 " );
+		
 		// 요청URL분석
 		String uri = request.getRequestURI();
 		String contextPath = request.getContextPath();
 		String reqURI = uri.substring(contextPath.length());
-
 		MemberVO memberVO = (MemberVO) request.getSession().getAttribute("member");
 		if (memberVO == null || memberVO.getId().isEmpty()) {
 			response.sendRedirect(request.getContextPath() + "/loginForm?reqURI=" + reqURI);
@@ -31,6 +34,14 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 		return true;
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {

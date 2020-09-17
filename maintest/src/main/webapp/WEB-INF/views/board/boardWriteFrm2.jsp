@@ -78,41 +78,18 @@
 										
 										
 			<div class="hidden_toolbar_menu">										
-								
+											<input multiple type="file" class="add_img"		style="display: none;">
+												 <input type="hidden"	name="thumbnail" class="thumbnail" value="null">
+										</div></li> 
 
-								
-			</div></li> 						
-			
-			
-	
+
 
 									<li class="bcontent_li">
-									 <input	type="hidden" class="tcontent" name="bcontent_area" >								
+									 <input	type="hidden" class="bcontent" name="bcontent_area" >
 										
-										<textarea class="bcontent_area"  name ="tcontent"  id="bcontent_area" contenteditable="true"  data-placeholder="내용을 입력하세요">	 
-									 	</textarea>
-									 	
-									 	<textarea class="bcontent_area"  name ="tcontent"  id="bcontent_area" contenteditable="true"  data-placeholder="내용을 입력하세요">	 
-									 	</textarea>
-									 	
-									 	<textarea class="bcontent_area"  name ="tcontent"  id="bcontent_area" contenteditable="true"  data-placeholder="내용을 입력하세요">	 
-									 	</textarea>
-									 	<textarea class="bcontent_area"  name ="tcontent"  id="bcontent_area" contenteditable="true"  data-placeholder="내용을 입력하세요">	 
-									 	</textarea>
-									 	
-									 	<textarea class="bcontent_area"  name ="tcontent"  id="bcontent_area" contenteditable="true"  data-placeholder="내용을 입력하세요">	 
-									 	</textarea>
-									 	
-									 	
-									 	
-									 <input type="file"	name="files" class="thumbnail">
-									<input type="file"	name="files" class="thumbnail">
-									<input type="file"	name="files" class="thumbnail">
-									 
-									 									 
-									
-									 
-									 
+										
+										<div class="bcontent_area"   id="bcontent_area" contenteditable="true"
+									 data-placeholder="내용을 입력하세요">${boardVO.bcontent }</div>
 										<form:errors cssClass="bound_error" path="bcontent"></form:errors></li>
 
 							

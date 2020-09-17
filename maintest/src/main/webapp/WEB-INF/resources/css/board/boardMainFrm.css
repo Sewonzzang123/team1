@@ -135,6 +135,7 @@ i.navbar_toggleBtn {
 .main_wrap .section_wrap .section_table table th {
   height: 40px;
   border-bottom: 1px dotted gray;
+  text-align: center;
 }
 
 .main_wrap .section_wrap .section_table table th:not(.title),

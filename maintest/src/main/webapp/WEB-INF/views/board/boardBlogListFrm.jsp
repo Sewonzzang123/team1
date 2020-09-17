@@ -7,8 +7,8 @@
 <table>
 	<thead>
 		<tr>
-			<th>번호</th>
-			<th>게시판분류</th>
+			<!-- <th>번호</th> -->
+			<th></th>
 			<th class="title">제목</th>
 			<th>작성자</th>
 			<th>조회수</th>
@@ -18,13 +18,19 @@
 	<tbody>
 		<c:forEach var="tdata" items="${requestScope.boardVO}">
 			<tr>
-				<td>${tdata.dbrownum }</td>
+				<%-- <td>${tdata.dbrownum }</td> --%>
 				<td>${tdata.bcategory.catname}</td>
-				<td class="title"><a	href="${contextPath }/board/read/${tdata.bcategory.catnum}/${tdata.bnum}/${pagingComponent.pageCriteria.currReqPage}/${pagingComponent.searchCriteria.searchType}/${pagingComponent.searchCriteria.searchKeyword}"
-					id="btitle"> <!-- 페이징 넘버 반영해서 리스트버튼 누르면 같은 페이지로  --> <c:if
-							test="${tdata.bstep != 0  }">
+				<td class="title">
+				<a	href="${contextPath }/board/read/${tdata.bcategory.catnum}/${tdata.bnum}
+				/${pagingComponent.pageCriteria.currReqPage}/${pagingComponent.searchCriteria.searchType}/${pagingComponent.searchCriteria.searchKeyword}"	id="btitle">
+				
+				
+				 <!-- 페이징 넘버 반영해서 리스트버튼 누르면 같은 페이지로  --> 					
+						<c:if	test="${tdata.bstep != 0  }">
 							<span style="padding-left:${tdata.bindent *20+10}px; ">└${tdata.btitle}</span>
-						</c:if> <c:if test="${tdata.bstep == 0  }">
+						</c:if> 
+						
+						<c:if test="${tdata.bstep == 0  }">
 							<span style="padding-left:${tdata.bindent *20+10}px; ">[${tdata.hidcategory.hidname}]</span>
 							<span>${tdata.btitle}</span>
 						</c:if>
@@ -33,7 +39,7 @@
 				<td>${tdata.bnickname}</td>
 				<td>${tdata.bhits}</td>
 				<td><fmt:formatDate value="${tdata.bcdate}"
-						pattern="yy/MM/dd HH:mm" /></td>
+						pattern="yy/MM/dd " /></td>
 			</tr>
 		</c:forEach>
 	</tbody>

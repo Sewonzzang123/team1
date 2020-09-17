@@ -43,16 +43,23 @@ public class BCommentController {
 		
 	@GetMapping(value={
 			"/{bnum}",
-			"/{bnum}/{reqPage}"} , produces = "application/json")
+			"/{bnum}/{innerRqPage}"} , produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<Map> toGetListInner(
 			@PathVariable("bnum") long bnum,
-			@PathVariable("reqPage") Optional<Integer> reqPage		
+			@PathVariable("innerRqPage") Optional<Integer> innerRqPage		
 			) {
+					System.out.println("innerRqPage" + innerRqPage);
+					
+					
+					
 		ResponseEntity<Map> res = null;		
 		Map<String, Object> map = new HashMap<>();				
-			List<BCommentVO> list = bCommentSVC.selectBComments(bnum,reqPage.orElse(1), REC_NUM_PER_PAGE, PAGING_NUM_PER_PAGE);
-		 map.put("result", "OK");
+			List<BCommentVO> list = bCommentSVC.selectBComments(bnum,innerRqPage.orElse(1), REC_NUM_PER_PAGE, PAGING_NUM_PER_PAGE);
+			System.out.println("댓글 불러오기 리스트 사이즈" + list.size());
+			
+			
+			map.put("result", "OK");
 			map.put("list", list);
 			res = new ResponseEntity<Map>(map, HttpStatus.OK);
 		return res;
@@ -61,10 +68,10 @@ public class BCommentController {
 	
 	
 	//부모 댓글등록 (inner)
-	@PostMapping(value={"/replyP", "/replyP/{reqPage}"} ,produces="application/json")
+	@PostMapping(value={"/replyP", "/replyP/{innerRqPage}"} ,produces="application/json")
 	public ResponseEntity<Map>  toReplyInner(
 			@Valid @RequestBody BCommentVO bCommentVO,			
-			@PathVariable("reqPage") Optional<Integer> reqPage
+			@PathVariable("innerRqPage") Optional<Integer> innerRqPage		
 		,HttpServletRequest request
 			) {				
 		ResponseEntity<Map> res = null;		
@@ -83,7 +90,7 @@ public class BCommentController {
 			//등록 성공시 댓글 LIST 정보 읽어서반환 			
 			System.out.println(" bCommentVO.getBnum()  == = = = " + bCommentVO.getBnum());
 			
-			List<BCommentVO> list = bCommentSVC.selectBComments(bCommentVO.getBnum(),reqPage.orElse(1), REC_NUM_PER_PAGE, PAGING_NUM_PER_PAGE);
+			List<BCommentVO> list = bCommentSVC.selectBComments(bCommentVO.getBnum(),innerRqPage.orElse(1), REC_NUM_PER_PAGE, PAGING_NUM_PER_PAGE);
 			
 			map.put("result", "OK");
 			map.put("list", list);
@@ -97,10 +104,10 @@ public class BCommentController {
 	
 	
 	//자식댓글 등록 
-	@PostMapping(value={"/replyC", "/replyC/{reqPage}"}, produces="application/json")
+	@PostMapping(value={"/replyC", "/replyC/{innerRqPage}"}, produces="application/json")
 	public ResponseEntity<Map> toReplyInnerOnCmt(
 			@Valid @RequestBody BCommentVO bCommentVO,
-			@PathVariable("reqPage") Optional<Integer> reqPage
+			@PathVariable("innerRqPage") Optional<Integer> innerRqPage		
 			,HttpServletRequest request		
 			){
 		ResponseEntity<Map> res = null;	
@@ -113,7 +120,7 @@ public class BCommentController {
 		
 		Map<String, Object> map = new HashMap<>();
 		if(result >= 0) {			
-			List<BCommentVO> list = bCommentSVC.selectBComments(bCommentVO.getBnum(),reqPage.orElse(1), REC_NUM_PER_PAGE, PAGING_NUM_PER_PAGE);
+			List<BCommentVO> list = bCommentSVC.selectBComments(bCommentVO.getBnum(),innerRqPage.orElse(1), REC_NUM_PER_PAGE, PAGING_NUM_PER_PAGE);
 			map.put("result", "OK");
 			map.put("list", list);			
 			res = new ResponseEntity<Map>(map,HttpStatus.OK);			
@@ -127,10 +134,10 @@ public class BCommentController {
 	
 	
 	//댓글 수정 
-	@PostMapping(value= {"/modify", "/modify/{reqPage}"}, produces="application/json")
+	@PostMapping(value= {"/modify", "/modify/{innerRqPage}"}, produces="application/json")
 	public ResponseEntity<Map> toModify(
 			@Valid @RequestBody BCommentVO bCommentVO,
-			@PathVariable("reqPage") Optional<Integer> reqPage,
+			@PathVariable("innerRqPage") Optional<Integer> innerRqPage,		
 			HttpServletRequest request
 			){
 		ResponseEntity<Map> res = null;	
@@ -139,7 +146,7 @@ public class BCommentController {
 		
 		Map<String, Object> map = new HashMap<>();
 		if(result >= 0) {
-			List<BCommentVO> list = bCommentSVC.selectBComments(bCommentVO.getBnum(),reqPage.orElse(1), REC_NUM_PER_PAGE, PAGING_NUM_PER_PAGE);
+			List<BCommentVO> list = bCommentSVC.selectBComments(bCommentVO.getBnum(),innerRqPage.orElse(1), REC_NUM_PER_PAGE, PAGING_NUM_PER_PAGE);
 			map.put("result", "OK");
 			map.put("list", list);			
 			res = new ResponseEntity<Map>(map,HttpStatus.OK);			
@@ -153,10 +160,10 @@ public class BCommentController {
 	
 	
 	//댓글 삭제
-	@PostMapping(value= {"/delete", "/delete/{reqPage}"}, produces="application/json")
+	@PostMapping(value= {"/delete", "/delete/{innerRqPage}"}, produces="application/json")
 	public ResponseEntity<Map> toDelete(
 			@Valid @RequestBody BCommentVO bCommentVO,
-			@PathVariable("reqPage") Optional<Integer> reqPage,
+			@PathVariable("innerRqPage") Optional<Integer> innerRqPage,		
 			HttpServletRequest request
 			){
 		ResponseEntity<Map> res = null;	
@@ -166,7 +173,7 @@ public class BCommentController {
 		
 		Map<String, Object> map = new HashMap<>();
 		if(result >= 0) {
-			List<BCommentVO> list = bCommentSVC.selectBComments(bCommentVO.getBnum(),reqPage.orElse(1), REC_NUM_PER_PAGE, PAGING_NUM_PER_PAGE);
+			List<BCommentVO> list = bCommentSVC.selectBComments(bCommentVO.getBnum(),innerRqPage.orElse(1), REC_NUM_PER_PAGE, PAGING_NUM_PER_PAGE);
 			map.put("result", "OK");
 			map.put("list", list);			
 			res = new ResponseEntity<Map>(map,HttpStatus.OK);			
@@ -185,7 +192,7 @@ public class BCommentController {
 	@PostMapping(value= {"/vote/{reqPage}" },produces="application/json")
 	public ResponseEntity<Map> toVote(
 			@Valid @RequestBody BCoVoteVO bCoVoteVO,
-			@PathVariable("reqPage") Optional<Integer> reqPage,
+			@PathVariable("innerRqPage") Optional<Integer> innerRqPage,		
 			HttpServletRequest request		
 			){
 		ResponseEntity<Map> res = null;
@@ -201,7 +208,7 @@ public class BCommentController {
 	 int result = 	bCommentSVC.updateVote(bCoVoteVO);
 	 Map<String, Object> map = new HashMap<>();
 	 if(result >= 0) {
-			List<BCommentVO> list = bCommentSVC.selectBComments(bCoVoteVO.getBnum(),reqPage.orElse(1), REC_NUM_PER_PAGE, PAGING_NUM_PER_PAGE);
+			List<BCommentVO> list = bCommentSVC.selectBComments(bCoVoteVO.getBnum(),innerRqPage.orElse(1), REC_NUM_PER_PAGE, PAGING_NUM_PER_PAGE);
 			map.put("result", "OK");
 			map.put("list", list);			
 			res = new ResponseEntity<Map>(map,HttpStatus.OK);			

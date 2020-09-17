@@ -33,15 +33,15 @@ public class BoardDAOImplTest {
 
 	@Test
 	@DisplayName("게시글 등록")
-	@Disabled
+	//@Disabled
 	void insertArticle() {
 		
-		for(int i = 1 ; i < 20; i++ ) {
+		for(int i = 0 ; i < 20; i++ ) {
 		String catNum = "1";
 		String hidNum = "1";
 		long uCode = 5;
 		String bTitle = "제목1"+i;
-		String bContent = "내용111111";
+		String bContent = "내용"+i;
 
 		BcategoryVO BcategoryVO = new BcategoryVO();
 		HeadIdCategoryVO headIdCategoryVO = new HeadIdCategoryVO();
@@ -56,7 +56,7 @@ public class BoardDAOImplTest {
 		  boardVO.getHidcategory().setHidnum(hidNum);
 		  
 		  boardVO.setUcode(uCode); boardVO.setBtitle(bTitle);
-		  boardVO.setTcontent(bContent);
+		  boardVO.setBcontent(bContent.getBytes());
 		  boardDAO.insertArticle(boardVO);
 		}
 	}

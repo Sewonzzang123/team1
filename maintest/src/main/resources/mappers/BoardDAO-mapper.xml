@@ -372,6 +372,10 @@ b_bnum_seq.nextVal,
 </insert>
 
 
+<!-- 조회수 갱신-->
+<update id="updateBhits" parameterType="long">
+update board set bhits = bhits+1 where bnum = #{bnum}
+</update>
 
 
 <!-- 	// 글 열람	 -->
@@ -417,14 +421,6 @@ isThumb
 from board_upload_file
 where bnum = #{bnum}
 </select>
-
-
-
-<!-- 조회수 갱신-->
-<update id="updateBhits" parameterType="long">
-update board set bhits = bhits+1 where bnum = #{bnum}
-
-</update>
 
 
 

@@ -23,6 +23,9 @@ public class AdminAuthenticationInterceptor extends HandlerInterceptorAdapter {
 		String contextPath = request.getContextPath();
 		String reqURI = uri.substring(contextPath.length());
 
+		
+		
+		
 		MemberVO memberVO = (MemberVO) request.getSession().getAttribute("member");
 		if (memberVO != null) {
 			logger.info(memberVO.getUcode());

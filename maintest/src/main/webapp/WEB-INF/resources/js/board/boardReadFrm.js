@@ -48,7 +48,7 @@ console.log('수정 요청')
 
   // gotop 버튼
   if (e.target.classList.contains('article_gotop_btn')) {
-    window.scrollTo(0, 0);
+    window.scrollTo(0, 250);
   }
 
   // 첨부파일 버튼

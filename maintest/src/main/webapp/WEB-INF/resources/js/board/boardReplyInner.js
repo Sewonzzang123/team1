@@ -4,14 +4,23 @@
  const reqPage = document.getElementById("reqPage").value;
  //const bnum = document.getElementById("bnum").value;
  const origin_pucode = document.getElementById("ucode").value;
- 
- 
+//로그인 여부체크
+ let isLogin = document.querySelector(".typing").classList.contains("isLogin")
 
+
+ 	
+	
+ 
+ 
+ 
 //작성창 
 const wrtTag = document.getElementById("filloutHere");
 const replaceableAreaTag = document.getElementById("replaceableArea")
 const innerRe_wrapperTag =  document.querySelector(".innerRe_wrapper")
-
+//inner 댓글 리스트 페이지 수 
+let innerRqPage = Number(document.getElementById("showMoreBtn").getAttribute("data-innerRqPage")) ;
+	 
+	 //document.getElementById("showMoreBtn").getAttribute("data-innerRqPage");	
 //목록 불러오기 
 list_f();
 //마우스 해당구역 벗어날때 메뉴 히든 처리 
@@ -28,33 +37,19 @@ innerRe_wrapperTag.addEventListener("click",bcommentTags_f)
 
 innerRe_wrapperTag.addEventListener("mouseover",function(e){
 //부모 태그가 없을때 익셉션 처리
-	if(e.target.closest(".bcomment") == undefined) 
-	{console.log("nulll들어옴" + e.target.tagName + e.target.className) 
-		return;
-		}
+	if(e.target.closest(".bcomment") == undefined) return;
 	tagNowOn = e.target.className;
 	bcNumNowOn =e.target.closest(".bcomment").parentElement.getAttribute("data-bcnum");
 	
-	if(clickedTag == undefined ) return;
-
 //댓글 리스트 
-if(clickedTag.classList.contains("fas") ){
-	
+if(clickedTag == undefined ) return;
+if(clickedTag.classList.contains("fas") ){	
 if(clickedBcNum != bcNumNowOn 
 // ||e.target.closest(".bcomment").parentElement.getAttribute("data-bcnum") == undefined
 ){     	
-	
-	
-	
    clickedTag.nextElementSibling.classList.add("hidden")   
    }
 }
-
-hideNowOpenedMenu_f(e);
-
-
-
-
 })
 
 //wrapper 전역 클릭 이벤트 감지 
@@ -80,6 +75,7 @@ console.log(" 댓글 목록 안에서 클릭한 타켓 ====[" + e.target.classNa
 
 
 
+
 //이벤트 리스너 구현 파트
 //----------------------------------------------------------------------------------------------------------------	 
 function wrtTag_f(e){     
@@ -87,10 +83,9 @@ function wrtTag_f(e){
      //댓글 작성창 파트
      //활성화  타겟 : typing    
     if(e.target.classList.contains("typing") && e.target.tagName == 'DIV'){
-    	
-    	if(e.target.dataset["placeholder"].indexOf("로그인") != -1){    		
-    		alert("로그인이 필요한 서비스 입니다.로그인 하시겠습니까?")    
-    }  else{    	
+    	//로그인 체크 메소드
+    	 checkLogin();
+    	 if(isLogin){
      	console.log("타이핑 구역 클릭")        
         e.target.setAttribute("contenteditable", "true");
         e.target.focus();        
@@ -98,18 +93,18 @@ function wrtTag_f(e){
         e.target.nextElementSibling.classList.remove("hidden");
          e.target.nextElementSibling.classList.add("shown");
         e.target.classList.add("typable"); 
-         }    
+    	 }
     }
 }//wrtTag_f
+
+
 
 //부모&자식 댓글 파트
 //ellipsis 버튼 클릭 이벤트 	
 function ellipsisBtn_f(e){       
-    if(e.target.classList.contains("fa-ellipsis-v")  && e.target.tagName == 'I'){      
-    	
+    if(e.target.classList.contains("fa-ellipsis-v")  && e.target.tagName == 'I'){    	
     	   console.log("ellipsisBtn_f : clicked BCNum:  전 " +clickedBcNum )
-    	
-    	
+    	   	
         //새로이 찍은 태그가 속한 댓글의 bcnum
      	nowClickedBcNum  =  e.target.closest(".bcomment").parentElement.getAttribute("data-bcnum");
         // 최초 클릭 clickedTag  == undefined
@@ -172,7 +167,7 @@ function modDelBtn_f(e){
 function list_f(e){
 	const xhttp = new XMLHttpRequest();
 	xhttp.addEventListener("readystatechange", ajaxCall);
-	const url = `http://localhost:9080/pfpkg/bcomment/${bnum}/${reqPage}`;
+	const url = `http://localhost:9080/pfpkg/bcomment/${bnum}/1`;
 	xhttp.open('get',url)
 	xhttp.setRequestHeader('Content-Type','application/json;charset=utf-8')
 	xhttp.send();      
@@ -228,20 +223,16 @@ function del_f(bcnum){
 
 
 
-//마우스가 해당 댓글을 벗어날때 ellipsis 히든 버튼 감추기
-function hideNowOpenedMenu_f(e){ 
-     
-      
-    }
-
-
-
 //답글쓰기 버튼 
 
 function replyWriting_f(e){
  if(e.target.classList.contains("reReply")  && e.target.tagName == 'BUTTON'){   
-if(e.target.closest(".bcomment").parentElement.childElementCount  < 2){
+	//로그인 체크 메소드
+		checkLogin();
+		if(isLogin){
+if(e.target.closest(".bcomment").parentElement.childElementCount  < 2){	
  	addWindow(e);
+}
 }
 }
 }
@@ -249,13 +240,9 @@ if(e.target.closest(".bcomment").parentElement.childElementCount  < 2){
 
 //댓글 입력창 추가 메소드 
 function addWindow(e){
-
 let nickname = document.getElementById("IRnickname").textContent
-
 let str = ''; 
-
 str += `<div class="filloutHere bcomment" >`;
-
 str += `<div class="profile"><div  class="profileImg">${nickname.substring(0,1) }</div></div>`;
 str += `<div class="userinfo">`;
 str += `<div><span class="IRnickname">${nickname }</span></div>`;
@@ -265,7 +252,6 @@ str += `<button class="btn" id="rwriteBtn" onClick="rbtnGrpTag_f(this)">등록</
 str += `<button class="btn" id="rcancelBtn" onClick="rbtnGrpTag_f(this)">취소</button>`
 str += `</div>`
 str += `</div>`
-
 str += `</div>`
 e.target.closest(".bcomment").parentElement.innerHTML += str;
 
@@ -277,8 +263,7 @@ e.target.closest(".bcomment").parentElement.innerHTML += str;
 function rbtnGrpTag_f(e){  
   if(e.textContent == '등록' && e.tagName == 'BUTTON'){    
 		console.log(" 등록 시작")
-     const reqMsg = {};
-     
+     const reqMsg = {};     
   		let bcgrp;
   		let pucode;
   		let bcindent = 0;
@@ -302,13 +287,13 @@ function rbtnGrpTag_f(e){
         reqMsg.pucode = pucode;   
         reqMsg.bcindent = bcindent;
         
-        console.log("부모글에 댓글 달기 bcgrp ======" + bcgrp);           
+           
         }
       //자식 댓글의 댓글
       if(e.closest(".bcomment").parentElement.className == 'children'){ 
        //자식댓글인 경우 추가로 부모댓글의 bcnum을 grp번호로 가진다.    
         
-    	  bcgrp = e.closest(".bcomment").parentElement.getAttribute("data-bcgrp"); 
+    	 bcgrp = e.closest(".bcomment").parentElement.getAttribute("data-bcgrp"); 
         pucode = e.closest(".bcomment").parentElement.querySelector(".IRnickname").getAttribute("data-nickname");
         bcindent = 1;
         
@@ -340,6 +325,7 @@ if(e.closest(".bcomment").parentElement.getAttribute("data-bcnum") != 0    ){
 
 
 
+
 //댓글 등록 버튼 클릭시
 function register(reqMsg){   
 const xhttp = new XMLHttpRequest();    
@@ -347,7 +333,7 @@ xhttp.addEventListener("readystatechange", ajaxCall);
  //ajax 요청메시지 작성
 console.log("reqMsg.bcindent ========="+reqMsg.bcindent);
 //요청메시지   --> json                   
-     const changeIntoJson = JSON.stringify(reqMsg);      
+     const changeIntoJson = JSON.stringify(reqMsg);     
 
 // 원본 댓글-- to be parent ___ indent : 0
 
@@ -355,48 +341,26 @@ console.log("reqMsg.bcindent ========="+reqMsg.bcindent);
 if(reqMsg.bcindent == 0){
 	console.log("부모댓글")
 	   //요청 메소드 + 요청URL 
-    url =`http://localhost:9080/pfpkg/bcomment/replyP/${reqPage}`;
+    url =`http://localhost:9080/pfpkg/bcomment/replyP/${innerRqPage}`;
 }
 
 //댓글의 댓글 child on parent /child on child     ___ indent : 1
 if(reqMsg.bcindent == 1){
 	console.log("자식 댓글들")
-	 url =`http://localhost:9080/pfpkg/bcomment/replyC/${reqPage}`;
+	 url =`http://localhost:9080/pfpkg/bcomment/replyC/${innerRqPage}`;
 }
-
 xhttp.open('post',url)
 xhttp.setRequestHeader('Content-Type','application/json;charset=utf-8')
 xhttp.send(changeIntoJson);          
-
-
 }//register
-
-
-//댓글 리스트 호출
-function callList(){
-const xhttp = new XMLHttpRequest();    
-xhttp.addEventListener("readystatechange", ajaxCall); 
-// ajax 요청메시지 
-const reqMsg = {};
-reqMsg.bnum = bnum;
-
-const url = `http://localhost:9080/pfpkg/bcomment/${bnum}/${reqPage+1}`;
-xhttp.open('GET', url);
-xhttp.setReqeustheader('Content-type', 'application/json;charset=utf-8');
-xhttp.send();
-
-}
-
 
 //ajax 응답 
     function ajaxCall(e){
         //서버 응답
         if(e.target.readyState == 4 && e.target.status == 200){            	
-        	const jsonObj = JSON.parse(e.target.responseText);            
-          
+        	const jsonObj = JSON.parse(e.target.responseText);  
             if(jsonObj.result ==  'OK'){
-                console.log("댓글등록 성공 및 목록가져와서 나타내기") 
-                
+                console.log("댓글등록 성공 및 목록가져와서 나타내기")                 
                 showUpList(jsonObj.list);
             }else{
                 console.log("등록 실패")
@@ -405,17 +369,16 @@ xhttp.send();
     } //ajax
     
 //댓글 리스트 표현
+    //댓글 더보기 
+
 function showUpList(list){
+	showMoreBtnToggle(list);
+	
  //값들어왔을때 화면처리 할 코드  
-	
-	
 	let nickname = document.getElementById("IRnickname").textContent
-	
-	
-	
-              replaceableAreaTag.innerHTML ='';              
-             Array.from(list).forEach(data=>{                 	
-                	let str ='';
+              replaceableAreaTag.innerHTML ='';
+				let str ='';
+             Array.from(list).forEach(data=>{
                 	if(data.bcindent == 0){
                 		//부모댓글일 경우
                 		console.log("부모 댓글")
@@ -450,16 +413,131 @@ function showUpList(list){
                 		            str += `</div>`
                 		        str += `</div>`
                 		    str += `</div>`
-                		    	}                		   	
-                		    	
+                		    	}      
                 		str += `</div>`                   	
-                	str += `</div>`                   	
-                	replaceableAreaTag.innerHTML +=  str;                  	
-                	str = '';         
-                })  
+                	str += `</div>`        		                		
+                	replaceableAreaTag.innerHTML +=  str;    
+                   str ='';
+                })                     
+             
 } //showUpList
 //Math.floor(Math.random()*16777215).toString(16);
 
+    
+
+
+//inner 댓글 더보기 버튼
+function showMore_f(e){	
+	//onClick event는 target사용 안함	
+	
+	console.log(" 댓글 더보기 버튼 클릭시 "  + innerRqPage)	
+	if(e.classList.contains("btn-showMore") && e.tagName =="BUTTON" ){	
+		callList(e);		
+		e.setAttribute("data-innerRqPage", innerRqPage)
+	}
+}
+
+
+let listLength = 0;
+//더보기 버튼 토글
+function showMoreBtnToggle(list){
+let innerRe_wrapperTag = document.querySelector(".innerRe_wrapper")
+let last = innerRe_wrapperTag.lastElementChild
+console.log(" ((Number(innerRqPage)*10)  =====================" + (Number(innerRqPage)*10) )		
+console.log(" 리스트 길이)  =====================" + list.length )		
+if(list.length < (Number(innerRqPage)*10) ){   		
+	last.innerHTML = '불러올 목록이 없습니다.';
+	//last.classList.remove("btn");
+}else{
+	last.innerHTML = '더보기';
+	last.classList.add("btn");	
+	innerRqPage +=1; 	
+}
+}
+
+
+
+//댓글 리스트 호출
+function callList(e){
+console.log("innerRqPage ===== "  + innerRqPage)	
+const xhttp = new XMLHttpRequest();    
+xhttp.addEventListener("readystatechange",(e)=>{
+	ajaxCallMore(e);			
+}); 
+//ajax 요청메시지 
+const url = `http://localhost:9080/pfpkg/bcomment/${bnum}/${innerRqPage}`;
+xhttp.open('GET', url);
+//xhttp.setReqeustheader('Content-type', 'application/json;charset=utf-8');
+xhttp.send();
+
+}
+function ajaxCallMore(e){
+    //서버 응답
+    if(e.target.readyState == 4 && e.target.status == 200){            	
+    	const jsonObj = JSON.parse(e.target.responseText);            
+      
+        if(jsonObj.result ==  'OK'){
+            console.log("댓글등록 성공 및 목록가져와서 나타내기")                 
+            showUpListMore(jsonObj.list);
+        }else{
+            console.log("등록 실패")
+        }
+        }
+} //ajax
+    
+
+    function showUpListMore(list){
+    	//값들어왔을때 화면처리 할 코드
+    	showMoreBtnToggle(list);
+                 let str ='';
+                 Array.from(list).forEach(data=>{
+                    	if(data.bcindent == 0){
+                    		//부모댓글일 경우
+                    		console.log("부모 댓글")
+                    		str += `<div class="parent" data-bcnum="${data.bcnum}">`                            
+                        }else{
+                    		//자식댓글일 경우
+                    		console.log("자식 댓글")
+                    		str += `<div class="children" data-bcnum="${data.bcnum}" data-bcgrp="${data.bcgrp}">`                          
+                        }                	
+                    		str += `<div class="bcomment">`
+                    		    str += `<div class="profile"> <div  class="profileImg">${data.nickname.substring(0,1) }</div></div>`
+                    		    str += `<div class="userinfo">`
+                    		        str += `<div>`
+                    		        	 str += `<span class="IRnickname" data-nickname="${data.ucode }">${data.nickname}</span>`
+                    		            str += `<span class="goodOrBad"><i class="far fa-thumbs-up"></i>${data.bcgood}</span>`
+                    		            str += `<span class="goodOrBad"><i class="far fa-thumbs-down"></i>${data.bcbad}</span>`
+                    		        str += `</div>`
+                    		        str += `<div class="udate"><span><fmt:formatDate value="${data.udate}" pattern="MM/dd"/></span><button class="btn reReply"  >답글쓰기</button></div>`
+                    		        str += `<div class="innerRe_area">`
+                    		            str += `<span class="IRnickname">${data.pnickname}</span>`
+                    		            	 str += `<div class="typed" contenteditable="false">${data.bccontent}</div>`                    		      
+                    		        str += `</div>`
+                    		    str += `</div>`
+                    		    	
+                    		    	if (window.sessionStorage) {               		    	
+                    		     str += ` <div class="ellipsis"><i class="fas fa-ellipsis-v"  ></i>`       
+                    		        str += `<!-- 수정/삭제 히든메뉴 -->`
+                    		        	str += ` <div class="ellipsis  hiddenMenu hidden" >`
+                    		            str += `<div>`
+                    		                str += `       <button type="button" onClick="modDelBtn_f(this)">수정</button>`
+                    		                str += `<button type="button" onClick="modDelBtn_f(this)">삭제</button>`
+                    		            str += `</div>`
+                    		        str += `</div>`
+                    		    str += `</div>`
+                    		    	}      
+                    		str += `</div>`                   	
+                    	str += `</div>`                    		
+                    		
+                    	replaceableAreaTag.innerHTML +=  str;
+                        str ='';
+                    })      
+    	
+    	
+    	
+    }
+    
+    
 //댓글 선호 비선호 처리 메소드 
 function voteGoodBad(e){
 	if(e.target.classList.contains("far") && e.target.tagName == 'I'){
@@ -478,11 +556,82 @@ const reqMsg = {};
 	
 	const intoJson = JSON.stringify(reqMsg);
 	
-	const url = `http://localhost:9080/pfpkg/bcomment/vote/${reqPage}`
+	const url = `http://localhost:9080/pfpkg/bcomment/vote/${innerRqPage}`
 	xhttp.open("post" , url)
 	xhttp.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
 	xhttp.send(intoJson);
 	
 	}
-
+	
+	
 }
+	
+
+//로그인 체크 메소드
+function checkLogin(){
+		if(!isLogin){
+		if(confirm("로그인이 필요합니다. 로그인페이지로 이동하시겠습니까?"))
+		location.href = `http://localhost:9080/pfpkg/loginForm`;			
+	}		
+		return;
+}
+	
+	/* 세션 storage 사용법
+	
+	window.sStorage = window.sessionStorage || (function() {
+		// window.sStorage = (function() {
+		var winObj = opener || window; //opener가 있으면 팝업창으로 열렸으므로 부모 창을 사용
+		var data = JSON.parse(winObj.top.name || '{}');
+		var fn = {
+		length : Object.keys(data).length,
+		setItem : function(key, value) {
+		data[key] = value + '';
+		winObj.top.name = JSON.stringify(data);
+		fn.length++;
+		},
+		getItem : function(key) {
+		return data[key] || null;
+		},
+		key : function(idx) {
+		return Object.keys(data)[idx] || null; //Object.keys() 는 IE9 이상을 지원하므로 IE8 이하 브라우저 환경에선 수정되어야함
+		},
+		removeItem : function(key) {
+		delete data[key];
+		winObj.top.name = JSON.stringify(data);
+		fn.length--;
+		},
+		clear : function() {
+		winObj.top.name = '{}';
+		fn.length = 0;
+		}
+		};
+		return fn;
+		})();
+		sStorage.setItem("key1", 10);
+		sStorage.setItem("key2", new Date());
+		console.log(sStorage.getItem("key1"));
+		console.log(sStorage.getItem("key2"));
+		sStorage.removeItem('key2');
+		sStorage.setItem("key3", '새 문자');
+		console.log(sStorage.length);
+		console.log(sStorage.key(1));
+		sStorage.clear();
+		console.log(sStorage.length);
+*/
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

@@ -6,11 +6,15 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Queue;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -123,6 +127,7 @@ public class BoardController {
 
 
 	
+
 	
 	// 게시글 작성 화면
 	@GetMapping("/boardWriteFrm/{catnum}/{returnPage}")
@@ -143,14 +148,12 @@ public class BoardController {
 		return "/board/boardWriteFrm";
 	}
 
-	// 사진등록
-	@ResponseBody
-	@RequestMapping(value = "/setphoto", produces = "application/String;charset=utf8")
-	public String set_photo(
+	// 사진등록	
+	@RequestMapping(value = "/setphoto", produces = "application/text;charset=utf-8")
+	public @ResponseBody String set_photo(
 			MultipartHttpServletRequest mtf
 			) throws Exception {
-		Map<String, String> result = new HashMap<>();		
-		
+		Map<String, String> result = new HashMap<>();			
 		
 		logger.info("사진업로드허출");
 		// 파일 태그
@@ -168,68 +171,106 @@ public class BoardController {
 		}
 
 		result.putIfAbsent("url", filePath + fileName);
+		
+		
 		logger.info(filePath + fileName);
+		//String _fileName = URLEncoder.encode(fileName , "UTF-8");
+		
+
 		return fileName;
 	}
-	// 게시글 등록
-//	@PostMapping("/write")
-//	public String toWrite(
-//			 HttpServletRequest request
-//			,@RequestParam("returnPage") String returnPage
-//			, @Valid  @ModelAttribute BoardVO boardVO
-//			, BindingResult result
-//			,Model model
-//	) {
-//		
-//		 if (result.hasErrors()) {
-//		 return "/board/boardWriteFrm";		 		 
-//		 }
-//		boardSVC.insertArticle(boardVO);
-//		
-//		return "redirect:/board/read/" + boardVO.getBnum();
-//	}
 	
 	
 	
-	// 게시글 등록
-	@PostMapping("/write")
-	public String toWrite(@RequestParam String bcontent_area, 
-			@RequestParam(value = "thumbnail") String thumb_img_name,
-			@ModelAttribute BoardVO boardVO
-			) throws Exception {		
-		boardVO.setBcontent(bcontent_area.getBytes("UTF-8"));
-
-		// 썸네일 등록
-		if (!thumb_img_name.equals("null")) {
-			
-			
-
-			String pathName = "C:\\Users\\Administrator\\git\\team1\\maintest\\src\\main\\webapp\\resources\\photo\\"
-					+ thumb_img_name;
-			// 썸네일로 만들 파일
-			File thumb_img_file = new File(pathName);
-			// 썸네일을 담을 파일
-			File thumbnail = new File(
-					"C:\\Users\\Administrator\\git\\team1\\maintest\\src\\main\\webapp\\resources\\photo\\썸네일_" + thumb_img_name);
-
-			// 대상 파일을 리사징 후 썸네일 파일에 저장
-			if (thumb_img_file.exists()) {
-				// 썸네일
-				thumbnail.getParentFile().mkdir();
-
-				Thumbnails.of(thumb_img_file).size(300, 300).toFile(thumbnail);
-
-				boardVO.setThumbnail(Files.readAllBytes(thumbnail.toPath()));
-			}
-		} else {
-			boardVO.setThumbnail(null);
+	 //게시글 등록
+	@PostMapping(value={"/write", "/write/{catnum}"})
+	public String toWrite(
+			 HttpServletRequest request
+			,@RequestParam("returnPage") String returnPage
+			, @Valid  @ModelAttribute BoardVO boardVO
+			, BindingResult result
+			,Model model
+	) {		
+		log.info(boardVO.toString());	
+		Queue< MultipartFile> queue = new LinkedList<>();
+		for(MultipartFile mtp : boardVO.getFiles()) {			
+			queue.add(mtp);					
+		}	
+		log.info(" queue.size()" + queue.size());
+		while(!queue.isEmpty()) {			
+			log.info(	"queue22222"+queue.poll().getOriginalFilename());					
 		}
+		log.info(	"boardVO.getTcontent"+boardVO.getTcontent());				
+	   String _tcontent[] = boardVO.getTcontent().split(",");
+	   log.info("_tcontent[0]" +  _tcontent[0]);
+	   log.info("_tcontent[0]" +  _tcontent[1]);
+	   log.info("_tcontent[0]" +  _tcontent[2]);
+	   log.info("_tcontent[0]" +  _tcontent[3]);
+	   log.info("_tcontent[0]" +  _tcontent[4]);
+	   int max = queue.size() > _tcontent.length ? queue.size(): _tcontent.length;
+   System.out.println("max++++++++++" + max);
+	   
+	   for(int i = 0 ; i < max ; i++) {
+	  	 
+	  	 
+	  	 
+	   }
+	   
+	   
+	   
+	   
+		
 
+		
+		 if (result.hasErrors()) {
+		 return "/board/boardWriteFrm";		 		 
+		 }
 		boardSVC.insertArticle(boardVO);
-		String bnum = String.valueOf(boardVO.getBnum());
-
-		return "redirect:/board/read/" + bnum;
+		
+		return "redirect:/board/read/" + boardVO.getBnum();
 	}
+	
+	
+//	
+//	// 게시글 등록
+//	@PostMapping(value={"/write", "/write/{catnum}"})
+//	public String toWrite(@RequestParam String bcontent_area, 
+//			@RequestParam(value = "thumbnail") String thumb_img_name,
+//			@RequestParam(value="catnum") Optional<Integer> catnum,
+//			@ModelAttribute BoardVO boardVO
+//			) throws Exception {		
+//		
+//		// 게시판 타입 읽어오기 		
+//		BcategoryVO bcategoryVO = boardSVC.selectBtype(catnum.orElse(0));
+//
+//		boardVO.setBcontent(bcontent_area.getBytes("UTF-8"));
+//
+//		// 썸네일 등록
+//		if (!thumb_img_name.equals("null")) {
+//			String pathName = "C:\\Users\\Administrator\\git\\team1\\maintest\\src\\main\\webapp\\resources\\photo\\"	+ thumb_img_name;																						
+//			// 썸네일로 만들 파일
+//			File thumb_img_file = new File(pathName);
+//			// 썸네일을 담을 파일
+//			File thumbnail = new File(	"C:\\Users\\Administrator\\git\\team1\\maintest\\src\\main\\webapp\\resources\\photo\\썸네일_" + thumb_img_name);
+//
+//			// 대상 파일을 리사징 후 썸네일 파일에 저장
+//			if (thumb_img_file.exists()) {
+//				// 썸네일
+//				thumbnail.getParentFile().mkdir();
+//
+//				Thumbnails.of(thumb_img_file).size(300, 300).toFile(thumbnail);
+//
+//				boardVO.setThumbnail(Files.readAllBytes(thumbnail.toPath()));
+//			}
+//		} else {
+//			boardVO.setThumbnail(null);
+//		}
+//
+//		boardSVC.insertArticle(boardVO);
+//		String bnum = String.valueOf(boardVO.getBnum());
+//	 String _catnum = bcategoryVO.getCatnum();
+//		return "redirect:/board/read/" + _catnum + "/" + bnum;
+//	}
 
 	// 게시글열람
 	@GetMapping({
@@ -245,8 +286,6 @@ public class BoardController {
 		
 		// 게시판 타입 읽어오기 		
 		BcategoryVO bcategoryVO = boardSVC.selectBtype(catnum);
-		
-		
 	
 		// svc는 map 타입을 반환값으로 가짐
 		Map<String, Object> map = boardSVC.selectArticle(bnum);			
