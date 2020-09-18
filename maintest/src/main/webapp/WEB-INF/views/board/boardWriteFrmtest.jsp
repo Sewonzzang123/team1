@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8" isELIgnored="false"%>
 <!-- 공통모듈 -->
 <%@ include file="/WEB-INF/views/included/common.jsp"%>
-    
 
 
 <title>게시글 작성</title>
@@ -58,6 +57,9 @@
 
 									</select> <form:errors cssClass="bound_error" path="bcategory.catnum"></form:errors>
 									</li>
+									
+									
+									
 									<li><input name="btitle" 
 										type="text"  placeholder="제목을 입력하세요." ></input>										
 										 <form:errors
@@ -78,18 +80,61 @@
 										
 										
 			<div class="hidden_toolbar_menu">										
-											<input multiple type="file" class="add_img"		style="display: none;">
-												 <input type="hidden"	name="thumbnail" class="thumbnail" value="null">
-										</div></li> 
+								
 
-
+								
+			</div></li> 						
+			
+			
+	
 
 									<li class="bcontent_li">
-									 <input	type="hidden" class="bcontent" name="bcontent_area" >
+									 <input	type="hidden" class="tcontent" name="bcontent_area" >								
 										
-										
-										<div class="bcontent_area"   id="bcontent_area" contenteditable="true"
-									 data-placeholder="내용을 입력하세요">${boardVO.bcontent }</div>
+										<textarea class="bcontent_area"  name ="tcontent"  id="bcontent_area" contenteditable="true"  data-placeholder="내용을 입력하세요">	 
+									 	</textarea>
+									 	
+									
+									 	
+									
+									 	
+									 	
+									 <input type="file"	name="files" class="thumbnail">
+									 <img> 
+									  	<textarea class="bcontent_area"  name ="tcontent"  id="bcontent_area" contenteditable="true"  data-placeholder="내용을 입력하세요">	 
+									 	</textarea>
+									 	
+									 	
+									 	
+									 	
+									 	
+									 	
+									 	<textarea class="bcontent_area"  name ="tcontent"  id="bcontent_area" contenteditable="true"  data-placeholder="내용을 입력하세요">	 
+									
+									글쓰기1
+									
+									<input type="file"	name="files" class="thumbnail">
+									
+									
+									글쓰기2
+										<input type="file"	name="files" class="thumbnail">
+									
+									글쓰기3
+										<input type="file"	name="files" class="thumbnail">
+									 	</textarea>
+									 	
+									 	
+									 	
+									 	
+									 	
+									 	
+									
+									<input type="file"	name="files" class="thumbnail">
+									 
+									 									 
+									
+									 
+									 
 										<form:errors cssClass="bound_error" path="bcontent"></form:errors></li>
 
 							

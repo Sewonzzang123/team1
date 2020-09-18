@@ -4,7 +4,7 @@
 		/* 사진 추가 */
 	const add_img_btn = document.querySelector('.add_img_btn');
 	
-	const add_img = document.querySelector('.add_img');
+	const add_img = document.querySelector('.thumbnail');
 	const bcontent_area = document.querySelector('.bcontent_area');
 	add_img_btn.addEventListener('click', (e) => {
 		e.preventDefault();
@@ -18,54 +18,36 @@
 	add_img.addEventListener("change", (e) => {
 	    if (e.target.files && e.target.files[0]) {		
 		  console.log(' 첨부 처리이벤트');
-	      var formData = new FormData();	
-	      formData.append("file", e.target.files[0]);	
-	      
-	      console.log(formData);
-	
-	      var ajax = new XMLHttpRequest();
-	      
+		  var ajax = new XMLHttpRequest();      
+	           
+		  
 	      
 	      ajax.onreadystatechange = function () {
 	        if (ajax.readyState === ajax.DONE) {
 	          if (ajax.status === 200
-	            || ajax.status === 201) {
-	        	  
-	        	  
-	        	  
+	            || ajax.status === 201) {	        	  
 	            const url = ajax.responseText;
-	            var Ca = /\+/g;
-	            
+	            var Ca = /\+/g;            
 	            var ajaxName = decodeURIComponent(url.replace(Ca, " "));
-	            
-	            
-	            
-	            
 	            console.log(ajaxName);
-	            
-	            
 	            const img = document.createElement('img');
 	            img.classList.add('added_img')
-	            img.setAttribute("src", 
-	            		
-	            		//${pageContext.request.contextPath}
-	            
-	           'http://localhost:9080/pfpkg/photo/' + ajaxName);
+	            img.setAttribute("src",   'http://localhost:9080/pfpkg/photo/' + ajaxName);
 	            img.setAttribute("name", ajaxName);
-	
 	            bcontent_area.append(img);
 	          } else {
-	        	  
-	        	  console.log("200아님 201 아님 ")
-	          //  console.error(ajax.responseText);	
+	        	  console.log("200아님 201 아님 ")	          
 	          }
 	        }
 	      };
 	      
-	    
+	      //요청메시지
+	      let frmData = document.getElementById("")
+	      
+	      
+	      
 	      ajax.open( "POST", "/pfpkg/board/setphoto", true);
-	    
-	      ajax.send(formData);
+	      //ajax.send(formData);
 	    }
 	  })
 		
@@ -76,7 +58,7 @@
 	const bcontent = document.querySelector('.bcontent');
 	writeBtn.addEventListener("click", (e) => {
 		console.log('등록');
-		bcontent.value = bcontent_area.innerHTML;
+		//bcontent.value = bcontent_area.innerHTML;
 		
 		const thumbnail_name = document.querySelector('.added_img')
 		if (thumbnail_name != null) {
@@ -222,4 +204,31 @@ function	getHeadid_f(e){
      	
      	}
      
+
+
+
+
+
+
+
+
+let a = `글쓰기1<input type="file"	name="files" class="thumbnail">	
+글쓰기2	<input type="file"	name="files" class="thumbnail">								
+글쓰기3<input type="file"	name="files" class="thumbnail">`
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
      		

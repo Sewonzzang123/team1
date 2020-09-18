@@ -192,8 +192,13 @@ i.navbar_toggleBtn {
 		<fmt:bundle basename="">
 			<div class="top_menu">
 				<ul>
+				
+				
+				
 					<li><a href="">리스트 작성</a></li>
 					<li><a href="${pageContext.request.contextPath}/board">게시판</a></li>
+					
+					
 					<!-- 로그인 전 -->
 					<c:if test="${empty sessionScope.member}">
 						<li><a href="${pageContext.request.contextPath}/signupForm">회원가입</a></li>
@@ -207,6 +212,8 @@ i.navbar_toggleBtn {
 						<li><a href="${url_myPage}">${sessionScope.member.nickname }</a></li>
 						<li><a href="${url_logout }">로그아웃</a></li>
 					</c:if>
+				
+				
 				</ul>
 			</div>
 			<i class="fas fa-bars navbar_toggleBtn" id="buggerBtn"></i>
@@ -221,8 +228,12 @@ i.navbar_toggleBtn {
 		<i class="fa fa-times" id="buggerBtn_hide"></i>
 	</div>
 	<ul>
+	
+	
 		<li><a href="">리스트 작성</a></li>
 		<li><a href="${pageContext.request.contextPath}/board">게시판</a></li>
+		
+		
 		<c:if test="${empty sessionScope.member}">
 			<li><a href="${pageContext.request.contextPath}/signupForm">회원가입</a></li>
 			<li><a href="${url_login }">로그인</a></li>
@@ -234,6 +245,9 @@ i.navbar_toggleBtn {
 			<li><a href="${url_myPage}">${sessionScope.member.nickname }</a></li>
 			<li><a href="${url_logout }">로그아웃</a></li>
 		</c:if>
+	
+	
+	
 	</ul>
 </div>
 <!-- 햄버거 버튼 열면 뒤에 깔리는 반투명 검정 배경 -->

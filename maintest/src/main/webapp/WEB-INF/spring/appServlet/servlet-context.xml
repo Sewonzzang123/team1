@@ -62,12 +62,6 @@
 
 
 
-<!-- 업로드 패스 설정 -->
-<beans:bean class="java.lang.String" id="uploadPath">
-<!-- 로컬 주소값이므로 나중에 바꿔야함.  -->
-<beans:constructor-arg value="D:\java\mygit\team1\maintest\src\main\webapp\WEB-INF\resources" /> 
-</beans:bean>
-
 <!-- 파일 업로드 -->
 	<beans:bean id="multipartResolver"
 							class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
