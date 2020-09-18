@@ -92,7 +92,7 @@ main section .line {
 
 main .list .createlist {
 	margin-top: 20px;
-	height: 300px;
+	height: 600px;
 	display: flex;
 	justify-content: space-between;
 }
@@ -101,6 +101,7 @@ main .list .createlist .default_list,
 main .list .createlist .user_list {
 	width: 48%;
 	border: 1px solid #ff8080;
+	position: relative;
 }
 
 section .gallery_list {
@@ -398,6 +399,7 @@ footer .footer_img img {
 	 	display: grid;
     grid-template-columns: repeat(2, 1fr);
 	}
+	
 	section .createlist .default_list>.default_table{
 	 	width:100%;
 	 	display: grid;

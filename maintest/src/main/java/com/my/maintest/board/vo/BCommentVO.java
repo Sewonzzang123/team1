@@ -15,7 +15,7 @@ private long pucode;
 private String pnickname;
 private long bnum;																										//	BNUM	NUMBER
 private String bccontent;																					//	BCCOMMENT	VARCHAR2(500 BYTE)
-private long bcgroup;																									//	BCGROUP	NUMBER
+private long bcgrp;																									//	BCGROUP	NUMBER
 private long bcindent;																								//	BCINDENT	NUMBER
 private long bcstep;																										//	BCSTEP	NUMBER
 private long bcgood;																									//	BCGOOD	NUMBER

@@ -1,5 +1,8 @@
 package com.my.maintest.common.paging;
 
+import lombok.Data;
+
+@Data
 public class PagingComponent {
 
 	
@@ -11,37 +14,26 @@ private SearchCriteria searchCriteria;
 	
 	public PagingComponent() {
 
-	}
-	
-	public RecordCriteria getRecordCriteria() {
-		return recordCriteria;
-	}
-
-	public void setRecordCriteria(RecordCriteria recordCriteria) {
+		
+	}	
+	public PagingComponent( long reqPage, long recNumPerPage,long  pagingNumsPerPage) {		
+		RecordCriteria recordCriteria = new RecordCriteria(recNumPerPage, reqPage);
+		PageCriteria pageCriteria = new PageCriteria(reqPage, recordCriteria.getTotalRec(),pagingNumsPerPage);				
 		this.recordCriteria = recordCriteria;
-	}
-
-	public PageCriteria getPageCriteria() {
-		return pageCriteria;
-	}
-
-	public void setPageCriteria(PageCriteria pageCriteria) {
 		this.pageCriteria = pageCriteria;
 	}
-
-	public SearchCriteria getSearchCriteria() {
-		return searchCriteria;
+	
+	public PagingComponent( long reqPage, long recNumPerPage,long  pagingNumsPerPage,String searchType,String searchKeyword) {
+		RecordCriteria recordCriteria = new RecordCriteria(recNumPerPage, reqPage);
+		PageCriteria pageCriteria = new PageCriteria(reqPage, recordCriteria.getTotalRec(),pagingNumsPerPage);
+		SearchCriteria searchCreCriteria = new SearchCriteria(searchType, searchKeyword);		
+		this.recordCriteria = recordCriteria;
+		this.pageCriteria = pageCriteria;
+		this.searchCriteria = searchCreCriteria;
 	}
-
-	public void setSearchCriteria(SearchCriteria searchCriteria) {
-		this.searchCriteria = searchCriteria;
-	}
-
-	@Override
-	public String toString() {
-		return "PagingComponent [recordCriteria=" + recordCriteria + ", pageCriteria=" + pageCriteria + ", searchCriteria="
-				+ searchCriteria + "]";
-	}
+	
+	
+	
 
 
 	

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.BCommentDAO-mapper">
+
+
+<!-- 부모 댓글 등록(inner Comment) -->
+<insert id="insertBComment" parameterType="com.my.maintest.board.vo.BCommentVO" >
+insert into bcomment (
+BCNUM
+,UCODE
+,PUCODE
+,BNUM
+,BCCONTENT
+,BCGRP
+,CDATE
+,UDATE
+)
+values(
+bcomment_bcNum_seq.nextVal
+,#{ucode }
+,#{pucode }
+,#{bnum }
+,#{bccontent }
+,bcomment_bcNum_seq.currVal
+,systimestamp
+,systimestamp
+)
+
+
+</insert>
+
+
+<!-- 부모 댓글의 자식 댓글 등록  -->
+<!-- 1. 자식 댓글 등록전 이전에 등록된 자식 댓글들의 bcstep을 +1  -->
+<update id="updateBcstep" parameterType="long">
+update bcomment set bcstep = bcstep +1 
+where bcgrp = #{bcgrp}  
+and bcindent = 1 
+and bcstep >=  0
+</update>
+
+<!-- 2. 자식 댓글 등록  -->
+<insert id="insertReBComment" parameterType="com.my.maintest.board.vo.BCommentVO" >
+insert into bcomment (
+BCNUM
+,UCODE
+,PUCODE
+,BNUM
+,BCCONTENT
+,BCGRP
+,bcstep
+,BCINDENT
+,CDATE
+,UDATE
+)
+values(
+bcomment_bcNum_seq.nextVal
+,#{ucode }
+,#{pucode }
+,#{bnum }
+,#{bccontent }
+,#{bcgrp}
+,1
+,1
+,systimestamp
+,systimestamp
+)
+</insert>
+
+
+<!--댓글목록 불러오기  -->
+<select id="selectBComments" parameterType="map" resultType="com.my.maintest.board.vo.BCommentVO">
+select 
+dbrownum
+,bcnum
+,ucode
+,nickname   
+,pucode
+,pnickname
+,bnum
+,bccontent
+,bcgrp
+,bcindent
+,bcstep
+,bcgood
+,bcbad
+,udate
+from
+(select row_number() over(order by t1.bcgrp desc, t1.bcstep asc) as dbrownum,
+t1.bcnum
+,t1.ucode
+,t3.nickname 
+,t1.pucode
+,(select nickname from member where ucode = t1.pucode) pnickname 
+,t1.bnum
+,t1. bccontent
+,t1.bcgrp
+,t1.bcindent
+,t1.bcstep
+,t1.bcgood
+,t1.bcbad
+,t1.udate
+FROM BCOMMENT t1, board t2, member t3
+where t1.bnum = t2.bnum and t1.ucode = t3.ucode
+and t1.bnum = #{bnum}) 
+where  dbrownum  between #{recFrom} and #{recTo} 
+</select>
+
+
+<!-- 댓글 수정 -->
+<update id="updateBccontent" parameterType="com.my.maintest.board.vo.BCommentVO" >
+update bcomment set bccontent = #{bccontent} where bcnum = #{bcnum}
+</update>
+
+
+<!--댓글 삭제  -->
+<delete id="deleteBComment" parameterType="long">
+delete bcomment where bcnum = #{bcnum}
+</delete>
+
+<!-- 선호도 투표 -->
+<update id="updateVote" parameterType="com.my.maintest.board.vo.BCoVoteVO">
+<![CDATA[ 
+merge into bcVote using dual on (BNUM = #{bnum} AND BCNUM= #{bcnum} AND ucode = #{ucode}  )
+when matched then 
+update set voted = #{voted}
+WHEN not matched then 
+INSERT (bcgbnum,BNUM,bcnum,ucode,voted) 
+values(
+bcvote_bcgbnum_seq.nextVal,
+#{bnum},
+ #{bcnum},
+  #{ucode},
+  #{voted})
+]]>
+</update>
+
+<!-- 댓글 선호도 투표수 갱신 _ good or bad-->
+<update id="updateGoodBadQnty" parameterType="com.my.maintest.board.vo.BCoVoteVO">
+update bcomment set 
+bcgood = (select count(*) good from (select * from BCVote where bcnum = #{bcnum} and voted='GOOD')),
+bcbad = (select count(*) good from (select * from BCVote where bcnum =  #{bcnum} and voted='BAD')) 
+where bcnum = #{bcnum}
+</update>
+
+
+</mapper>

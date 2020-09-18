@@ -12,7 +12,13 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
 
 <!-- bootStrap css  -->
-<link rel="stylesheet" href="${contextPath }/webjars/bootstrap/4.5.0/css/bootstrap.css">
+<%-- <link rel="stylesheet" href="${contextPath }/webjars/bootstrap/4.5.0/css/bootstrap.css">  --%>
+
+<!--폰트-->
+<link
+  href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&family=Nanum+Myeongjo:wght@400;700&family=Noto+Sans+KR:wght@100;400;900&display=swap"
+  rel="stylesheet"
+/>
 
 <!-- font style css-->
 <link rel="stylesheet" href="">

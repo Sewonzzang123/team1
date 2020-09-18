@@ -12,7 +12,11 @@
   box-shadow: 0 0 1px rgba(0, 0, 0, 0);
   position: relative;
   overflow: hidden;
+  height: 50px;
+  border-bottom: 1px dotted #ff8080;
+  border-right: 1px dotted #ff8080;
 }
+
 .tab_box:before {
   content: "";
   position: absolute;
@@ -29,19 +33,37 @@
   -webkit-transition-timing-function: ease-out;
   transition-timing-function: ease-out;
 }
+
 .tab_box:hover:before, .tab_box:focus:before, .tab_box:active:before {
   left: 0;
   right: 0;
 }
+
  .tab_box {
   display: grid;
 	grid-template-columns: 1fr 6fr;
 	grid-auto-rows: minmax(20px, auto);
-	margin-bottom: 4;
-      }
+}
+
+.add_or_delete {
+	width: 50px;
+	background-color: #FF8080;
+}
+
+.add_or_delete > i.fa-plus::before, .add_or_delete >  i.fa-minus::before {
+	color:white;
+	position: relative;
+   top: 18px;
+   left: 17px;
+}
+      
 .default_list.tab_box_container>.default_table {
 	width: 100%;
-	margin-top: 10px;
+}
+
+.default_table div.iname {
+    margin-top: 13px;
+    margin-left: 13px;
 }
 
 
@@ -53,14 +75,14 @@
 	all: unset;
 }
 
-.default_list> .list_buttons{
-		width:inherit;
-		max-width: 400px;
-		padding-right: 20px;
-  	position: absolute;
-  	bottom: 1px;
-  	background-color:white;
+.list_buttons{
+	margin-top: 10px;
+}
 
+.list_buttons>input[type="button"] {
+	outline: none;
+	border: none;
+	background-color: white;
 }
 
 .default_list i,
@@ -74,28 +96,34 @@
 .user_list>.category_grid {
 	margin: 0;
 	width: 100%;
+	height: 500px;
 }
 
 .user_list>.category_grid>dd {
 	margin: 10px;
 }
 
-.user_list>.category_grid>dd>.tab_menu_btn {
-	width: 88%;
+.user_list>.category_grid>dd:foucs {
+	outline:none;
 }
 
-.category_grid dd>ul>li>div {
-	display: flex;
+.user_list>.category_grid>dd>.tab_menu_btn {
+	width: 100%;
 }
+
+
 .row{
 	margin:0px;
 }
 
 .row>div>.icount {
-	width: 20%;
+	width: 80%;
+	text-align: center;
 }
 .row>div>.edit_number{
-	width:20;
+	width:20px;
+	display: flex;
+  flex-direction: column;
 }
 
 .row>div>div[selected="true"] {
@@ -104,13 +132,12 @@
 	
 }
 
-.row>div>.iname {
-	width: 70%;
-	padding-top: 5px;
+default_table div.iname {
+	margin-top: 13px;
+	margin-left: 13px;
 }
 
 .row>div>.icount {
-	margin: 3px;
 	border: 1px solid #75ccb9;
 }
 
@@ -126,23 +153,38 @@
 	background-color: white;
 }
 .tab_menu_btn.on{
-	background-color: #553de8;
+	background-color: #ff8080;
 	color:white;
 }
 
+.row input[type="checkbox"] {
+    margin-top: 10px;
+    margin-left: 12px;
+}
+
+.row .iname {
+    margin-left: 10px;
+        margin-top: 3px;
+}
+
 .row>div>.deleteItem{
-	margin-right:3px;
+	margin-top: 7px;
+	color:black;
 }
 
 .row>div {
 	width:100%;
 	display: flex;
-	border-bottom: 1px solid lightgray;
+	border-bottom: 1px solid gray;
 	background-color:white;
+	position: relative;
+	display: grid;
+  grid-template-columns: 10% 50% 20% 10% 10%;
 	
 }
 
 .row>div:nth-child(1) {
-	padding-top: 5px;
+	padding-top: 3px;
+  padding-bottom: 3px;
 }
 

@@ -1,12 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/included/common_taglib.jsp"%>
-
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+ <%@ include file="/WEB-INF/views/included/common.jsp"%>
 <title>main</title>
 <script defer src="${pageContext.request.contextPath}/js/main.js"></script>
 <script>
@@ -34,8 +28,11 @@ if('${sessionScope.member.id}'.trim() == null){
 </head>
 <body>
 
+
+
+
 	<!-- header -->
-	<%@ include file="/WEB-INF/views/layout/haeder.jsp"%>
+	<%@ include file="/WEB-INF/views/layout/header.jsp"%>
 
 	<div class="menu_wrap">
 		<div class="hide_wrap">
@@ -73,52 +70,32 @@ if('${sessionScope.member.id}'.trim() == null){
 			</div>
 		</section>
 
+
 		<section class="tip scroll">
 			<div class="list_wrap">
 				<h3>여행 팁</h3>
 				<div class="line"></div>
 				<div class="tip_list">
 					<ul>
-						<li><a href="">
-								<div class="qna_title">
-									<span> Lorem, ipsum dolor sit amet consectetur
-										adipisicing elit. </span> <span> 17:12 </span>
-								</div>
-						</a></li>
-						<li><a href="">
-								<div class="qna_title">
-									<span> Lorem, ipsum dolor sit amet consectetur
-										adipisicing elit. </span> <span> 17:12 </span>
-								</div>
-						</a></li>
-						<li><a href="">
-								<div class="qna_title">
-									<span> Lorem, ipsum dolor sit amet consectetur
-										adipisicing elit. </span> <span> 17:12 </span>
-								</div>
-						</a></li>
-						<li><a href="">
-								<div class="qna_title">
-									<span> Lorem, ipsum dolor sit amet consectetur
-										adipisicing elit. </span> <span> 17:12 </span>
-								</div>
-						</a></li>
-						<li><a href="">
-								<div class="qna_title">
-									<span> Lorem, ipsum dolor sit amet consectetur
-										adipisicing elit. </span> <span> 17:12 </span>
-								</div>
-						</a></li>
-						<li><a href="">
-								<div class="qna_title">
-									<span> Lorem, ipsum dolor sit amet consectetur
-										adipisicing elit. </span> <span> 17:12 </span>
-								</div>
-						</a></li>
+						<!-- begin : data 들어오는 곳  -->
+
+							<c:forEach var="tdata" items=" #{requestScope.tipBoardVO }" >
+							<li><a href="${contextPath }/board/read/${tdata.bnum}">
+									<div class="qna_title">
+										<span> ${tdata.btitle }</span> <span> <fmt:formatDate
+												value="${tdata.budate }" pattern="MM/dd" />
+										</span>
+									</div>
+							</a></li>
+						</c:forEach>
+
+						<!-- end : data 들어오는 곳  -->
+
+
 					</ul>
 				</div>
 				<div class="more">
-					<a href=""><span>더보기</span></a>
+					<a href="${contextPath }/board/1"><span>더보기</span></a>
 				</div>
 			</div>
 		</section>
@@ -129,46 +106,23 @@ if('${sessionScope.member.id}'.trim() == null){
 				<div class="line"></div>
 				<div class="qna_list">
 					<ul>
-						<li><a href="">
-								<div class="qna_title">
-									<span> Lorem, ipsum dolor sit amet consectetur
-										adipisicing elit. </span> <span> 17:12 </span>
-								</div>
-						</a></li>
-						<li><a href="">
-								<div class="qna_title">
-									<span> Lorem, ipsum dolor sit amet consectetur
-										adipisicing elit. </span> <span> 17:12 </span>
-								</div>
-						</a></li>
-						<li><a href="">
-								<div class="qna_title">
-									<span> Lorem, ipsum dolor sit amet consectetur
-										adipisicing elit. </span> <span> 17:12 </span>
-								</div>
-						</a></li>
-						<li><a href="">
-								<div class="qna_title">
-									<span> Lorem, ipsum dolor sit amet consectetur
-										adipisicing elit. </span> <span> 17:12 </span>
-								</div>
-						</a></li>
-						<li><a href="">
-								<div class="qna_title">
-									<span> Lorem, ipsum dolor sit amet consectetur
-										adipisicing elit. </span> <span> 17:12 </span>
-								</div>
-						</a></li>
-						<li><a href="">
-								<div class="qna_title">
-									<span> Lorem, ipsum dolor sit amet consectetur
-										adipisicing elit. </span> <span> 17:12 </span>
-								</div>
-						</a></li>
+						<!-- begin : data 들어오는 곳  -->
+						<c:if test="${empty qaBoardVO}"> 게시글 없음  </c:if>
+						<c:forEach var="qdata" items="#{requestScope.qaBoardVO }">
+							<li><a href="${contextPath }/board/read/${qdata.bnum}">
+									<div class="qna_title">
+										<span> ${qdata.btitle }</span> <span> <fmt:formatDate
+												value="${qdata.budate }" pattern="MM/dd" />
+										</span>
+									</div>
+							</a></li>
+						</c:forEach>
+
+						<!-- end : data 들어오는 곳  -->
 					</ul>
 				</div>
 				<div class="more">
-					<a href=""><span>더보기</span></a>
+					<a href="${contextPath }/board/3"><span>더보기</span></a>
 				</div>
 			</div>
 		</section>
@@ -178,152 +132,48 @@ if('${sessionScope.member.id}'.trim() == null){
 				<h3>갤러리</h3>
 				<div class="line"></div>
 				<div class="gallery_list">
+
+
 					<ul>
-						<li class="inner"><a href="#">
-								<div class="li_img">
-									<img
-										src="https://cdn.pixabay.com/photo/2020/05/05/07/52/republic-of-korea-5131925__340.jpg"
-										alt="" />
-								</div>
-								<div class="li_text">
-									<div class="li_text_poa">
-										<h4 class="li_text_head">Title of content</h4>
-										<p class="li_text_summary">Lorem ipsum dolor sit amet,
-											consectetur adipiscing elit. Duis sit amet tellus velit, ut
-											semper neque.</p>
+						<!-- data 들어오는 부분 loop-->
+						<c:forEach var="gdata" items="${requestScope.galBoardVO}">
+							<li class="inner"><a
+								href="${contextPath }/board/read/${gdata.bnum}">
+									<div class="li_img">
+										<img name=""
+											src="data:${gdata.thumbnailVO.thumbftype };base64,${gdata.thumbnailVO.base64encoded}"
+											alt="" />
 									</div>
-								</div>
-						</a></li>
-						<li class="inner"><a href="#">
-								<div class="li_img">
-									<img
-										src="https://cdn.pixabay.com/photo/2018/11/29/21/19/hamburg-3846525__340.jpg"
-										alt="" />
-								</div>
-								<div class="li_text">
-									<div class="li_text_poa">
-										<h4 class="li_text_head">Title of content</h4>
-										<p class="li_text_summary">Lorem ipsum dolor sit amet,
-											consectetur adipiscing elit. Duis sit amet tellus velit, ut
-											semper neque.</p>
+									<div class="li_text">
+										<div class="li_text_poa">
+											<h5 class="li_text_head">${gdata.btitle }</h5>
+											<p class="li_text_summary">${gdata.bcontent}</p>
+										</div>
 									</div>
-								</div>
-						</a></li>
-						<li class="inner"><a href="#">
-								<div class="li_img">
-									<img
-										src="https://cdn.pixabay.com/photo/2018/01/09/12/20/hamburg-3071437__340.jpg"
-										alt="" />
-								</div>
-								<div class="li_text">
-									<div class="li_text_poa">
-										<h4 class="li_text_head">Title of content</h4>
-										<p class="li_text_summary">Lorem ipsum dolor sit amet,
-											consectetur adipiscing elit. Duis sit amet tellus velit, ut
-											semper neque.</p>
-									</div>
-								</div>
-						</a></li>
-						<li class="inner"><a href="#">
-								<div class="li_img">
-									<img
-										src="https://cdn.pixabay.com/photo/2019/08/14/10/37/beach-4405371__340.jpg"
-										alt="" />
-								</div>
-								<div class="li_text">
-									<div class="li_text_poa">
-										<h4 class="li_text_head">Title of content</h4>
-										<p class="li_text_summary">Lorem ipsum dolor sit amet,
-											consectetur adipiscing elit. Duis sit amet tellus velit, ut
-											semper neque.</p>
-									</div>
-								</div>
-						</a></li>
-						<li class="inner"><a href="#">
-								<div class="li_img">
-									<img
-										src="https://cdn.pixabay.com/photo/2019/08/06/11/58/boat-4388160__340.jpg"
-										alt="" />
-								</div>
-								<div class="li_text">
-									<div class="li_text_poa">
-										<h4 class="li_text_head">Title of content</h4>
-										<p class="li_text_summary">Lorem ipsum dolor sit amet,
-											consectetur adipiscing elit. Duis sit amet tellus velit, ut
-											semper neque.</p>
-									</div>
-								</div>
-						</a></li>
-						<li class="inner"><a href="#">
-								<div class="li_img">
-									<img
-										src="https://cdn.pixabay.com/photo/2019/09/23/16/39/square-4499056__340.jpg"
-										alt="" />
-								</div>
-								<div class="li_text">
-									<div class="li_text_poa">
-										<h4 class="li_text_head">Title of content</h4>
-										<p class="li_text_summary">Lorem ipsum dolor sit amet,
-											consectetur adipiscing elit. Duis sit amet tellus velit, ut
-											semper neque.</p>
-									</div>
-								</div>
-						</a></li>
-						<li class="inner"><a href="#">
-								<div class="li_img">
-									<img
-										src="https://cdn.pixabay.com/photo/2020/07/22/08/39/waterfall-5428467__340.jpg"
-										alt="" />
-								</div>
-								<div class="li_text">
-									<div class="li_text_poa">
-										<h4 class="li_text_head">Title of content</h4>
-										<p class="li_text_summary">Lorem ipsum dolor sit amet,
-											consectetur adipiscing elit. Duis sit amet tellus velit, ut
-											semper neque.</p>
-									</div>
-								</div>
-						</a></li>
-						<li class="inner"><a href="#">
-								<div class="li_img">
-									<img
-										src="https://cdn.pixabay.com/photo/2019/12/01/21/29/walk-4666509__340.jpg"
-										alt="" />
-								</div>
-								<div class="li_text">
-									<div class="li_text_poa">
-										<h4 class="li_text_head">Title of content</h4>
-										<p class="li_text_summary">Lorem ipsum dolor sit amet,
-											consectetur adipiscing elit. Duis sit amet tellus velit, ut
-											semper neque.</p>
-									</div>
-								</div>
-						</a></li>
+							</a></li>
+						</c:forEach>
 					</ul>
 				</div>
 				<div class="more">
-					<a href=""><span>더보기</span></a>
+					<a href="${contextPath }/board/2"><span>더보기</span></a>
 				</div>
 			</div>
+		</section>
+
+
+
+
+
+
+
+
+
 		</section>
 
 		<!-- <section class="introduce scroll">
         <div class="introduce_img"></div>
       </section> -->
 	</main>
-	<footer>
-		<div class="footer_inner">
-			<div class="footer_text">
-				<p>Contact Us</p>
-				<br />
-				<p>Email: : Admin@perfectPackage.co.kr</p>
-				<p>Copyright 2020 PerfectPackage All Rights Reserved.</p>
-			</div>
-
-			<div class="footer_img">
-				<img src="img/perage_logo_f.png" alt="" />
-			</div>
-		</div>
-	</footer>
+	<%@ include file="/WEB-INF/views/layout/footer.jsp"%>
 </body>
 </html>

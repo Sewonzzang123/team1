@@ -19,7 +19,6 @@ let menu_wrap = document.querySelector(".menu_wrap");
 let buggerBtn_hide = document.querySelector("#buggerBtn_hide");
 let cover_close = document.querySelector(".cover_close");
 }
-
 buggerBtn.addEventListener("click", () => {
   console.log("buggerBtn Clicked");
   menu_wrap.style.zIndex = "999";
@@ -27,7 +26,6 @@ buggerBtn.addEventListener("click", () => {
   cover_close.style.zIndex = "998";
   cover_close.style.opacity = "0.4";
 });
-
 buggerBtn_hide.addEventListener("click", () => {
   console.log("buggerBtn Clicked");
   menu_wrap.style.zIndex = "0";
@@ -35,7 +33,6 @@ buggerBtn_hide.addEventListener("click", () => {
   cover_close.style.zIndex = "0";
   cover_close.style.opacity = "0";
 });
-
 cover_close.addEventListener("click", () => {
   menu_wrap.style.zIndex = "0";
   menu_wrap.style.opacity = "0";
@@ -51,18 +48,15 @@ cover_close.addEventListener("click", () => {
 	box-sizing: border-box;
 	font-family: "Noto Sans KR", sans-serif;
 }
-
 a {
 	margin: 0;
 	text-decoration: none;
 	color: black;
 }
-
 a:hover {
 	color: #ff8080;
 	transition: color 0.2s;
 }
-
 header {
 	background-color: white;
 	position: fixed;
@@ -70,11 +64,9 @@ header {
 	width: 100%;
 	box-shadow: 0 0 10px 0 darkgray;
 }
-
 header ul {
 	list-style: none;
 }
-
 /* 햄버거 버튼 */
 i.navbar_toggleBtn {
 	display: none;
@@ -84,7 +76,6 @@ i.navbar_toggleBtn {
 	font-size: 27px;
 	color: #ff8080;
 }
-
 /* mobile */
 @media screen and (max-width: 769px) {
 	header .navbar {
@@ -147,7 +138,6 @@ i.navbar_toggleBtn {
 		opacity: 0;
 	}
 }
-
 /* desktop */
 @media screen and (min-width: 769px) {
 	header .navbar {
@@ -235,8 +225,8 @@ i.navbar_toggleBtn {
 
 	<c:if test="${empty sessionScope.member}">
 		<ul>
-			<li><a href="">리스트 작성</a></li>
-			<li><a href="">게시판</a></li>
+					<li><a href="">리스트 작성</a></li>
+					<li><a href="${pageContext.request.contextPath}/board">게시판</a></li>
 			<li><a href="${pageContext.request.contextPath}/signupForm">회원가입</a></li>
 			<li><a href="${url_login }">로그인</a></li>
 
@@ -246,8 +236,10 @@ i.navbar_toggleBtn {
 	<c:if test="${!empty sessionScope.member}">
 
 		<ul>
-			<li><a href="">리스트 작성</a></li>
-			<li><a href="">게시판</a></li>
+		<li><a href="${pageContext.request.contextPath}/pfpkg">리스트 작성</a></li>
+		<li><a href="${pageContext.request.contextPath}/board">게시판</a></li>
+			
+			
 			<c:if test="${sessionScope.member.ucode==1}">
 				<li><a href="${url_admin}">관리하기</a></li>
 			</c:if>
