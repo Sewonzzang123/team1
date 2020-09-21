@@ -1,17 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
- <%@ include file="/WEB-INF/views/included/common.jsp"%>
+<%@ include file="/WEB-INF/views/included/common.jsp"%>
 <title>main</title>
 <script defer src="${pageContext.request.contextPath}/js/main.js"></script>
 <script>
-var getid = null;
-if('${sessionScope.member.id}'.trim() == null){
-	 getid  = null;
+	var getid = null;
+	if ('${sessionScope.member.id}'.trim() == null) {
+		getid = null;
+	} else {
+		getid = '${sessionScope.member.id}';
 	}
-	else{
-	 getid ='${sessionScope.member.id}';}
 </script>
-<script defer src="${pageContext.request.contextPath}/js/packinglist/packingList.js?ver=335"></script>
+<script defer
+	src="${pageContext.request.contextPath}/js/packinglist/packingList.js?ver=335"></script>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/main.css">
 <link rel="stylesheet"
@@ -78,13 +79,9 @@ if('${sessionScope.member.id}'.trim() == null){
 				<div class="tip_list">
 					<ul>
 						<!-- begin : data 들어오는 곳  -->
-<c:forEach var="tdata" items="${requestScope.tipBoardVO }">
+						<c:forEach var="tdata" items="#{requestScope.tipBoardVO }">
 
-${tdata.catnum }
-
-</c:forEach>
-							<c:forEach var="tdata" items=" ${tipBoardVO }" >
-							<li><a href="${contextPath }/board/read/${tdata.bnum}">
+							<li><a href="${contextPath }/board/read/1/${tdata.bnum}">
 									<div class="qna_title">
 										<span> ${tdata.btitle }</span> <span> <fmt:formatDate
 												value="${tdata.budate }" pattern="MM/dd" />
@@ -113,7 +110,7 @@ ${tdata.catnum }
 						<!-- begin : data 들어오는 곳  -->
 						<c:if test="${empty qaBoardVO}"> 게시글 없음  </c:if>
 						<c:forEach var="qdata" items="#{requestScope.qaBoardVO }">
-							<li><a href="${contextPath }/board/read/${qdata.bnum}">
+							<li><a href="${contextPath }/board/read/2/${qdata.bnum}">
 									<div class="qna_title">
 										<span> ${qdata.btitle }</span> <span> <fmt:formatDate
 												value="${qdata.budate }" pattern="MM/dd" />
@@ -140,9 +137,9 @@ ${tdata.catnum }
 
 					<ul>
 						<!-- data 들어오는 부분 loop-->
-						<c:forEach var="gdata" items="${requestScope.galBoardVO}">
+						<c:forEach var="gdata" items="#{requestScope.galBoardVO}">
 							<li class="inner"><a
-								href="${contextPath }/board/read/${gdata.bnum}">
+								href="${contextPath }/board/read/3/${gdata.bnum}">
 									<div class="li_img">
 										<img name=""
 											src="data:${gdata.thumbnailVO.thumbftype };base64,${gdata.thumbnailVO.base64encoded}"
@@ -163,7 +160,6 @@ ${tdata.catnum }
 				</div>
 			</div>
 		</section>
-
 
 
 
