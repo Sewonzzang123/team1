@@ -1,5 +1,7 @@
 package com.my.maintest;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -76,14 +78,28 @@ public class FrontController {
 		int galCatnum = 2;
 		int qaCatnum = 3;		
 		
+		List<BoardVO> boardVO = boardSVC.selectArticles("blog",tipCatnum, 1, recNumPerPage, null, null);
+		List<Map<String, String>> tipBoardVO = new ArrayList<Map<String,String>>();
+		String btitle = null;
+		String bnum = null;
+		String budate = null;
+		for(int i=0; i<boardVO.size(); i++) {
+			Map<String, String> map = new HashMap<>();
+			btitle = boardVO.get(i).getBtitle();
+			bnum = String.valueOf(boardVO.get(i).getBnum());
+			budate = String.valueOf(boardVO.get(i).getBudate());
+			map.put("btitle", btitle);
+			map.put("bnum", bnum);
+			map.put("budate", budate);
+			tipBoardVO.add(i, map);
+		}
 		
-		
-		model.addAttribute("tipBoardVO",boardSVC.selectArticles("blog",tipCatnum, 1, recNumPerPage, null, null));
+				
+				
+		model.addAttribute("tipBoardVO",boardVO);
 		model.addAttribute("galBoardVO",boardSVC.selectArticles("album",galCatnum,  1, (recNumPerPage+2), null, null));
 		model.addAttribute("qaBoardVO",boardSVC.selectArticles("blog", qaCatnum, 1, recNumPerPage, null, null));
-		logger.info(boardSVC.selectArticlesWithKey("blog",tipCatnum, 1, recNumPerPage, null, null).get("list").toString());
-		logger.info(boardSVC.selectArticlesWithKey("album",galCatnum,  1, (recNumPerPage+2), null, null).get("list").toString());
-		logger.info(boardSVC.selectArticlesWithKey("blog", qaCatnum, 1, recNumPerPage, null, null).get("list").toString());
+		
 		
 		
 		

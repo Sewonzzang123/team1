@@ -79,11 +79,13 @@ if('${sessionScope.member.id}'.trim() == null){
 					<ul>
 						<!-- begin : data 들어오는 곳  -->
 
-							<c:forEach var="tdata" items=" #{requestScope.tipBoardVO }" >
-							<li><a href="${contextPath }/board/read/${tdata.bnum}">
+							<c:forEach var="tdata" items="#{requestScope.tipBoardVO }" >
+
+					 	<li><a href="${contextPath }/board/read/1/${tdata.bnum}">
 									<div class="qna_title">
-										<span> ${tdata.btitle }</span> <span> <fmt:formatDate
-												value="${tdata.budate }" pattern="MM/dd" />
+										<span> ${tdata.btitle }</span>
+									<span> <fmt:formatDate
+											value="${tdata.budate }" pattern="MM/dd" />
 										</span>
 									</div>
 							</a></li>
@@ -109,7 +111,7 @@ if('${sessionScope.member.id}'.trim() == null){
 						<!-- begin : data 들어오는 곳  -->
 						<c:if test="${empty qaBoardVO}"> 게시글 없음  </c:if>
 						<c:forEach var="qdata" items="#{requestScope.qaBoardVO }">
-							<li><a href="${contextPath }/board/read/${qdata.bnum}">
+							<li><a href="${contextPath }/board/read/2/${qdata.bnum}">
 									<div class="qna_title">
 										<span> ${qdata.btitle }</span> <span> <fmt:formatDate
 												value="${qdata.budate }" pattern="MM/dd" />
@@ -136,9 +138,9 @@ if('${sessionScope.member.id}'.trim() == null){
 
 					<ul>
 						<!-- data 들어오는 부분 loop-->
-						<c:forEach var="gdata" items="${requestScope.galBoardVO}">
+						<c:forEach var="gdata" items="#{requestScope.galBoardVO}">
 							<li class="inner"><a
-								href="${contextPath }/board/read/${gdata.bnum}">
+								href="${contextPath }/board/read/3/${gdata.bnum}">
 									<div class="li_img">
 										<img name=""
 											src="data:${gdata.thumbnailVO.thumbftype };base64,${gdata.thumbnailVO.base64encoded}"
@@ -159,7 +161,6 @@ if('${sessionScope.member.id}'.trim() == null){
 				</div>
 			</div>
 		</section>
-
 
 
 

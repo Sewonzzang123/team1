@@ -32,8 +32,9 @@
  <script src="${contextPath }/webjars/jquery/3.5.1/jquery.js"></script>
  
  <!--bootstrap js  -->
+ <%-- 
  <script src="${contextPath }/webjars/bootstrap/4.5.0/js/bootstrap.js"  type="text/javascript"></script>
-
+--%>
 
 <!--popper js  -->
 <script src="${contextPath }/webjars/popper.js/2.0.2/umd/popper.js"  type="text/javascript"></script>
