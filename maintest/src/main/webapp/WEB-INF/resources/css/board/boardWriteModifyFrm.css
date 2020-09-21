@@ -173,15 +173,9 @@ label {
 	transform: translate(-50%, -50%);
 }
 
-.bcontent_area {
-	border: 1px solid #e5e5e5;
-	min-height: 300px;
-	outline: none
-}
-
-.content_area {
+.content_area, .bcontent_area {
 	border: 2px solid #c5c5c5;
-	min-height: 600px;
+	min-height: 500px;
 	margin-bottom: 20px;
 	outline: none;
 	padding-top: 5px

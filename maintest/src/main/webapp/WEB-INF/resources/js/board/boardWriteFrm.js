@@ -35,48 +35,49 @@
         window.addEventListener("load", init);
         
         
-        //대석
+        // 대석
         const picsTag =  document.getElementById("pics")
-//        function init() {  
+// function init() {
 //        	
 //        
-//        		picsTag.addEventListener("change", function () {        		
-//                const content_area = document.querySelector('.content_area');
-//                const imgTag = document.createElement('img');
-//            	 //메모리상에 로딩된 uri정보를 읽어와서 미리보기
-//                const url = URL.createObjectURL(picsTag.files[0]);
-//                imgTag.src = url;            
-//                content_area.appendChild(imgTag)
+// picsTag.addEventListener("change", function () {
+// const content_area = document.querySelector('.content_area');
+// const imgTag = document.createElement('img');
+// //메모리상에 로딩된 uri정보를 읽어와서 미리보기
+// const url = URL.createObjectURL(picsTag.files[0]);
+// imgTag.src = url;
+// content_area.appendChild(imgTag)
 //                
-//                //web server DB 저장 후 물리위치 불러와야함. ajax
+// //web server DB 저장 후 물리위치 불러와야함. ajax
 //                
-//                const xhttp = new XMLHttpRequest();
-//                xhttp.addEventListener("readystatechange", ajaxCall(e))
-//                //요청 메시지 
+// const xhttp = new XMLHttpRequest();
+// xhttp.addEventListener("readystatechange", ajaxCall(e))
+// //요청 메시지
 //                
-//                let formData = new FormData(writeFrm);
-//                console.log("formData.has('files') ======boolean=======" +formData.has('file') )               
-//                formData.append("file", this.files[0]);
+// let formData = new FormData(writeFrm);
+// console.log("formData.has('files') ======boolean======="
+// +formData.has('file') )
+// formData.append("file", this.files[0]);
 //                
 //           
 //                
-//                const reqMsg = {};
-//                reqMsg.files = this.files[0];
-//                const intoJson = JSON.stringify(reqMsg);                
+// const reqMsg = {};
+// reqMsg.files = this.files[0];
+// const intoJson = JSON.stringify(reqMsg);
 //               
 //                
-//                xhttp.open("post", "http://localhost:9080/pfpkg/board/setphoto")
-//                xhttp.setRequestHeader("Content-Type", "multipart/formed-data")
-//                xhttp.send(formData);        
+// xhttp.open("post", "http://localhost:9080/pfpkg/board/setphoto")
+// xhttp.setRequestHeader("Content-Type", "multipart/formed-data")
+// xhttp.send(formData);
 //              
-//                //xhttp.setRequestHeader("Content-Type","application/json;charset=utf-8");                
-//                //xhttp.send(JSON.stringify(reqMsg));
+// //xhttp.setRequestHeader("Content-Type","application/json;charset=utf-8");
+// //xhttp.send(JSON.stringify(reqMsg));
 //          
 //                
 //                
 //  
 //                
-//              });    
+// });
 //        	
 //        	
 //        	
@@ -84,25 +85,25 @@
 //        	
 //        	
 //        	
-////        	function ajaxCall(e){ 	       		
-////        		console.log("e.responstText 응답 OK" + e.responstText)
-////        		let Parsed = JSON.parse(this.responseText)
-////        		console.log("Parsed    ============" + Parsed)
-////        		
-////       		 if (this.readyState == 4 && this.status == 200) {
-////       			 console.log("데이터 응답 OK")
-////       			 console.log("데이터 응답 OK")
-////      
-////       			 
-////       		 }else{
-////       			 console.log("데이터 응답 NG")
-////       		 }
-////       		 }
-////        	}
+// // function ajaxCall(e){
+// // console.log("e.responstText 응답 OK" + e.responstText)
+// // let Parsed = JSON.parse(this.responseText)
+// // console.log("Parsed ============" + Parsed)
+// //
+// // if (this.readyState == 4 && this.status == 200) {
+// // console.log("데이터 응답 OK")
+// // console.log("데이터 응답 OK")
+// //
+// //
+// // }else{
+// // console.log("데이터 응답 NG")
+// // }
+// // }
+// // }
         	
         	
         	
-            //=======================================================================
+            // =======================================================================
         function init() {     	
         	picsTag.addEventListener("change", function () {       
                     if (this.files && this.files[0]) {
@@ -145,8 +146,9 @@
         // 보드 카테고리에 맞는 말머리 불러오기
         // ajax
         function getHeadid_f(e) {
+        	
             const bCateTagVal = bCateTag.value;
-
+            
             // ajax
             const xhttp = new XMLHttpRequest();
 
@@ -158,10 +160,13 @@
 
                 if (this.readyState == 4 && this.status == 200) {
 
+                	console.log('작동성공');
+
                     const responseObj = this.responseText;
                     const jsonToJsObj = JSON.parse(responseObj);
                     switch (jsonToJsObj.rtcode) {
                         case "00":
+                        	
                             const hidcategory = jsonToJsObj.hidcategory;
                             hidCateTag.innerHTML = "";
                             Array.from(hidcategory).forEach(e => {
@@ -174,15 +179,13 @@
                             break;
                     }
                 }
-       
-        
+            }
             const jsObj = {};
             jsObj.catnum = bCateTagVal;
             const jsObjToJson = JSON.stringify(jsObj);
             xhttp.open("POST", "http://localhost:9080/pfpkg/board/headid");
             xhttp.setRequestHeader("Content-Type", "application/json;charset=utf-8");
             xhttp.send(jsObjToJson);
-        }
-        
+               
         }
    
