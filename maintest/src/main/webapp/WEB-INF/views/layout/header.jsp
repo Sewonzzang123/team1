@@ -184,8 +184,8 @@ i.navbar_toggleBtn {
 			<c:if test="${empty sessionScope.member}">
 				<div class="top_menu">
 					<ul>
-						<li><a href="">리스트 작성</a></li>
-						<li><a href="">게시판</a></li>
+						<li><a href="${pageContext.request.contextPath}/">리스트 작성</a></li>
+						<li><a href="${pageContext.request.contextPath}/board">게시판</a></li>
 						<li><a href="${pageContext.request.contextPath}/signupForm">회원가입</a></li>
 						<li><a href="${url_login }">로그인</a></li>
 
@@ -200,8 +200,8 @@ i.navbar_toggleBtn {
 
 			<div class="top_menu">
 				<ul>
-					<li><a href="">리스트 작성</a></li>
-					<li><a href="">게시판</a></li>
+					<li><a href="${pageContext.request.contextPath}/#list_wrap">리스트 작성</a></li>
+					<li><a href="${pageContext.request.contextPath}/board">게시판</a></li>
 					<c:if test="${sessionScope.member.ucode==1}">
 						<li><a href="${url_admin}">관리하기</a></li>
 					</c:if>
@@ -225,7 +225,7 @@ i.navbar_toggleBtn {
 
 	<c:if test="${empty sessionScope.member}">
 		<ul>
-					<li><a href="">리스트 작성</a></li>
+					<li><a href="${pageContext.request.contextPath}/#list_wrap">리스트 작성</a></li>
 					<li><a href="${pageContext.request.contextPath}/board">게시판</a></li>
 			<li><a href="${pageContext.request.contextPath}/signupForm">회원가입</a></li>
 			<li><a href="${url_login }">로그인</a></li>
@@ -236,7 +236,7 @@ i.navbar_toggleBtn {
 	<c:if test="${!empty sessionScope.member}">
 
 		<ul>
-		<li><a href="${pageContext.request.contextPath}/pfpkg">리스트 작성</a></li>
+		<li><a href="${pageContext.request.contextPath}/#list_wrap">리스트 작성</a></li>
 		<li><a href="${pageContext.request.contextPath}/board">게시판</a></li>
 			
 			

@@ -53,6 +53,7 @@
 		<span class="main_text"> Lorem ipsum dolor sit amet,
 			consectetur adipisicing </span>
 	</div>
+		<a name="list_wrap"></a>
 	<main>
 		<section class="list scroll">
 			<div class="list_wrap">
