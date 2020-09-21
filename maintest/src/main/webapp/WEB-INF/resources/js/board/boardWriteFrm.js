@@ -2,6 +2,7 @@
         const writeBtn = document.getElementById("writeBtn");
         const writeFrm = document.getElementById("Frm");
         const listBtn = document.getElementById("listBtn");
+        const catnumV = document.getElementById("catnum");
 
         writeBtn.addEventListener("click", writeBtn_f);
         listBtn.addEventListener("click", () => {
@@ -20,7 +21,8 @@
             e.preventDefault();
             const content_area = document.querySelector('.content_area');
             const bcontent_area = document.querySelector('.bcontent_area');
-            const thumbnail_name = document.querySelector('.img_file')
+            const thumbnail_name = document.querySelector('.img_file');
+            const listBtn = document.querySelector('#listBtn');
 
             if (thumbnail_name != null) {
                 const thumbnail = document.querySelector('.thumbnail');
@@ -34,6 +36,9 @@
 
         window.addEventListener("load", init);
         
+        listBtn.addEventListener('click', () =>{
+        	location.href="http://localhost:9080/pfpkg/board/"+catnumV.value;
+        })
         
         // 대석
         const picsTag =  document.getElementById("pics")

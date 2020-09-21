@@ -97,7 +97,8 @@
 							<li>
 								<div class="btnGrp">
 									<button id="modifyBtn" class="btn" type="button">저장</button>
-									<button id="cancelBtn" class="btn" type="button">취소</button>
+									<button id="cancelBtn" class="btn article_list_btn"
+										type="button">취소</button>
 								</div>
 							</li>
 						</ul>
