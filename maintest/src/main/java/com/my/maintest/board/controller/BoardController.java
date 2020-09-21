@@ -5,15 +5,11 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Queue;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +31,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.my.maintest.admin.svc.AdminSVC;
 import com.my.maintest.board.svc.BCommentSVC;
 import com.my.maintest.board.svc.BoardSVC;
 import com.my.maintest.board.svc.PagingSVC;
@@ -64,6 +61,9 @@ public class BoardController {
 
 	@Inject
 	BoardSVC boardSVC;
+
+	@Inject
+	AdminSVC adminSVC;
 
 	@Inject
 	PagingSVC pagingSVC;
@@ -110,12 +110,16 @@ public class BoardController {
 		// 게시판 타입 읽어오기
 		BcategoryVO bcategoryVO = boardSVC.selectBtype(catnum.orElse(0));
 		// 표시할 게시글 수
+		logger.info("테스트중1");
+		logger.info(bcategoryVO.toString());
 		long recNumPerPage = 10;
 		Map<String, Object> map = boardSVC.selectArticlesWithKey(bcategoryVO.getBtype(), catnum.orElse(0),
 				reqPage.orElse(1), recNumPerPage, searchType, searchKeyword);
 		model.addAttribute("boardVO", (List<BoardVO>) map.get("list"));
 		model.addAttribute("pagingComponent", (PagingComponent) map.get("pagingComponent"));
 		model.addAttribute("bcategoryVO", bcategoryVO);
+		model.addAttribute("bcatelist", adminSVC.getCate());
+
 		return "/board/boardMainFrm";
 	}
 

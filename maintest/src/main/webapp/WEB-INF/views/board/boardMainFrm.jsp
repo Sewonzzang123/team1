@@ -4,10 +4,12 @@
 <%@ include file="/WEB-INF/views/included/common.jsp"%>
 
 <!-- css/javascript  -->
-<link rel="stylesheet" 	href="${contextPath }/css/board/boardMainFrm.css?ver=${today}">
-	<link rel="stylesheet" 	href="${contextPath}/css/board/button.css?ver=2"> 
-	
-<script defer type="text/javascript"	src="${contextPath }/js/board/boardMainFrm.js"></script>
+<link rel="stylesheet"
+	href="${contextPath }/css/board/boardMainFrm.css?ver=${today}">
+<link rel="stylesheet" href="${contextPath}/css/board/button.css?ver=2">
+
+<script defer type="text/javascript"
+	src="${contextPath }/js/board/boardMainFrm.js"></script>
 <title>Board Main</title>
 
 </head>
@@ -27,17 +29,17 @@
 						<button type="button" class="writeBtn" id="writeBtn">글쓰기</button>
 					</div>
 					<div class="section_table">
-					
+
 						<input type="hidden" id="returnPage" name="returnPage"
-							value="${pagingComponent.pageCriteria.currReqPage}" /> 
-							
-							<input 	type="hidden" id="catnum" name="catnum"
+							value="${pagingComponent.pageCriteria.currReqPage}" /> <input
+							type="hidden" id="catnum" name="catnum"
 							value="${requestScope.bcategoryVO.catnum}" />
-							
-							
+
+
 						<c:if test="${requestScope.bcategoryVO.btype == 'album' }">
 							<c:import url="/WEB-INF/views/board/boardGalleryListFrm.jsp">
-							<c:param name="catnum" value="${requestScope.bcategoryVO.catnum}" />
+								<c:param name="catnum"
+									value="${requestScope.bcategoryVO.catnum}" />
 							</c:import>
 						</c:if>
 						<c:if test="${requestScope.bcategoryVO.btype != 'album'  }">
