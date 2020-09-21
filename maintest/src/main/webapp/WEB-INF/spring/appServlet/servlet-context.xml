@@ -19,9 +19,11 @@
 	<resources mapping="/css/**"		location="/WEB-INF/resources/css/" />
 	<resources mapping="/js/**" location="/WEB-INF/resources/js/" />
 	<resources mapping="/img/**"		location="/WEB-INF/resources/img/" />
+	
+	
 	<resources mapping="/photo/**" location="/resources/photo/" />
-
-
+	
+	
 
 	<!-- 웹컴포넌트 라이브러리 url매핑 -->
 	<resources mapping="/webjars/**"		location="classpath:/META-INF/resources/webjars/" />
@@ -60,6 +62,14 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 
+
+<!-- 업로드 패스 설정 --> 
+<beans:bean class="java.lang.String" id="uploadPath">
+ <beans:constructor-arg value="D:\java\apache-tomcat-9.0.37\wtpwebapps\maintestB\resources\uploadImg" />
+</beans:bean>
+
+<!-- 일반 파일 업로드 경로 -->
+	<resources mapping="/imgUpload/**" location="/resources/imgUpload/" />
 
 
 <!-- 파일 업로드 -->

@@ -6,15 +6,12 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Queue;
 
+import javax.annotation.Resource;
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,6 +67,9 @@ public class BoardController {
 
 	@Inject
 	BCommentSVC bCommentSVC;
+	
+	@Resource(name="uploadPath")
+	private String uploadPath;
 
 	// 게시판 카테고리 조회
 	@ModelAttribute("bcategoryList")
@@ -155,18 +155,26 @@ public class BoardController {
 	@ResponseBody
 	public  String set_photo(
 			MultipartHttpServletRequest mtf
+			,MultipartFile file 
 		
 			) throws Exception {
 		Map<String, String> result = new HashMap<>();				
 		log.info("사진등록 ajax 호출 ");
 		logger.info("mtf" + mtf.getFile("file").getOriginalFilename());
 
+		//저장할 path 
+		//String path = "D:/java/apache-tomcat-9.0.37/wtpwebapps/maintestB/resources/uploadImg";
+	
+		
+		
+
 		// 파일 태그
 		String fileTag = "file";
 		// 업로드 파일이 저장될 경로
-		String filePath = "C:\\Users\\Administrator\\git\\team1\\maintest\\src\\main\\webapp\\resources\\photo\\";
+		String filePath = "C:\\Users\\DSY\\git\\team1\\maintest\\src\\main\\webapp\\resources\\photo\\";
 		// 파일 이름
-		MultipartFile file = mtf.getFile(fileTag);
+		//MultipartFile file = mtf.getFile(fileTag);	
+		//String fileName = file.getOriginalFilename();
 		String fileName = file.getOriginalFilename();
 
 		try {

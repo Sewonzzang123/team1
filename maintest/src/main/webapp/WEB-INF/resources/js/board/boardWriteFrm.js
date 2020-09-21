@@ -116,14 +116,14 @@
                                 if (ajax.status === 200
                                     || ajax.status === 201) {
                                 	
-                                    const url = ajax.responseText;
-                                    console.log(" ajax.responseText  =========================" +  url);
+                                    const filename = ajax.responseText;
+                                    console.log(" ajax.responseText  =========================" +  filename);
                                     
                                     
                                     const content_area = document.querySelector('.content_area');
                                     const img = document    .createElement('img');
-                                    img.setAttribute("src", 'http://localhost:9080/pfpkg/photo/' + url);
-                                    img.setAttribute("name", url);
+                                    img.setAttribute("src", 'http://localhost:9080/pfpkg/resources/photo/' + filename);
+                                    img.setAttribute("name", filename);
                                     img.setAttribute("class","img_file");
 
                                     content_area.append(img);
