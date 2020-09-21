@@ -78,8 +78,12 @@ if('${sessionScope.member.id}'.trim() == null){
 				<div class="tip_list">
 					<ul>
 						<!-- begin : data 들어오는 곳  -->
+<c:forEach var="tdata" items="${requestScope.tipBoardVO }">
 
-							<c:forEach var="tdata" items=" #{requestScope.tipBoardVO }" >
+${tdata.catnum }
+
+</c:forEach>
+							<c:forEach var="tdata" items=" ${tipBoardVO }" >
 							<li><a href="${contextPath }/board/read/${tdata.bnum}">
 									<div class="qna_title">
 										<span> ${tdata.btitle }</span> <span> <fmt:formatDate

@@ -1,6 +1,5 @@
 package com.my.maintest.board.controller;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -50,16 +49,17 @@ import com.my.maintest.common.paging.SearchCriteria;
 
 import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnails;
+
 @Slf4j
 @Controller
 @RequestMapping("/board")
 public class BoardController {
 
-	//*  하나의 페이징 넘버 페이지에 보여줄 레코드수 : recNumPerPage
-	final long  REC_NUM_PER_PAGE = 10;	
-	//한 페이지에 보여줄 페이징 수 
-	final long  PAGING_NUM_PER_PAGE = 10;	
-	
+	// * 하나의 페이징 넘버 페이지에 보여줄 레코드수 : recNumPerPage
+	final long REC_NUM_PER_PAGE = 10;
+	// 한 페이지에 보여줄 페이징 수
+	final long PAGING_NUM_PER_PAGE = 10;
+
 	Logger logger = LoggerFactory.getLogger(BoardController.class);
 
 	@Inject
@@ -81,9 +81,8 @@ public class BoardController {
 
 	// 게시판 말머리 조회(ajax)
 	@PostMapping(value = "/headid", produces = "application/json")
-	 @ResponseBody
-	public  ResponseEntity<Map<String, Object>> getHeadIdCategory(
-		@RequestBody HeadIdCategoryVO headIdCategoryVO) {
+	@ResponseBody
+	public ResponseEntity<Map<String, Object>> getHeadIdCategory(@RequestBody HeadIdCategoryVO headIdCategoryVO) {
 		ResponseEntity<Map<String, Object>> res = null;
 		List<HeadIdCategoryVO> list = boardSVC.selectHeadIdCategory(headIdCategoryVO.getCatnum());
 		Map<String, Object> map = new HashMap<>();
@@ -99,65 +98,49 @@ public class BoardController {
 		return res;
 	}
 
-
-
-	// 게시글 목록보기  (페이징 + 검색 + 게시판 카테고리)
-	@GetMapping({
-		""
-		,"/{catnum}" // 각 게시판으로 이동
-		, "/{catnum}/{reqPage}"
-		, "/{catnum}/{reqPage}/{searchType}/{searchKeyword}" })
-	public String toSearch(			
-			@PathVariable(value="catnum", required = false) Optional<Integer> catnum,
+	// 게시글 목록보기 (페이징 + 검색 + 게시판 카테고리)
+	@GetMapping({ "", "/{catnum}" // 각 게시판으로 이동
+			, "/{catnum}/{reqPage}", "/{catnum}/{reqPage}/{searchType}/{searchKeyword}" })
+	public String toSearch(@PathVariable(value = "catnum", required = false) Optional<Integer> catnum,
 			@PathVariable(value = "reqPage", required = false) Optional<Integer> reqPage,
 			@PathVariable(value = "searchType", required = false) String searchType,
 			@PathVariable(value = "searchKeyword", required = false) String searchKeyword,
-			@ModelAttribute SearchCriteria searchCriteria, Model model) {		
-		
-		// 게시판 타입 읽어오기 		
+			@ModelAttribute SearchCriteria searchCriteria, Model model) {
+
+		// 게시판 타입 읽어오기
 		BcategoryVO bcategoryVO = boardSVC.selectBtype(catnum.orElse(0));
-		//표시할 게시글 수
-		long recNumPerPage = 10;		
-		Map<String,Object> map = boardSVC.selectArticlesWithKey(bcategoryVO.getBtype(), catnum.orElse(0), reqPage.orElse(1), recNumPerPage, searchType, searchKeyword);	
-		model.addAttribute("boardVO",(List<BoardVO>)map.get("list"));
-		model.addAttribute("pagingComponent",(PagingComponent)map.get("pagingComponent"));
+		// 표시할 게시글 수
+		long recNumPerPage = 10;
+		Map<String, Object> map = boardSVC.selectArticlesWithKey(bcategoryVO.getBtype(), catnum.orElse(0),
+				reqPage.orElse(1), recNumPerPage, searchType, searchKeyword);
+		model.addAttribute("boardVO", (List<BoardVO>) map.get("list"));
+		model.addAttribute("pagingComponent", (PagingComponent) map.get("pagingComponent"));
 		model.addAttribute("bcategoryVO", bcategoryVO);
-		return 	"/board/boardMainFrm";
-			}
+		return "/board/boardMainFrm";
+	}
 
-	
-	
-	
-	
-
-	
 	// 게시글 작성 화면
 	@GetMapping("/boardWriteFrm/{catnum}/{returnPage}")
-	public String toboardWriteFrm(
-			@ModelAttribute BoardVO boardVO, 
-			@PathVariable ("catnum")  int catnum		
-			, @ModelAttribute("returnPage") String returnPage
-			,Model model
-			) {
-		
-	// 게시판 타입 읽어오기 		
-			BcategoryVO bcategoryVO = boardSVC.selectBtype(catnum);
-			bcategoryVO.setCatname("글쓰기");			
-			model.addAttribute("bcategoryVO", bcategoryVO);
-			
-			model.addAttribute("catnum", catnum);//정민
-		
+	public String toboardWriteFrm(@ModelAttribute BoardVO boardVO, @PathVariable("catnum") int catnum,
+			@ModelAttribute("returnPage") String returnPage, Model model) {
+
+		// 게시판 타입 읽어오기
+		BcategoryVO bcategoryVO = boardSVC.selectBtype(catnum);
+		bcategoryVO.setCatname("글쓰기");
+		model.addAttribute("bcategoryVO", bcategoryVO);
+
+		model.addAttribute("catnum", catnum);// 정민
+
 		return "/board/boardWriteFrm";
 	}
 
-	// 사진등록	
+	// 사진등록
 	@RequestMapping(value = "/setphoto", produces = "application/text;charset=utf-8")
 	@ResponseBody
-	public  String set_photo(
-			MultipartHttpServletRequest mtf
-		
-			) throws Exception {
-		Map<String, String> result = new HashMap<>();				
+	public String set_photo(MultipartHttpServletRequest mtf
+
+	) throws Exception {
+		Map<String, String> result = new HashMap<>();
 		log.info("사진등록 ajax 호출 ");
 		logger.info("mtf" + mtf.getFile("file").getOriginalFilename());
 
@@ -176,21 +159,13 @@ public class BoardController {
 		}
 
 		result.putIfAbsent("url", filePath + fileName);
-		
-		
-		logger.info(filePath + fileName);
-		//String _fileName = URLEncoder.encode(fileName , "UTF-8");
-		
 
-	return fileName;
+		logger.info(filePath + fileName);
+		// String _fileName = URLEncoder.encode(fileName , "UTF-8");
+
+		return fileName;
 	}
-	
-	
-	
-	
-	
-	
-	
+
 //	 //게시글 등록
 //	@PostMapping(value={"/write", "/write/{catnum}"})
 //	public String toWrite(
@@ -241,29 +216,26 @@ public class BoardController {
 //		
 //		return "redirect:/board/read/" + boardVO.getBnum();
 //	}
-	
-	
-	
+
 	// 게시글 등록
-	@PostMapping(value={"/write", "/write/{catnum}"})
-	public String toWrite(@RequestParam String bcontent_area, 
-			@RequestParam(value = "thumbnail") String thumb_img_name,
-			@RequestParam(value="catnum") Optional<Integer> catnum,
-			@ModelAttribute BoardVO boardVO
-			) throws Exception {		
-		
-		// 게시판 타입 읽어오기 		
+	@PostMapping(value = { "/write", "/write/{catnum}" })
+	public String toWrite(@RequestParam String bcontent_area, @RequestParam(value = "thumbnail") String thumb_img_name,
+			@RequestParam(value = "catnum") Optional<Integer> catnum, @ModelAttribute BoardVO boardVO) throws Exception {
+
+		// 게시판 타입 읽어오기
 		BcategoryVO bcategoryVO = boardSVC.selectBtype(catnum.orElse(0));
 
 		boardVO.setBcontent(bcontent_area.getBytes("UTF-8"));
 
 		// 썸네일 등록
 		if (!thumb_img_name.equals("null")) {
-			String pathName = "C:\\Users\\Administrator\\git\\team1\\maintest\\src\\main\\webapp\\resources\\photo\\"	+ thumb_img_name;																						
+			String pathName = "C:\\Users\\Administrator\\git\\team1\\maintest\\src\\main\\webapp\\resources\\photo\\"
+					+ thumb_img_name;
 			// 썸네일로 만들 파일
 			File thumb_img_file = new File(pathName);
 			// 썸네일을 담을 파일
-			File thumbnail = new File(	"C:\\Users\\Administrator\\git\\team1\\maintest\\src\\main\\webapp\\resources\\photo\\썸네일_" + thumb_img_name);
+			File thumbnail = new File(
+					"C:\\Users\\Administrator\\git\\team1\\maintest\\src\\main\\webapp\\resources\\photo\\썸네일_" + thumb_img_name);
 
 			// 대상 파일을 리사징 후 썸네일 파일에 저장
 			if (thumb_img_file.exists()) {
@@ -280,93 +252,86 @@ public class BoardController {
 
 		boardSVC.insertArticle(boardVO);
 		String bnum = String.valueOf(boardVO.getBnum());
-	 String _catnum = bcategoryVO.getCatnum();
+		String _catnum = bcategoryVO.getCatnum();
 		return "redirect:/board/read/" + _catnum + "/" + bnum;
 	}
 
 	// 게시글열람
-	@GetMapping({
-		"/read/{catnum}/{bnum}",
-		"/read/{catnum}/{bnum}/{returnPage}", 
-		"/read/{catnum}/{bnum}/{returnPage}/{searchType}/{searchKeyword}" }) 
-	// returnPage		열람후	리스트로 이동시 돌아갈reqPage																								
-	public String toRead(@PathVariable("bnum") Long bnum,
-			@PathVariable("catnum") int catnum,
-			@ModelAttribute("returnPage") String returnPage,
-			@ModelAttribute SearchCriteria searchCriteria, Model model)  throws UnsupportedEncodingException{		
-		
-		
-		// 게시판 타입 읽어오기 		
+	@GetMapping({ "/read/{catnum}/{bnum}", "/read/{catnum}/{bnum}/{returnPage}",
+			"/read/{catnum}/{bnum}/{returnPage}/{searchType}/{searchKeyword}" })
+	// returnPage 열람후 리스트로 이동시 돌아갈reqPage
+	public String toRead(@PathVariable("bnum") Long bnum, @PathVariable("catnum") int catnum,
+			@ModelAttribute("returnPage") String returnPage, @ModelAttribute SearchCriteria searchCriteria, Model model)
+			throws UnsupportedEncodingException {
+
+		// 게시판 타입 읽어오기
 		BcategoryVO bcategoryVO = boardSVC.selectBtype(catnum);
-	
+
 		// svc는 map 타입을 반환값으로 가짐
-		Map<String, Object> map = boardSVC.selectArticle(bnum);			
-		BoardVO boardVO = (BoardVO)map.get("boardVO");
-		boardVO.setTcontent(new String(boardVO.getBcontent(), "UTF-8"));//정민
-		// 파일 타입은 List<BoardFileVO>	
-		List<BoardFileVO> files = ((List<BoardFileVO>)  map.get("files"));
-			
-		//inner댓글 리스트 불러오기 
+		Map<String, Object> map = boardSVC.selectArticle(bnum);
+		BoardVO boardVO = (BoardVO) map.get("boardVO");
+
+		logger.info("테스트");
+		logger.info(boardVO.toString());
+		logger.info(boardVO.getBcontent().toString());
+
+		boardVO.setTcontent(new String(boardVO.getBcontent(), "UTF-8"));// 정민
+		// 파일 타입은 List<BoardFileVO>
+		List<BoardFileVO> files = ((List<BoardFileVO>) map.get("files"));
+
+		// inner댓글 리스트 불러오기
 		List<BCommentVO> list = bCommentSVC.selectBComments(bnum, 1, REC_NUM_PER_PAGE, PAGING_NUM_PER_PAGE);
-				
-		model.addAttribute("boardVO", boardVO);		
-		model.addAttribute("files",files);
+
+		model.addAttribute("boardVO", boardVO);
+		model.addAttribute("files", files);
 		model.addAttribute("innerList", list);
 		model.addAttribute("bcategoryVO", bcategoryVO);
-		
+
 		return "/board/boardReadFrm";
 	}
-	
-	
-	//TODO 게시글 임시 저장 구현
-	//TODO 게시글 댓글 구현
-	//TODO 각 VO 유효성 검사 구현
-	//TODO 관리자 페이지 게시판 추가 구현
-	//TODO 내가쓴글 클릭시 게시글 열람 가능하게 구현
-	//TODO BoardVO 썸네일 컬럼 추가 반영
-	
-	
-	//첨부파일 다운로드
+
+	// TODO 게시글 임시 저장 구현
+	// TODO 게시글 댓글 구현
+	// TODO 각 VO 유효성 검사 구현
+	// TODO 관리자 페이지 게시판 추가 구현
+	// TODO 내가쓴글 클릭시 게시글 열람 가능하게 구현
+	// TODO BoardVO 썸네일 컬럼 추가 반영
+
+	// 첨부파일 다운로드
 	@GetMapping("/file/{fid}")
-	public ResponseEntity<byte[]> toGetFile(
-			@PathVariable("fid") String fid
-			,Model model			
-			){
-		 ResponseEntity<byte[]> res = null;		 
-		 BoardFileVO boardFileVO = boardSVC.selectFileToDwLoad(fid);
-		 
-		 //응답헤더에 mimetype과 파일 사이즈 정보를 설정
-		 final HttpHeaders headers = new HttpHeaders();
-		 String[] mimeTypes = boardFileVO.getFtype().split("/");
-		 headers.setContentType(new MediaType(mimeTypes[0], mimeTypes[1]));
-		 headers.setContentLength(boardFileVO.getFsize());
-		 
-		 //첨부파일 명이 한글일 경우 깨짐방지
-		 String fileName = null;
-		 try {
+	public ResponseEntity<byte[]> toGetFile(@PathVariable("fid") String fid, Model model) {
+		ResponseEntity<byte[]> res = null;
+		BoardFileVO boardFileVO = boardSVC.selectFileToDwLoad(fid);
+
+		// 응답헤더에 mimetype과 파일 사이즈 정보를 설정
+		final HttpHeaders headers = new HttpHeaders();
+		String[] mimeTypes = boardFileVO.getFtype().split("/");
+		headers.setContentType(new MediaType(mimeTypes[0], mimeTypes[1]));
+		headers.setContentLength(boardFileVO.getFsize());
+
+		// 첨부파일 명이 한글일 경우 깨짐방지
+		String fileName = null;
+		try {
 			fileName = new String(boardFileVO.getFname().getBytes("utf-8"), "ISO-8859-1");
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
 
-		 
-		 //응답헤더에 파일이 있음을 알려줌
-		 headers.setContentDispositionFormData("attachment", fileName);
-		 
-		 res = new ResponseEntity<byte[]>(boardFileVO.getFdata(), headers, HttpStatus.OK);
-				 
+		// 응답헤더에 파일이 있음을 알려줌
+		headers.setContentDispositionFormData("attachment", fileName);
+
+		res = new ResponseEntity<byte[]>(boardFileVO.getFdata(), headers, HttpStatus.OK);
+
 		return res;
 	}
 
 	// 첨부파일 일부 삭제
 	@GetMapping("/deleteFile/{fid}/{isthumb}")
 	@ResponseBody
-	public ResponseEntity<String> toDeleteFile(
-			@PathVariable("fid") long fid
-			,@PathVariable(value="isthumb", required = false) String  isThumb			
-			, Model model) {
-		ResponseEntity<String> responseEntity = null;		
-		long result = boardSVC.deleteFile(fid,isThumb);
+	public ResponseEntity<String> toDeleteFile(@PathVariable("fid") long fid,
+			@PathVariable(value = "isthumb", required = false) String isThumb, Model model) {
+		ResponseEntity<String> responseEntity = null;
+		long result = boardSVC.deleteFile(fid, isThumb);
 
 		if (result == 1) {
 
@@ -412,6 +377,7 @@ public class BoardController {
 		logger.info(boardVO.toString());
 		return "/board/boardModifyFrm";
 	}
+
 //게시글 수정처리
 	@PostMapping("/modify")
 	public String toModify(@RequestParam String bcontent_area, @RequestParam(value = "thumbnail") String thumb_img_name,
@@ -475,16 +441,14 @@ public class BoardController {
 
 	// 답글 등록
 	@PostMapping("/reply")
-	public String toReply(@ModelAttribute BoardVO boardVO,			
-			BindingResult result,
+	public String toReply(@ModelAttribute BoardVO boardVO, BindingResult result,
 			@RequestParam("returnPage") String returnPage) {
-		
+
 //		if (result.hasErrors()) {
 //			return "/board/boardReplyFrm";
 //		}
 		boardSVC.insertRepliedArticle(boardVO);
-		return "redirect:/board/boardListFrm/"+ returnPage;
+		return "redirect:/board/boardListFrm/" + returnPage;
 	}
-	
-	
+
 }
