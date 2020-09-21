@@ -61,7 +61,8 @@
 							<td><input type="checkbox" class="check"
 								bnum="${post.bnum }"></td>
 							<td class="catname">${post.bcategory.catname }</td>
-							<td class="title">${post.btitle }</td>
+							<td class="title"><a
+								href="${pageContext.request.contextPath}/board/read/${post.bcategory.catnum }/${post.bnum }">${post.btitle }</a></td>
 							<td><fmt:formatDate value="${post.bcdate }"
 									pattern="yyyy/MM/dd" /></td>
 							<td>${post.bhits }</td>

@@ -108,7 +108,7 @@ public class MypageController {
 		logger.info(memberVO.toString());
 		model.addAttribute("mypost", mypageSVC.mypost(reqPage.orElse(1), ucode));
 		model.addAttribute("paging", mypageSVC.mypost_paging(reqPage.orElse(1), ucode));
-
+		logger.info(mypageSVC.mypost(reqPage.orElse(1), ucode).toString());
 		return "/mypage/mypost";
 	}
 
@@ -129,7 +129,7 @@ public class MypageController {
 	@RequestMapping({ "/mylist", "/mylist/{reqPage}" })
 	public String mylist(@PathVariable(value = "reqPage", required = false) Optional<Integer> reqPage,
 			HttpSession session, Model model) {
-		
+
 		MemberVO memberVO = (MemberVO) session.getAttribute("member");
 		String ucode = memberVO.getUcode();
 		logger.info(memberVO.toString());
@@ -141,16 +141,14 @@ public class MypageController {
 
 		return "/mypage/mylist";
 	}
-	
 
-	
 	// 由ъ뒪�듃 �궘�젣
 	@RequestMapping("/del_list")
 	public String del_list(@RequestBody String lnum, HttpSession session, Model model) {
 		logger.info("�궘�젣 �샇異쒕맖");
 		logger.info(lnum);
 		mypageSVC.del_list(lnum);
-				
+
 		return "/mypage/mylist";
 	}
 

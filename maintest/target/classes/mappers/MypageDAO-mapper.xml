@@ -5,7 +5,8 @@
 	<!-- 회원정보수정 -->
 	<update id="modify" parameterType="MemberVO">
 		update member
-		set nickname=#{nickname}, tel=#{tel}
+		set
+		nickname=#{nickname}, tel=#{tel}
 		where id = #{id}
 	</update>
 
@@ -15,7 +16,7 @@
 	</update>
 
 	<delete id="withdraw" parameterType="string">
-		delete member 
+		delete member
 		where id = #{id}
 	</delete>
 
@@ -66,7 +67,8 @@
 	</select>
 
 	<delete id="del_list" parameterType="string">
-		delete list where lnum = #{lnum}
+		delete list where lnum =
+		#{lnum}
 	</delete>
 
 	<select id="get_category" resultType="ItemCategoryVO">
@@ -98,16 +100,20 @@
 	<select id="mypost" parameterType="map" resultType="BoardVO">
 		select
 		t1.bnum,t1.btitle,t1.bcdate,t1.bhits, t2.catname as
-		"bcategory.catname" from(select
-		bnum , bcategory, btitle, bcdate,
+		"bcategory.catname", t2.catnum as
+		"bcategory.catnum" from(select
+		bnum ,
+		bcategory, btitle, bcdate,
 		bhits,
 		row_number()
 		over(
 		order by bnum
-		asc) as num from board where
+		asc) as
+		num from board where
 		ucode=#{ucode}) t1,
 		bcategory t2 where
-		t1.bcategory = t2.catnum and
+		t1.bcategory
+		= t2.catnum and
 		num
 		between
 		#{end_num}
