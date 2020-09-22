@@ -59,22 +59,32 @@
 									placeholder="제목을 입력하세요."></input> <form:errors
 										cssClass="bound_error" path="btitle"></form:errors></li>
 
-								<li>
-									<div class="btn_area">
-										<input type="hidden" name="thumbnail" class="thumbnail"
-											value="null"> <input type="file" name=files id="pics"
-											multiple>
+								
+							<li class="toolbar_box_li"><label for="btitle"></label>
+								<div class="toolbar_box">
+									<ul>
+										<li>
+											<button class="toolbar_btn add_img_btn">
+												<i class="far fa-image"></i><br> <span>사진</span>
+											</button>
+										</li>
+									</ul>
+								</div>
+								<div class="hidden_toolbar_menu">																	
+										<input type="hidden" name="thumbnail" class="thumbnail"	value="null">										
+											 <input type="file" name="files" id="pics"	multiple>
 									</div>
 								</li>
-								<li><input type="hidden" name="bcontent_area"
-									class="bcontent_area">
-									<div class="content_area" contenteditable="true">
-										<div class="line">첫번째 텍스트</div>
-									</div>
+								
+								<li><label for="bcontent"></label> 
+
+								<input type="hidden" name="tcontent"	class="tcontent_area">
+									<div class="content_area" contenteditable="true"	data-placeholder="내용을 입력하세요">${boardVO.tcontent }</div>
+								 <form:errors cssClass="bound_error" path="bcontent"></form:errors>								 
+								 </li>
+
 								<li>
-								<li>
-									<div class="btnGrp">
-										<button id="tmpWriteBtn" class="btn" type="button">임시저장</button>
+									<div class="btnGrp">							
 										<button id="writeBtn" class="btn" type="button">등록</button>
 										<button id="listBtn" class="btn" type="button">목록으로</button>
 									</div>

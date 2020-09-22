@@ -111,7 +111,7 @@
 						<!-- begin : data 들어오는 곳  -->
 						<c:if test="${empty qaBoardVO}"> 게시글 없음  </c:if>
 						<c:forEach var="qdata" items="#{requestScope.qaBoardVO }">
-							<li><a href="${contextPath }/board/read/2/${qdata.bnum}">
+							<li><a href="${contextPath }/board/read/3/${qdata.bnum}">
 									<div class="qna_title">
 										<span> ${qdata.btitle }</span> <span> <fmt:formatDate
 												value="${qdata.budate }" pattern="MM/dd" />
@@ -140,10 +140,10 @@
 						<!-- data 들어오는 부분 loop-->
 						<c:forEach var="gdata" items="#{requestScope.galBoardVO}">
 							<li class="inner"><a
-								href="${contextPath }/board/read/3/${gdata.bnum}">
+								href="${contextPath }/board/read/2/${gdata.bnum}">
 									<div class="li_img">
 										<img name=""
-											src="data:${gdata.thumbnailVO.thumbftype };base64,${gdata.thumbnailVO.base64encoded}"
+											src="${contextPath }/${gdata.thumbnai;}"
 											alt="" />
 									</div>
 									<div class="li_text">

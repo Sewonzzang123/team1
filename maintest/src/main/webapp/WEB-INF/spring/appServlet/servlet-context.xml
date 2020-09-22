@@ -22,7 +22,7 @@
 	<resources mapping="/img/**"
 		location="/WEB-INF/resources/img/" />
 	<resources mapping="/photo/**" location="file:///c:/tmpServerRepo/photo/" />
-	
+		<resources mapping="/tmpphoto/**" location="file:///c:/tmpServerRepo/photo/tmp/" />
 
 	<!-- 웹컴포넌트 라이브러리 url매핑 -->
 	<resources mapping="/webjars/**"

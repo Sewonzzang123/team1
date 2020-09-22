@@ -98,6 +98,12 @@ label {
 	display: none;
 }
 
+
+#Frm  .content_area .img_file {
+	width: 500px;
+}
+
+
 /* 파일 첨부 영역 css  */
 .attachment label {
 	display: inline-block;

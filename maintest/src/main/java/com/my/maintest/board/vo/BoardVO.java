@@ -21,12 +21,12 @@ private BcategoryVO bcategory;         						//catNum catName							  //bcategor
 private HeadIdCategoryVO hidcategory;							//hidNum catNum hidName															  //hidnum number, --말머리 번호
 
 private long ucode;																																						  //ucode number NOT NULL, --사용자 코드 아이디
-@NotNull
+@NotNull(message="최소 2자 이상 기록하셔야 합니다.")
 @Size(min=2, max= 20, message="제목은최소 2자,  최대 20자까지 입력가능합니다.")
 private String btitle;																																						  //btitle varchar2(60) NOT NULL, --게시글 제목
-@NotNull
-@Size(min=4, max=1500, message="본문은 최소 4자,  최대 1500자까지 입력가능합니다.")
 private byte[]  bcontent;																																  //bcontent varchar2(500) NOT NULL, -- 게시글 내용
+@NotNull(message="최소 2자 이상 기록하셔야 합니다.")
+@Size(min=4, max=1500, message="본문은 최소 4자,  최대 1500자까지 입력가능합니다.")
 private String tcontent;
 private  long bhits;																																					  //bhits number NOT NULL, --조회수
 private Timestamp bcdate;																												  //bCdate timestamp NOT NULL, --생성일
@@ -40,7 +40,7 @@ private String bnickname; //SQL : member.nickname as "bnickname"
 
 //첨부파일
 
-private byte[] thumbnail; // 썸네일
+private String thumbnail; // 썸네일
 private List<MultipartFile>  files;
 private BoardFileVO boardFileVO;
 private ThumbnailVO thumbnailVO; //섬네일

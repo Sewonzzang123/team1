@@ -107,10 +107,4 @@ t3.nickname like '%'||#{searchKeyword}||'%'
 )
 </select>
 
-
-
-
-
-
-
 </mapper>

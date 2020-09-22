@@ -23,7 +23,7 @@
 				</div>
 			</div>
 			<ul>
-				<c:forEach var="bcatelist" items="${requestScope.bcatelist}">
+				<c:forEach var="bcatelist" items="${requestScope.bcatelist}" begin="1" >
 					<li><a href="${contextPath }/board/${bcatelist.catnum  }">${bcatelist.catname  }</a></li>
 				</c:forEach>
 			</ul>

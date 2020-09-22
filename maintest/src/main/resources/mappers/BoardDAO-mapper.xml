@@ -431,8 +431,7 @@ where bnum = #{bnum}
 		 bnum = #{bnum},
 	 	 bcategory= #{bcategory.catnum}, 
 	 	 hidcategory= #{hidcategory.hidnum}, 
-	 	 ucode = (select ucode from member where nickname = #{bnickname}),
-	   btitle= #{btitle},
+	 	 btitle= #{btitle},
 	   bcontent= #{bcontent},
 	   budate=systimestamp
 	   where bnum = #{bnum}

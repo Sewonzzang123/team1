@@ -9,7 +9,7 @@
 <link rel="stylesheet" 	href="${contextPath}/css/board/button.css?ver=2"> 
 
 
-<script  defer type="text/javascript" src="${contextPath }/js/board/boardReadFrm.js?ver=1"></script>
+<script  defer type="text/javascript" src="${contextPath }/js/board/boardReadFrm.js"></script>
 
 </head>
 <body>
@@ -44,9 +44,9 @@
 									value="답글"></input>
 							<c:if
 								test="${requestScope.boardVO.ucode == sessionScope.member.ucode}">
-								<input type="button" class="btn article_del_btn article_btn"
+								<input type="button" class="btn article_mod_btn article_btn" 
 									value="수정"></input>
-								<input type="button" class="btn article_mod_btn article_btn"
+								<input type="button" class="btn article_del_btn article_btn"
 									value="삭제"></input>
 							</c:if>
 						</div>
@@ -122,9 +122,9 @@
 						<div class="left_area">
 							<c:if
 								test="${requestScope.boardVO.ucode == sessionScope.member.ucode}">
-								<input type="button" class="btn  article_del_btn article_btn"
+						<input type="button" class="btn article_mod_btn article_btn" 
 									value="수정"></input>
-								<input type="button" class=" btn  article_mod_btn article_btn"
+								<input type="button" class="btn article_del_btn article_btn"
 									value="삭제"></input>
 							</c:if>
 						</div>

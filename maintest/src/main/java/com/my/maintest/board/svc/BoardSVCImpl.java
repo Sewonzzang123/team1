@@ -163,10 +163,10 @@ public class BoardSVCImpl implements BoardSVC {
 		result = boardDAO.insertArticle(boardVO);
 		//첨부파일 저장
 		//첨부파일 유무 체크 			
-		List<MultipartFile> files = boardVO.getFiles();
-		if(files !=null && files.size() > 0 ) {			
-			insertFiles(files, boardVO.getBnum(), boardVO.getBcategory().getCatnum());					
-		}
+//		List<MultipartFile> files = boardVO.getFiles();
+//		if(files !=null && files.size() > 0 ) {			
+//			insertFiles(files, boardVO.getBnum(), boardVO.getBcategory().getCatnum());					
+//		}
 
 		return result;
 	}
@@ -265,10 +265,10 @@ public void insertFiles(List<MultipartFile> files, long bnum, String catnum)  {
 		boardDAO.updateArticle(boardVO);
 		
 		//첨부파일 변경사항 저장
-		List<MultipartFile> files = boardVO.getFiles();
-		if(files != null && files.size() >0) {
-			insertFiles(files, boardVO.getBnum(),boardVO.getBcategory().getCatnum());
-		}
+//		List<MultipartFile> files = boardVO.getFiles();
+//		if(files != null && files.size() >0) {
+//			insertFiles(files, boardVO.getBnum(),boardVO.getBcategory().getCatnum());
+//		}
 		
 
 		return boardDAO.updateArticle(boardVO);
