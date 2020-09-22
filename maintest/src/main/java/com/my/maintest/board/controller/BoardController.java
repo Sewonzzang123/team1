@@ -341,8 +341,11 @@ public class BoardController {
 
 	// 게시글 등록
 	@PostMapping(value = { "/write", "/write/{catnum}" })
-	public String toWrite(@RequestParam String bcontent_area, @RequestParam(value = "thumbnail") String thumb_img_name,
-			@RequestParam(value = "catnum") Optional<Integer> catnum, @ModelAttribute BoardVO boardVO) throws Exception {
+	public String toWrite(
+			@RequestParam String bcontent_area, 
+			@RequestParam(value = "thumbnail") String thumb_img_name,
+			@RequestParam(value = "catnum") Optional<Integer> catnum, 
+			@ModelAttribute BoardVO boardVO) throws Exception {
 
 		// 게시판 타입 읽어오기
 		BcategoryVO bcategoryVO = boardSVC.selectBtype(catnum.orElse(0));
@@ -371,7 +374,7 @@ public class BoardController {
 		} else {
 			boardVO.setThumbnail(null);
 		}
-
+		
 		boardSVC.insertArticle(boardVO);
 		String bnum = String.valueOf(boardVO.getBnum());	
 		String _catnum = bcategoryVO.getCatnum();

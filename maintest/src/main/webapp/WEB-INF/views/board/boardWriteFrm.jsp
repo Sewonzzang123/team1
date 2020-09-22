@@ -70,8 +70,12 @@
 									<div class="attachment" id="listBox">
 									<label class="uploadList">리스트 첨부</label>			
 									<c:if test="${not empty requestScope.lname }">
-									<input type="hidden" name="listVO.lnum" value="${requestScope.lnum }"/>
-									<input type="text" name="listVO.lname" value="${requestScope.lname }"/> </c:if>
+										<input type="hidden" name="listVO.lnum" value="${requestScope.lnum }"/>
+										<input type="text" name="listVO.lname" value="${requestScope.lname }"/> 
+									</c:if>
+									<c:if test="${empty requestScope.lname }">
+										<input type="hidden" name="listVO.lnum" value="0"/>
+									</c:if>
 									</div>
 										<script>
 							

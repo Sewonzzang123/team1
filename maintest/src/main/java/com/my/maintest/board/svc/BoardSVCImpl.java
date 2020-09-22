@@ -173,9 +173,10 @@ public class BoardSVCImpl implements BoardSVC {
 			insertFiles(files, boardVO.getBnum(), boardVO.getBcategory().getCatnum());					
 		}
 		//리스트 blisting에 저장
-		if(boardVO.getListVO().getLnum() != 0) {
-		List<ListingVO> list = itemListDAO.loadListing(boardVO.getListVO().getLnum());		
-		for(ListingVO listingVO: list)
+		long lnum = boardVO.getListVO().getLnum();	
+		if(lnum != 0) {			
+			List<ListingVO> list = itemListDAO.loadListing(boardVO.getListVO().getLnum());		
+			for(ListingVO listingVO: list)
 				{
 				listingVO.setBnum(boardVO.getBnum());
 				boardDAO.insertBlisting(listingVO);
