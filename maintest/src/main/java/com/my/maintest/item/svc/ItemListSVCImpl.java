@@ -104,5 +104,8 @@ public class ItemListSVCImpl implements ItemListSVC {
 		}		
 		return 0;
 	}
-
+	@Override
+	public String getListname(long lnum) {
+		return itemListDAO.getListname(lnum);
+	}
 }

@@ -184,7 +184,7 @@ i.navbar_toggleBtn {
 			<c:if test="${empty sessionScope.member}">
 				<div class="top_menu">
 					<ul>
-						<li><a href="${pageContext.request.contextPath}/">리스트 작성</a></li>
+						<li><a href="${pageContext.request.contextPath}/#list_wrap">리스트 작성</a></li>
 						<li><a href="${pageContext.request.contextPath}/board">게시판</a></li>
 						<li><a href="${pageContext.request.contextPath}/signupForm">회원가입</a></li>
 						<li><a href="${url_login }">로그인</a></li>

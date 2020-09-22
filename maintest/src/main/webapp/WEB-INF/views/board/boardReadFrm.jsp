@@ -99,6 +99,38 @@
 										</div>
 									</div>
 								</c:if>
+											<!-- 리스트  -->
+											<ul>
+											<li>
+											<c:if test="${empty requestScope.boardVO.listVO.lnum }">
+												<label for="">첨부 리스트</label>
+												<div>
+													<p>첨부 리스트가 없습니다.</p>
+												</div>
+											</c:if>
+											
+											<c:if test="${not empty requestScope.boardVO.listVO.lnum}">
+												<label for="">첨부 리스트</label>
+												<div id="attachments">
+														<div class="attchlist">
+																<span id="viewList" class="${requestScope.boardVO.bnum}">${requestScope.boardVO.listVO.lname }</span>
+														</div>
+												</div>
+											</c:if></li>
+											<script>
+									const viewListBtn = document.getElementById('viewList');
+									if(viewListBtn!=null){		
+									viewListBtn.addEventListener('click',viewListBtn_f);
+									}
+										function viewListBtn_f(){
+											let bnum = viewListBtn.className;
+											const option 	= "width=570,height=680,location=no,resizable=no";
+											let url = "http://localhost:9080/pfpkg/board/downloadListForm/"+bnum;
+											window.open(url,"리스트 다운로드",option);
+											}
+
+									</script>
+											</ul>
 							</div>
 							<div class="main_container">
 								<div class="article_viewer">

@@ -12,7 +12,7 @@
 	}
 </script>
 <script defer
-	src="${pageContext.request.contextPath}/js/packinglist/packingList.js?ver=335"></script>
+	src="${pageContext.request.contextPath}/js/packinglist/packingList.js?ver=337"></script>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/main.css">
 <link rel="stylesheet"
@@ -68,6 +68,13 @@
 							<%@ include file="/WEB-INF/views/packinglist/category.jsp"%>
 						</div>
 					</div>
+				<div class="list_buttons">
+				<input type="button" id="additem" value="아이템 추가" /><span>|</span> 
+				<input type="button" value="저장" 	id="saveBtn"/> <span>|</span>
+				<input type="button" value="리스트 불러오기" id="loadBtn" /> <span>|</span> 
+				<input type="button" value="PDF/인쇄" id="downloadBtn" /> <span>|</span> 
+				<input type="button" value="초기화" id="resetBtn" />
+			</div>
 				</form>
 			</div>
 		</section>
@@ -80,6 +87,8 @@
 				<div class="tip_list">
 					<ul>
 						<!-- begin : data 들어오는 곳  -->
+						<c:if test="${empty requestScope.tipBoardVO}"> 게시글 없음  </c:if>
+						<c:if test="${not empty requestScope.tipBoardVO}">
 						<c:forEach var="tdata" items="#{requestScope.tipBoardVO }">
 
 							<li><a href="${contextPath }/board/read/1/${tdata.bnum}">
@@ -90,6 +99,7 @@
 									</div>
 							</a></li>
 						</c:forEach>
+						</c:if>
 
 						<!-- end : data 들어오는 곳  -->
 
@@ -109,7 +119,8 @@
 				<div class="qna_list">
 					<ul>
 						<!-- begin : data 들어오는 곳  -->
-						<c:if test="${empty qaBoardVO}"> 게시글 없음  </c:if>
+						<c:if test="${empty requestScope.qaBoardVO}"> 게시글 없음  </c:if>
+						<c:if test="${not empty qaBoardVO}">
 						<c:forEach var="qdata" items="#{requestScope.qaBoardVO }">
 							<li><a href="${contextPath }/board/read/2/${qdata.bnum}">
 									<div class="qna_title">
@@ -119,6 +130,7 @@
 									</div>
 							</a></li>
 						</c:forEach>
+						 </c:if>
 
 						<!-- end : data 들어오는 곳  -->
 					</ul>
@@ -138,6 +150,8 @@
 
 					<ul>
 						<!-- data 들어오는 부분 loop-->
+						<c:if test="${empty requestScope.galBoardVO}"> 게시글 없음  </c:if>
+						<c:if test="${not empty requestScope.galBoardVO}">
 						<c:forEach var="gdata" items="#{requestScope.galBoardVO}">
 							<li class="inner"><a
 								href="${contextPath }/board/read/3/${gdata.bnum}">
@@ -154,6 +168,7 @@
 									</div>
 							</a></li>
 						</c:forEach>
+						</c:if>
 					</ul>
 				</div>
 				<div class="more">

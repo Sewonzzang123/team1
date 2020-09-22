@@ -25,6 +25,7 @@ import com.my.maintest.board.vo.BoardVO;
 import com.my.maintest.board.vo.HeadIdCategoryVO;
 import com.my.maintest.board.vo.ThumbnailVO;
 import com.my.maintest.common.paging.PagingComponent;
+import com.my.maintest.item.vo.ListingVO;
 
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
@@ -325,7 +326,11 @@ public void insertFiles(List<MultipartFile> files, long bnum, String catnum)  {
 	}
 
 	
-	
+	//리스트 열람
+	@Override
+	public List<ListingVO> loadListing(long bnum){
+		return boardDAO.loadListing(bnum);	
+	};
 	
 	
 	

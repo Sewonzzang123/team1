@@ -30,7 +30,11 @@ function init(){
 	Array.from(document.querySelectorAll('input[type="checkbox"]')).forEach((a)=>{		
 		let itemClassTag = a.nextElementSibling.classList;
 		document.querySelector("."+itemClassTag[0]).parentElement.parentElement.querySelector('.fa-minus').style.display="table-row";
+		if(document.querySelector("."+itemClassTag[0]).parentElement.parentElement.querySelector('.fa-plus') !=null){
 		document.querySelector("."+itemClassTag[0]).parentElement.parentElement.querySelector('.fa-plus').style.display="none";
+		}else{
+		console.log('만들기');
+		}
 		}
 	);
 
@@ -116,7 +120,7 @@ $('.tab_menu_btn6').on('click',function(){
 		
 		let newitem = document.createElement('div');
 		newitem.className +='tab_box  tab_box'+idTag ;
-		newitem.innerHTML = '<div class="add_or_delete"><i class="fas fa-minus" onClick="deletelist2_f(this)" style="display:none"></i><i class="fas fa-plus" onClick="addlist_f(this)"></i></div><div class="newitem iname" selected="false">'+add+'</div>';
+		newitem.innerHTML = '<div class="add_or_delete"><i class="fas fa-minus" onClick="deletelist2_f(this)" style="display:none"></i><i class="fas fa-plus" onClick="addlist_f(this)"></i></div><div class="iname_wrapper"><div class="newitem iname" selected="false">'+add+'</div></div>';
 
 		document.querySelector('.tab_box').parentElement.prepend(newitem);		
 		}

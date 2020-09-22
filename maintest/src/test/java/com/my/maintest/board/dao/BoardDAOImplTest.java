@@ -230,7 +230,7 @@ public class BoardDAOImplTest {
 	
 	String searchType = null;	
 	String searchKeyword ="테스트";	
-	String btype = "album";
+	String btype = "blog";
 	int catnum =2;			;
 	
 	

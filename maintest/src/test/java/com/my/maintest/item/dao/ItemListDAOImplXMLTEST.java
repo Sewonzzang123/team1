@@ -1,9 +1,6 @@
 package com.my.maintest.item.dao;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -17,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import com.my.maintest.item.svc.ItemListSVC;
 import com.my.maintest.item.vo.ItemCategoryVO;
 import com.my.maintest.item.vo.ItemVO;
 import com.my.maintest.item.vo.ListVO;
@@ -57,15 +55,21 @@ public class ItemListDAOImplXMLTEST {
 		}
 
 	}
+	@Inject
+	ItemListSVC itemListSVC;
 	
 	@Test
 	@DisplayName("리스트불러오기에서 선택했을 경우")
-	@Disabled
+//	@Disabled
 	void selectListItem() {
-		List<ItemVO> list = itemListDAO.selectListItem(61);
-		for(ItemVO itemVO : list) {
-			logger.info(itemVO.toString());
-		}
+		List<ItemVO> list = itemListDAO.selectListItem(2);
+		List<ListingVO> listing = null;
+		List<ItemVO> itemList = null;
+		listing = itemListSVC.loadListing(Long.valueOf(2));
+		itemList = itemListSVC.selectListItem(Long.valueOf(2));
+		logger.info(listing.toString());
+		logger.info(itemList.toString());
+
 	}
 	
 	@Test
@@ -82,7 +86,7 @@ public class ItemListDAOImplXMLTEST {
 		
 	@Test
 	@DisplayName("리스트 이름 생성")
-//	@Disabled
+	@Disabled
 	void listNameInsert() {
 		ListVO listVO = new ListVO();
 		MemberVO memberVO = new MemberVO();
@@ -100,7 +104,7 @@ public class ItemListDAOImplXMLTEST {
 	@Disabled
 	void loadItem() {
 		List<ListingVO> list = null;
-		list = itemListDAO.loadListing((long)10);
+		list = itemListDAO.loadListing((long)2);
 		for(int i=0; i<list.size(); i++) {
 			logger.info(""+list.get(i));
 		}

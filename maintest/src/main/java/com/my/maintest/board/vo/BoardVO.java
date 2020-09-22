@@ -10,6 +10,8 @@ import javax.validation.constraints.Size;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.my.maintest.item.vo.ListVO;
+
 import lombok.Data;
 @Data
 @Entity
@@ -45,5 +47,6 @@ private List<MultipartFile>  files;
 private BoardFileVO boardFileVO;
 private ThumbnailVO thumbnailVO; //섬네일
 
- 
+//리스트
+private ListVO listVO;
 }

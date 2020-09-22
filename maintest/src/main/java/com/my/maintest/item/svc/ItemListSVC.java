@@ -23,4 +23,6 @@ public interface ItemListSVC {
 	List<ListingVO> loadListing(long lnum);
 	//아이템 리스트에 넣기
 	int insertListing(ListVO listVO, List<Map<String,String>> listing);
+	//get lname
+	String getListname(long lnum);
 }

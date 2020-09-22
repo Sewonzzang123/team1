@@ -14,6 +14,7 @@ import com.my.maintest.board.vo.BcategoryVO;
 import com.my.maintest.board.vo.BoardFileVO;
 import com.my.maintest.board.vo.BoardVO;
 import com.my.maintest.board.vo.HeadIdCategoryVO;
+import com.my.maintest.item.vo.ListingVO;
 
 @Repository
 public class BoardDAOImpl implements BoardDAO {
@@ -199,7 +200,13 @@ public int updateBhits(long bnum) {
 
 			return sqlSession.selectList("mappers.BoardDAO-mapper.getThumbnail");
 		}
-
+		//게시글 리스트 불러오기
+		@Override
+		public List<ListingVO> loadListing(long bnum){
+			List<ListingVO> list = null;
+			list = (sqlSession.selectList("mappers.BoardDAO-mapper.loadListing", bnum));
+			return list;
+		};
 
 	}
 

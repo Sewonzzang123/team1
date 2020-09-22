@@ -24,7 +24,7 @@
 		i_name,
 		i_description
 		from item
-		where lnum=0 or lnum=#{lnum}
+		where lnum=1 or lnum=#{lnum}
 	</select>
 
 	<!-- 사용자의 리스트 이름만 불러오기 -->

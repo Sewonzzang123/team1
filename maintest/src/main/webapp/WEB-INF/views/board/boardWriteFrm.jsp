@@ -66,6 +66,30 @@
 											multiple>
 									</div>
 								</li>
+								<li>
+									<div class="attachment" id="listBox">
+									<label class="uploadList">리스트 첨부</label>			
+									<c:if test="${not empty requestScope.lname }">
+									<input type="hidden" name="listVO.lnum" value="${requestScope.lnum }"/>
+									<input type="text" name="listVO.lname" value="${requestScope.lname }"/> </c:if>
+									</div>
+										<script>
+							
+							
+							const listBoxTag = document.getElementById('listBox');
+							listBoxTag.addEventListener('click',function(){
+								let formTag = document.Frm;
+								let catnum = formTag.catnum.value;
+								let returnPage = formTag.returnPage.value;
+								const option 	= "width=570,height=680,location=no,resizable=no";
+								let url = "http://localhost:9080/pfpkg/board/loadListForm/"
+								url += catnum+"/"+returnPage;
+								console.log(url);
+								window.open(url,"첨부할 리스트 선택",option);								
+								});
+							</script>
+									
+								</li>
 								<li><input type="hidden" name="bcontent_area"
 									class="bcontent_area">
 									<div class="content_area" contenteditable="true">

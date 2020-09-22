@@ -291,7 +291,8 @@ hidcategory,
 ucode, 
 btitle, 
 bcontent,
-bgroup
+bgroup,
+lname
 )
 values(
 b_bnum_seq.nextVal,
@@ -300,7 +301,8 @@ b_bnum_seq.nextVal,
 #{ucode},
 #{btitle},
 #{bcontent},
-b_bnum_seq.nextVal
+b_bnum_seq.nextVal,
+#{listVO.lname}
 )
 
 <selectKey keyProperty="bnum" resultType="int" order="AFTER">
@@ -371,6 +373,13 @@ b_bnum_seq.nextVal,
 )
 </insert>
 
+<!-- 리스트 조회 -->
+<select id="loadListing" parameterType="long" resultType="ListingVO">
+SELECT
+i_num, iname as "i_name", icount, ca_num
+FROM blisting
+WHERE bnum=#{bnum}
+</select>
 
 <!-- 조회수 갱신-->
 <update id="updateBhits" parameterType="long">
@@ -395,7 +404,8 @@ t1.bcdate,
 t1.budate,
 t1.bgroup,
 t1.bstep,
-t1.bIndent
+t1.bIndent,
+t1.lname as "listVO.lname"
 from board t1, bcategory t2, member t3, headid t4
 where t1.bcategory = t2.catnum and t1.ucode = t3.ucode and t1.hidcategory = t4.hidnum and
 bnum = #{bnum}
@@ -431,7 +441,6 @@ where bnum = #{bnum}
 		 bnum = #{bnum},
 	 	 bcategory= #{bcategory.catnum}, 
 	 	 hidcategory= #{hidcategory.hidnum}, 
-	 	 ucode = (select ucode from member where nickname = #{bnickname}),
 	   btitle= #{btitle},
 	   bcontent= #{bcontent},
 	   budate=systimestamp
