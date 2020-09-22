@@ -12,4 +12,6 @@ public class ListingVO {
 	private String checked;	//	checked varchar2(10),
 	private int icount;			//	icount number,
 	private int ca_num;
+	
+	private long bnum;
 }

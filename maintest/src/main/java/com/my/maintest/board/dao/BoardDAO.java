@@ -58,6 +58,7 @@ public interface BoardDAO {
 
 	//게시글 리스트 불러오기
 	List<ListingVO> loadListing(long bnum);
-	
+//리스트 등록
+	int insertBlisting(ListingVO listingVO);
 	
 }

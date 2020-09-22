@@ -310,7 +310,11 @@ select b_bnum_seq.currVal from dual
 </selectKey>
 </insert>
 
-
+<!-- 리스트 등록 -->
+<insert id="insertBlisting" parameterType="listingVO">
+insert into blisting(blinum, bnum,i_num, iname, icount, ca_num)
+values(b_l_num_seq.nextval, #{bnum},#{i_num}, #{i_name}, #{icount}, #{ca_num})
+</insert>
 
 <!-- 첨부파일 등록 -->
 <insert id="insertFiles" parameterType="com.my.maintest.board.vo.BoardFileVO">

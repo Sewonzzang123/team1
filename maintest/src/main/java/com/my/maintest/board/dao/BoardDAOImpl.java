@@ -207,6 +207,13 @@ public int updateBhits(long bnum) {
 			list = (sqlSession.selectList("mappers.BoardDAO-mapper.loadListing", bnum));
 			return list;
 		};
+		
+		//리스트 등록
+		@Override
+		public int insertBlisting(ListingVO listingVO) {
+			return sqlSession.insert("mappers.BoardDAO-mapper.insertBlisting", listingVO);
+		};
+		
 
 	}
 

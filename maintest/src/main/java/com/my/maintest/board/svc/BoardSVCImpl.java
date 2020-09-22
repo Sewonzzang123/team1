@@ -25,6 +25,7 @@ import com.my.maintest.board.vo.BoardVO;
 import com.my.maintest.board.vo.HeadIdCategoryVO;
 import com.my.maintest.board.vo.ThumbnailVO;
 import com.my.maintest.common.paging.PagingComponent;
+import com.my.maintest.item.dao.ItemListDAO;
 import com.my.maintest.item.vo.ListingVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +36,9 @@ public class BoardSVCImpl implements BoardSVC {
 	
 	@Inject
 	BoardDAO boardDAO;
+	
+	@Inject
+	ItemListDAO itemListDAO;
 	
 	//게시판 카테고리 조회 
 	@Override
@@ -168,7 +172,15 @@ public class BoardSVCImpl implements BoardSVC {
 		if(files !=null && files.size() > 0 ) {			
 			insertFiles(files, boardVO.getBnum(), boardVO.getBcategory().getCatnum());					
 		}
-
+		//리스트 blisting에 저장
+		if(boardVO.getListVO().getLnum() != 0) {
+		List<ListingVO> list = itemListDAO.loadListing(boardVO.getListVO().getLnum());		
+		for(ListingVO listingVO: list)
+				{
+				listingVO.setBnum(boardVO.getBnum());
+				boardDAO.insertBlisting(listingVO);
+					}
+		}
 		return result;
 	}
 	
