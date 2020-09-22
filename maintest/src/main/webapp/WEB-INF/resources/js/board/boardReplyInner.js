@@ -447,10 +447,12 @@ console.log(" ((Number(innerRqPage)*10)  =====================" + (Number(innerR
 console.log(" 리스트 길이)  =====================" + list.length )		
 if(list.length < (Number(innerRqPage)*10) ){   		
 	last.innerHTML = '불러올 목록이 없습니다.';
+	last.setAttribute("disabled", " true");
 	//last.classList.remove("btn");
 }else{
 	last.innerHTML = '더보기';
 	last.classList.add("btn");	
+	last.removeAttribute("disabled");
 	innerRqPage +=1; 	
 }
 }

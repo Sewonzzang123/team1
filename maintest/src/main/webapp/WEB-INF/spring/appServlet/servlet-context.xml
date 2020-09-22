@@ -21,7 +21,8 @@
 	<resources mapping="/js/**" location="/WEB-INF/resources/js/" />
 	<resources mapping="/img/**"
 		location="/WEB-INF/resources/img/" />
-	<resources mapping="/photo/**" location="/resources/photo/" />
+	<resources mapping="/photo/**" location="file:///c:/tmpServerRepo/photo/" />
+	
 
 	<!-- 웹컴포넌트 라이브러리 url매핑 -->
 	<resources mapping="/webjars/**"
@@ -46,8 +47,8 @@
 		<interceptor>
 			<!-- 1) 특정 uri지정 -->
 			<mapping path="/mypage/**/" />
-			<mapping path="/board/writeForm/**" />
-			<mapping path="/board/reply/**" />
+			<mapping path="/board/boardWriteFrm/**" />
+			<mapping path="/board/boardReplyFrm/**" />
 			<mapping path="/itemlist/saveListForm/**"/>
 			<mapping path="/itemlist/loadListForm/**"/>
 			<!-- 2) interceptor구현 클래스 -->

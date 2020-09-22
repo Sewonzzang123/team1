@@ -1,8 +1,11 @@
 package com.my.maintest.board.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +13,8 @@ import java.util.Map;
 import java.util.Optional;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -142,27 +147,63 @@ public class BoardController {
 	@RequestMapping(value = "/setphoto", produces = "application/text;charset=utf-8")
 	@ResponseBody
 	public String set_photo(MultipartHttpServletRequest mtf
-
+,HttpServletRequest request 
+,HttpServletResponse response
 	) throws Exception {
 		Map<String, String> result = new HashMap<>();
 		log.info("사진등록 ajax 호출 ");
 		logger.info("mtf" + mtf.getFile("file").getOriginalFilename());
 
+		
+		File filePath = new File("C:\\tmpServerRepo\\photo\\");
+		if(!filePath.exists()) {
+			System.out.println("패스가 존재하지 않음 그래서 생성하겠슴.");			
+			filePath.mkdirs();			
+		}
+
+		
 		// 파일 태그
 		String fileTag = "file";
 		// 업로드 파일이 저장될 경로
-		String filePath = "C:\\Users\\Administrator\\git\\team1\\maintest\\src\\main\\webapp\\resources\\photo\\";
+	//	String filePath = "C:\\Users\\Administrator\\git\\team1\\maintest\\src\\main\\webapp\\resources\\photo\\";
+
+		System.out.println("filePath.getPath() == " + filePath.getPath());
+		StringBuilder sb = new StringBuilder(filePath.getPath());
+		
 		// 파일 이름
 		MultipartFile file = mtf.getFile(fileTag);
-		String fileName = file.getOriginalFilename();
+		String fileName = file.getOriginalFilename();		
+		sb.append("\\"+fileName);
+		
+		FileInputStream fis = null;
+		FileOutputStream fos = null;
+		
+		File newFile = new File(sb.toString());
+	
+		fos = new FileOutputStream(newFile);
+		fos.write(mtf.getFile(fileTag).getBytes());
+		fos.close();
+		
+		
+		
+		
 
-		try {
-			file.transferTo(new File(filePath + fileName));
-		} catch (Exception e) {
-			System.out.println("ajax업로드 오류");
-		}
 
-		result.putIfAbsent("url", filePath + fileName);
+
+		URL fileUrl = new URL("file:///"+sb.toString());		
+		System.out.println("fileUrl == " + fileUrl);
+		
+
+		
+		
+//		
+//		try {
+//			file.transferTo(new File(filePath + fileName));
+//		} catch (Exception e) {
+//			System.out.println("ajax업로드 오류");
+//		}
+//
+//		result.putIfAbsent("url", filePath + fileName);
 
 		logger.info(filePath + fileName);
 		// String _fileName = URLEncoder.encode(fileName , "UTF-8");

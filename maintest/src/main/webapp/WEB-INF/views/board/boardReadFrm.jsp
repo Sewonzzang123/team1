@@ -26,13 +26,13 @@
 				<div class="acticle_wrap">
 					<div class="hidden_area">					
 					
-						<input type="hidden" id="bnum" name="bnum" value="${requestScope.boardVO.bnum }" /> 			
+				<input type="hidden" id="bnum" name="bnum" value="${requestScope.boardVO.bnum }" /> 			
 							<input type="hidden"				id="ucode" name="ucode" value="${requestScope.boardVO.ucode }" />
 							<input type="hidden" id="returnPage" name="returnPage"		value="${requestScope.returnPage}" />
 							 <input type="hidden"			id="searchType" name="searchType"		value="${requestScope.searchCriteria.searchType }" /> 
 							 <input		type="hidden" id="searchKeyword" name="searchKeyword"			value="${requestScope.searchCriteria.searchKeyword }" /> 
 							<input			type="hidden" id="catnum" name="catnum"	value="${requestScope.boardVO.bcategory.catnum }" /> 
-							<%-- <input				type="hidden" id="reqPage" name="reqPage" value="${requestScope.reqPage }" />		 --%>
+ 								<input				type="hidden" id="reqPage" name="reqPage" value="${requestScope.reqPage }" />	
 							<input type="hidden" id="hidnum" name="hidnum"				value="${requestScope.boardVO.hidcategory.hidnum}" />
 																				
 							
