@@ -9,7 +9,6 @@ import com.my.maintest.board.vo.BcategoryVO;
 import com.my.maintest.board.vo.BoardFileVO;
 import com.my.maintest.board.vo.BoardVO;
 import com.my.maintest.board.vo.HeadIdCategoryVO;
-import com.my.maintest.item.vo.ListingVO;
 
 public interface BoardSVC {
 	
@@ -32,7 +31,10 @@ public interface BoardSVC {
 	Map<String, Object> selectArticle(long bnum);		
 	//게시글 등록(게시글 원글 and 답글)
 	long insertArticle(BoardVO boardVO);
-
+//게시글 등록(text + img  (썸네일생성 / 원본 파일 저장)
+	long insertArticleWithImg(BoardVO boardVO);	
+	//썸네일 경로 저장
+	int updateThumbPath(BoardVO boardVO);
 	//첨부파일 등록 +  썸네일 생성 및 등록	
 	void insertFiles(List<MultipartFile> files, long bnum, String catnum);	
 	//게시글  수정
@@ -45,9 +47,8 @@ public interface BoardSVC {
 	long deleteArticle(long  bnum);
 	//게시글 답글 작성
 	long insertRepliedArticle(BoardVO boardVO);
-	
-	//리스트 열람
-	List<ListingVO> loadListing(long bnum);
+	//파일 처리 (썸네일 및 원본 사진 저장 디렉토리 생성 및 파일 복사)
+	 boolean  handleFiles(long _bnum, String thumbnailName);
 	
 
 	

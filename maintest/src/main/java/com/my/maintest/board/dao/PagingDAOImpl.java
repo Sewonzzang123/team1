@@ -23,6 +23,8 @@ public class PagingDAOImpl  implements PagingDAO{
 			Map<String, Object> map = new HashMap<>();
 			
 			
+			System.out.println("paging DAO Impl searchType ==" + searchType);
+			
 			map.put("catnum", catnum);
 			map.put("searchType", searchType);
 			map.put("searchKeyword", searchKeyword);
@@ -34,7 +36,7 @@ public class PagingDAOImpl  implements PagingDAO{
 		@Override
 		public int selectRecQnty_Album(long catnum, String searchType, String searchKeyword) {		
 			Map<String, Object> map = new HashMap<>();
-			
+			System.out.println("paging DAO Impl searchType ==" + searchType);
 			
 			map.put("catnum", catnum);
 			map.put("searchType", searchType);

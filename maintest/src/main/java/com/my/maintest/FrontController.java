@@ -54,10 +54,6 @@ public class FrontController {
 		model.addAttribute("tipBoardVO", boardSVC.selectArticles("blog", tipCatnum, 1, recNumPerPage, null, null));
 		model.addAttribute("galBoardVO", boardSVC.selectArticles("album", galCatnum, 1, (recNumPerPage + 2), null, null));
 		model.addAttribute("qaBoardVO", boardSVC.selectArticles("album", qaCatnum, 1, recNumPerPage, null, null));
-		logger.info(boardSVC.selectArticlesWithKey("blog", tipCatnum, 1, recNumPerPage, null, null).get("list").toString());
-		logger.info(
-				boardSVC.selectArticlesWithKey("album", galCatnum, 1, (recNumPerPage + 2), null, null).get("list").toString());
-		logger.info(boardSVC.selectArticlesWithKey("blog", qaCatnum, 1, recNumPerPage, null, null).get("list").toString());
 
 		List<ItemVO> itemList = null;
 		List<ListingVO> listing = null;
