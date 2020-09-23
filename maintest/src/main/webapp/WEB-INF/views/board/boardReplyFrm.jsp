@@ -62,22 +62,20 @@
 												</li>
 											</ul>
 										</div>
-										<div class="hidden_toolbar_menu">										
-											<input multiple type="file" class="add_img"
-												style="display: none;"> <input type="hidden"
-												name="thumbnail" class="thumbnail" value="null">
-										</div></li>
-												<li class="bcontent_li">
-												<input  type="hidden" class="bcontent" name="bcontent_area" >
+													<div class="hidden_toolbar_menu">									
+											<input type="hidden" name="thumbnail" class="thumbnail" value="null">
+											<input type="file" name="files" id="pics"	multiple style="display: none;">
+										</div></li>									
 										
-										
-										<div class="bcontent_area"   id="bcontent_area" contenteditable="true"
-									 data-placeholder="내용을 입력하세요">${boardVO.bcontent }</div>
-										<form:errors cssClass="bound_error" path="bcontent"></form:errors></li>
+										<li><label for="bcontent"></label> 						
+										<input type="hidden" name="tcontent"	class="tcontent_area">
+									<div class="content_area" contenteditable="true"	data-placeholder="내용을 입력하세요">[답글]</div>
+								 <form:errors cssClass="bound_error" path="bcontent"></form:errors>								 
+								 </li>
 								
 								<li>					
 								<div class="btnGrp">					
-							<button id="tmpWriteBtn" type="button"  class="btn" >임시저장</button>
+							
 							<button id="replyBtn" type="button"  class="btn" >등록</button>
 							<button id="listBtn" type="button"  class="btn" >목록으로</button> 
 							</div>

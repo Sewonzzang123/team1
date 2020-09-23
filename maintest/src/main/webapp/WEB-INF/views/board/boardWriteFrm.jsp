@@ -27,20 +27,15 @@
 				<%@ include file="/WEB-INF/views/board/included/boardAsideMenu.jsp"%>
 				<section>
 					<div class="section_wrap">
-						<form:form id="Frm" name="Frm" method="POST"
-							enctype="multipart/form-data"
+							<form:form id="Frm" name="Frm" method="POST" 	enctype="multipart/form-data"
 							action="${contextPath}/board/write/" modelAttribute="boardVO">
-							<input type="hidden" id="returnPage" name="returnPage"
-								value="${requestScope.returnPage}" />
-							<input type="hidden" id="ucode" name="ucode"
-								value="${sessionScope.member.ucode  }" />
-							<input type="hidden" id="catnum" name="catnum"
-								value="${requestScope.bcategoryVO.catnum}" />
-							<input type="hidden" id="hidnum" name="hidnum"
-								value="${requestScope.boardVO.hidcategory.hidnum}" />
+							
+							<input type="hidden" id="returnPage" name="returnPage"			value="${requestScope.returnPage}" />
+							<input type="hidden" id="ucode" name="ucode"				value="${sessionScope.member.ucode  }" />
+							<input type="hidden" id="catnum" name="catnum"					value="${requestScope.bcategoryVO.catnum}" />
+							<input type="hidden" id="hidnum" name="hidnum"				value="${requestScope.boardVO.hidcategory.hidnum}" />
 							<ul>
-								<li class="selectGrp"><select name="bcategory.catnum"
-									id="bcategory">
+								<li class="selectGrp"><select name="bcategory.catnum"		id="bcategory">
 										<option value="0">게시판분류</option>
 										<c:forEach var="bcate" items="${bcategoryList }">
 											<c:if test="${bcate.catnum != 0}">
@@ -48,24 +43,44 @@
 													<c:if test="${bcate.catnum == requestScope.catnum}">selected</c:if>>${bcate.catname }</option>
 											</c:if>
 										</c:forEach>
-
-								</select> <select name="hidcategory.hidnum" id="hidcategory">
-										<option value="">말머리분류</option>
-
+									</select> 
+								<select name="hidcategory.hidnum" id="hidcategory">
+									<option value="">말머리분류</option>
 								</select> <form:errors cssClass="bound_error" path="bcategory.catnum"></form:errors>
 								</li>
 
-								<li><input name="btitle" type="text"
-									placeholder="제목을 입력하세요."></input> <form:errors
-										cssClass="bound_error" path="btitle"></form:errors></li>
-
-								<li>
+								<li><input name="btitle" type="text"			placeholder="제목을 입력하세요."></input> 
+									<form:errors	cssClass="bound_error" path="btitle"></form:errors></li>
+									<li class="toolbar_box_li"><label for="btitle"></label>
+								<div class="toolbar_box">
+									<ul>
+										<li>
+											<button class="toolbar_btn add_img_btn">
+												<i class="far fa-image"></i><br> <span>사진</span>
+											</button>
+										</li>
+									</ul>
+								</div>
+								<div class="hidden_toolbar_menu">																	
+										<input type="hidden" name="thumbnail" class="thumbnail"	value="null">										
+											 <input type="file" name="files" id="pics"	multiple style="display: none;">
+									</div>
+								</li>
+									
+									
+									
+<!-- 리스트  -->
+			<!-- 		<li>
 									<div class="btn_area">
 										<input type="hidden" name="thumbnail" class="thumbnail"
 											value="null"> <input type="file" name=files id="pics"
 											multiple>
 									</div>
-								</li>
+								</li> -->
+								
+								
+								
+								
 								<li>
 									<div class="attachment" id="listBox">
 									<label class="uploadList">리스트 첨부</label>			
@@ -78,8 +93,6 @@
 									</c:if>
 									</div>
 										<script>
-							
-							
 							const listBoxTag = document.getElementById('listBox');
 							listBoxTag.addEventListener('click',function(){
 								let formTag = document.Frm;
@@ -92,17 +105,20 @@
 								window.open(url,"첨부할 리스트 선택",option);								
 								});
 							</script>
-									
-								</li>
-								<li><input type="hidden" name="bcontent_area"
-									class="bcontent_area">
-									<div class="content_area" contenteditable="true">
-										<div class="line">첫번째 텍스트</div>
+							<!-- 리스트  -->
+							
+							
+							
+									<li><label for="bcontent"></label> 
+								<input type="hidden" name="tcontent"	class="tcontent_area">
+									<div class="content_area" contenteditable="true"	data-placeholder="내용을 입력하세요">${boardVO.tcontent }
+								
 									</div>
-								<li>
+								 <form:errors cssClass="bound_error" path="bcontent"></form:errors>								 
+								 </li>
+
 								<li>
 									<div class="btnGrp">
-										<button id="tmpWriteBtn" class="btn" type="button">임시저장</button>
 										<button id="writeBtn" class="btn" type="button">등록</button>
 										<button id="listBtn" class="btn" type="button">목록으로</button>
 									</div>

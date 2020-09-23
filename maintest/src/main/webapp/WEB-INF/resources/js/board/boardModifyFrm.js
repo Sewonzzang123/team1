@@ -1,285 +1,186 @@
 'use strict'
-
-<!--읽기모드 -->
-        const peplyBtn = document.getElementById("peplyBtn");
-// const modifyBtn = document.getElementById("modifyBtn");
-        const listBtn = document.getElementById("listBtn");
-
-        if( peplyBtn)  	peplyBtn.addEventListener("click", peplyBtn_f);  
-// if( modifyBtn) modifyBtn.addEventListener("click", modifyBtn_f);
-          if( listBtn)  listBtn.addEventListener("click", listBtn_f);     
-      
-      
-      <!-- 답글 -->      
-      function peplyBtn_f(){          
-      const bnum = document.getElementById("bnum").value;
-       const returnPage = document.getElementById("returnPage").value;
-      const url = `/pfpkg/board/boardReplyFrm/${bnum}/${returnPage}`;
-      window.location.href=url;      
-      }
-      
-      
-        <!--수정모드 -->
-        const deleteBtn = document.getElementById("deleteBtn");
-        const saveBtn = document.getElementById("saveBtn");
+        const modifyBtn = document.getElementById("modifyBtn");
+        const writeFrm = document.getElementById("Frm");
         const cancelBtn = document.getElementById("cancelBtn");
-        const attachments = document.getElementById("attachments");
-        // 게시판 카테고리별 말머리 불러오기
-        const   bcateTag = document.getElementById("bcategory");
+        const catnumV = document.getElementById("catnum");
+        const picsTag =  document.getElementById("pics")
+
+        	//수정페이지 진입시 컨텐트영역에 img 태그 수 및 파일이름
+        	const imgTags_ContentArea = document.querySelectorAll(".img_file");
+        
+        /* 사진 추가 */
+       const add_img_btn = document.querySelector('.add_img_btn');
         
         
-       if( deleteBtn) deleteBtn.addEventListener("click",deleteBtn_f);      
-       if( saveBtn)    saveBtn.addEventListener("click", saveBtn_f);           
-       if( cancelBtn) cancelBtn.addEventListener("click", cancelBtn_f);        
-        // 첨부파일 일부 삭제
-         if( attachments)  attachments.addEventListener("click", deleteFile_f);
-       if(bcateTag) bcateTag.addEventListener("change", getHidcate_f);
-        // 수정버튼
-// function modifyBtn_f(){
-// console.log("modifyBtn 버튼 클릭");
-// const isModifyMode = true;
-// // 클릭과 함께 readonly disabled 속성 값 변환
-// modeChange(isModifyMode);
-//                     
-// }
-     
-     
-// // 수정 / 읽기 모드 처리 로직
-// function modeChange(isModifyMode){
-// if(isModifyMode== true){
-// // 읽기모드--> 수정모드
-// const ritems = document.getElementsByClassName("readMode")
-// Array.from(ritems).forEach((item)=>{item.style.display = "none"});
-// const mitems = document.getElementsByClassName("modifyMode")
-// Array.from(mitems).forEach((item)=>{item.style.display = "block"});
-//     
-// // selectTags disabled 해제
-// const selectTags = document.getElementsByTagName("select")
-// Array.from(selectTags).forEach((item)=>{item.removeAttribute("disabled")});
-//     
-// // btitle & bcontent readOnly 해제
-// document.getElementById("btitle").removeAttribute("readonly");
-// document.getElementById("bcontent").removeAttribute("readonly")
-//     
-// // bcategory 및 hidcategory 의 db에서 불러온 값 selected 속성 풀기
-// document.getElementById("bcategory").children[0].removeAttribute("selected")
-// document.getElementById("hidcategory").children[0].removeAttribute("selected")
-//     
-// }else{
-// // 수정 --> 읽기모드
-// const ritems = document.getElementsByClassName("readMode")
-// Array.from(ritems).forEach((item)=>{item.style.display = "block"});
-// const mitems = document.getElementsByClassName("modifyMode")
-// Array.from(mitems).forEach((item)=>{item.style.display = "none"});
-//     
-//     
-// // selectTags disabled 설정
-// const selectTags = document.getElementsByTagName("select")
-// Array.from(selectTags).forEach((item)=>{item.setAttribute("disabled",true)});
-//     
-// // btitle & bcontent readOnly 설정
-// document.getElementById("btitle").setAttribute("readonly",true);
-// document.getElementById("bcontent").setAttribute("readonly",true);
-//
-//
-// // bcategory db에서 불러온 값 다시 보이기
-// document.getElementById("bcategory").children[0].setAttribute("selected",
-// true)
-// document.getElementById("hidcategory").children[0].setAttribute("selected",true)
-//
-// // hidcateTag.innerHTML += "<option value='${hid.hidnum }'
-// // style='display:none'>${hid.hidname }</option> "
-//     
-//     
-//     
-// }
-// }
-     
-// // 삭제버튼
-// function deleteBtn_f(e){
-// e.preventDefault();
-// console.log("deleteBtn 버튼 클릭");
-// const isModifyMode = false;
-// modeChange(isModifyMode);
-// if(confirm("삭제하시겠습니까?")){
-// const bnum = document.getElementById("bnum").value;
-// const url = `/pfpkg/board/delete/${bnum}`;
-// window.location.href= url;
-// }
-//            
-// }
-     
-     // 목록 버튼
-   function   listBtn_f(e){        
-      e.preventDefault();
-// const isModifyMode = false;
-// modeChange(isModifyMode);
-    const searchType = document.getElementById("searchType").value;
-   	const searchKeyword = document.getElementById("searchKeyword").value;   	
-    const returnPage = document.getElementById("returnPage").value;       
-    const catnum = document.getElementById("catnum").value;       
-    const url = `/pfpkg/board/${catnum}/${returnPage}/${searchType}/${searchKeyword}`;
+        //작성영역 및 출력 영역 
+        const content_area = document.querySelector('.content_area');
+        //바인딩할 데이터 삽입영역
+        const tcontent_area = document.querySelector('.tcontent_area');
+        //처음 등록한 사진의 파일이름  
+        const thumbnail_name = document.querySelector('.img_file');
+        //리스트 버튼
+        const listBtn = document.querySelector('#listBtn');
     
-   window.location.href=url;     
-     
-     }
-   
-     // 저장버튼
-      function   saveBtn_f(e){        
-//    
-// if(confirm("저장하시겠습니까?")){
-// const readModFrm = document.getElementById("readModFrm");
-// readModFrm.submit();
-// }
-    }
-     // 취소 버튼
-   function   cancelBtn_f(e){        
-// const isModifyMode = false;
-// readModFrm.reset();
-// modeChange(isModifyMode);
-     }
-     
-     
-     // 첨부 파일 삭제
-     function deleteFile_f(e){
-     console.log(e.target);
-       if(e.target.tagName != "I") return false;
-       const iTag = e.target;
-       const fid= iTag.getAttribute("data-fid");
-       
-      const isthumb = iTag.getAttribute("data-isthumb");
-             
-     if(confirm("삭제하시겠습니까?")) {   
-     // AJAX사용
-     // XMLHttpRequest 객체 새성
-     const xhttp = new XMLHttpRequest();
-     
-     // 서비스 요청
-     const uri = `http://localhost:9080/pfpkg/board/deleteFile/${fid}/${isthumb}`;
-     
-     xhttp.open("get", uri)
-     xhttp.send();
-     
-     // 응답처리
-     // readystate
-     // 0:open()이 호출되지 않은상태
-     // 1:open()이 실행된 상태 -> 서버에 연결됨.
-     // 2:send()가 실행된 상태, 서버가 클라이언트 요청을 받았음.
-     // 3:서버가 클라이언트 요청을 처리중 / 응답헤더는 수신했으나 바디가 수신중인 상태
-     // 4:서버가 클라이언트의 요청을 완료 햇고 , 서버도 응답이 완료된 상태
-     xhttp.addEventListener("readystatechange", ajaxCall);
-     
-     function ajaxCall(e){
-     if(this.readyState == 4 && this.status == 200){
-     // 서버에서 삭제를 처리햇으면
-     if(this.responseText == "success"){
-     // 성공했을때 첨부파일 표시 하던 tag 삭제 처리
-     const parent = iTag.parentElement.parentElement;
-     parent.remove(iTag); 		
-     }else{     
-     console.log("파일삭제 실패!") 
-          }
- 			    }     
-   			  }
-          }
- }
-     
-      // 게시판 카테고리별 말머리 불러오기
-     
-     function getHidcate_f(e){
-     
-     const bcateVal = bcateTag.value;
-     
-
-  
-     // 요청 시작
-     const hidnumV = document.querySelector('#hidnum').value;
-     const xhttp = new XMLHttpRequest();
-     
-     xhttp.addEventListener("readystatechange", ajaxCallForHid);  
-     
-          // 요청 처리 완료되었을때
-     function ajaxCallForHid(e){
-        if(this.readyState == 4 && this.status == 200){
-     
-     // 제이슨 --> 자바스크립트 객체로 변환
-  const   jsonToJavascript = JSON.parse(this.responseText);
-     
-     switch(jsonToJavascript.rtcode){
-     case "00":
-        const   hidcateTag = document.getElementById("hidcategory");
-     
-     		const hidcategory = jsonToJavascript.hidcategory;
-     		hidcateTag.innerHTML="";
-     		Array.from(hidcategory).forEach(e=>{
-     			if(hidnumV ==  e.hidnum){
-     				hidcateTag.innerHTML += "<option value='" + e.hidnum + "' selected>" + e.hidname + "</option>";
-     			} else{
-     		hidcateTag.innerHTML += "<option value='" + e.hidnum + "'>" + e.hidname + "</option>";}
-     		})
-     	 	
-     		break;
-     
-     case "01":
-     console.log("hid 카테 조회 실패");
-     
-     break;    
-        }
-        }
-     }
-
-     // 요청 파라미터 셋팅
-     const reqPara = {} ; 
-     reqPara.catnum = bcateVal;
-     
-     const javascriptToJson = JSON.stringify(reqPara);
-     
-     xhttp.open("POST", "http://localhost:9080/pfpkg/board/headid");
-     xhttp.setRequestHeader("Content-Type","application/json;charset=utf-8");
-     xhttp.send(javascriptToJson);
         
-     }
-     
-     const acticle = document.querySelector('.section_wrap');
-     const layer_attach = document.querySelector('.layer_attach');
-     const bnum = document.querySelector('#bnum').value;
-     console.log(bnum);
+        
+   
+        
+        add_img_btn.addEventListener('click', (e) => {
+    		e.preventDefault();
+    		picsTag.click();
+    		console.log('클릭됨');
+    		}
+    	)
+        
+        window.addEventListener("load", init);        
+        modifyBtn.addEventListener("click", writeBtn_f);
+        cancelBtn.addEventListener('click', () =>{
+        	location.href="http://localhost:9080/pfpkg/board/"+catnumV.value;
+        })
 
-     acticle.addEventListener('click', (e) => {
-       // 목록 버튼
-       if (e.target.classList.contains('article_list_btn')) {	
-// listBtn_f(e)
-    	   history.back();
-       }
+        const bCateTag = document.getElementById("bcategory")
+        const hidCateTag = document.getElementById("hidcategory")
+        // 게시판 분류 카테고리 별 말머리 연동 ajax
+        bCateTag.addEventListener("change", getHeadid_f);
 
-       // 삭제 버튼
-       if (e.target.classList.contains('article_mod_btn')) {        
-       	if(confirm('게시글을 삭제하시겠습니까?')){
-       		location.href="${pageContext.request.contextPath}/board/delete/"+bnum;
-           	}
-       }
-
-       // 수정 버튼
-       if (e.target.classList.contains('article_del_btn')) {
-         console.log('수정 요청')
-         location.href = '${pageContext.request.contextPath}/board/modifyFrm/'+bnum;
-       }
-
-       // gotop 버튼
-       if (e.target.classList.contains('article_gotop_btn')) {
-         window.scrollTo(0, 0);
-       }
-
-       // 첨부파일 버튼
-       if (e.target.classList.contains('button_file')) {
-         e.preventDefault();
-         if (layer_attach.getAttribute('style') == 'display: none;') {
-           layer_attach.style.display = null;
-         } else {
-           layer_attach.style.display = 'none';
-         }
-       }  
-       });
-     
-     getHidcate_f();
+    
+        function init() {     	
+        	getHeadid_f();
+        	picsTag.addEventListener("change", function () {       
+                    if (this.files && this.files[0]) {
+                        var formData = new FormData();
+                        formData.append("file", this.files[0]);
+                        console.log("업로드");
+                        var ajax = new XMLHttpRequest();
+                        ajax.onreadystatechange = function () {
+                            if (ajax.readyState === ajax.DONE) {
+                                if (ajax.status === 200
+                                    || ajax.status === 201) {
+                                    const url = ajax.responseText;
+                                    console.log(" ajax.responseText  =========================" +  url);                                    
+                                    const content_area = document.querySelector('.content_area');
+                                    const img = document    .createElement('img');
+                                    img.setAttribute("src", 'http://localhost:9080/pfpkg/tmpphoto/' + url);
+                                    img.setAttribute("name", url);
+                                    img.setAttribute("class","img_file");
+                                    content_area.append(img);
+                                } else {
+                                    console.error(ajax.responseText);
+                                }
+                            }
+                        };
+                        ajax.open(
+                                "POST",   "http://localhost:9080/pfpkg/board/setphoto",   true); //
+                        ajax.send(formData);
+                    }
+                })
  
+        }
+
+        function writeBtn_f(e) {
+            e.preventDefault();
+            if (thumbnail_name != null) {
+                const thumbnail = document.querySelector('.thumbnail');
+                thumbnail.value = thumbnail_name.getAttribute('name');
+                console.log("2번" + thumbnail);
+                alert("1번 파일 썸네일 이름 셋팅 완료");
+            }
+            tcontent_area.value = content_area.innerHTML;
+          writeFrm.submit();
+        }
+
+        
+        // 보드 카테고리에 맞는 말머리 불러오기
+        // ajax
+        function getHeadid_f(e) {
+        	
+            const bCateTagVal = bCateTag.value;
+            
+            // ajax
+            const xhttp = new XMLHttpRequest();
+
+            xhttp.addEventListener("readystatechange", ajaxCall);
+
+
+            function ajaxCall(e) {
+                // 처리완료 시 응답처리
+
+                if (this.readyState == 4 && this.status == 200) {
+
+                	console.log('작동성공');
+
+                    const responseObj = this.responseText;
+                    const jsonToJsObj = JSON.parse(responseObj);
+                    switch (jsonToJsObj.rtcode) {
+                        case "00":
+                        	
+                            const hidcategory = jsonToJsObj.hidcategory;
+                            hidCateTag.innerHTML = "";
+                            Array.from(hidcategory).forEach(e => {
+                                hidCateTag.innerHTML += "<option value='" + e.hidnum + "' >" + e.hidname + "</option>"
+                            })
+                            break;
+
+                        case "01":
+                            console.log("말머리 불러오기 실패")
+                            break;
+                    }
+                }
+            }
+            const jsObj = {};
+            jsObj.catnum = bCateTagVal;
+            const jsObjToJson = JSON.stringify(jsObj);
+            xhttp.open("POST", "http://localhost:9080/pfpkg/board/headid");
+            xhttp.setRequestHeader("Content-Type", "application/json;charset=utf-8");
+            xhttp.send(jsObjToJson);
+               
+        }
+        
+        
+        //수정 영역 변경사항 발생시 이벤트 리스너
+       
+        content_area.addEventListener("blur", content_area_f);
+        content_area.addEventListener("keyup", content_area_f);
+        content_area.addEventListener("paste", content_area_f);
+        content_area.addEventListener("copy", content_area_f);
+        content_area.addEventListener("cut", content_area_f);
+        content_area.addEventListener("delete", content_area_f);
+       // content_area.addEventListener("mouseup", content_area_f);
+    	
+        
+        
+        //수정페이지 진입시 컨텐트영역에 img 태그 수 및 파일이름
+    	//const imgTags_ContentArea = document.querySelectorAll(".img_file");
+        
+        function content_area_f(){        	
+        	console.log("컨텐트 영역 변경사항 발생")
+        	let imgTags_modifying =  document.querySelectorAll(".img_file");
+        	if(imgTags_modifying.length == 0 ) {
+        		console.log("모든파일 tmp로 ")
+        	}
+        	let  cnt ;
+        		for(let i = 0; i <imgTags_ContentArea.length; i++  ){ 	        			
+        			cnt = 0;
+        			for(let j = 0; j <imgTags_modifying.length; j++  ){ 	
+        				console.log("originF.name=FileNowOn.name ::" +imgTags_ContentArea[i].name + "=" + imgTags_modifying[j].name)
+        			if(imgTags_ContentArea[i].name.indexOf(imgTags_modifying[j].name) != -1 ){         				
+        				cnt += 1;
+        			}        				
+        			}
+        				
+        
+        				if(cnt  = 0){   
+        				console.log("tmp 폴더로 이동")        	
+
+        				
+        				
+        				
+        				}
+        		}
+        		
+        		
+        }
+        
+        
+        
+   

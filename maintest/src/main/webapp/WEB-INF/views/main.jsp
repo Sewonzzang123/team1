@@ -86,11 +86,9 @@
 				<div class="line"></div>
 				<div class="tip_list">
 					<ul>
-						<!-- begin : data 들어오는 곳  -->
-						<c:if test="${empty requestScope.tipBoardVO}"> 게시글 없음  </c:if>
-						<c:if test="${not empty requestScope.tipBoardVO}">
+	<!-- begin : data 들어오는 곳  -->
+							<c:if test="${empty tipBoardVO}"> 게시글 없음  </c:if>
 						<c:forEach var="tdata" items="#{requestScope.tipBoardVO }">
-
 							<li><a href="${contextPath }/board/read/1/${tdata.bnum}">
 									<div class="qna_title">
 										<span> ${tdata.btitle }</span> <span> <fmt:formatDate
@@ -99,7 +97,6 @@
 									</div>
 							</a></li>
 						</c:forEach>
-						</c:if>
 
 						<!-- end : data 들어오는 곳  -->
 
@@ -119,10 +116,9 @@
 				<div class="qna_list">
 					<ul>
 						<!-- begin : data 들어오는 곳  -->
-						<c:if test="${empty requestScope.qaBoardVO}"> 게시글 없음  </c:if>
-						<c:if test="${not empty qaBoardVO}">
+						<c:if test="${empty qaBoardVO}"> 게시글 없음  </c:if>
 						<c:forEach var="qdata" items="#{requestScope.qaBoardVO }">
-							<li><a href="${contextPath }/board/read/2/${qdata.bnum}">
+							<li><a href="${contextPath }/board/read/3/${qdata.bnum}">
 									<div class="qna_title">
 										<span> ${qdata.btitle }</span> <span> <fmt:formatDate
 												value="${qdata.budate }" pattern="MM/dd" />
@@ -130,7 +126,6 @@
 									</div>
 							</a></li>
 						</c:forEach>
-						 </c:if>
 
 						<!-- end : data 들어오는 곳  -->
 					</ul>
@@ -150,25 +145,23 @@
 
 					<ul>
 						<!-- data 들어오는 부분 loop-->
-						<c:if test="${empty requestScope.galBoardVO}"> 게시글 없음  </c:if>
-						<c:if test="${not empty requestScope.galBoardVO}">
+							<c:if test="${empty galBoardVO}"> 게시글 없음  </c:if>
 						<c:forEach var="gdata" items="#{requestScope.galBoardVO}">
 							<li class="inner"><a
-								href="${contextPath }/board/read/3/${gdata.bnum}">
+								href="${contextPath }/board/read/2/${gdata.bnum}">
 									<div class="li_img">
 										<img name=""
-											src="data:${gdata.thumbnailVO.thumbftype };base64,${gdata.thumbnailVO.base64encoded}"
+											src="${contextPath }/${gdata.thumbnail}"
 											alt="" />
 									</div>
 									<div class="li_text">
 										<div class="li_text_poa">
 											<h5 class="li_text_head">${gdata.btitle }</h5>
-											<p class="li_text_summary">${gdata.bcontent}</p>
+											<%-- <p class="li_text_summary">${gdata.tcontent}</p> --%>
 										</div>
 									</div>
 							</a></li>
 						</c:forEach>
-						</c:if>
 					</ul>
 				</div>
 				<div class="more">

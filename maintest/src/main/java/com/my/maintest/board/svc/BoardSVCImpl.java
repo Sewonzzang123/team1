@@ -16,7 +16,6 @@ import javax.imageio.ImageIO;
 import javax.inject.Inject;
 
 import org.apache.commons.io.output.ByteArrayOutputStream;
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.imgscalr.Scalr;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +28,8 @@ import com.my.maintest.board.vo.BoardVO;
 import com.my.maintest.board.vo.HeadIdCategoryVO;
 import com.my.maintest.board.vo.ThumbnailVO;
 import com.my.maintest.common.paging.PagingComponent;
+import com.my.maintest.item.dao.ItemListDAO;
+import com.my.maintest.item.vo.ListingVO;
 
 import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnails;
@@ -39,6 +40,9 @@ public class BoardSVCImpl implements BoardSVC {
 	
 	@Inject
 	BoardDAO boardDAO;
+	
+	@Inject
+	ItemListDAO itemListDAO;
 	
 	//게시판 카테고리 조회 
 	@Override
@@ -82,11 +86,14 @@ public class BoardSVCImpl implements BoardSVC {
 			if(btype.equals("album")) {
 			recNumPerPage = 8;
 		}
+		
 		//페이징 		
 	PagingComponent pagingComponent = pagingSVC.getPagingComponent(btype,catnum, reqPage, recNumPerPage, searchType,searchKeyword);
 		List<BoardVO> list = null;	
 	if(btype.equals("album")) {		
 		list = boardDAO.selectArticlesWithKey_Album(catnum,pagingComponent.getRecordCriteria().getRecFrom(), pagingComponent.getRecordCriteria().getRecTo(), searchType, searchKeyword);
+		
+		
 		// base64 
 		/*
 		 * for(int i = 0 ; i < list.size(); i++) {
@@ -102,20 +109,29 @@ public class BoardSVCImpl implements BoardSVC {
 		
 		list = boardDAO.selectArticlesWithKey_Blog(catnum,pagingComponent.getRecordCriteria().getRecFrom(), pagingComponent.getRecordCriteria().getRecTo(), searchType, searchKeyword);
 	}
+	
 	log.info("list.size()    =   " +list.size() );
 	for(BoardVO vo : list) {
 	System.out.println("list.get(0).getBtitle() = "+vo.getBtitle());
+	
 	}
+	
 	Map<String,Object> map = new HashMap<>();
 	map.put("pagingComponent", pagingComponent);
 	map.put("list", list);
+	
+	
 	return map;
 	}
+	
+	
 	
 	 //갤러리 게시판 썸네일 목록 호출 : 게시판 타입이 album일 때 호출
 	public List<BoardFileVO> selectThumbnailFiles(int catnum){		
 	return	boardDAO.selectThumbnailFiles(catnum);		
 	}
+	
+
 	// 게시글 열람
 	@Override
 	public Map<String, Object> selectArticle(long bnum) {		
@@ -159,6 +175,16 @@ public class BoardSVCImpl implements BoardSVC {
 		List<MultipartFile> files = boardVO.getFiles();
 		if(files !=null && files.size() > 0 ) {			
 			insertFiles(files, boardVO.getBnum(), boardVO.getBcategory().getCatnum());					
+		}
+		//리스트 blisting에 저장
+		long lnum = boardVO.getListVO().getLnum();	
+		if(lnum != 0) {			
+			List<ListingVO> list = itemListDAO.loadListing(boardVO.getListVO().getLnum());		
+			for(ListingVO listingVO: list)
+				{
+				listingVO.setBnum(boardVO.getBnum());
+				boardDAO.insertBlisting(listingVO);
+					}
 		}
 		return result;
 	}
@@ -424,6 +450,11 @@ public void insertFiles(List<MultipartFile> files, long bnum, String catnum)  {
 }
 
 	
+	//리스트 열람
+	@Override
+	public List<ListingVO> loadListing(long bnum){
+		return boardDAO.loadListing(bnum);	
+	};
 	
 	
 	

@@ -61,7 +61,7 @@ label {
 
 #Frm>ul li .bound_error {
 	grid-column: 2/4;
-	text-align: right;
+	text-align: left;
 	color: red;
 	font-weight: bold;
 	font-size: 0.7em;
@@ -97,6 +97,15 @@ label {
 #Frm  #files {
 	display: none;
 }
+
+
+#Frm  .content_area .img_file {
+	max-width: 500px;
+	max-height:500px;
+	display:block;
+	margin : 10px auto;
+}
+
 
 /* 파일 첨부 영역 css  */
 .attachment label {
@@ -178,7 +187,8 @@ label {
 	min-height: 500px;
 	margin-bottom: 20px;
 	outline: none;
-	padding-top: 5px
+	padding-top: 5px;
+		text-align :center;
 }
 
 .toolbar_box {

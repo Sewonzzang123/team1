@@ -60,6 +60,8 @@
 
 							</select> <form:errors cssClass="bound_error" path="bcategory.catnum"></form:errors>
 							</li>
+							
+							
 							<li><input name="btitle" type="text"
 								value="${boardVO.btitle }" placeholder="제목을 입력하세요." /> <form:errors
 									cssClass="bound_error" path="btitle"></form:errors></li>
@@ -74,31 +76,23 @@
 										</li>
 									</ul>
 								</div>
-								<div class="hidden_toolbar_menu">
-									<input multiple type="file" class="add_img"
-										style="display: none;"> <input type="hidden"
-										name="thumbnail" class="thumbnail" value="null">
+								<div class="hidden_toolbar_menu">				
+									 <input type="hidden" name="thumbnail" class="thumbnail" value="null">
+									 	<input type="file" name="files" id="pics"	multiple style="display:none;">
+									 			 
 								</div></li>
 
-							<li class="bcontent_li"><label for="bcontent"></label> <input
-								type="hidden" class="bcontent" name="bcontent_area">
+							<li><label for="bcontent"></label> 
 
-
-								<div class="bcontent_area" contenteditable="true"
-									data-placeholder="내용을 입력하세요">${boardVO.tcontent }</div> <form:errors
-									cssClass="bound_error" path="bcontent"></form:errors></li>
-
-							<li>
-								<div class="attachment" id="filesBox">
-									<input type="file" id="files" name="files" multiple="multiple" />
-								</div>
-							</li>
+								<input type="hidden" name="tcontent"	class="tcontent_area">
+									<div class="content_area" contenteditable="true"	data-placeholder="내용을 입력하세요">${boardVO.tcontent }</div>
+								 <form:errors cssClass="bound_error" path="bcontent"></form:errors>								 
+								 </li>
 
 							<li>
 								<div class="btnGrp">
 									<button id="modifyBtn" class="btn" type="button">저장</button>
-									<button id="cancelBtn" class="btn article_list_btn"
-										type="button">취소</button>
+									<button id="cancelBtn" class="btn article_list_btn" 	type="button">취소</button>
 								</div>
 							</li>
 						</ul>
@@ -110,73 +104,4 @@
 	<%@ include file="/WEB-INF/views/layout/footer.jsp"%>
 </body>
 
-<script type="text/javascript">
-	/* 사진 추가 */
-	const add_img_btn = document.querySelector('.add_img_btn');
-	const add_img = document.querySelector('.add_img');
-	const bcontent_area = document.querySelector('.bcontent_area');
-	add_img_btn.addEventListener('click', (e) => {
-		e.preventDefault();
-		add_img.click();
-		console.log('클릭됨');
-		}
-	)
-	
-	add_img.addEventListener("change", (e) => {
-	    if (e.target.files && e.target.files[0]) {		
-		  console.log('이벤트');
-	      var formData = new FormData();	
-	      formData.append("file", e.target.files[0]);	
-	      console.log(formData);
-	
-	      var ajax = new XMLHttpRequest();
-	      ajax.onreadystatechange = function () {
-	        if (ajax.readyState === ajax.DONE) {
-	          if (ajax.status === 200
-	            || ajax.status === 201) {
-	            const url = ajax.responseText;
-	            console.log(url);
-	            
-	            const img = document
-	              .createElement('img');
-	            img.classList.add('added_img')
-	            img.setAttribute("src",
-	              '${pageContext.request.contextPath}/photo/'
-	              + url);
-	            img.setAttribute("name", url);
-	
-	            bcontent_area.append(img);
-	          } else {
-	            console.error(ajax.responseText);	
-	          }
-	        }
-	      };
-	      ajax
-	        .open(
-	          "POST",
-	          "${pageContext.request.contextPath}/board/setphoto",
-	          true); //
-	      ajax.send(formData);
-	    }
-	  })
-	  
-	  
-	/* 등록 */
-	const modifyFrm = document.querySelector('#modifyFrm');
-	const modifyBtn = document.querySelector('#modifyBtn');
-	const bcontent = document.querySelector('.bcontent');
-	modifyBtn.addEventListener("click", (e) => {
-		console.log('등록');
-		bcontent.value = bcontent_area.innerHTML;
-		
-		const thumbnail_name = document.querySelector('.added_img')
-
-		if (thumbnail_name != null) {
-			const thumbnail = document.querySelector('.thumbnail');
-			thumbnail.value = thumbnail_name.getAttribute('name');
-		}
-		
-		Frm.submit();				
-		})
-</script>
 </html>

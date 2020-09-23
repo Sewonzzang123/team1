@@ -1,5 +1,16 @@
 'use strict'
 
+<!--읽기모드 -->
+//        const peplyBtn = document.getElementById("peplyBtn");
+//         const modifyBtn = document.getElementById("modifyBtn");
+//        const listBtn = document.getElementById("listBtn");
+//     
+//        if( peplyBtn)  	peplyBtn.addEventListener("click", peplyBtn_f);  
+//           if( modifyBtn) modifyBtn.addEventListener("click", modifyBtn_f);                 
+//          if( listBtn)  listBtn.addEventListener("click", listBtn_f);     
+      
+
+
 const acticle = document.querySelector('.acticle');
 const layer_attach = document.querySelector('.layer_attach');
 //hidden 속성들
@@ -18,18 +29,19 @@ console.log("article 구역 클릭 " + e.target.tagName);
   }
 
   // 삭제 버튼
-  if (e.target.classList.contains('article_del_btn')) {        
+  if (e.target.classList.contains('article_mod_btn')) {        
+if(confirm('게시글을 삭제하시겠습니까?')){
   		deleteBtn_f(); 		  	
-
+      	}
   }
   
   // 답글 버튼
-  if (e.target.classList.contains('article_rep_btn')) {
+  if (e.target.classList.contains(' article_rep_btn')) {
 	   peplyBtn_f();    	   
   }      
  
   // 수정 버튼
-  if (e.target.classList.contains('article_mod_btn')) {
+  if (e.target.classList.contains('article_del_btn')) {
 console.log('수정 요청')    
     modifyBtn_f();
   }
@@ -59,7 +71,7 @@ if (layer_attach.getAttribute('style') == 'display: none;') {
         
 //수정버튼
 function modifyBtn_f(){
-    const url = `/pfpkg/board/boardModifyFrm/${catnum}/${bnum}`;                     
+    const url = `/pfpkg/board/modifyFrm/${bnum}`;                     
         location.href = url;                    
  }          
      

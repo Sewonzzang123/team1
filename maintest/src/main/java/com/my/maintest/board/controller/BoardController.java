@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +12,7 @@ import java.util.Optional;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -46,7 +47,12 @@ import com.my.maintest.board.vo.BoardVO;
 import com.my.maintest.board.vo.HeadIdCategoryVO;
 import com.my.maintest.common.paging.PagingComponent;
 import com.my.maintest.common.paging.SearchCriteria;
+import com.my.maintest.item.svc.ItemListSVC;
+import com.my.maintest.item.vo.ItemCategoryVO;
+import com.my.maintest.item.vo.ListVO;
+import com.my.maintest.item.vo.ListingVO;
 import com.my.maintest.member.vo.MemberVO;
+import com.my.maintest.mypage.svc.MypageSVC;
 
 import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnails;
@@ -78,6 +84,12 @@ public class BoardController {
 	@Inject
 	BCommentSVC bCommentSVC;
 
+	@Inject
+	ItemListSVC itemListSVC;
+	
+	@Inject
+	MypageSVC mypageSVC;
+	
 	// 게시판 카테고리 조회
 	@ModelAttribute("bcategoryList")
 	public List<BcategoryVO> getBcategory() {
@@ -163,76 +175,40 @@ public class BoardController {
 	}
 
 	// 게시글 작성 화면
-	@GetMapping("/boardWriteFrm/{catnum}/{returnPage}")
+	@GetMapping({"/boardWriteFrm/{catnum}/{returnPage}",
+	"/boardWriteFrm/{catnum}/{returnPage}/{lnum}"})
 	public String toboardWriteFrm(@ModelAttribute BoardVO boardVO, @PathVariable("catnum") int catnum,
-			@ModelAttribute("returnPage") String returnPage, Model model) {
+			@ModelAttribute("returnPage") String returnPage
+			, @PathVariable(value ="lnum", required= false) String lnum
+			, HttpServletRequest request
+			,Model model) {
 
 		// 게시판 타입 읽어오기
 		BcategoryVO bcategoryVO = boardSVC.selectBtype(catnum);
 		bcategoryVO.setCatname("글쓰기");
 		model.addAttribute("bcategoryVO", bcategoryVO);
-
-		model.addAttribute("catnum", catnum);// 정민
-
+		model.addAttribute("catnum", catnum);
+		if(lnum != null) {
+			model.addAttribute("lname", itemListSVC.getListname(Long.valueOf(lnum)));
+			model.addAttribute("lnum", lnum);
+		}
 		return "/board/boardWriteFrm";
 	}
 
-
-//	 //게시글 등록
-//	@PostMapping(value={"/write", "/write/{catnum}"})
-//	public String toWrite(
-//			 HttpServletRequest request
-//			,@RequestParam("returnPage") String returnPage
-//			, @Valid  @ModelAttribute BoardVO boardVO
-//			, BindingResult result
-//			,Model model
-//	) {		
-//		log.info(boardVO.toString());	
-//		Queue< MultipartFile> queue = new LinkedList<>();
-//		for(MultipartFile mtp : boardVO.getFiles()) {			
-//			queue.add(mtp);					
-//		}	
-//		log.info(" queue.size()" + queue.size());
-//		while(!queue.isEmpty()) {			
-//			log.info(	"queue22222"+queue.poll().getOriginalFilename());					
-//		}
-//		
-//	
-//		
-//		log.info(	"boardVO.getTcontent"+boardVO.getTcontent());				
-//	   String _tcontent[] = boardVO.getTcontent().split(",");
-//	   log.info("_tcontent[0]" +  _tcontent[0]);
-//	   log.info("_tcontent[0]" +  _tcontent[1]);
-//	   log.info("_tcontent[0]" +  _tcontent[2]);
-//	  // log.info("_tcontent[0]" +  _tcontent[3]);
-//	   //log.info("_tcontent[0]" +  _tcontent[4]);
-//	   int max = queue.size() > _tcontent.length ? queue.size(): _tcontent.length;
-//   System.out.println("max++++++++++" + max);
-//	   
-//	   for(int i = 0 ; i < max ; i++) {
-//	  	 
-//	   }
-//	   
-//	   
-//	   
-//	   
-//		
-//
-//		
-//		 if (result.hasErrors()) {
-//		 return "/board/boardWriteFrm";		 		 
-//		 }
-//		boardSVC.insertArticle(boardVO);
-//		
-//		return "redirect:/board/read/" + boardVO.getBnum();
-//	}
 
 	// 게시글 등록
 	@PostMapping(value = { "/write", "/write/{catnum}" })
 	public String toWrite(
 			@RequestParam(value = "catnum") Optional<Integer> catnum,
-			@ModelAttribute BoardVO boardVO,
+			@Valid @ModelAttribute BoardVO boardVO,
+			BindingResult result,
 			HttpServletRequest request)  {	
+		
+		
+		
+		if (result.hasErrors()) {
+			return "/board/boardWriteFrm";
+		}
 		
 		MemberVO memberVO = (MemberVO)request.getSession().getAttribute("member");
 		boardVO.setUcode(Long.parseLong(memberVO.getUcode()));		
@@ -241,7 +217,64 @@ public class BoardController {
 		return "redirect:/board/read/" +  boardVO.getBcategory().getCatnum() + "/" + boardVO.getBnum();
 	}
 
+//리스트 첨부하기 클릭
+	@GetMapping(
+		"/loadListForm/{catnum}/{returnPage}")
+	public String loadListForm(		
+			@PathVariable(value="catnum", required=false) Integer catnum,			
+			@PathVariable(value="returnPage", required=false) Integer returnPage,			
+			Model model,
+			HttpSession session
+			) {
+		MemberVO memberVO =(MemberVO)session.getAttribute("member");
+		if(session != null) {
+			session.removeAttribute("returnPage");
+			session.removeAttribute("catnum");
+		}
+
+		session.setAttribute("returnPage", returnPage);
+		session.setAttribute("catnum", catnum);
+		
+		String ucode = memberVO.getUcode();		
+		List<ListVO> listVO = null;
+		List<ListingVO> listing = null;
+		listVO = itemListSVC.loadList(ucode);
+		long lnum = listVO.get(0).getLnum();
+
+		listing = itemListSVC.loadListing(lnum);
+		List<ItemCategoryVO> icategory = itemListSVC.selectAllCategory();
+		
+		model.addAttribute("lnum", lnum);
+		model.addAttribute("icategory", icategory);
+		model.addAttribute("listVO", listVO);
+		model.addAttribute("listingVO", listing);
+		
+		
+		return "/board/loadListForm";
+	}
 	
+	@GetMapping("/loadListForm/{lnum}")
+	public String getListing(
+			@PathVariable("lnum") long lnum,
+			HttpSession session,
+			Model model) {
+		
+		MemberVO memberVO =(MemberVO)session.getAttribute("member");
+		String ucode = memberVO.getUcode();
+		
+		List<ListVO> listVO = null;
+		List<ListingVO> listing = null;
+		listVO = itemListSVC.loadList(ucode);
+		listing = itemListSVC.loadListing(lnum);
+		List<ItemCategoryVO> icategory = itemListSVC.selectAllCategory();
+
+		model.addAttribute("lnum", lnum);
+		model.addAttribute("icategory", icategory);
+		model.addAttribute("listVO", listVO);
+		model.addAttribute("listingVO", listing);
+		
+		return "/board/loadListForm";
+	}
 	
 	
 	// 게시글열람
@@ -270,7 +303,67 @@ public class BoardController {
 		return "/board/boardReadFrm";
 	}
 
+	@GetMapping("/downloadListForm/{bnum}")
+	public String downloadListForm(
+			@PathVariable("bnum") Long bnum,
+			Model model
+			) {
 
+		List<ItemCategoryVO> itemCategoryVO = itemListSVC.selectAllCategory();
+		List<ListingVO> listingVO = boardSVC.loadListing(bnum);
+		System.out.println(listingVO.toString());
+		model.addAttribute("listing", listingVO);
+		model.addAttribute("category", itemCategoryVO);
+		model.addAttribute("bnum", bnum);
+
+		
+		return "board/downloadListForm";
+	}
+	
+	@PostMapping(value="/saveList/{lname}")
+	public String inum(
+			@RequestParam(value="bnum", required = true) Long bnum,
+			@RequestParam(value="checked", required = false) List<String> checked,
+			@PathVariable(value = "lname") String lname,
+			HttpSession session,
+			Model model) {
+
+		List<Map<String, String>> listing = new ArrayList<Map<String, String>>();
+		List<ListingVO> getListing = boardSVC.loadListing(bnum);
+				
+		for(int i=0; i<getListing.size(); i++) {
+			Map<String, String> itemMap = new HashMap<>();
+			itemMap.put("i_num", getListing.get(i).getI_num());
+			itemMap.put("i_name", getListing.get(i).getI_name());
+			itemMap.put("icount", String.valueOf(getListing.get(i).getIcount()));
+			itemMap.put("icategory", String.valueOf(getListing.get(i).getCa_num()));
+			itemMap.put("checked", checked.get(i).toString());
+			listing.add(i, itemMap);
+		}
+		
+			MemberVO memberVO = (MemberVO) session.getAttribute("member");
+			String ucode = memberVO.getUcode();
+		
+			ListVO listVO = new ListVO();
+			listVO.setLname(lname);
+			listVO.setMemberVO(memberVO);
+			
+			itemListSVC.listNameInsert(listVO);
+			itemListSVC.insertListing(listVO, listing);
+			
+
+			
+			model.addAttribute("mylist", mypageSVC.mylist(1, ucode));
+			model.addAttribute("paging", mypageSVC.mylist_paging(1, ucode));	
+
+		
+		
+		//마이페이지에 리스트 화면으로 이동
+		return "/mypage/mylist";
+
+}
+	
+	
 
 	// 첨부파일 다운로드
 	@GetMapping("/file/{fid}")
@@ -335,7 +428,7 @@ public class BoardController {
 //		return "redirect:/board";
 //	}
 
-	// 게시글수정 화면
+	// 게시글수정 화면 
 	@GetMapping("/boardModifyFrm/{catnum}/{bnum}")
 	public String toModifyFrm(
 			 @PathVariable("catnum") int catnum
@@ -429,7 +522,8 @@ public class BoardController {
 
 	// 답글 등록
 	@PostMapping("/reply")
-	public String toReply(@ModelAttribute BoardVO boardVO, BindingResult result,
+	public String toReply(@Valid @ModelAttribute BoardVO boardVO, 
+			BindingResult result,
 			@RequestParam("bcategory.catnum") String catnum,
 			HttpServletRequest request) {
 		

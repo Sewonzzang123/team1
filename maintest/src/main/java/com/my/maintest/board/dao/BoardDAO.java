@@ -6,6 +6,7 @@ import com.my.maintest.board.vo.BcategoryVO;
 import com.my.maintest.board.vo.BoardFileVO;
 import com.my.maintest.board.vo.BoardVO;
 import com.my.maintest.board.vo.HeadIdCategoryVO;
+import com.my.maintest.item.vo.ListingVO;
 
 public interface BoardDAO {
 	
@@ -56,6 +57,11 @@ public interface BoardDAO {
 	// 텍스트 이미지 게시판 수정 시작
 	List<BoardFileVO> getThumbnail();
 
+
+	//게시글 리스트 불러오기
+	List<ListingVO> loadListing(long bnum);
+//리스트 등록
+	int insertBlisting(ListingVO listingVO);
 	
 	
 	

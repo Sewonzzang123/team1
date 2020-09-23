@@ -39,7 +39,7 @@
 				<td>${tdata.bnickname}</td>
 				<td>${tdata.bhits}</td>
 				<td><fmt:formatDate value="${tdata.bcdate}"
-						pattern="yy/MM/dd " /></td>
+						pattern="yy/MM/dd HH:mm" /></td>
 			</tr>
 		</c:forEach>
 	</tbody>

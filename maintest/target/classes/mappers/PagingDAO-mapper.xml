@@ -13,6 +13,7 @@ from
 t1.bnum
 from board t1, bcategory t2, member t3, headid t4
 where t1.bcategory = t2.catnum and t1.ucode = t3.ucode and t1.hidcategory = t4.hidnum
+
 <if test="catnum != 0">
 and t1.bcategory = #{catnum}
 </if> 
@@ -64,7 +65,7 @@ from
 t1.bnum
 from board t1, bcategory t2, member t3, headid t4, board_upload_file t5
 where t1.bcategory = t2.catnum and t1.ucode = t3.ucode and t1.hidcategory = t4.hidnum and t1.bnum = t5.bnum
-and t5.thumbfname != 'null'
+
 
 <if test="catnum != 0">
 and t1.bcategory = #{catnum}
@@ -106,11 +107,5 @@ t3.nickname like '%'||#{searchKeyword}||'%'
 </if>
 )
 </select>
-
-
-
-
-
-
 
 </mapper>

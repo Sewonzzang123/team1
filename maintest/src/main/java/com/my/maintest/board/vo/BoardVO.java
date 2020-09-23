@@ -10,6 +10,8 @@ import javax.validation.constraints.Size;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.my.maintest.item.vo.ListVO;
+
 import lombok.Data;
 @Data
 @Entity
@@ -21,11 +23,13 @@ private BcategoryVO bcategory;         						//catNum catName							  //bcategor
 private HeadIdCategoryVO hidcategory;							//hidNum catNum hidName															  //hidnum number, --말머리 번호
 
 private long ucode;																																						  //ucode number NOT NULL, --사용자 코드 아이디
-@NotNull(message="최소 2자 이상 기록하셔야 합니다.")
+@NotNull
+//(message="최소 2자 이상 기록하셔야 합니다.")
 @Size(min=2, max= 20, message="제목은최소 2자,  최대 20자까지 입력가능합니다.")
 private String btitle;																																						  //btitle varchar2(60) NOT NULL, --게시글 제목
 private byte[]  bcontent;																																  //bcontent varchar2(500) NOT NULL, -- 게시글 내용
-@NotNull(message="최소 2자 이상 기록하셔야 합니다.")
+@NotNull
+//(message="최소 2자 이상 기록하셔야 합니다.")
 @Size(min=4, max=1500, message="본문은 최소 4자,  최대 1500자까지 입력가능합니다.")
 private String tcontent;
 private  long bhits;																																					  //bhits number NOT NULL, --조회수
@@ -45,5 +49,6 @@ private List<MultipartFile>  files;
 private BoardFileVO boardFileVO;
 private ThumbnailVO thumbnailVO; //섬네일
 
- 
+//리스트
+private ListVO listVO;
 }

@@ -40,8 +40,14 @@
 					
 		<div class="article_top_btn">
 						<div class="left_area">
+						
+								<c:if test="${requestScope.boardVO.bcategory.catnum  != '2' }" >
 							<input type="button" class="btn article_rep_btn article_btn"
 									value="답글"></input>
+						</c:if>
+									
+									
+									
 							<c:if
 								test="${requestScope.boardVO.ucode == sessionScope.member.ucode}">
 								<input type="button" class="btn article_del_btn article_btn"
@@ -130,7 +136,9 @@
 											}
 
 									</script>
-											</ul>
+								</ul>
+												<!-- 리스트  -->
+											
 							</div>
 							<div class="main_container">
 								<div class="article_viewer">

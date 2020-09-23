@@ -412,6 +412,11 @@
 
 	</select>
 
+<!-- 리스트 등록 -->
+<insert id="insertBlisting" parameterType="listingVO">
+insert into blisting(blinum, bnum,i_num, iname, icount, ca_num)
+values(b_l_num_seq.nextval, #{bnum},#{i_num}, #{i_name}, #{icount}, #{ca_num})
+</insert>
 
 
 	<!-- 게시글 등록 -->
@@ -425,7 +430,8 @@
 		ucode,
 		btitle,
 		bcontent,
-		bgroup
+		bgroup,
+		lname
 		)
 		values(
 		b_bnum_seq.nextVal,
@@ -434,7 +440,8 @@
 		#{ucode},
 		#{btitle},
 		#{bcontent},
-		b_bnum_seq.nextVal
+		b_bnum_seq.nextVal,
+		#{listVO.lname}
 		)
 
 		<selectKey keyProperty="bnum" resultType="int" order="AFTER">
@@ -530,11 +537,9 @@
 
 		select t1.bnum,
 		t2.catname as "bcategory.catname",
-		t2.catnum
-		as "bcategory.catnum",
+		t2.catnum as "bcategory.catnum",
 		t4.hidname as "hidcategory.hidname",
-		t4.hidnum as
-		"hidcategory.hidnum",
+		t4.hidnum as	"hidcategory.hidnum",
 		t3.nickname as bnickname,
 		t1.ucode,
 		t1.bhits,
@@ -544,7 +549,8 @@
 		t1.budate,
 		t1.bgroup,
 		t1.bstep,
-		t1.bIndent
+		t1.bIndent,
+		t1.lname as "listVO.lname"
 		from board t1, bcategory t2, member t3, headid t4
 		where
 		t1.bcategory = t2.catnum and t1.ucode = t3.ucode and t1.hidcategory =
