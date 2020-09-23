@@ -28,7 +28,6 @@ public class PagingSVCImpl implements PagingSVC{
 	}else {
 	recordCriteria.setTotalRec(pagingDAO.selectRecQnty_Blog(catnum, searchType,searchKeyword));	
 	}
-	System.out.println("ㅁ※※※※※※※※※※※※※※※※※※※※※※※※※※ recordCriteria.getTotalRec()     =   " + recordCriteria.getTotalRec());
 	return recordCriteria;
 	}
 	

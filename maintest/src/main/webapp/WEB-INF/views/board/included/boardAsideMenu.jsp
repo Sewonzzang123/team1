@@ -16,7 +16,7 @@
 								${requestScope.bcategoryVO.catname }</a>
 						</c:when>
 						<c:otherwise>
-							<a href="${pageContext.request.contextPath}/board"> 전체글</a>
+							<a href="${pageContext.request.contextPath}/board">전체글 보기</a>
 						</c:otherwise>
 					</c:choose>
 					<div class="underline"></div>

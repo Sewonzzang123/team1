@@ -201,8 +201,7 @@ function mod_f(e){
 function del_f(bcnum){
 	const xhttp = new XMLHttpRequest();
 	xhttp.addEventListener("readystatechange", function(e){
-		
-		
+	list_f();
 		
 	});	
 	

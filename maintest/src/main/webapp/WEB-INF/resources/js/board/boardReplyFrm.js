@@ -1,10 +1,5 @@
 'use strict'
 
-//.main_container .article_viewer .img_file{
-//	max-width:500px;
-//	max-height:500px;	
-//	margin: 0px auto;
-//}
 
 
 

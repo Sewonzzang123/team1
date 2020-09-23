@@ -50,9 +50,9 @@
 									
 							<c:if
 								test="${requestScope.boardVO.ucode == sessionScope.member.ucode}">
-								<input type="button" class="btn article_del_btn article_btn"
-									value="수정"></input>
 								<input type="button" class="btn article_mod_btn article_btn"
+									value="수정"></input>
+								<input type="button" class="btn article_del_btn article_btn"
 									value="삭제"></input>
 							</c:if>
 						</div>
@@ -162,9 +162,9 @@
 						<div class="left_area">
 							<c:if
 								test="${requestScope.boardVO.ucode == sessionScope.member.ucode}">
-								<input type="button" class="btn  article_del_btn article_btn"
+								<input type="button" class="btn  article_mod_btn article_btn"
 									value="수정"></input>
-								<input type="button" class=" btn  article_mod_btn article_btn"
+								<input type="button" class=" btn  article_del_btn article_btn"
 									value="삭제"></input>
 							</c:if>
 						</div>

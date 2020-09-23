@@ -27,7 +27,7 @@
 						action="${contextPath}/board/reply">		
 																					
 									<input type="hidden" id="bnum" name="bnum" value="${boardVO.bnum }"/> 
-									<input type="hidden" name="bcategory.catnum" value="${boardVO.bcategory.catnum }" />
+									<input type="hidden" id="catnum" name="bcategory.catnum" value="${boardVO.bcategory.catnum }" />
 									<input type="hidden" name="hidcategory.hidnum" value="${boardVO.hidcategory.hidnum }"/>
 									<input type="hidden" name="ucode" value="${boardVO.ucode }"/>									
 									<input type="hidden" name="bgroup" value="${boardVO.bgroup }"/>

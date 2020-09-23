@@ -99,6 +99,11 @@ label {
 }
 
 
+#Frm  .content_area{
+	
+	padding:20px;
+}
+
 #Frm  .content_area .img_file {
 	max-width: 500px;
 	max-height:500px;
