@@ -48,6 +48,9 @@ public class ItemListController {
 	
 	@Inject
 	MypageSVC mypageSVC;
+	
+	@Inject
+	BoardSVC boardSVC;
 
 	@PostMapping(value="/lname", produces = "application/json")
 	@ResponseBody
@@ -265,6 +268,17 @@ public class ItemListController {
 		List<ItemCategoryVO> categoryList = itemListSVC.selectAllCategory();
 		model.addAttribute("categoryList", categoryList);
 		model.addAttribute("itemList", itemList);
+		// 게시판
+		// 표현할 게시글 수
+		long recNumPerPage = 6;
+		// 게시판 카테고리 번호
+		int tipCatnum = 1;
+		int galCatnum = 2;
+		int qaCatnum = 3;
+		
+		model.addAttribute("tipBoardVO", boardSVC.selectArticles("blog", tipCatnum, 1, recNumPerPage, null, null));
+		model.addAttribute("galBoardVO", boardSVC.selectArticles("album", galCatnum, 1, (recNumPerPage + 2), null, null));
+		model.addAttribute("qaBoardVO", boardSVC.selectArticles("album", qaCatnum, 1, recNumPerPage, null, null));
 		
 		return "main";
 	}
