@@ -367,6 +367,7 @@ footer .footer_img img {
 	}
 	section .gallery_list ul li a {
 		display: inline-block;
+		width:100%
 	}
 	section .gallery_list ul .inner {
 		width: 25%;

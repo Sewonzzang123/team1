@@ -81,8 +81,8 @@ const picsTag =  document.getElementById("pics")
             if (thumbnail_name != null) {
                 const thumbnail = document.querySelector('.thumbnail');
                 thumbnail.value = thumbnail_name.getAttribute('name');
-                console.log("2번" + thumbnail);
-                alert("1번 파일 썸네일 이름 셋팅 완료");
+             
+  
             }
       
             tcontent_area.value =  content_area.innerHTML;

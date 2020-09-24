@@ -81,7 +81,7 @@
             if (thumbnail_name != null) {
                 const thumbnail = document.querySelector('.thumbnail');
                 thumbnail.value = thumbnail_name.getAttribute('name');
-                console.log("2번" + thumbnail);
+            
              
             }
       
