@@ -86,7 +86,7 @@
 
 								<input type="hidden" name="tcontent"	class="tcontent_area">
 									<div class="content_area" contenteditable="true"	data-placeholder="내용을 입력하세요">${boardVO.tcontent }</div>
-								 <form:errors cssClass="bound_error" path="bcontent"></form:errors>								 
+								 <form:errors cssClass="bound_error" path="tcontent"></form:errors>								 
 								 </li>
 
 							<li>

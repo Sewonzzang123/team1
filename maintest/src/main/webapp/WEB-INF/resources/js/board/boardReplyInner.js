@@ -4,15 +4,13 @@
  const reqPage = document.getElementById("reqPage").value;
  //const bnum = document.getElementById("bnum").value;
  const origin_pucode = document.getElementById("ucode").value;
+ const nowLogedUcode =   document.getElementById("IRnickname").getAttribute("data-sessionUcode");
 //로그인 여부체크
- let isLogin = document.querySelector(".typing").classList.contains("isLogin")
+ let isLogin =  document.querySelector(".typing").getAttribute("data-isLogin");
 
-
+console.log("is Login " + (isLogin == 'false'))
  	
-	
- 
- 
- 
+
 //작성창 
 const wrtTag = document.getElementById("filloutHere");
 const replaceableAreaTag = document.getElementById("replaceableArea")
@@ -36,25 +34,34 @@ let bcNumNowOn; // 현재 마우스 포인트가 올라가있는 태그가 속�
 innerRe_wrapperTag.addEventListener("click",bcommentTags_f)
 
 innerRe_wrapperTag.addEventListener("mouseover",function(e){
-//부모 태그가 없을때 익셉션 처리
-	if(e.target.closest(".bcomment") == undefined) return;
-	tagNowOn = e.target.className;
-	bcNumNowOn =e.target.closest(".bcomment").parentElement.getAttribute("data-bcnum");
 	
-//댓글 리스트 
-if(clickedTag == undefined ) return;
-if(clickedTag.classList.contains("fas") ){	
-if(clickedBcNum != bcNumNowOn 
-// ||e.target.closest(".bcomment").parentElement.getAttribute("data-bcnum") == undefined
-){     	
-   clickedTag.nextElementSibling.classList.add("hidden")   
-   }
-}
-})
+	 hideItem(e);
+
+
+
+}) //innerRe_wrapperTag
+
+	function hideItem(e){
+		//부모 태그가 없을때 익셉션 처리
+			if(e.target.closest(".bcomment") == undefined) return;
+			tagNowOn = e.target.className;
+			bcNumNowOn =e.target.closest(".bcomment").parentElement.getAttribute("data-bcnum");
+			
+		//댓글 리스트 
+		if(clickedTag == undefined ) return;
+		if(clickedTag.classList.contains("fas") ){			
+		if(clickedBcNum != bcNumNowOn ){     	
+		   clickedTag.nextElementSibling.classList.add("hidden")   
+		   }
+		}
+		}
+
+
 
 //wrapper 전역 클릭 이벤트 감지 
 function bcommentTags_f(e){
-console.log(" 댓글 목록 안에서 클릭한 타켓 ====[" + e.target.className+"]");
+	hideItem(e);
+	
     //작성창 이벤트 
     //등록 및 취소 버튼 이벤트 
     wrtTag_f(e);
@@ -78,14 +85,12 @@ console.log(" 댓글 목록 안에서 클릭한 타켓 ====[" + e.target.classNa
 
 //이벤트 리스너 구현 파트
 //----------------------------------------------------------------------------------------------------------------	 
-function wrtTag_f(e){     
-	console.log("작성창 안에서 클릭한 타켓 ====[" + e.target.tagName+"]");
+function wrtTag_f(e){     	
      //댓글 작성창 파트
      //활성화  타겟 : typing    
     if(e.target.classList.contains("typing") && e.target.tagName == 'DIV'){
-    	//로그인 체크 메소드
-    	 checkLogin();
-    	 if(isLogin){
+  
+    if(isLogin == "true"){
      	console.log("타이핑 구역 클릭")        
         e.target.setAttribute("contenteditable", "true");
         e.target.focus();        
@@ -93,6 +98,8 @@ function wrtTag_f(e){
         e.target.nextElementSibling.classList.remove("hidden");
          e.target.nextElementSibling.classList.add("shown");
         e.target.classList.add("typable"); 
+    	 }else{    		 
+    		 toDoLogin();
     	 }
     }
 }//wrtTag_f
@@ -101,30 +108,32 @@ function wrtTag_f(e){
 
 //부모&자식 댓글 파트
 //ellipsis 버튼 클릭 이벤트 	
-function ellipsisBtn_f(e){       
+function ellipsisBtn_f(e){
+	
     if(e.target.classList.contains("fa-ellipsis-v")  && e.target.tagName == 'I'){    	
-    	   console.log("ellipsisBtn_f : clicked BCNum:  전 " +clickedBcNum )
-    	   	
         //새로이 찍은 태그가 속한 댓글의 bcnum
      	nowClickedBcNum  =  e.target.closest(".bcomment").parentElement.getAttribute("data-bcnum");
         // 최초 클릭 clickedTag  == undefined
         if(clickedTag == undefined){                    	
             //클릭타겟이 바뀌면 BCNum도 같이 바뀌어야함.
             clickedTag = e.target; 
-            clickedBcNum = nowClickedBcNum ;
-            
-          
+            clickedBcNum = nowClickedBcNum;          
         //다른 ellipsis 버튼을 클랙했을때 
         } else if(clickedBcNum != nowClickedBcNum){
-                clickedTag.nextElementSibling.classList.add("hidden");
-                clickedTag = e.target;
-                clickedBcNum = clickedTag.closest(".bcomment").parentElement.getAttribute("data-bcnum");
-         }
-            //버튼 visible
-           clickedTag.nextElementSibling.classList.remove("hidden");    
- 
+            //이전에 클릭한 태그 숨김    
+        	clickedTag.nextElementSibling.classList.add("hidden");
+        	//target 바꾸기
+        	  clickedTag = e.target;
+              clickedBcNum =nowClickedBcNum;
+              //이번에 클릭한 태그 보이기 
+              e.target.nextElementSibling.classList.remove("hidden");    
+              
+         } else if(clickedBcNum == nowClickedBcNum){
+        	 //버튼 visible
+        	 e.target.nextElementSibling.classList.remove("hidden");    
   }
      
+}
 }
 
 
@@ -133,8 +142,12 @@ function modDelBtn_f(e){
 	let _bccontent = e.closest(".bcomment").parentElement.querySelector(".typed").textContent;
 	let bcnum = e.closest(".bcomment").parentElement.getAttribute("data-bcnum");
 	let nickname = document.getElementById("IRnickname").textContent
+	
+	
     switch(e.textContent){
-        case "수정": 
+        case "수정":         	
+        	
+ 
         if(e.tagName == 'BUTTON'){         
             let str = ''; 
             str += `<div class="filloutHere bcomment" >`;
@@ -150,6 +163,7 @@ function modDelBtn_f(e){
             //tag 속성 수정모드로 변경
             e.closest(".bcomment").parentElement.innerHTML = str;            
             }
+     
         break;
         case "삭제":
             if(e.tagName == 'BUTTON'){
@@ -176,6 +190,9 @@ function list_f(e){
 
 //댓글 수정 처리
 function mod_f(e){
+	
+	
+	
 	const xhttp = new XMLHttpRequest();
 	xhttp.addEventListener("readystatechange", ajaxCall);	
 	   let bcnum ;
@@ -227,12 +244,14 @@ function del_f(bcnum){
 function replyWriting_f(e){
  if(e.target.classList.contains("reReply")  && e.target.tagName == 'BUTTON'){   
 	//로그인 체크 메소드
-		checkLogin();
-		if(isLogin){
+	
+		if(isLogin == 'true'){
 if(e.target.closest(".bcomment").parentElement.childElementCount  < 2){	
- 	addWindow(e);
+ 	addWindow(e);}
+}else{
+	toDoLogin();
 }
-}
+
 }
 }
 
@@ -268,6 +287,11 @@ function rbtnGrpTag_f(e){
   		let bcindent = 0;
   		let bccontent = e.parentElement.previousElementSibling.textContent;                 
   		
+  		if(bccontent.length == '0'){		   
+ 		   alert("최소 한자이상 입력해주세요.")
+ 	   }
+  		
+  		
   		
   	     //부모 댓글  작성 -- 작성창 상위에 parent / child tag없음.    
             reqMsg.bnum = bnum;
@@ -281,7 +305,7 @@ function rbtnGrpTag_f(e){
        //자식댓글인 경우 추가로 부모댓글의 bcnum을 grp번호로 가진다.    
     	   bcgrp = e.closest(".bcomment").parentElement.getAttribute("data-bcnum");         
         pucode = e.closest(".bcomment").parentElement.querySelector(".IRnickname").getAttribute("data-nickname");
-        bcindent = 1;
+        bcindent = 1;        
         reqMsg.bcgrp = bcgrp;  
         reqMsg.pucode = pucode;   
         reqMsg.bcindent = bcindent;
@@ -327,6 +351,8 @@ if(e.closest(".bcomment").parentElement.getAttribute("data-bcnum") != 0    ){
 
 //댓글 등록 버튼 클릭시
 function register(reqMsg){   
+	
+
 const xhttp = new XMLHttpRequest();    
 xhttp.addEventListener("readystatechange", ajaxCall);  
  //ajax 요청메시지 작성
@@ -338,14 +364,12 @@ console.log("reqMsg.bcindent ========="+reqMsg.bcindent);
 
    let url ;
 if(reqMsg.bcindent == 0){
-	console.log("부모댓글")
 	   //요청 메소드 + 요청URL 
     url =`http://localhost:9080/pfpkg/bcomment/replyP/${innerRqPage}`;
 }
 
 //댓글의 댓글 child on parent /child on child     ___ indent : 1
-if(reqMsg.bcindent == 1){
-	console.log("자식 댓글들")
+if(reqMsg.bcindent == 1){	
 	 url =`http://localhost:9080/pfpkg/bcomment/replyC/${innerRqPage}`;
 }
 xhttp.open('post',url)
@@ -359,7 +383,7 @@ xhttp.send(changeIntoJson);
         if(e.target.readyState == 4 && e.target.status == 200){            	
         	const jsonObj = JSON.parse(e.target.responseText);  
             if(jsonObj.result ==  'OK'){
-                console.log("댓글등록 성공 및 목록가져와서 나타내기")                 
+                          
                 showUpList(jsonObj.list);
             }else{
                 console.log("등록 실패")
@@ -378,13 +402,19 @@ function showUpList(list){
               replaceableAreaTag.innerHTML ='';
 				let str ='';
              Array.from(list).forEach(data=>{
+            	 
+            	 
+             	 //날짜 포맷 설정
+            	 let _sysdate = new Date(data.udate);
+            	 let sysdate = _sysdate.format('MM-dd');
+            	 
                 	if(data.bcindent == 0){
                 		//부모댓글일 경우
-                		console.log("부모 댓글")
+                		
                 		str += `<div class="parent" data-bcnum="${data.bcnum}">`                            
                     }else{
                 		//자식댓글일 경우
-                		console.log("자식 댓글")
+           
                 		str += `<div class="children" data-bcnum="${data.bcnum}" data-bcgrp="${data.bcgrp}">`                          
                     }                	
                 		str += `<div class="bcomment">`
@@ -395,14 +425,14 @@ function showUpList(list){
                 		            str += `<span class="goodOrBad"><i class="far fa-thumbs-up"></i>${data.bcgood}</span>`
                 		            str += `<span class="goodOrBad"><i class="far fa-thumbs-down"></i>${data.bcbad}</span>`
                 		        str += `</div>`
-                		        str += `<div class="udate"><span><fmt:formatDate value="${data.udate}" pattern="MM/dd"/></span><button class="btn reReply"  >답글쓰기</button></div>`
+                		        	 str += `<div class="udate"><span>${sysdate}</span><button class="btn reReply"  >답글쓰기</button></div>`
                 		        str += `<div class="innerRe_area">`
-                		            str += `<span class="IRnickname">${data.pnickname}</span>`
+                		            str += `<span class="IRnickname">To.${data.pnickname}</span>`
                 		            	 str += `<div class="typed" contenteditable="false">${data.bccontent}</div>`                    		      
                 		        str += `</div>`
                 		    str += `</div>`
                 		    	
-                		    	if (window.sessionStorage) {               		    	
+                		    	if(isLogin == "true" && nowLogedUcode == data.ucode ){            		    	
                 		     str += ` <div class="ellipsis"><i class="fas fa-ellipsis-v"  ></i>`       
                 		        str += `<!-- 수정/삭제 히든메뉴 -->`
                 		        	str += ` <div class="ellipsis  hiddenMenu hidden" >`
@@ -492,6 +522,9 @@ function ajaxCallMore(e){
     	showMoreBtnToggle(list);
                  let str ='';
                  Array.from(list).forEach(data=>{
+                 	 //날짜 포맷 설정
+                	 let _sysdate = new Date(data.udate);
+                	 let sysdate = _sysdate.format('MM-dd');
                     	if(data.bcindent == 0){
                     		//부모댓글일 경우
                     		console.log("부모 댓글")
@@ -509,14 +542,14 @@ function ajaxCallMore(e){
                     		            str += `<span class="goodOrBad"><i class="far fa-thumbs-up"></i>${data.bcgood}</span>`
                     		            str += `<span class="goodOrBad"><i class="far fa-thumbs-down"></i>${data.bcbad}</span>`
                     		        str += `</div>`
-                    		        str += `<div class="udate"><span><fmt:formatDate value="${data.udate}" pattern="MM/dd"/></span><button class="btn reReply"  >답글쓰기</button></div>`
+                    		        str += `<div class="udate"><span>${sysdate}</span><button class="btn reReply"  >답글쓰기</button></div>`
                     		        str += `<div class="innerRe_area">`
-                    		            str += `<span class="IRnickname">${data.pnickname}</span>`
+                    		            str += `<span class="IRnickname">To.${data.pnickname}</span>`
                     		            	 str += `<div class="typed" contenteditable="false">${data.bccontent}</div>`                    		      
                     		        str += `</div>`
                     		    str += `</div>`
                     		    	
-                    		    	if (window.sessionStorage) {               		    	
+                    		    	if(isLogin == "true" && nowLogedUcode == data.ucode ){            		    	    	
                     		     str += ` <div class="ellipsis"><i class="fas fa-ellipsis-v"  ></i>`       
                     		        str += `<!-- 수정/삭제 히든메뉴 -->`
                     		        	str += ` <div class="ellipsis  hiddenMenu hidden" >`
@@ -541,7 +574,9 @@ function ajaxCallMore(e){
     
 //댓글 선호 비선호 처리 메소드 
 function voteGoodBad(e){
+
 	if(e.target.classList.contains("far") && e.target.tagName == 'I'){
+		if(isLogin == 'true'){
 	const xhttp = new XMLHttpRequest();
 	xhttp.addEventListener("readystatechange", ajaxCall)	
 const reqMsg = {};
@@ -561,7 +596,9 @@ const reqMsg = {};
 	xhttp.open("post" , url)
 	xhttp.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
 	xhttp.send(intoJson);
-	
+		}else{
+			toDoLogin();
+		}
 	}
 	
 	
@@ -569,59 +606,80 @@ const reqMsg = {};
 	
 
 //로그인 체크 메소드
-function checkLogin(){
-		if(!isLogin){
-		if(confirm("로그인이 필요합니다. 로그인페이지로 이동하시겠습니까?"))
+function toDoLogin(){	
+		if(confirm("로그인을 해야 사용할 수 있습니다. 로그인 하시겠습니까?")){
 		location.href = `http://localhost:9080/pfpkg/loginForm`;			
-	}		
 		return;
-}
-	
-	/* 세션 storage 사용법
-	
-	window.sStorage = window.sessionStorage || (function() {
-		// window.sStorage = (function() {
-		var winObj = opener || window; //opener가 있으면 팝업창으로 열렸으므로 부모 창을 사용
-		var data = JSON.parse(winObj.top.name || '{}');
-		var fn = {
-		length : Object.keys(data).length,
-		setItem : function(key, value) {
-		data[key] = value + '';
-		winObj.top.name = JSON.stringify(data);
-		fn.length++;
-		},
-		getItem : function(key) {
-		return data[key] || null;
-		},
-		key : function(idx) {
-		return Object.keys(data)[idx] || null; //Object.keys() 는 IE9 이상을 지원하므로 IE8 이하 브라우저 환경에선 수정되어야함
-		},
-		removeItem : function(key) {
-		delete data[key];
-		winObj.top.name = JSON.stringify(data);
-		fn.length--;
-		},
-		clear : function() {
-		winObj.top.name = '{}';
-		fn.length = 0;
 		}
-		};
-		return fn;
-		})();
-		sStorage.setItem("key1", 10);
-		sStorage.setItem("key2", new Date());
-		console.log(sStorage.getItem("key1"));
-		console.log(sStorage.getItem("key2"));
-		sStorage.removeItem('key2');
-		sStorage.setItem("key3", '새 문자');
-		console.log(sStorage.length);
-		console.log(sStorage.key(1));
-		sStorage.clear();
-		console.log(sStorage.length);
-*/
+}
 
 
-	
+	//날짜 포맷 설정 함수
+
+
+Date.prototype.format = function (f) {
+
+    if (!this.valueOf()) return " ";
+
+
+
+    var weekKorName = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
+
+    var weekKorShortName = ["일", "월", "화", "수", "목", "금", "토"];
+
+    var weekEngName = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+    var weekEngShortName = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+    var d = this;
+
+
+
+    return f.replace(/(yyyy|yy|MM|dd|KS|KL|ES|EL|HH|hh|mm|ss|a\/p)/gi, function ($1) {
+
+        switch ($1) {
+
+            case "yyyy": return d.getFullYear(); // 년 (4자리)
+
+            case "yy": return (d.getFullYear() % 1000).zf(2); // 년 (2자리)
+
+            case "MM": return (d.getMonth() + 1).zf(2); // 월 (2자리)
+
+            case "dd": return d.getDate().zf(2); // 일 (2자리)
+
+            case "KS": return weekKorShortName[d.getDay()]; // 요일 (짧은 한글)
+
+            case "KL": return weekKorName[d.getDay()]; // 요일 (긴 한글)
+
+            case "ES": return weekEngShortName[d.getDay()]; // 요일 (짧은 영어)
+
+            case "EL": return weekEngName[d.getDay()]; // 요일 (긴 영어)
+
+            case "HH": return d.getHours().zf(2); // 시간 (24시간 기준, 2자리)
+
+            case "hh": return ((h = d.getHours() % 12) ? h : 12).zf(2); // 시간 (12시간 기준, 2자리)
+
+            case "mm": return d.getMinutes().zf(2); // 분 (2자리)
+
+            case "ss": return d.getSeconds().zf(2); // 초 (2자리)
+
+            case "a/p": return d.getHours() < 12 ? "오전" : "오후"; // 오전/오후 구분
+
+            default: return $1;
+
+        }
+
+    });
+
+};
+
+
+
+String.prototype.string = function (len) { var s = '', i = 0; while (i++ < len) { s += this; } return s; };
+
+String.prototype.zf = function (len) { return "0".string(len - this.length) + this; };
+
+Number.prototype.zf = function (len) { return this.toString().zf(len); };
 	
 	
 	

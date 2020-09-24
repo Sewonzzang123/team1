@@ -23,7 +23,7 @@
 						<div class="section_wrap">								
 						
 						
-					<form id="Frm" name="Frm" method="POST" 	enctype="multipart/form-data"
+					<form:form id="Frm" name="Frm" method="POST" 	enctype="multipart/form-data"
 						action="${contextPath}/board/reply">		
 																					
 									<input type="hidden" id="bnum" name="bnum" value="${boardVO.bnum }"/> 
@@ -70,7 +70,7 @@
 										<li><label for="bcontent"></label> 						
 										<input type="hidden" name="tcontent"	class="tcontent_area">
 									<div class="content_area" contenteditable="true"	data-placeholder="내용을 입력하세요">[답글]</div>
-								 <form:errors cssClass="bound_error" path="bcontent"></form:errors>								 
+								 <form:errors cssClass="bound_error" path="tcontent"></form:errors>								 
 								 </li>
 								
 								<li>					
@@ -81,7 +81,7 @@
 							</div>
 							</li>
 						</ul>
-					</form>
+							</form:form>
 							</div>
 					</section>
 		</div>

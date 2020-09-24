@@ -2,8 +2,9 @@
         const writeBtn = document.getElementById("writeBtn");
         const writeFrm = document.getElementById("Frm");
         const listBtn = document.getElementById("listBtn");
-        const catnumV = document.getElementById("catnum");
+        const catnum = document.getElementById("catnum").value;
         const picsTag =  document.getElementById("pics")
+        const returnPage = document.getElementById("returnPage").value;
         
         /* 사진 추가 */
        const add_img_btn = document.querySelector('.add_img_btn');
@@ -16,6 +17,17 @@
     	)
         window.addEventListener("load", init);
         writeBtn.addEventListener("click", writeBtn_f);
+        
+        listBtn.addEventListener('click', (e) => {	
+        	
+        	listBtn_f();
+        	
+        })
+        
+        
+        
+        
+        
         const bCateTag = document.getElementById("bcategory")
         const hidCateTag = document.getElementById("hidcategory")
         // 게시판 분류 카테고리 별 말머리 연동 ajax
@@ -70,10 +82,13 @@
                 const thumbnail = document.querySelector('.thumbnail');
                 thumbnail.value = thumbnail_name.getAttribute('name');
                 console.log("2번" + thumbnail);
-                alert("1번 파일 썸네일 이름 셋팅 완료");
+             
             }
       
-            tcontent_area.value =  content_area.innerHTML;
+            tcontent_area.value =  content_area.innerHTML.trim();
+            
+            
+            
             writeFrm.submit();
         }
 
@@ -123,4 +138,12 @@
             xhttp.send(jsObjToJson);
                
         }
+        
+        
+        //목록 버튼
+        function   listBtn_f(e){        
+         const url = `/pfpkg/board/${catnum}/${returnPage}`;    
+        window.location.href=url;     
+          
+          }   
    

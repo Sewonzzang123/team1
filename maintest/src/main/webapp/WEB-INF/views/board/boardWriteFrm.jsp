@@ -35,19 +35,22 @@
 							<input type="hidden" id="catnum" name="catnum"					value="${requestScope.bcategoryVO.catnum}" />
 							<input type="hidden" id="hidnum" name="hidnum"				value="${requestScope.boardVO.hidcategory.hidnum}" />
 							<ul>
-								<li class="selectGrp"><select name="bcategory.catnum"		id="bcategory">
-										<option value="0">게시판분류</option>
-										<c:forEach var="bcate" items="${bcategoryList }">
-											<c:if test="${bcate.catnum != 0}">
-												<option value="${bcate.catnum }"
-													<c:if test="${bcate.catnum == requestScope.catnum}">selected</c:if>>${bcate.catname }</option>
-											</c:if>
-										</c:forEach>
-									</select> 
-								<select name="hidcategory.hidnum" id="hidcategory">
+		<li class="selectGrp"><select name="bcategory.catnum"
+								id="bcategory">
+									<option value="0">게시판분류</option>
+									<c:forEach var="bcate" items="${bcategoryList }">
+										<c:if test="${bcate.catnum != 0}">
+											<option value="${bcate.catnum }"
+												<c:if test="${bcate.catnum == requestScope.boardVO.bcategory.catnum}">selected</c:if>
+												>${bcate.catname }</option>
+										</c:if>
+									</c:forEach>
+
+							</select> <select name="hidcategory.hidnum" id="hidcategory">
 									<option value="">말머리분류</option>
-								</select> <form:errors cssClass="bound_error" path="bcategory.catnum"></form:errors>
-								</li>
+
+							</select> <form:errors cssClass="bound_error" path="bcategory.catnum"></form:errors>
+							</li>
 
 								<li><input name="btitle" type="text"			placeholder="제목을 입력하세요."></input> 
 									<form:errors	cssClass="bound_error" path="btitle"></form:errors></li>
@@ -114,7 +117,7 @@
 									<div class="content_area" contenteditable="true"	data-placeholder="내용을 입력하세요">${boardVO.tcontent }
 								
 									</div>
-								 <form:errors cssClass="bound_error" path="bcontent"></form:errors>								 
+								 <form:errors cssClass="bound_error" path="tcontent"><c:if test="${requestScope.error }">${requestScope.error }</c:if></form:errors>								 
 								 </li>
 
 								<li>
