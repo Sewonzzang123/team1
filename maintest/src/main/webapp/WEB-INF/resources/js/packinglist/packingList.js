@@ -338,6 +338,7 @@ function checkItem(e){
 	
 	function plus(e){
 		let a = e.parentElement.parentElement.firstElementChild.nextElementSibling.nextElementSibling;
+		if(Number(a.value)+1 >20){return false;}
 		a.value = Number(a.value)+1;
 		let cat = e.closest('.row').querySelector('input[name="icategory"]').getAttribute('value');	
 		let iname = e.closest('.row').querySelector('div[name="i_name"]').textContent;
