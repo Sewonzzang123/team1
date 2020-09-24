@@ -209,7 +209,7 @@ function del_f(bcnum){
     reqMsg.bnum = bnum;
     reqMsg.bcnum = bcnum;     
     const changeIntoJson = JSON.stringify(reqMsg);
-	const url = `http://localhost:9080/pfpkg/bcomment/delete/${reqPage}`;
+	const url = `http://localhost:9080/pfpkg/bcomment/delete/${innerRqPage}`;
 	xhttp.open('post',url)
 	xhttp.setRequestHeader('Content-Type','application/json;charset=utf-8')
 	xhttp.send(changeIntoJson);          

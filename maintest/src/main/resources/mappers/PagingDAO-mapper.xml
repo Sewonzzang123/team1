@@ -25,14 +25,14 @@ and
 <!--전체  -->
 <when test="searchType == 'A'.toString() ">
 (t1.btitle  like '%'||#{searchKeyword}||'%' or
-t1.bcontent like '%'||#{searchKeyword}||'%' or
+t1.tcontent  like '%'||#{searchKeyword}||'%' or
 t3.nickname like '%'||#{searchKeyword}||'%')
 </when>
 
 <!--제목+ 내용  -->
 <when test="searchType == 'TC'.toString() ">
 (t1.btitle  like '%'||#{searchKeyword}||'%' or
-t1.bcontent like '%'||#{searchKeyword}||'%')
+t1.tcontent like '%'||#{searchKeyword}||'%')
 </when>
 
 
@@ -43,7 +43,7 @@ t1.btitle  like '%'||#{searchKeyword}||'%'
 
 <!--내용  -->
 <when test="searchType == 'C'.toString() ">
-t1.bcontent like '%'||#{searchKeyword}||'%' 
+t1.tcontent like '%'||#{searchKeyword}||'%' 
 </when>
 
 <!--작성자  -->
@@ -78,14 +78,14 @@ and
 <!--전체  -->
 <when test="searchType == 'A'.toString() ">
 (t1.btitle  like '%'||#{searchKeyword}||'%' or
-t1.bcontent like '%'||#{searchKeyword}||'%' or
+t1.tcontent like '%'||#{searchKeyword}||'%' or
 t3.nickname like '%'||#{searchKeyword}||'%')
 </when>
 
 <!--제목+ 내용  -->
 <when test="searchType == 'TC'.toString() ">
 (t1.btitle  like '%'||#{searchKeyword}||'%' or
-t1.bcontent like '%'||#{searchKeyword}||'%')
+t1.tcontent like '%'||#{searchKeyword}||'%')
 </when>
 
 
@@ -96,7 +96,7 @@ t1.btitle  like '%'||#{searchKeyword}||'%'
 
 <!--내용  -->
 <when test="searchType == 'C'.toString() ">
-t1.bcontent like '%'||#{searchKeyword}||'%' 
+t1.tcontent like '%'||#{searchKeyword}||'%' 
 </when>
 
 <!--작성자  -->

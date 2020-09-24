@@ -17,7 +17,7 @@
 					<div class="li_text">
 						<div class="li_text_poa">
 							<h5 class="li_text_head">${tdata.btitle }</h5>
-							<p class="li_text_content">${tdata.tcontent}</p>
+							<%-- <p class="li_text_content">${tdata.tcontent}</p> --%>
 							<div class="li_text_cw">
 								<span class="li_text_cdate">작성자 : ${tdata.bnickname }</span> <span
 									class="li_text_writer"> <fmt:formatDate

@@ -16,13 +16,14 @@
 								${requestScope.bcategoryVO.catname }</a>
 						</c:when>
 						<c:otherwise>
-							<a href="${pageContext.request.contextPath}/board">전체글 보기</a>
+							<a href="${pageContext.request.contextPath}/board">전체글</a>
 						</c:otherwise>
 					</c:choose>
 					<div class="underline"></div>
 				</div>
 			</div>
 			<ul>
+			<li><a href="${contextPath }/board">전체글 보기</a></li>
 					<c:forEach var="bcatelist" items="${requestScope.bcatelist}" begin="1" >
 					<li><a href="${contextPath }/board/${bcatelist.catnum  }">${bcatelist.catname  }</a></li>
 				</c:forEach>

@@ -34,6 +34,7 @@
 		nickname as "bnickname",
 		btitle,
 		bcontent,
+		tcontent,
 		bHits,
 		bcdate,
 		budate,
@@ -54,6 +55,7 @@
 		t1.bhits,
 		t1.btitle,
 		t1.bcontent,
+			t1.tcontent,
 		t1.bcdate,
 		t1.budate,
 		t1.bgroup,
@@ -89,6 +91,7 @@
 		nickname as "bnickname",
 		btitle,
 		bcontent,
+		tcontent,
 		bHits,
 		bcdate,
 		budate,
@@ -109,6 +112,7 @@
 		t1.bhits,
 		t1.btitle,
 		t1.bcontent,
+			t1.tcontent,
 		t1.bcdate,
 		t1.budate,
 		t1.bgroup,
@@ -151,6 +155,7 @@
 		nickname as "bnickname",
 		btitle,
 		bcontent,
+		tcontent,
 		bHits,
 		bcdate,
 		budate,
@@ -171,6 +176,7 @@
 		t1.bhits,
 		t1.btitle,
 		t1.bcontent,
+			t1.tcontent,
 		t1.bcdate,
 		t1.budate,
 		t1.bgroup,
@@ -191,7 +197,7 @@
 				<!--전체 -->
 				<when test="searchType == 'A'.toString() ">
 					(btitle like '%'||#{searchKeyword}||'%' or
-					bcontent
+					tcontent
 					like '%'||#{searchKeyword}||'%' or
 					nickname like
 					'%'||#{searchKeyword}||'%')
@@ -200,7 +206,7 @@
 				<!--제목+ 내용 -->
 				<when test="searchType == 'TC'.toString() ">
 					(btitle like '%'||#{searchKeyword}||'%' or
-					bcontent
+					tcontent
 					like '%'||#{searchKeyword}||'%')
 				</when>
 
@@ -212,7 +218,7 @@
 
 				<!--내용 -->
 				<when test="searchType == 'C'.toString() ">
-					bcontent like '%'||#{searchKeyword}||'%'
+					tcontent like '%'||#{searchKeyword}||'%'
 				</when>
 
 				<!--작성자 -->
@@ -344,6 +350,7 @@
 		nickname as "bnickname",
 		btitle,
 		bcontent,
+		tcontent,
 		thumbnail,
 		bHits,
 		bcdate,
@@ -361,6 +368,7 @@
 		t1.bhits,
 		t1.btitle,
 		t1.bcontent,
+		t1.tcontent,
 		t1.thumbnail,
 		t1.bcdate,
 		t1.budate
@@ -376,7 +384,7 @@
 				<!--전체 -->
 				<when test="searchType == 'A'.toString() ">
 					(btitle like '%'||#{searchKeyword}||'%' or
-					bcontent
+					tcontent
 					like '%'||#{searchKeyword}||'%' or
 					nickname like
 					'%'||#{searchKeyword}||'%')
@@ -385,7 +393,7 @@
 				<!--제목+ 내용 -->
 				<when test="searchType =='TC'.toString() ">
 					(btitle like '%'||#{searchKeyword}||'%' or
-					bcontent
+					tcontent
 					like '%'||#{searchKeyword}||'%')
 				</when>
 
@@ -397,7 +405,7 @@
 
 				<!--내용 -->
 				<when test="searchType == 'C'.toString() ">
-					bcontent like '%'||#{searchKeyword}||'%'
+					tcontent like '%'||#{searchKeyword}||'%'
 				</when>
 
 				<!--작성자 -->
@@ -430,6 +438,7 @@ values(b_l_num_seq.nextval, #{bnum},#{i_num}, #{i_name}, #{icount}, #{ca_num})
 		ucode,
 		btitle,
 		bcontent,
+		tcontent,
 		bgroup,
 		lname
 		)
@@ -440,6 +449,7 @@ values(b_l_num_seq.nextval, #{bnum},#{i_num}, #{i_name}, #{icount}, #{ca_num})
 		#{ucode},
 		#{btitle},
 		#{bcontent},
+		#{tcontent},
 		b_bnum_seq.nextVal,
 		#{listVO.lname}
 		)
@@ -499,6 +509,7 @@ values(b_l_num_seq.nextval, #{bnum},#{i_num}, #{i_name}, #{icount}, #{ca_num})
 		ucode,
 		btitle,
 		bcontent,
+		tcontent,
 		bgroup,
 		bstep,
 		bindent
@@ -510,6 +521,7 @@ values(b_l_num_seq.nextval, #{bnum},#{i_num}, #{i_name}, #{icount}, #{ca_num})
 		#{ucode},
 		#{btitle},
 		#{bcontent},
+		#{tcontent},
 		#{bgroup},
 		#{bstep}+1,
 		#{bindent}+1
@@ -545,6 +557,7 @@ values(b_l_num_seq.nextval, #{bnum},#{i_num}, #{i_name}, #{icount}, #{ca_num})
 		t1.bhits,
 		t1.btitle,
 		t1.bcontent,
+		t1.tcontent,
 		t1.bcdate,
 		t1.budate,
 		t1.bgroup,
@@ -591,8 +604,8 @@ values(b_l_num_seq.nextval, #{bnum},#{i_num}, #{i_name}, #{icount}, #{ca_num})
 		bcategory= #{bcategory.catnum},
 		hidcategory= #{hidcategory.hidnum},
 		btitle= #{btitle},
-		bcontent=
-		#{bcontent},
+		bcontent=		#{bcontent},
+		tcontent = #{tcontent},
 		budate=systimestamp
 		where bnum = #{bnum}
 	</update>
@@ -605,7 +618,8 @@ values(b_l_num_seq.nextval, #{bnum},#{i_num}, #{i_name}, #{icount}, #{ca_num})
 
 		update board set
 		thumbnail = #{thumbnail},
-		bcontent =		#{bcontent}
+		bcontent =		#{bcontent},
+		tcontent = #{tcontent}
 		where bnum = #{bnum}
 
 	</update>
