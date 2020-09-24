@@ -697,4 +697,9 @@ select t3.LNUM, t3.UCODE, t3.LNAME, t3.CDATE, num,
 </select>
 
 
+<select id="loadListing" parameterType="long" resultType="ListingVO">
+select i_num, iname as "i_name", icount, ca_num from blisting where bnum = #{bnum}
+
+</select>
+
 </mapper>

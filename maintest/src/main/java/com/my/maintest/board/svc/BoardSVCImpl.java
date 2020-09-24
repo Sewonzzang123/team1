@@ -187,6 +187,9 @@ public class BoardSVCImpl implements BoardSVC {
 				boardDAO.insertBlisting(listingVO);
 					}
 		}
+		
+		
+		
 		return result;
 	}
 	
@@ -383,7 +386,16 @@ public void insertFiles(List<MultipartFile> files, long bnum, String catnum)  {
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}				
-	
+		//리스트 blisting에 저장
+			long lnum = boardVO.getListVO().getLnum();	
+			if(lnum != 0) {			
+				List<ListingVO> list = itemListDAO.loadListing(boardVO.getListVO().getLnum());		
+				for(ListingVO listingVO: list)
+					{
+					listingVO.setBnum(boardVO.getBnum());
+					boardDAO.insertBlisting(listingVO);
+						}
+			}
 
 		return boardDAO.updateThumbPath(boardVO);
 	}
