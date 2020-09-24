@@ -30,7 +30,7 @@ public interface BoardSVC {
 	//갤러리게시판(catnum:2)  썸네일 첨부파일 정보 불러오기 
 	 List<BoardFileVO> selectThumbnailFiles(int catnum);	 
 	 // 게시글 열람
-	Map<String, Object> selectArticle(long bnum);		
+	Map<String, Object> selectArticle(boolean toUphits ,long bnum);		
 	//게시글 등록(게시글 원글 and 답글)
 	long insertArticle(BoardVO boardVO);
 //게시글 등록(text + img  (썸네일생성 / 원본 파일 저장)

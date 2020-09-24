@@ -55,7 +55,6 @@ import com.my.maintest.member.vo.MemberVO;
 import com.my.maintest.mypage.svc.MypageSVC;
 
 import lombok.extern.slf4j.Slf4j;
-import net.coobird.thumbnailator.Thumbnails;
 
 // TODO 관리자 페이지 게시판 추가 구현
 // TODO 내가쓴글 클릭시 게시글 열람 가능하게 구현
@@ -202,12 +201,22 @@ public class BoardController {
 			@RequestParam(value = "catnum") Optional<Integer> catnum,
 			@Valid @ModelAttribute BoardVO boardVO,
 			BindingResult result,
-			HttpServletRequest request)  {	
+			HttpServletRequest request
+			,Model model)  {	
 		
+		String error = null;
+		
+		if(boardVO.getTcontent().trim().length() == 0) {			
+			 error = "최소 한글자 이상 입력해주세요.";					 
+				model.addAttribute("error", error);
+				return "/board/boardWriteFrm";
+		};
 		
 		
 		if (result.hasErrors()) {
 			return "/board/boardWriteFrm";
+
+		
 		}
 		
 		MemberVO memberVO = (MemberVO)request.getSession().getAttribute("member");
@@ -286,8 +295,10 @@ public class BoardController {
 			throws UnsupportedEncodingException {
 		// 게시판 타입 읽어오기
 		BcategoryVO bcategoryVO = boardSVC.selectBtype(catnum);
+		//조회수 업데이트필요 여부
+		boolean toUphits = true; 
 		// svc는 map 타입을 반환값으로 가짐
-		Map<String, Object> map = boardSVC.selectArticle(bnum);
+		Map<String, Object> map = boardSVC.selectArticle(toUphits, bnum);
 		BoardVO boardVO = (BoardVO) map.get("boardVO");
 
 		boardVO.setTcontent(new String(boardVO.getBcontent(), "UTF-8"));// 정민
@@ -436,7 +447,13 @@ public class BoardController {
 		logger.info("수정호출");
 
 		BcategoryVO bcategoryVO = boardSVC.selectBtype(catnum);		
-		Map<String, Object> map = boardSVC.selectArticle(bnum);
+		
+		//조회수 업데이트필요 여부
+		boolean toUphits = false; 
+		Map<String, Object> map = boardSVC.selectArticle(toUphits, bnum);
+		
+		
+		
 		BoardVO boardVO = (BoardVO) map.get("boardVO");
 		
 		// 파일 타입은 List<BoardFileVO>
@@ -460,39 +477,7 @@ public class BoardController {
 		if (result.hasErrors()) {
 			return "/board/boardModifyFrm";
 		}
-		
-		
-		File filePath = new File("C:\\tmpServerRepo\\photo\\");
-		if(!filePath.exists()) {
-			System.out.println("저장 경로 존재하지 않으므로 경로 생성.");			
-			filePath.mkdirs();			
-		}
-
-		boardVO.setBcontent(boardVO.getTcontent().getBytes("UTF-8"));
-
-
-		// 썸네일 등록
-		if (!thumb_img_name.equals("null")) {
-			String orginFile = "C:\\tmpServerRepo\\photo\\"	+ thumb_img_name;
-			// 썸네일로 만들 원본파일객체 생성
-			File thumb_img_file = new File(orginFile);
-			// 썸네일을 담을 파일
-			File thumbnail = new File(
-					"C:\\tmpServerRepo\\photo\\s\\s_" + thumb_img_name);
-
-			// 대상 파일을 리사징 후 썸네일 파일에 저장
-			if (thumb_img_file.exists()) {
-				// 썸네일 저장 디렉토리 생성
-				thumbnail.getParentFile().mkdir();
-				Thumbnails.of(thumb_img_file).size(257, 257).toFile(thumbnail);
-
-			//db에 저장 경로 저장			
-				boardVO.setThumbnail("photo\\s\\s_"+ thumb_img_name);
-				
-			}
-		} else {
-			boardVO.setThumbnail(null);
-		}
+	
 		boardSVC.updateArticle(boardVO);
 
 		return "redirect:/board/read/" + boardVO.getBcategory().getCatnum() + "/" + boardVO.getBnum();
@@ -511,7 +496,14 @@ public class BoardController {
 	public String toboardReplyFrm(@PathVariable("bnum") long bnum, @ModelAttribute("returnPage") String returnPage,
 			Model model) {
 		Map<String, Object> map = null;
-		map = boardSVC.selectArticle(bnum);
+		
+		boolean toUphits = false; 
+		// svc는 map 타입을 반환값으로 가짐
+		map = boardSVC.selectArticle(toUphits, bnum);
+		
+		
+		
+		
 		// 맵안에서 게시글데이터를 가져와 가공한다.
 		BoardVO boardVO = (BoardVO) map.get("boardVO");
 		boardVO.setBtitle("[답글]" + boardVO.getBtitle());

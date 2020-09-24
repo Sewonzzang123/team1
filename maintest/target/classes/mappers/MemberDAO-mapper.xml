@@ -14,6 +14,11 @@
 		INSERT into member (ucode, id, pw, name, tel, nickname)
 		VALUES(m_ucode_seq.NEXTVAL, #{id}, #{pw}, #{name}, #{tel},
 		#{nickname})
+		
+		<selectKey  resultType="String" keyProperty="ucode" order="AFTER">
+						select
+			m_ucode_seq.currVal from dual
+		</selectKey>
 	</insert>
 
 	<select id="findID" parameterType="map" resultType="string">

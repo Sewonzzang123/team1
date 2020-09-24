@@ -135,11 +135,15 @@ public class BoardSVCImpl implements BoardSVC {
 
 	// 게시글 열람
 	@Override
-	public Map<String, Object> selectArticle(long bnum) {		
+	public Map<String, Object> selectArticle(boolean toUphits ,long bnum) {		
 		 Map<String, Object> map = new HashMap<>();
 		 List<BoardFileVO> files = null;		 
+		 
+		 if(toUphits == true) {
 		//조회수 업데이트 
-		boardDAO.updateBhits(bnum);			
+		boardDAO.updateBhits(bnum);
+		
+		 }
 		//게시글 가져오기 
 		
 		BoardVO boardVO = boardDAO.selectArticle(bnum);
@@ -187,9 +191,6 @@ public class BoardSVCImpl implements BoardSVC {
 				boardDAO.insertBlisting(listingVO);
 					}
 		}
-		
-		
-		
 		return result;
 	}
 	

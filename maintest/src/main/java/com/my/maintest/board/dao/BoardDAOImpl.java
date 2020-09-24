@@ -140,7 +140,6 @@ public List<BoardFileVO> selectFiles(long bnum) {
 @Override
 public int updateBhits(long bnum) {
 	
-	System.out.println("조회수 갱신  ============== ");
 	
 	return sqlSession.update("mappers.BoardDAO-mapper.updateBhits",bnum);
 }
@@ -222,7 +221,6 @@ public int updateBhits(long bnum) {
 		public List<ListVO> myList(String ucode) {
 			return sqlSession.selectList("mappers.BoardDAO-mapper.myList", ucode);
 		};
-
 
 	}
 

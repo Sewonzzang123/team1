@@ -283,11 +283,7 @@
 		where t1.bcategory = t2.catnum and t1.ucode =
 		t3.ucode and
 		t1.hidcategory = t4.hidnum and t1.bnum = t5.bnum
-
-
 		and t5.thumbfname != 'null'
-
-
 		<if test="catnum != 0">
 			and t1.bcategory = #{catnum}
 		</if>
@@ -302,36 +298,29 @@
 					nickname like
 					'%'||#{searchKeyword}||'%')
 				</when>
-
 				제목+ 내용
 				<when test="searchType =='TC'.toString() ">
 					(btitle like '%'||#{searchKeyword}||'%' or
 					bcontent
 					like '%'||#{searchKeyword}||'%')
 				</when>
-
-
 				제목
 				<when test="searchType == 'T'.toString() ">
 					btitle like '%'||#{searchKeyword}||'%'
 				</when>
-
 				내용
 				<when test="searchType == 'C'.toString() ">
 					bcontent like '%'||#{searchKeyword}||'%'
 				</when>
-
 				작성자
 				<when test="searchType == 'N'.toString() ">
 					nickname like '%'||#{searchKeyword}||'%'
 				</when>
 			</choose>
 		</if>
-
 		)
 		where dbrownum between #{recFrom} and #{recTo}
 		order by dbrownum desc
-
 	</select> -->
 
 
