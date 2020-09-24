@@ -26,9 +26,9 @@
 
 		<!-- main -->
 		<main id="content" class="modifyResult">
-			<div id="txt">
+			<div id="txt" style="margin-bottom: 15px">
 				<div>
-					<strong class="org">회원정보가 수정되었습니다.</strong>
+					<strong class="org" style="font-size: 16px">회원정보가 수정되었습니다.</strong>
 				</div>
 			</div>
 
@@ -38,7 +38,6 @@
 					<col style="width: 450px">
 				</colgroup>
 
-				<h3>기본정보</h3>
 				<tbody>
 					<tr>
 						<th>아이디</th>
@@ -61,12 +60,12 @@
 
 			<div class="actionBtn">
 				<input type="button" value="메인페이지로"
-					onClick="location.href='${pageContext.request.contextPath}'"> <input type="button"
-					value="이전 페이지"
+					onClick="location.href='${pageContext.request.contextPath}'">
+				<input type="button" value="이전 페이지"
 					onClick="location.href='${pageContext.request.contextPath}/mypage/modifyForm'">
 			</div>
 		</main>
 	</div>
-	
+
 </body>
 </html>

@@ -45,6 +45,7 @@ public class MemberController {
 	public String signup(@ModelAttribute @Valid MemberVO signup_info, BindingResult bindingResult, Model model,
 			HttpSession session) {
 
+		logger.info(signup_info.toString());
 		// 1) 필수 사항 입력확인
 		if (bindingResult.hasErrors()) {
 			return "/member/signupForm";
@@ -57,6 +58,8 @@ public class MemberController {
 			return "/member/signupForm";
 		}
 
+		logger.info(signup_info.getPw());
+		logger.info(signup_info.getPwc());
 		// 3) 비밀번호 확인
 		if (!signup_info.getPw().equals(signup_info.getPwc())) {
 			logger.info(signup_info.getPw());
@@ -99,10 +102,12 @@ public class MemberController {
 			// 2)회원id가 존재할경우
 			// 2-1) 비밀번호가 일치하는경우
 			if (memberVO.getPw().equals(pw)) {
-				String[] telSP = memberVO.getTel().split("-");
-				memberVO.setTel1(telSP[0]);
-				memberVO.setTel2(telSP[1]);
-				memberVO.setTel3(telSP[2]);
+				if (!memberVO.getTel().equals("010--")) {
+					String[] telSP = memberVO.getTel().split("-");
+					memberVO.setTel1(telSP[0]);
+					memberVO.setTel2(telSP[1]);
+					memberVO.setTel3(telSP[2]);
+				}
 
 				session.setAttribute("member", memberVO);
 				logger.info("등록완료");

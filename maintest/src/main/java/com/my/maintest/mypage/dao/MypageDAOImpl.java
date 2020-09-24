@@ -36,7 +36,7 @@ public class MypageDAOImpl implements MypageDAO {
 	@Override
 	public int withdraw(String id) {
 
-		return sqlSession.delete("mappers.MypageDAO-mapper.withdraw", id);
+		return sqlSession.update("mappers.MypageDAO-mapper.withdraw", id);
 	}
 
 	@Override

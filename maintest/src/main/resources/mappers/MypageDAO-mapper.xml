@@ -15,10 +15,10 @@
 		where id = #{id}
 	</update>
 
-	<delete id="withdraw" parameterType="string">
-		delete member
-		where id = #{id}
-	</delete>
+	<update id="withdraw" parameterType="string">
+		update member SET id='del', pw='del', name='del', tel='del',
+		sessionkey='del' where id = #{id}
+	</update>
 
 
 	<!-- 내 리스트 -->

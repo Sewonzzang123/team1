@@ -15,13 +15,18 @@ function init(){
 	resetBtn.addEventListener("click",resetBtn_f);
 	
 	//숨김 버튼 클릭시 아이템 숨김
-	document.querySelectorAll('.fa-chevron-down').forEach(i=>{
+	document.querySelectorAll('.drop_btn').forEach(i=>{
 			i.addEventListener('click',(e)=>{
 
 				if(e.target.nextElementSibling.style.display=="none"){
+					console.log();
 					e.target.nextElementSibling.style.display="block";
+					e.target.classList.remove('fa-chevron-down');					
+					e.target.classList.add('fa-chevron-up');
 				}else{
-					e.target.nextElementSibling.style.display="none";
+					e.target.nextElementSibling.style.display="none";					
+					e.target.classList.add('fa-chevron-down');					
+					e.target.classList.remove('fa-chevron-up');
 				}
 			});
 		});
@@ -46,8 +51,6 @@ $('.tab_box').hide();
 $('.tab_menu_btn').on('click',function(){
   $('.tab_menu_btn').removeClass('on');
   $(this).addClass('on');
-  $('.tab_menu_btn').parent().css('outline','');
-  $(this).parent().css('outline','1px solid #553de8');
 });
 
 
@@ -55,14 +58,12 @@ $('.tab_menu_btn').on('click',function(){
 $('.tab_menu_btn1').on('click',function(){
   $('.tab_box').hide();
   $('.tab_box1').show();
-  $(this).parent().css('outline','1px solid #553de8');
 });
 
 //2번 컨텐츠
 $('.tab_menu_btn2').on('click',function(){
   $('.tab_box').hide();
   $('.tab_box2').show();
-  $(this).parent().css('outline','1px solid #553de8');
 });
 
 
@@ -70,7 +71,6 @@ $('.tab_menu_btn2').on('click',function(){
 $('.tab_menu_btn3').on('click',function(){
   $('.tab_box').hide();
   $('.tab_box3').show();
-  $(this).parent().css('outline','1px solid #553de8');
 });
 
 
@@ -78,7 +78,6 @@ $('.tab_menu_btn3').on('click',function(){
 $('.tab_menu_btn4').on('click',function(){
   $('.tab_box').hide();
   $('.tab_box4').show();
-  $(this).parent().css('outline','1px solid #553de8');
 });
 
 
@@ -86,14 +85,12 @@ $('.tab_menu_btn4').on('click',function(){
 $('.tab_menu_btn5').on('click',function(){
   $('.tab_box').hide();
   $('.tab_box5').show();
-  $(this).parent().css('outline','1px solid #553de8');
 });
 
 //6번 컨텐츠
 $('.tab_menu_btn6').on('click',function(){
   $('.tab_box').hide();
   $('.tab_box6').show();
-  $(this).parent().css('outline','1px solid #553de8');
 });
 
 

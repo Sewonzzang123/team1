@@ -60,7 +60,7 @@ public class MypageController {
 	public String modify(HttpSession session, @ModelAttribute MemberVO info, BindingResult result, Model model) {
 
 		if (info.getNickname().trim().length() == 0) {
-			model.addAttribute("err_msg", " * �븘�닔 �젙蹂댁엯�땲�떎.");
+			model.addAttribute("err_msg", " *별명을 입력해주세요.");
 			return "/mypage/modifyForm";
 		}
 
@@ -88,7 +88,7 @@ public class MypageController {
 	public String withdraw(HttpSession session, @RequestParam String pw, Model model) {
 		MemberVO memberVO = (MemberVO) session.getAttribute("member");
 		if (!memberVO.getPw().equals(pw)) {
-			model.addAttribute("err_msg", "* 鍮꾨�踰덊샇媛� �씪移섑븯吏� �븡�뒿�땲�떎.");
+			model.addAttribute("err_msg", " *비밀번호가 일치하지 않습니다.");
 
 			return "/mypage/withdrawForm";
 		}
@@ -166,17 +166,11 @@ public class MypageController {
 	@RequestMapping("/check")
 	public void item_check(@RequestBody String linum, Model model) {
 		mypageSVC.item_check(linum);
-		logger.info("泥댄겕�샇異�");
-
-//		return "/mypage/listView";
 	}
 
 	// �븘�씠�뀥 泥댄겕
 	@RequestMapping("/uncheck")
 	public void item_uncheck(@RequestBody String linum, Model model) {
 		mypageSVC.item_uncheck(linum);
-		logger.info("�뼵泥댄겕�샇異�");
-
-//		return "/mypage/listView";
 	}
 }
