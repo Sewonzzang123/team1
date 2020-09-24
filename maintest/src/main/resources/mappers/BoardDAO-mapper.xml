@@ -660,6 +660,41 @@ values(b_l_num_seq.nextval, #{bnum},#{i_num}, #{i_name}, #{icount}, #{ca_num})
 		resultType="com.my.maintest.board.vo.BoardFileVO">
 		select * from board_upload_file
 	</select>
+	
+	<!--리스트 불러오기 -->
+<select id="myList" parameterType="String" resultType="ListVO">
+select t3.LNUM, t3.UCODE, t3.LNAME, t3.CDATE, num,
+		NVL(total_item,0) as
+		total_item, NVL(checked_item,0) as checked_item
+		from(select LNUM ,
+		LNAME, CDATE, ucode,
+		row_number() over(
+		order by LNUM
+		ASC) as num from
+		list where
+		ucode=#{ucode}) t3 left
+		OUTER
+		join (select
+		t1.LNUM,count(*) as
+		total_item from list t1
+		,listing t2
+		where
+		t1.lnum=t2.lnum group by
+		t1.lnum) t2 on
+		t3.lnum=t2.lnum
+		left OUTER
+		join (
+		select t1.LNUM,count(*)
+		as checked_item from list t1,
+		listing t2
+		where
+		t1.lnum=t2.lnum and
+		t2.checked='true'
+        group by
+		t1.lnum) t4 on
+		t3.lnum=t4.lnum
+    where total_item not like 0
+</select>
 
 
 </mapper>
