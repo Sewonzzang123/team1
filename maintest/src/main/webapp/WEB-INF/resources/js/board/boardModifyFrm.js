@@ -17,7 +17,7 @@
         //바인딩할 데이터 삽입영역
         const tcontent_area = document.querySelector('.tcontent_area');
         //처음 등록한 사진의 파일이름  
-        const thumbnail_name = document.querySelector('.img_file');
+        let thumbnail_name = document.querySelector('.img_file');
         //리스트 버튼
         const listBtn = document.querySelector('#listBtn');
     
@@ -78,18 +78,19 @@
         }
 
         function writeBtn_f(e) {
-            e.preventDefault();
-            
-            
-            
-            if (thumbnail_name != null) {            	
-                const thumbnail = document.querySelector('.thumbnail');
+            e.preventDefault();        
+            thumbnail_name = document.querySelector('.img_file');
+            if (thumbnail_name != null) {  
+            	 const thumbnail = document.querySelector('.thumbnail');
                 thumbnail.value = thumbnail_name.getAttribute('name');
-         	   tcontent_area.value = content_area.innerHTML;
-               if(confirm("저장하시겠습니까?")){            
-                   writeFrm.submit();
-               }
-            }
+          	   tcontent_area.value = content_area.innerHTML;
+                
+     }else{            	
+     	   tcontent_area.value = content_area.innerHTML;
+    }                   
+            if(confirm("저장하시겠습니까?")){            
+                writeFrm.submit();
+     }
            
         }
 

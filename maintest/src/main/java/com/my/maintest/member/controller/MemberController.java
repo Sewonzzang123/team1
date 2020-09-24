@@ -214,7 +214,7 @@ public class MemberController {
 		sb.append(id + "님의 비밀번호입니다.<br><br>");
 		sb.append("<b>비밀번호 : " + pw + "</b>");
 		sb.append("<br><br>");
-		sb.append("<a href='http://localhost:9080/maintest/loginForm'>로그인</a>");
+		sb.append("<a href='http://localhost:9080/pfpkg/loginForm'>로그인</a>");
 		sb.append("</body></html>");
 
 		memberSVC.sendMail(id, "packing 비밀번호 찾기", sb.toString());

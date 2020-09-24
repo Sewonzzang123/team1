@@ -55,7 +55,7 @@
 				<div class="b_content" id="b_content">
 					<c:forEach var="bcate" items="${requestScope.bcategoryVO }">
 						<table id="" class="set_box hide">
-							<input type="hidden" class="info" id="canum_input"
+							<input type="hidden" class="info" 
 								value="${bcate.catnum }" />
 							<!-- 카테고리 넘버 -->
 

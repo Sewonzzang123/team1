@@ -301,8 +301,10 @@ public class BoardController {
 		Map<String, Object> map = boardSVC.selectArticle(toUphits, bnum);
 		BoardVO boardVO = (BoardVO) map.get("boardVO");
 
-		boardVO.setTcontent(new String(boardVO.getBcontent(), "UTF-8"));// 정민
-		// 파일 타입은 List<BoardFileVO>
+		if(boardVO.getBcontent() != null) {
+		boardVO.setTcontent(new String(boardVO.getBcontent(), "UTF-8"));// 정민		
+		}
+		// 파일 타입은 List<BoardFileVO>		
 		List<BoardFileVO> files = ((List<BoardFileVO>) map.get("files"));
 
 		// inner댓글 리스트 불러오기

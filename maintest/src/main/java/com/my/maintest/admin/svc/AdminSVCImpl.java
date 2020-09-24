@@ -27,6 +27,16 @@ public class AdminSVCImpl implements AdminSVC {
 		return adminDAO.getCate();
 	}
 
+	
+//	//delete headID 먼저 
+//	public int delHeadID(String catnum) {
+//		
+//		
+//	}
+//	
+	
+	
+	//delete bcategory 
 	@Override
 	public int delBoard(String catnum) {
 
@@ -63,6 +73,8 @@ public class AdminSVCImpl implements AdminSVC {
 		return adminDAO.delHead(hidnum);
 	}
 
+	
+	
 	@Override
 	public List<ItemCategoryVO> getIcate() {
 		// TODO Auto-generated method stub

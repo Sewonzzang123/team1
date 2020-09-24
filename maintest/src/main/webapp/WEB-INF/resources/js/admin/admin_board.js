@@ -38,7 +38,7 @@
 		newMenuTitle.setAttribute('id', 'n');
 
 		var str = '<input type="hidden" class="info" id="canum_input" value="new">';
-		str += '<tr> <th class="caname">게시판명</th> <td class="caname_value"><input id="caname_input" class="caname_input info" type=" text" value="새로운게시판"></td> </tr>';
+		str += '<tr> <th class="caname">게시판명</th> <td class="caname_value"><input  class="caname_input info" type=" text" value="새로운게시판"></td> </tr>';
 		str += '<tr> <th class="bmemo">게시판 설명</th> <td class="bmemo_value"><input id="bmemo_input" class="info" type=" text" value=""></td> </tr>';
 		str += '<tr> <th class="btype">게시판 유형</th> <td class="btype_input_box"> <select id="btype_input" class="info"> <option value="blog">자유게시판</option> <option value="album">사진게시판</option> </select> </td> </tr>';
 		str += '<tr> <th class="b_subject">말머리</th> <td class="b_subject_value"> <input type="hidden" class="del_annum_list info" id="del_annum_list"> <div class="sub_input_box"><input type="text" class="sub_input"><input type="button" onclick="addSub(this)" value="추가"></div> <div class="sub_box"> </div> </td> </tr>';

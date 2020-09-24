@@ -16,7 +16,7 @@
 	<insert id="createBoard" parameterType="BcategoryVO">
 		insert into bcategory
 		(catnum, catname, btype, bmemo)
-		values (bnum_seq.NEXTVAL, #{catname},
+		values (b_bnum_seq.NEXTVAL, #{catname},
 		#{btype}, #{bmemo})
 	</insert>
 

@@ -95,6 +95,9 @@ public class AdminController {
 		String[] del_board = del_board_list.split("/");
 		logger.info(String.valueOf(del_board.length));
 		for (String catnum : del_board) {
+			
+	
+			//카테고리 삭제		
 			adminSVC.delBoard(catnum);
 		}
 
