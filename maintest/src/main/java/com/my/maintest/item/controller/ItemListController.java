@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.my.maintest.board.svc.BoardSVC;
 import com.my.maintest.item.dao.ItemListDAO;
 import com.my.maintest.item.svc.ItemListSVC;
 import com.my.maintest.item.vo.ItemCategoryVO;

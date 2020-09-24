@@ -29,6 +29,7 @@ import com.my.maintest.board.vo.HeadIdCategoryVO;
 import com.my.maintest.board.vo.ThumbnailVO;
 import com.my.maintest.common.paging.PagingComponent;
 import com.my.maintest.item.dao.ItemListDAO;
+import com.my.maintest.item.vo.ListVO;
 import com.my.maintest.item.vo.ListingVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -456,7 +457,11 @@ public void insertFiles(List<MultipartFile> files, long bnum, String catnum)  {
 		return boardDAO.loadListing(bnum);	
 	};
 	
-	
+//리스트 불러오기
+	@Override
+	public List<ListVO> myList(String ucode){
+		return boardDAO.myList(ucode);	
+	};
 	
 	
 

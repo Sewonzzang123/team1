@@ -13,6 +13,7 @@ import com.my.maintest.board.vo.BcategoryVO;
 import com.my.maintest.board.vo.BoardFileVO;
 import com.my.maintest.board.vo.BoardVO;
 import com.my.maintest.board.vo.HeadIdCategoryVO;
+import com.my.maintest.item.vo.ListVO;
 import com.my.maintest.item.vo.ListingVO;
 
 @Repository
@@ -217,7 +218,11 @@ public int updateBhits(long bnum) {
 		public int insertBlisting(ListingVO listingVO) {
 			return sqlSession.insert("mappers.BoardDAO-mapper.insertBlisting", listingVO);
 		};
-		
+		@Override
+		public List<ListVO> myList(String ucode) {
+			return sqlSession.selectList("mappers.BoardDAO-mapper.myList", ucode);
+		};
+
 
 	}
 

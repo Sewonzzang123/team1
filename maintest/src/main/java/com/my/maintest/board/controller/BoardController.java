@@ -238,7 +238,7 @@ public class BoardController {
 		String ucode = memberVO.getUcode();		
 		List<ListVO> listVO = null;
 		List<ListingVO> listing = null;
-		listVO = itemListSVC.loadList(ucode);
+		listVO = boardSVC.myList(ucode);
 		long lnum = listVO.get(0).getLnum();
 
 		listing = itemListSVC.loadListing(lnum);

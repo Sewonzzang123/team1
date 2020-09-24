@@ -6,6 +6,7 @@ import com.my.maintest.board.vo.BcategoryVO;
 import com.my.maintest.board.vo.BoardFileVO;
 import com.my.maintest.board.vo.BoardVO;
 import com.my.maintest.board.vo.HeadIdCategoryVO;
+import com.my.maintest.item.vo.ListVO;
 import com.my.maintest.item.vo.ListingVO;
 
 public interface BoardDAO {
@@ -62,7 +63,8 @@ public interface BoardDAO {
 	List<ListingVO> loadListing(long bnum);
 //리스트 등록
 	int insertBlisting(ListingVO listingVO);
-	
+//리스트 불러오기
+	List<ListVO> myList(String ucode);
 	
 	
 }

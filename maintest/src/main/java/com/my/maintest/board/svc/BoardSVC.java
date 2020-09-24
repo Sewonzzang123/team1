@@ -9,6 +9,7 @@ import com.my.maintest.board.vo.BcategoryVO;
 import com.my.maintest.board.vo.BoardFileVO;
 import com.my.maintest.board.vo.BoardVO;
 import com.my.maintest.board.vo.HeadIdCategoryVO;
+import com.my.maintest.item.vo.ListVO;
 import com.my.maintest.item.vo.ListingVO;
 
 public interface BoardSVC {
@@ -53,7 +54,7 @@ public interface BoardSVC {
 	
 	//리스트 열람
 	List<ListingVO> loadListing(long bnum);
-	
+	List<ListVO> myList(String ucode);
 
 	
 }
