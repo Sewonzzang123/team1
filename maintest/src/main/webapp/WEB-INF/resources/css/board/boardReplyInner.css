@@ -62,14 +62,19 @@
 	
         .innerRe_wrapper .bcomment .innerRe_area   {
             display: grid;
-            grid-template-columns: minmax(50px,10%) 1fr;
+            grid-template-columns: minmax(70px,15%) 1fr;
         }
         
         	 .innerRe_wrapper .bcomment .userinfo .udate {
              display: grid;
-            grid-template-columns: minmax(50px,10%) 20% 1fr;
+            grid-template-columns: minmax(70px,15%) 20% 1fr;
         	 }
         
+        
+            	 .innerRe_wrapper .bcomment .userinfo .udate button{
+             font-size: 0.7em;
+             text-align: left;
+        	 }
          .innerRe_wrapper .bcomment .userinfo i {
         margin-left:10px;
         cursor: pointer;

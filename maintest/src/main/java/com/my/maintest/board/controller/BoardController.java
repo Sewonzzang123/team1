@@ -85,10 +85,10 @@ public class BoardController {
 
 	@Inject
 	ItemListSVC itemListSVC;
-	
+
 	@Inject
 	MypageSVC mypageSVC;
-	
+
 	// 게시판 카테고리 조회
 	@ModelAttribute("bcategoryList")
 	public List<BcategoryVO> getBcategory() {
@@ -118,35 +118,30 @@ public class BoardController {
 	// 사진등록(ajax)
 	@RequestMapping(value = "/setphoto", produces = "application/text;charset=utf-8")
 	@ResponseBody
-	public String set_photo(MultipartHttpServletRequest mtf
-	) throws Exception {
+	public String set_photo(MultipartHttpServletRequest mtf) throws Exception {
 		log.info("사진등록 ajax 호출 ");
 		logger.info("mtf" + mtf.getFile("file").getOriginalFilename());
-		//임시저장위치
+		// 임시저장위치
 		File filePath = new File("C:\\tmpServerRepo\\photo\\tmp\\");
-		if(!filePath.exists()) {
-			System.out.println("저장 경로 존재하지 않으므로 임시저장 경로 생성.");			
-			filePath.mkdirs();			
-		}		
+		if (!filePath.exists()) {
+			filePath.mkdirs();
+		}
 		// 파일 태그
 		String fileTag = "file";
 		System.out.println("filePath.getPath() == " + filePath.getPath());
 		StringBuilder sb = new StringBuilder(filePath.getPath());
 		// 파일 이름
 		MultipartFile file = mtf.getFile(fileTag);
-		String fileName = file.getOriginalFilename();		
-		sb.append("\\"+fileName);		
+		String fileName = file.getOriginalFilename();
+		sb.append("\\" + fileName);
 		FileOutputStream fos = null;
 		File newFile = new File(sb.toString());
 		fos = new FileOutputStream(newFile);
 		fos.write(mtf.getFile(fileTag).getBytes());
-		fos.close();	
-		logger.info(filePath + fileName);
+		fos.close();
 		return fileName;
 	}
 
-	
-	
 	// 게시글 목록보기 (페이징 + 검색 + 게시판 카테고리)
 	@GetMapping({ "", "/{catnum}" // 각 게시판으로 이동
 			, "/{catnum}/{reqPage}", "/{catnum}/{reqPage}/{searchType}/{searchKeyword}" })
@@ -159,133 +154,92 @@ public class BoardController {
 		BcategoryVO bcategoryVO = boardSVC.selectBtype(catnum.orElse(0));
 		// 표시할 게시글 수
 		long recNumPerPage = 10;
-		
-
 		Map<String, Object> map = boardSVC.selectArticlesWithKey(bcategoryVO.getBtype(), catnum.orElse(0),
 				reqPage.orElse(1), recNumPerPage, searchType, searchKeyword);
-
-		
 		model.addAttribute("boardVO", map.get("list"));
 		model.addAttribute("pagingComponent", (PagingComponent) map.get("pagingComponent"));
 		model.addAttribute("bcategoryVO", bcategoryVO);
 		model.addAttribute("bcatelist", adminSVC.getCate());
-
 		return "/board/boardMainFrm";
 	}
 
 	// 게시글 작성 화면
-	@GetMapping({"/boardWriteFrm/{catnum}/{returnPage}",
-	"/boardWriteFrm/{catnum}/{returnPage}/{lnum}"})
+	@GetMapping({ "/boardWriteFrm/{catnum}/{returnPage}", "/boardWriteFrm/{catnum}/{returnPage}/{lnum}" })
 	public String toboardWriteFrm(@ModelAttribute BoardVO boardVO, @PathVariable("catnum") int catnum,
-			@ModelAttribute("returnPage") String returnPage
-			, @PathVariable(value ="lnum", required= false) String lnum
-			, HttpServletRequest request
-			,Model model) {
-
+			@ModelAttribute("returnPage") String returnPage, @PathVariable(value = "lnum", required = false) String lnum,
+			HttpServletRequest request, Model model) {
 		// 게시판 타입 읽어오기
 		BcategoryVO bcategoryVO = boardSVC.selectBtype(catnum);
 		bcategoryVO.setCatname("글쓰기");
 		model.addAttribute("bcategoryVO", bcategoryVO);
 		model.addAttribute("catnum", catnum);
-		if(lnum != null) {
+		if (lnum != null) {
 			model.addAttribute("lname", itemListSVC.getListname(Long.valueOf(lnum)));
 			model.addAttribute("lnum", lnum);
 		}
 		return "/board/boardWriteFrm";
 	}
 
-
 	// 게시글 등록
 	@PostMapping(value = { "/write", "/write/{catnum}" })
-	public String toWrite(
-			@RequestParam(value = "catnum") Optional<Integer> catnum,
-			@Valid @ModelAttribute BoardVO boardVO,
-			BindingResult result,
-			HttpServletRequest request
-			,Model model)  {	
-		
+	public String toWrite(@RequestParam(value = "catnum") Optional<Integer> catnum,
+			@Valid @ModelAttribute BoardVO boardVO, BindingResult result, HttpServletRequest request, Model model) {
 		String error = null;
-		
-		if(boardVO.getTcontent().trim().length() == 0) {			
-			 error = "최소 한글자 이상 입력해주세요.";					 
-				model.addAttribute("error", error);
-				return "/board/boardWriteFrm";
-		};
-		
-		
+		if (boardVO.getTcontent().trim().length() == 0) {
+			error = "최소 한글자 이상 입력해주세요.";
+			model.addAttribute("error", error);
+			return "/board/boardWriteFrm";
+		}	;
 		if (result.hasErrors()) {
 			return "/board/boardWriteFrm";
-
-		
 		}
-		
-		MemberVO memberVO = (MemberVO)request.getSession().getAttribute("member");
-		boardVO.setUcode(Long.parseLong(memberVO.getUcode()));		
-		boardSVC.insertArticleWithImg(boardVO);				
-			
-		return "redirect:/board/read/" +  boardVO.getBcategory().getCatnum() + "/" + boardVO.getBnum();
+		MemberVO memberVO = (MemberVO) request.getSession().getAttribute("member");
+		boardVO.setUcode(Long.parseLong(memberVO.getUcode()));
+		boardSVC.insertArticleWithImg(boardVO);
+		return "redirect:/board/read/" + boardVO.getBcategory().getCatnum() + "/" + boardVO.getBnum();
 	}
 
 //리스트 첨부하기 클릭
-	@GetMapping(
-		"/loadListForm/{catnum}/{returnPage}")
-	public String loadListForm(		
-			@PathVariable(value="catnum", required=false) Integer catnum,			
-			@PathVariable(value="returnPage", required=false) Integer returnPage,			
-			Model model,
-			HttpSession session
-			) {
-		MemberVO memberVO =(MemberVO)session.getAttribute("member");
-		if(session != null) {
+	@GetMapping("/loadListForm/{catnum}/{returnPage}")
+	public String loadListForm(@PathVariable(value = "catnum", required = false) Integer catnum,
+			@PathVariable(value = "returnPage", required = false) Integer returnPage, Model model, HttpSession session) {
+		MemberVO memberVO = (MemberVO) session.getAttribute("member");
+		if (session != null) {
 			session.removeAttribute("returnPage");
 			session.removeAttribute("catnum");
 		}
-
 		session.setAttribute("returnPage", returnPage);
 		session.setAttribute("catnum", catnum);
-		
-		String ucode = memberVO.getUcode();		
+		String ucode = memberVO.getUcode();
 		List<ListVO> listVO = null;
 		List<ListingVO> listing = null;
 		listVO = boardSVC.myList(ucode);
 		long lnum = listVO.get(0).getLnum();
-
 		listing = itemListSVC.loadListing(lnum);
 		List<ItemCategoryVO> icategory = itemListSVC.selectAllCategory();
-		
 		model.addAttribute("lnum", lnum);
 		model.addAttribute("icategory", icategory);
 		model.addAttribute("listVO", listVO);
 		model.addAttribute("listingVO", listing);
-		
-		
 		return "/board/loadListForm";
 	}
-	
+
 	@GetMapping("/loadListForm/{lnum}")
-	public String getListing(
-			@PathVariable("lnum") long lnum,
-			HttpSession session,
-			Model model) {
-		
-		MemberVO memberVO =(MemberVO)session.getAttribute("member");
+	public String getListing(@PathVariable("lnum") long lnum, HttpSession session, Model model) {
+		MemberVO memberVO = (MemberVO) session.getAttribute("member");
 		String ucode = memberVO.getUcode();
-		
 		List<ListVO> listVO = null;
 		List<ListingVO> listing = null;
 		listVO = itemListSVC.loadList(ucode);
 		listing = itemListSVC.loadListing(lnum);
 		List<ItemCategoryVO> icategory = itemListSVC.selectAllCategory();
-
 		model.addAttribute("lnum", lnum);
 		model.addAttribute("icategory", icategory);
 		model.addAttribute("listVO", listVO);
 		model.addAttribute("listingVO", listing);
-		
 		return "/board/loadListForm";
 	}
-	
-	
+
 	// 게시글열람
 	@GetMapping({ "/read/{catnum}/{bnum}", "/read/{catnum}/{bnum}/{returnPage}",
 			"/read/{catnum}/{bnum}/{returnPage}/{searchType}/{searchKeyword}" })
@@ -295,18 +249,16 @@ public class BoardController {
 			throws UnsupportedEncodingException {
 		// 게시판 타입 읽어오기
 		BcategoryVO bcategoryVO = boardSVC.selectBtype(catnum);
-		//조회수 업데이트필요 여부
-		boolean toUphits = true; 
+		// 조회수 업데이트필요 여부
+		boolean toUphits = true;
 		// svc는 map 타입을 반환값으로 가짐
 		Map<String, Object> map = boardSVC.selectArticle(toUphits, bnum);
 		BoardVO boardVO = (BoardVO) map.get("boardVO");
-
-		if(boardVO.getBcontent() != null) {
-		boardVO.setTcontent(new String(boardVO.getBcontent(), "UTF-8"));// 정민		
+		if (boardVO.getBcontent() != null) {
+			boardVO.setTcontent(new String(boardVO.getBcontent(), "UTF-8"));// 정민
 		}
-		// 파일 타입은 List<BoardFileVO>		
+		// 파일 타입은 List<BoardFileVO>
 		List<BoardFileVO> files = ((List<BoardFileVO>) map.get("files"));
-
 		// inner댓글 리스트 불러오기
 		List<BCommentVO> list = bCommentSVC.selectBComments(bnum, 1, REC_NUM_PER_PAGE, PAGING_NUM_PER_PAGE);
 		model.addAttribute("boardVO", boardVO);
@@ -317,34 +269,23 @@ public class BoardController {
 	}
 
 	@GetMapping("/downloadListForm/{bnum}")
-	public String downloadListForm(
-			@PathVariable("bnum") Long bnum,
-			Model model
-			) {
-
+	public String downloadListForm(@PathVariable("bnum") Long bnum, Model model) {
 		List<ItemCategoryVO> itemCategoryVO = itemListSVC.selectAllCategory();
 		List<ListingVO> listingVO = boardSVC.loadListing(bnum);
 		System.out.println(listingVO.toString());
 		model.addAttribute("listing", listingVO);
 		model.addAttribute("category", itemCategoryVO);
 		model.addAttribute("bnum", bnum);
-
-		
 		return "board/downloadListForm";
 	}
-	
-	@PostMapping(value="/saveList/{lname}")
-	public String inum(
-			@RequestParam(value="bnum", required = true) Long bnum,
-			@RequestParam(value="checked", required = false) List<String> checked,
-			@PathVariable(value = "lname") String lname,
-			HttpSession session,
-			Model model) {
 
+	@PostMapping(value = "/saveList/{lname}")
+	public String inum(@RequestParam(value = "bnum", required = true) Long bnum,
+			@RequestParam(value = "checked", required = false) List<String> checked,
+			@PathVariable(value = "lname") String lname, HttpSession session, Model model) {
 		List<Map<String, String>> listing = new ArrayList<Map<String, String>>();
 		List<ListingVO> getListing = boardSVC.loadListing(bnum);
-				
-		for(int i=0; i<getListing.size(); i++) {
+		for (int i = 0; i < getListing.size(); i++) {
 			Map<String, String> itemMap = new HashMap<>();
 			itemMap.put("i_num", getListing.get(i).getI_num());
 			itemMap.put("i_name", getListing.get(i).getI_name());
@@ -353,43 +294,30 @@ public class BoardController {
 			itemMap.put("checked", checked.get(i).toString());
 			listing.add(i, itemMap);
 		}
-		
-			MemberVO memberVO = (MemberVO) session.getAttribute("member");
-			String ucode = memberVO.getUcode();
-		
-			ListVO listVO = new ListVO();
-			listVO.setLname(lname);
-			listVO.setMemberVO(memberVO);
-			
-			itemListSVC.listNameInsert(listVO);
-			itemListSVC.insertListing(listVO, listing);
-			
-
-			
-			model.addAttribute("mylist", mypageSVC.mylist(1, ucode));
-			model.addAttribute("paging", mypageSVC.mylist_paging(1, ucode));	
-
-		
-		
-		//마이페이지에 리스트 화면으로 이동
+		MemberVO memberVO = (MemberVO) session.getAttribute("member");
+		String ucode = memberVO.getUcode();
+		ListVO listVO = new ListVO();
+		listVO.setLname(lname);
+		listVO.setMemberVO(memberVO);
+		itemListSVC.listNameInsert(listVO);
+		itemListSVC.insertListing(listVO, listing);
+		model.addAttribute("mylist", mypageSVC.mylist(1, ucode));
+		model.addAttribute("paging", mypageSVC.mylist_paging(1, ucode));
+		// 마이페이지에 리스트 화면으로 이동
 		return "/mypage/mylist";
 
-}
-	
-	
+	}
 
 	// 첨부파일 다운로드
 	@GetMapping("/file/{fid}")
 	public ResponseEntity<byte[]> toGetFile(@PathVariable("fid") String fid, Model model) {
 		ResponseEntity<byte[]> res = null;
 		BoardFileVO boardFileVO = boardSVC.selectFileToDwLoad(fid);
-
 		// 응답헤더에 mimetype과 파일 사이즈 정보를 설정
 		final HttpHeaders headers = new HttpHeaders();
 		String[] mimeTypes = boardFileVO.getFtype().split("/");
 		headers.setContentType(new MediaType(mimeTypes[0], mimeTypes[1]));
 		headers.setContentLength(boardFileVO.getFsize());
-
 		// 첨부파일 명이 한글일 경우 깨짐방지
 		String fileName = null;
 		try {
@@ -397,12 +325,9 @@ public class BoardController {
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-
 		// 응답헤더에 파일이 있음을 알려줌
 		headers.setContentDispositionFormData("attachment", fileName);
-
 		res = new ResponseEntity<byte[]>(boardFileVO.getFdata(), headers, HttpStatus.OK);
-
 		return res;
 	}
 
@@ -413,54 +338,25 @@ public class BoardController {
 			@PathVariable(value = "isthumb", required = false) String isThumb, Model model) {
 		ResponseEntity<String> responseEntity = null;
 		long result = boardSVC.deleteFile(fid, isThumb);
-
 		if (result == 1) {
-
 			responseEntity = new ResponseEntity<>("success", HttpStatus.OK);
 		} else {
-
 			responseEntity = new ResponseEntity<>("fail", HttpStatus.OK);
 		}
 		return responseEntity;
 	}
 
-	// 게시글수정
-//	@PostMapping("/save")
-//	public String toSaveChanges(@ModelAttribute BoardVO boardVO
-//			,@RequestParam("returnPage") String returnPage
-//			, Model model) {
-//		boardSVC.updateArticle(boardVO);
-//		return "redirect:/board/read/" + boardVO.getBnum() +"/" + returnPage;
-//	}
-//
-//	// 게시글삭제
-//	@GetMapping("/delete/{bnum}")
-//	public String toDeleteArticle(@PathVariable("bnum") int bnum, Model model) {
-//
-//		boardSVC.deleteArticle(bnum);
-//		return "redirect:/board";
-//	}
-
-	// 게시글수정 화면 
+	// 게시글수정 화면
 	@GetMapping("/boardModifyFrm/{catnum}/{bnum}")
-	public String toModifyFrm(
-			 @PathVariable("catnum") int catnum
-			,@PathVariable("bnum") int bnum, Model model) throws UnsupportedEncodingException {
-		logger.info("수정호출");
-
-		BcategoryVO bcategoryVO = boardSVC.selectBtype(catnum);		
-		
-		//조회수 업데이트필요 여부
-		boolean toUphits = false; 
+	public String toModifyFrm(@PathVariable("catnum") int catnum, @PathVariable("bnum") int bnum, Model model)
+			throws UnsupportedEncodingException {
+		BcategoryVO bcategoryVO = boardSVC.selectBtype(catnum);
+		// 조회수 업데이트필요 여부
+		boolean toUphits = false;
 		Map<String, Object> map = boardSVC.selectArticle(toUphits, bnum);
-		
-		
-		
 		BoardVO boardVO = (BoardVO) map.get("boardVO");
-		
 		// 파일 타입은 List<BoardFileVO>
 		List<BoardFileVO> files = ((List<BoardFileVO>) map.get("files"));
-
 		model.addAttribute("boardVO", boardVO);
 		model.addAttribute("files", files);
 		logger.info(boardVO.toString());
@@ -469,22 +365,16 @@ public class BoardController {
 
 //게시글 수정처리
 	@PostMapping("/modify")
-	public String toModify(
-	    @RequestParam(value = "thumbnail") String thumb_img_name,
+	public String toModify(@RequestParam(value = "thumbnail") String thumb_img_name,
 			@Valid @ModelAttribute BoardVO boardVO, BindingResult result) throws IOException {
 		logger.info("수정호출");
 		logger.info(boardVO.toString());
-		
-		
 		if (result.hasErrors()) {
 			return "/board/boardModifyFrm";
 		}
-	
 		boardSVC.updateArticle(boardVO);
-
 		return "redirect:/board/read/" + boardVO.getBcategory().getCatnum() + "/" + boardVO.getBnum();
 	}
-
 	// 게시글삭제
 	@GetMapping("/delete/{bnum}")
 	public String toDeleteArticle(@PathVariable("bnum") int bnum, Model model) {
@@ -493,19 +383,13 @@ public class BoardController {
 	}
 
 	// 답글 작성 화면
-	@GetMapping(
-			value={"/boardReplyFrm/{bnum}", "/boardReplyFrm/{bnum}/{returnPage}"})
+	@GetMapping(value = { "/boardReplyFrm/{bnum}", "/boardReplyFrm/{bnum}/{returnPage}" })
 	public String toboardReplyFrm(@PathVariable("bnum") long bnum, @ModelAttribute("returnPage") String returnPage,
 			Model model) {
 		Map<String, Object> map = null;
-		
-		boolean toUphits = false; 
+		boolean toUphits = false;
 		// svc는 map 타입을 반환값으로 가짐
 		map = boardSVC.selectArticle(toUphits, bnum);
-		
-		
-		
-		
 		// 맵안에서 게시글데이터를 가져와 가공한다.
 		BoardVO boardVO = (BoardVO) map.get("boardVO");
 		boardVO.setBtitle("[답글]" + boardVO.getBtitle());
@@ -516,23 +400,14 @@ public class BoardController {
 
 	// 답글 등록
 	@PostMapping("/reply")
-	public String toReply(@Valid @ModelAttribute BoardVO boardVO, 
-			BindingResult result,
-			@RequestParam("bcategory.catnum") String catnum,
-			HttpServletRequest request) {
-		
-		System.out.println("컨트롤단 단 답글 ==" + boardVO.toString());
-			
+	public String toReply(@Valid @ModelAttribute BoardVO boardVO, BindingResult result,
+			@RequestParam("bcategory.catnum") String catnum, HttpServletRequest request) {
 		if (result.hasErrors()) {
 			return "/board/boardReplyFrm";
 		}
-		
-		MemberVO memberVO = (MemberVO)request.getSession().getAttribute("member");
-		boardVO.setUcode(Long.parseLong(memberVO.getUcode()));		
+		MemberVO memberVO = (MemberVO) request.getSession().getAttribute("member");
+		boardVO.setUcode(Long.parseLong(memberVO.getUcode()));
 		boardSVC.insertRepliedArticle(boardVO);
-		
-		
-		
 		return "redirect:/board/" + catnum;
 	}
 
