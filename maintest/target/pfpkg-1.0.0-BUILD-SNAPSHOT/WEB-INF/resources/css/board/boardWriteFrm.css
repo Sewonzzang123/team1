@@ -1,0 +1,156 @@
+/* -------------------------------------- start -------------------------------------- */
+.main_img {
+	width: 100%;
+	height: 50vh;
+	background: url(../../img/polynesia-3021072_1920.jpg);
+	background-size: cover;
+}
+
+.main_wrap {
+	margin-top: 50px;
+}
+
+.main_wrap section {
+	width: 50%;
+	margin: 0 auto;
+}
+
+.main_wrap .section_wrap .section_write {
+	border-bottom: 2px solid #ff8080;
+}
+
+.main_wrap .section_wrap .section_write .writeBtn {
+	margin-bottom: 10px;
+}
+
+.main_wrap .writeForm {
+	margin-top: 15px;
+}
+
+.main_wrap .writeForm .writeForm_title {
+	display: flex;
+}
+
+.main_wrap .writeForm #selectList {
+	border: 1px solid lightgray;
+	width: 25%;
+	height: 30px;
+}
+
+.main_wrap .writeForm #selectHead {
+	margin-left: 10px;
+	border: 1px solid lightgray;
+	width: 25%;
+	height: 30px;
+}
+
+.main_wrap .writeForm .wwriter, .main_wrap .writeForm .wtitle {
+	margin-top: 15px;
+	border: 1px solid lightgray;
+	width: 100%;
+	height: 30px;
+	padding-left: 5px;
+}
+
+.main_wrap .writeForm .wwriter:focus, .main_wrap .writeForm .wtitle:focus
+	{
+	outline: none;
+}
+
+.main_wrap .writeForm .writeForm_content {
+	margin-top: 15px;
+}
+
+.main_wrap .writeForm .writeForm_content textarea {
+	border: 1px solid lightgray;
+	width: 100%;
+	height: 300px;
+	resize: none;
+}
+
+.main_wrap .writeForm .writeForm_content textarea:focus {
+	outline: none;
+}
+
+.writeForm .attach .ImgBtn, .writeForm .inseattachrt .FileBtn {
+	border: 1px solid #ff8080;
+	color: #ff8080;
+	border-radius: 3px;
+	width: 60px;
+	height: 25px;
+	margin-bottom: 5px;
+}
+
+.writeForm .attach {
+	margin-top: 10px;
+}
+
+.writeForm .attach .img, .writeForm .attach .file {
+	display: inline-block;
+}
+
+.writeForm .attach .file {
+	margin-left: 15px;
+}
+
+.writeForm .attach span {
+	font-size: 0.8em;
+}
+
+.writeForm .attach .ImgBtn:hover, .writeForm .attach .FileBtn:hover {
+	background-color: #ff8080;
+	color: white;
+	transition: background-color 0.2s, color 0.2s;
+	cursor: pointer;
+}
+
+.writeForm .attach .ImgBtn:focus, .writeForm .attach .FileBtn:focus {
+	outline: none;
+}
+
+.btnGrp {
+	margin-top: 20px;
+	text-align: right;
+}
+
+.btnGrp .writeBtn, .btnGrp .listBtn {
+	border-radius: 3px;
+	width: 60px;
+	height: 25px;
+	margin-bottom: 5px;
+}
+
+.btnGrp .writeBtn {
+	background-color: #ff8080;
+	color: white;
+}
+
+.btnGrp .listBtn {
+	background-color: lightgray;
+	color: white;
+}
+
+.btnGrp .writeBtn:hover {
+	background-color: #ff3c3c;
+	transition: background-color 0.2s, color 0.2s;
+	cursor: pointer;
+}
+
+.btnGrp .listBtn:hover {
+	background-color: gray;
+	transition: background-color 0.2s, color 0.2s;
+	cursor: pointer;
+}
+
+/* -------------------------------------- end -------------------------------------- */
+
+/* mobile */
+@media screen and (max-width: 769px) {
+	.main_wrap section {
+		width: 100%;
+	}
+}
+
+/* desktop */
+@media screen and (min-width: 769px) {
+}

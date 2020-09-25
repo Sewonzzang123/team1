@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.ItemListDAO-mapper">
+	<!-- 아이템 카테고리 전체 조회 -->
+	<select id="selectAllCategory" resultType="ItemCategoryVO">
+		select ca_num, ca_name
+		from i_category
+	</select>
+
+	<!-- 선택한 카테고리의 아이템 전체 조회 불러오기x -->
+	<select id="selectAllItem" resultType="ItemVO">
+		select ca_num as "itemCategoryVO.ca_num",
+		i_num,
+		i_name,
+		i_description
+		from item t1
+		where <![CDATA[i_num <1000]]>
+	</select>
+	<!-- lnum 선택 후 packinglist창 보여주기 -->
+	<select id="selectListItem" parameterType="long"
+		resultType="ItemVO">
+		select ca_num as "itemCategoryVO.ca_num",
+		i_num,
+		i_name,
+		i_description
+		from item
+		where lnum=1 or lnum=#{lnum}
+	</select>
+
+	<!-- 사용자의 리스트 이름만 불러오기 -->
+	<select id="loadList" parameterType="String" resultType="ListVO">
+		select
+		distinct t1.lnum,
+		t1.ucode as "memberVO.ucode",
+		t1.lname
+		from list t1,
+		member t2
+		where t1.ucode = t2.ucode
+		and t2.ucode = #{ucode}
+	</select>
+
+	<!-- 리스트 저장 : 이름 생성하기 -->
+	<insert id="listNameInsert" parameterType="ListVO">
+		insert into list(lnum,
+		ucode, lname)
+		values(l_num_seq.nextval, #{memberVO.ucode}, #{lname})
+		<selectKey keyProperty="lnum" resultType="long"
+			order="AFTER">
+		select l_num_seq.currval
+			from dual
+		</selectKey>
+	</insert>
+
+
+	<!-- list에 저장할때 -->
+	<!-- 기존 listing 에있는 아이템들 삭제 -->
+	<delete id="deleteListing" parameterType="long">
+		delete from listing
+		where lnum = #{lnum}
+	</delete>
+	<!-- mapper test용 -->
+	<select id="countListing" parameterType="long" resultType="int">
+		select count(*)
+		from listing
+		where lnum = #{lnum}
+	</select>
+	<!-- 추가된 아이템들도 삭제 -->
+	<delete id="deleteNewItem" parameterType="long">
+		delete from item where
+		lnum = #{lnum}
+	</delete>
+	<!-- new item 저장 >> inum 반환 -->
+	<insert id="saveNewItem" parameterType="ItemVO">
+		INSERT INTO ITEM(ca_num, i_num, i_name, lnum)
+		VALUES(#{itemCategoryVO.ca_num},I_NUM2_SEQ.nextval,#{i_name},#{lnum})
+		<selectKey keyProperty="i_num" resultType="long"
+			order="AFTER">
+			select I_NUM2_SEQ.currval
+			from dual
+		</selectKey>
+	</insert>
+
+	<!-- 아이템 정보 insert -->
+	<select id="getListname" parameterType="long"
+		resultType="String">
+		select lname
+		from list
+		where lnum = #{lnum}
+	</select>
+	<insert id="insertListing">
+		insert into listing(linum, lnum, i_num, checked, icount)
+		values(list_num_seq.nextval, #{lnum}, #{i_num},#{checked},#{icount})
+	</insert>
+
+	<!-- lnum 선택 시 아이템 목록 출력 -->
+	<select id="loadListing" parameterType="long" resultType="listingVO">
+		select
+		t1.linum as linum,
+		t2.i_name as i_name,
+		t1.checked as checked,
+		t1.icount as icount,
+		t3.ca_name as ca_name,
+		t3.ca_num as ca_num,
+		t2.i_num as i_num
+		from listing t1, item
+		t2, i_category t3
+		where t1.i_num = t2.i_num
+		and t2.ca_num = t3.ca_num
+		and t1.lnum=#{lnum}
+	</select>
+
+</mapper>

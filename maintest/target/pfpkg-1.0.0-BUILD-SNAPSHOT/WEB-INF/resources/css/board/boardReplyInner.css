@@ -1,0 +1,186 @@
+* {
+            margin: 0px;
+	
+
+            box-sizing: border-box;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        li {
+            list-style-type: none;
+        }
+
+        .innerRe{           
+           height: 100%;
+            margin-top: 30px;
+            font-size: 0.9em;
+						display:flex;
+            width: 100%;
+            
+       
+        }
+
+        .innerRe_wrapper{
+        	justify-content:flex-end;
+            width: 100%;
+            margin-left: 30px ;
+            padding-right: 30px;
+            height: auto;
+        }
+
+
+
+        /* 자식댓글 indent */
+        .innerRe_wrapper .children {
+            margin-left: 60px;
+        }
+
+
+        .innerRe_wrapper .bcomment_wrapper .bcomment {
+        	margin-top:15px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(1,minmax(10%, 80px) 1fr minmax(10%, 80px));
+        }
+
+        .innerRe_wrapper  .hidden {
+            display: none; 
+        }
+
+        /* 프로필 사진 CSS */
+        .innerRe_wrapper .bcomment .profile,
+         .innerRe_wrapper .fillout .profile {
+            text-align: center;
+        }
+        
+      
+
+		/* 작성자 인포 및 답글쓰기 layout */
+	
+        .innerRe_wrapper .bcomment .innerRe_area   {
+            display: grid;
+            grid-template-columns: minmax(70px,15%) 1fr;
+        }
+        
+        	 .innerRe_wrapper .bcomment .userinfo .udate {
+             display: grid;
+            grid-template-columns: minmax(70px,15%) 20% 1fr;
+        	 }
+        
+        
+            	 .innerRe_wrapper .bcomment .userinfo .udate button{
+             font-size: 0.7em;
+             text-align: left;
+        	 }
+         .innerRe_wrapper .bcomment .userinfo i {
+        margin-left:10px;
+        cursor: pointer;
+        }
+        
+            .innerRe_wrapper .bcomment .userinfo .udate .btn.reReply{
+           border:none;
+           background-color:white;
+           color: black;           
+           margin:0px;
+           padding:0px;
+            }
+        .innerRe_wrapper .bcomment .userinfo .udate span        {        
+        display:flex;
+        flex-direction: column;
+        justify-content: center;        
+        }
+        
+        /* 프로필이미지 */
+        .innerRe_wrapper .bcomment .profile .profileImg {
+        display:inline-block;'
+            vertical-align: middle;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            border-radius: 50px 50px;
+            background-color: lightgray;            
+        }
+
+        /* 공통CSS 끝  */
+
+        /* 댓글 CSS  */
+        /* ellipsis 버튼 CSS  */                
+   
+        .innerRe_wrapper .bcomment .ellipsis {
+            text-align: center;
+            position: relative;
+        }
+
+        .innerRe_wrapper .bcomment .ellipsis>i {
+            display: block;
+            width: 20px;
+            height: 20px;
+            margin: 0px auto;
+            cursor: pointer;
+        }
+
+        /* 수정 삭제 버튼 CSS  */
+        .innerRe_wrapper .bcomment .hiddenMenu div {
+            display: flex;
+            flex-direction: column;
+            position: absolute;           
+            left: 20px;
+            font-size: 0.8em;
+            width: 50px;
+            box-shadow: 5px 5px 15px #aaaaaa;
+        } 
+
+        /* 댓글 작성창 CSS */        
+         .innerRe_wrapper .filloutHere.bcomment{
+         	width: 100%;
+            display: grid;
+            grid-template-columns: minmax(50px, 10%) 1fr ;
+            padding: 3px;
+         }
+         
+         
+         .innerRe_wrapper .filloutHere.bcomment .profile img {
+            vertical-align: middle;
+            width: 70px;
+            height: 70px;
+            border-radius: 50px 50px;
+            background-color: none;
+        }
+        
+        .innerRe_wrapper .filloutHere.bcomment .userinfo .typing {
+            border-bottom: 1px solid lightgray;
+            min-height: 2em;
+            padding: 10px;
+        }
+
+        .innerRe_wrapper .filloutHere.bcomment .userinfo .typing:empty::before {
+            content: attr(data-placeholder);
+            display: block;
+            color: lightgray;
+        }
+
+
+	   .innerRe_wrapper .filloutHere.bcomment .userinfo .typing.disabled {
+          font-weight: bold;
+        }
+
+        .innerRe_wrapper .filloutHere.bcomment .userinfo .typable {
+            border-bottom: 1px solid black;
+        }
+
+        .innerRe_wrapper .filloutHere.bcomment .userinfo .rbtnGrp.shown{
+            display: flex;
+            justify-content: flex-end;
+        }
+
+
+	/*  showMoreBtn 버튼 CSS */
+        .innerRe_wrapper .btn.btn-showMore {
+            border: 1px solid #ff8080;
+      			width:100%;
+            border-radius: 3px;            
+            margin-top: 20px;
+        }

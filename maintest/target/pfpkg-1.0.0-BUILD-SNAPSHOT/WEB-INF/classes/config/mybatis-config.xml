@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- mybatis에서 null값 허용 세팅 시작 -->
+	<settings>
+		<setting name="cacheEnabled" value="false" />
+		<setting name="jdbcTypeForNull" value="NULL" />
+	</settings>
+	<!-- mybatis에서 null값 허용 세팅 종료 -->
+
+	<typeAliases>
+		<typeAlias type="com.my.maintest.item.vo.ItemVO"
+			alias="ItemVO" />
+		<typeAlias type="com.my.maintest.item.vo.ListVO"
+			alias="ListVO" />
+		<typeAlias type="com.my.maintest.item.vo.ItemCategoryVO"
+			alias="ItemCategoryVO" />
+		<typeAlias type="com.my.maintest.item.vo.ListingVO"
+			alias="ListingVO" />
+		<typeAlias type="com.my.maintest.member.vo.MemberVO"
+			alias="MemberVO" />
+		<typeAlias type="com.my.maintest.board.vo.BoardVO"
+			alias="BoardVO" />
+		<typeAlias type="com.my.maintest.board.vo.BcategoryVO"
+			alias="BcategoryVO" />
+		<typeAlias type="com.my.maintest.board.vo.HeadIdCategoryVO"
+			alias="HeadIdCategoryVO" />
+		<typeAlias type="com.my.maintest.board.vo.BoardFileVO"
+			alias="BoardFileVO" />
+		
+
+
+	</typeAliases>
+</configuration>

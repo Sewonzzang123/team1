@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.PagingDAO-mapper">
+
+<!-- 페이징  -->
+<!-- 레코드 총수량 구하기  -->
+
+<!-- 블로그 타입 레코드 총수량 구하기  -->
+<select id="selectRecQnty_Blog"  parameterType="map"  resultType="int">
+select count(*)
+from  
+(select 
+t1.bnum
+from board t1, bcategory t2, member t3, headid t4
+where t1.bcategory = t2.catnum and t1.ucode = t3.ucode and t1.hidcategory = t4.hidnum
+
+<if test="catnum != 0">
+and t1.bcategory = #{catnum}
+</if> 
+
+<if test="searchType != null">
+and  
+
+<choose>
+<!--전체  -->
+<when test="searchType == 'A'.toString() ">
+(t1.btitle  like '%'||#{searchKeyword}||'%' or
+t1.tcontent  like '%'||#{searchKeyword}||'%' or
+t3.nickname like '%'||#{searchKeyword}||'%')
+</when>
+
+<!--제목+ 내용  -->
+<when test="searchType == 'TC'.toString() ">
+(t1.btitle  like '%'||#{searchKeyword}||'%' or
+t1.tcontent like '%'||#{searchKeyword}||'%')
+</when>
+
+
+<!--제목  -->
+<when test="searchType == 'T'.toString() ">
+t1.btitle  like '%'||#{searchKeyword}||'%' 
+</when>
+
+<!--내용  -->
+<when test="searchType == 'C'.toString() ">
+t1.tcontent like '%'||#{searchKeyword}||'%' 
+</when>
+
+<!--작성자  -->
+<when test="searchType == 'N'.toString() ">
+t3.nickname like '%'||#{searchKeyword}||'%'
+</when>
+</choose>
+</if>
+)
+</select>
+
+<!-- 앨범레코드 총수량 구하기  -->
+<select id="selectRecQnty_Album"  parameterType="map"  resultType="int">
+select count(*) 
+
+from  
+
+(select 
+t1.bnum
+from board t1, bcategory t2, member t3, headid t4, board_upload_file t5
+where t1.bcategory = t2.catnum and t1.ucode = t3.ucode and t1.hidcategory = t4.hidnum and t1.bnum = t5.bnum
+
+
+<if test="catnum != 0">
+and t1.bcategory = #{catnum}
+</if> 
+
+<if test="searchType != null">
+and  
+
+<choose>
+<!--전체  -->
+<when test="searchType == 'A'.toString() ">
+(t1.btitle  like '%'||#{searchKeyword}||'%' or
+t1.tcontent like '%'||#{searchKeyword}||'%' or
+t3.nickname like '%'||#{searchKeyword}||'%')
+</when>
+
+<!--제목+ 내용  -->
+<when test="searchType == 'TC'.toString() ">
+(t1.btitle  like '%'||#{searchKeyword}||'%' or
+t1.tcontent like '%'||#{searchKeyword}||'%')
+</when>
+
+
+<!--제목  -->
+<when test="searchType == 'T'.toString() ">
+t1.btitle  like '%'||#{searchKeyword}||'%' 
+</when>
+
+<!--내용  -->
+<when test="searchType == 'C'.toString() ">
+t1.tcontent like '%'||#{searchKeyword}||'%' 
+</when>
+
+<!--작성자  -->
+<when test="searchType == 'N'.toString() ">
+t3.nickname like '%'||#{searchKeyword}||'%'
+</when>
+</choose>
+</if>
+)
+</select>
+
+</mapper>

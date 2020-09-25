@@ -1,0 +1,94 @@
+@charset "UTF-8";
+
+html {
+	font-family: Tahoma, Gulim, '굴림';
+	font-size: 12px;
+	line-height: 1.3;
+	color: #333333;
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+}
+
+input {
+	width: 131px;
+	height: 20px;
+	border: 1px solid #979797;
+	box-sizing: border-box;
+	font-size: 12px;
+	color: #000;
+	padding: 0 0 0 10px;
+	vertical-align: middle;
+}
+
+button, input, select, textarea {
+	font-family: Tahoma, Gulim, '굴림', sans-serif;
+}
+
+.actionBtn {
+	align-content: center;
+	text-align: center;
+	margin-top: 20px;
+}
+
+.actionBtn>input {
+	width: 120px;
+	text-align: center;
+	padding: 0;
+}
+
+th {
+	width: 130px;
+	color: #737373;
+	text-align: left;
+	padding-left: 17px;
+	background: #EFEFEF;
+	font-weight: normal;
+}
+
+th, td {
+	padding: 10px 0 8px 20px;
+	font-size: 11px;
+	font-family: Dotum, '돋움';
+	color: #333;
+	line-height: 17px;
+	line-height: 1.55em;
+	border-bottom: 1px solid #E0E0E0;
+}
+
+/* 개인 폼 */
+table {
+	width: 500px;
+	border-top: 2px solid #CBCBCB;
+	border-bottom: 2px solid #CBCBCB;
+	table-layout: fixed;
+	border-collapse: collapse;
+	border-spacing: 0;
+	border-top: 2px solid #CBCBCB;
+	margin: auto;
+}
+
+.title {
+	text-align: center;
+}
+
+.signupForm ul, ol {
+	padding: 0;
+	list-style: none;
+}
+
+.txtTel {
+	width: 40px;
+}
+
+#telBox {
+	display: flex;
+	align-items: center;
+}
+
+.info {
+	width: 160px;
+}
+
+.err_msg {
+	color: red;
+}

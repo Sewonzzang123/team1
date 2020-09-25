@@ -1,0 +1,94 @@
+@charset "UTF-8";
+
+    /* 컨테이너 설정*/
+        div{
+            display: inline-block;
+        }
+        a{
+            text-decoration: none;
+        }
+        .container {
+            width: 100vw;
+        }
+
+        /* 게시글 목록 타이틀*/
+        .container .title {
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        /* 게시글 목록 타이틀 폰트 */
+        .container .title legend {
+            font-weight: bold;
+            font-size: 1.5em;
+        }
+
+        /* wrapper 설정  */
+        .container .content {
+            margin: 0px auto;
+            border-left: 1px black solid;
+            border-top: 1px black solid;
+            width: 80%;
+            display: grid;
+            grid-template-columns: 1fr 1fr 5fr 1fr 1fr 1fr;
+
+        }
+
+        /* 테이블 서식  */
+        .container .content .cols {
+            font-size: 0.8em;
+            text-align: center;
+            border-right: 1px black solid;
+            border-bottom: 1px black solid;
+        }
+
+        .container .content .th {
+            font-weight: bold;
+        }
+
+  .container .content #btitle{
+         display:flex;
+       justify-content: left;
+         
+  }
+    .container .content #btitle  span{
+        padding-left:10px; 
+  }
+
+
+          /* 버튼 그룹  */
+          .container .btnGrp {
+            display: grid;
+            grid-template-columns:1fr 1fr 5fr 1fr 1fr 1fr;
+            padding: 10px;
+            width: 80%;
+            margin: 0px auto;
+        }
+
+	/* 검색*/
+      .container  .searching {
+            display: flex;
+            justify-content: center;
+        }
+        
+        .container .btnGrp #writeBtn{
+            grid-column: 8/9;
+
+        }
+
+        .container .btnGrp .paging{
+            grid-column: 1/9;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container .btnGrp .paging a{
+             margin: 1px 1px;
+             font-size: 0.8em;}
+
+
+        .container .btnGrp .paging a:hover{ 
+            font-size: 1em;
+            font-weight: bold;
+        }

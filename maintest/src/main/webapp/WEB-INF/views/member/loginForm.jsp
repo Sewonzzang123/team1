@@ -43,7 +43,7 @@
 					<div class="id_area">
 						<div class="input_row">
 							<input type="text" id="id" name="id" class="int"
-								placeholder="아이디" maxlength="20">
+								placeholder="아이디" maxlength="20" autocomplete="off"/>
 						</div>
 					</div>
 

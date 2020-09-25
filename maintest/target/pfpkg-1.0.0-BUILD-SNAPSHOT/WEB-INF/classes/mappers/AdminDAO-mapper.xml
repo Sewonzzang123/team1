@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.AdminDAO-mapper">
+	<select id="getCate" resultType="BcategoryVO">
+		select catnum,catname,btype,bmemo from bcategory order by catnum
+		<!-- select t1.catnum, t1.catname, t1.btype, t1.bmemo, t2.hidnum as "headIdCategory.hidnum" 
+			, t2.hidname as "headIdCategory.hidname" from bcategory t1 LEFT OUTER JOIN 
+			headid t2 on t1.catnum=t2.catnum order by catnum asc -->
+	</select>
+
+	<delete id="delBoard" parameterType="string">
+		delete bcategory where
+		catnum=${catnum}
+	</delete>
+
+	<insert id="createBoard" parameterType="BcategoryVO">
+		insert into bcategory
+		(catnum, catname, btype, bmemo)
+		values (b_bnum_seq.NEXTVAL, #{catname},
+		#{btype}, #{bmemo})
+	</insert>
+
+	<update id="setBoard" parameterType="BcategoryVO">
+		update bcategory set catname
+		= #{catname},
+		btype=#{btype}, bmemo=#{bmemo} where catnum=#{catnum}
+	</update>
+
+	<!-- 말머리 -->
+	<select id="getHead"
+		resultType="com.my.maintest.board.vo.HeadIdCategoryVO">
+		select hidnum,catnum,hidname from headid order by hidnum
+		asc
+	</select>
+
+	<insert id="setHead"
+		parameterType="com.my.maintest.board.vo.HeadIdCategoryVO">
+		insert into headid (hidNum,catNum,hidName) VALUES
+		(hidnum_seq.nextval,
+		#{catnum}, #{hidname})
+	</insert>
+
+	<delete id="delHead" parameterType="string">
+		delete headid where
+		hidnum=#{hidnum}
+	</delete>
+
+	<!-- 아이템 관리 -->
+	<select id="getIcate" resultType="ItemCategoryVO">
+		select * from i_category
+	</select>
+
+	<select id="getItem" resultType="ItemVO">
+		select ca_num as"itemCategoryVO.ca_num", i_num, i_name
+		from item
+		 <![CDATA[where i_num<1000    ]]>
+	</select>
+
+	<delete id="delIcate" parameterType="string">
+		delete i_category where
+		ca_num=#{ca_num}
+	</delete>
+
+
+	<delete id="delItem" parameterType="string">
+		delete item where
+		i_num=#{i_num}
+	</delete>
+
+	<select id="getCa_num" resultType="string">
+		SELECT CA_NUM_SEQ.nextval FROM
+		DUAL
+	</select>
+
+	<insert id="setIcate" parameterType="hashMap">
+		insert into i_category
+		(ca_num, ca_name) values (#{ca_num },
+		#{ca_name})
+	</insert>
+
+	<update id="modifyIcate" parameterType="hashMap">
+		update i_category set
+		ca_name=#{ca_name } where
+		ca_num=#{ca_num }
+	</update>
+
+	<insert id="setItem" parameterType="hashMap">
+		insert into item (ca_num,
+		i_num, i_name, lnum)
+		values (#{ca_num }, I_NUM_SEQ.nextval, #{i_name},
+		0)
+	</insert>
+
+	<select id="total_member" resultType="int">
+		select count(*) from member
+	</select>
+
+	<select id="total_member_ck" resultType="int"
+		parameterType="hashMap">
+		select count(*) from
+		member
+		<if test="searchType != null">
+			where
+			<choose>
+				<!-- 이름 -->
+				<when test="searchType == 'name'">
+					name like '%' || #{keyword} || '%'
+				</when>
+				<!-- 별명 -->
+				<when test="searchType == 'nickname'">
+					nickname like '%' || #{keyword} || '%'
+				</when>
+				<!-- 아이디 -->
+				<when test="searchType == 'id'">
+					id like '%' || #{keyword} || '%'
+				</when>
+			</choose>
+		</if>
+	</select>
+
+	<select id="memberlist" resultType="MemberVO"
+		parameterType="hashMap">
+		select ucode, id, pw, name, tel,
+		nickname, cdate, num
+		from(
+		select ucode, id, pw, name, tel,
+		nickname, cdate, row_number()
+		over(
+		order by
+		ucode
+		asc) as num from
+		member where not id='del' and not
+		ucode='1') where num between #{end_num}
+		and #{str_num} order
+		by num
+		desc
+	</select>
+
+	<select id="memberlist_ck" resultType="MemberVO"
+		parameterType="hashMap">
+		select ucode, id, pw, name, tel,
+		nickname, cdate, num
+		from(
+		select ucode,
+		id, pw, name, tel,
+		nickname, cdate, row_number()
+		over(
+		order by
+		ucode
+		asc)
+		as num from
+		member
+		<if test="searchType != null">
+			where
+			<choose>
+				<!-- 이름 -->
+				<when test="searchType == 'name'">
+					name like '%' || #{keyword} || '%'
+				</when>
+				<!-- 별명 -->
+				<when test="searchType == 'nickname'">
+					nickname like '%' || #{keyword} || '%'
+				</when>
+				<!-- 아이디 -->
+				<when test="searchType == 'id'">
+					id like '%' || #{keyword} || '%'
+				</when>
+			</choose>
+		</if>
+		) where num between #{end_num}
+		and #{str_num} order
+		by num
+		desc
+	</select>
+
+	<update id="exit_member" parameterType="string">
+		update member SET
+		id='del', pw='del', name='del', tel='del',
+		sessionkey='del' where
+		ucode=#{ucode}
+	</update>
+
+</mapper>

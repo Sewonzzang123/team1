@@ -1,0 +1,41 @@
+@charset "UTF-8";
+
+/* *{outline: auto;} */
+html {
+	font-family: Tahoma, Gulim, '굴림';
+	font-size: 12px;
+	line-height: 1.3;
+	color: #333333;
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+}
+
+header {
+	height: 50px;
+}
+
+footer {
+	height: 150px;
+}
+
+header, footer {
+	min-width: 700px;
+}
+
+#content {
+	min-width: 600px;
+	width: 600px;
+}
+
+.box-container {
+	display: flex;
+	justify-content: center
+}
+
+aside {
+	margin-right: 20px
+}
+
+footer, .box-container {
+	margin-top: 20px;
+}

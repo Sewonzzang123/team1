@@ -25,7 +25,7 @@
 				<tr>
 					<th class="table-head">*아이디 (이메일 형식)</th>
 					<td class="table-data"><form:input path="id" class="info"
-							maxlength="20" /> <form:errors path="id" class="err_msg" /> <br></td>
+							maxlength="20" autocomplete="off"/> <form:errors path="id" class="err_msg" /> <br></td>
 				</tr>
 
 				<tr>
@@ -43,13 +43,13 @@
 				<tr>
 					<th class="table-head">*이름</th>
 					<td class="table-data"><form:input path="name" class="info"
-							maxlength="10" /> <form:errors path="name" class="err_msg" /></td>
+							maxlength="10" autocomplete="off" /> <form:errors path="name" class="err_msg" /></td>
 				</tr>
 
 				<tr>
 					<th class="table-head">*별명</th>
 					<td class="table-data"><form:input path="nickname"
-							class="info" maxlength="10" /> <form:errors path="nickname"
+							class="info" maxlength="10" autocomplete="off" /> <form:errors path="nickname"
 							class="err_msg" /></td>
 				</tr>
 
@@ -62,9 +62,9 @@
 								<form:option value="070">070</form:option>
 							</form:select>
 							-
-							<form:input path="tel2" class="txtTel" maxlength="4" />
+							<form:input path="tel2" class="txtTel" maxlength="4" autocomplete="off" />
 							-
-							<form:input path="tel3" class="txtTel" maxlength="4" />
+							<form:input path="tel3" class="txtTel" maxlength="4" autocomplete="off" />
 						</div>
 					</td>
 				</tr>

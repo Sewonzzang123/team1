@@ -72,7 +72,7 @@ public class AdminController {
 
 			// 말머리 설정
 			for (String sub : obj.getSub_list()) {
-				HeadIdCategoryVO headId = new HeadIdCategoryVO("new", obj.getCanum(), sub);
+				HeadIdCategoryVO headId = new HeadIdCategoryVO("new", bcategoryVO.getCatnum(), sub);
 				adminSVC.setHead(headId);
 			}
 
@@ -95,9 +95,8 @@ public class AdminController {
 		String[] del_board = del_board_list.split("/");
 		logger.info(String.valueOf(del_board.length));
 		for (String catnum : del_board) {
-			
-	
-			//카테고리 삭제		
+
+			// 카테고리 삭제
 			adminSVC.delBoard(catnum);
 		}
 
@@ -190,6 +189,5 @@ public class AdminController {
 
 		return "강퇴완료";
 	}
-
 
 }

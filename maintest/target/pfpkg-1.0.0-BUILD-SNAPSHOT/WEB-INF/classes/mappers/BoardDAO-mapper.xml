@@ -1,0 +1,694 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.BoardDAO-mapper">
+
+	<!-- 게시판 카테고리 조회 -->
+	<select id="selectBcategory"
+		resultType="com.my.maintest.board.vo.BcategoryVO">
+		select catnum, catname, btype from bcategory
+	</select>
+	<!-- 게시판 말머리 조회 -->
+	<select id="selectHeadIdCategory" parameterType="long"
+		resultType="com.my.maintest.board.vo.HeadIdCategoryVO">
+		select t1.hidnum, t1.catnum, t1.hidname
+		from headid t1,
+		bcategory t2
+		where t1.catnum = t2.catnum and
+		t1.catnum = #{catnum}
+	</select>
+
+
+
+	<!-- // 전체글 조회 (default) -->
+	<select id="selectArticles0"
+		resultType="com.my.maintest.board.vo.BoardVO">
+		select
+		dbrownum,
+		bnum,
+		catname as "bcategory.catname" ,
+		catnum
+		as "bcategory.catnum",
+		hidname as "hidcategory.hidname",
+		hidnum as
+		"hidcategory.hidnum",
+		nickname as "bnickname",
+		btitle,
+		bcontent,
+		tcontent,
+		bHits,
+		bcdate,
+		budate,
+		bgroup,
+		bstep,
+		bIndent,
+		thumbnail
+		from (select row_number()
+		over(order by bgroup desc, bstep asc) as
+		dbrownum,
+		t1.bnum,
+		t2.catname,
+		t2.catnum,
+		t4.hidname,
+		t4.hidnum,
+		t3.nickname,
+		t1.ucode,
+		t1.bhits,
+		t1.btitle,
+		t1.bcontent,
+			t1.tcontent,
+		t1.bcdate,
+		t1.budate,
+		t1.bgroup,
+		t1.bstep,
+		t1.bIndent,
+		t1.thumbnail
+		from board t1, bcategory t2, member t3, headid
+		t4
+		where t1.bcategory = t2.catnum and t1.ucode = t3.ucode and
+		t1.hidcategory =
+		t4.hidnum)
+		order by dbrownum asc
+
+
+
+	</select>
+
+
+
+	<!-- // 전체글 조회 (페이징) -->
+	<select id="selectArticles" parameterType="map"
+		resultType="com.my.maintest.board.vo.BoardVO">
+
+		select
+		dbrownum,
+		bnum,
+		catname as "bcategory.catname" ,
+		catnum
+		as "bcategory.catnum",
+		hidname as "hidcategory.hidname",
+		hidnum as
+		"hidcategory.hidnum",
+		nickname as "bnickname",
+		btitle,
+		bcontent,
+		tcontent,
+		bHits,
+		bcdate,
+		budate,
+		bgroup,
+		bstep,
+		bIndent,
+		thumbnail
+		from (select row_number()
+		over(order by bgroup desc, bstep asc) as
+		dbrownum,
+		t1.bnum,
+		t2.catname,
+		t2.catnum,
+		t4.hidname,
+		t4.hidnum,
+		t3.nickname,
+		t1.ucode,
+		t1.bhits,
+		t1.btitle,
+		t1.bcontent,
+			t1.tcontent,
+		t1.bcdate,
+		t1.budate,
+		t1.bgroup,
+		t1.bstep,
+		t1.bIndent,
+		t1.thumbnail
+		from board t1, bcategory t2, member t3, headid
+		t4
+		where t1.bcategory = t2.catnum and t1.ucode = t3.ucode and
+		t1.hidcategory =
+		t4.hidnum
+		and t1.bcategory = #{catnum})
+		where dbrownum
+		between #{recFrom} and #{recTo}
+		order by dbrownum asc
+
+	</select>
+
+	<!--게시판 타입 조회 -->
+	<select id="selectBtype" parameterType="long"
+		resultType="com.my.maintest.board.vo.BcategoryVO">
+		select btype,catname,catnum, bmemo from bcategory where
+		catnum = #{catnum}
+	</select>
+
+
+	<!-- // 전체글 조회 (페이징 + 검색어 + 게시판 카테고리 ) -->
+	<select id="selectArticlesWithKey_Blog" parameterType="map"
+		resultType="com.my.maintest.board.vo.BoardVO">
+
+		select
+		dbrownum,
+		bnum,
+		catname as "bcategory.catname" ,
+		catnum as
+		"bcategory.catnum",
+		hidname as "hidcategory.hidname",
+		hidnum as
+		"hidcategory.hidnum",
+		nickname as "bnickname",
+		btitle,
+		bcontent,
+		tcontent,
+		bHits,
+		bcdate,
+		budate,
+		bgroup,
+		bstep,
+		bIndent,
+		thumbnail
+		from (select row_number()
+		over(order by bgroup desc, bstep asc) as
+		dbrownum,
+		t1.bnum,
+		t2.catname,
+		t2.catnum,
+		t4.hidname,
+		t4.hidnum,
+		t3.nickname,
+		t1.ucode,
+		t1.bhits,
+		t1.btitle,
+		t1.bcontent,
+			t1.tcontent,
+		t1.bcdate,
+		t1.budate,
+		t1.bgroup,
+		t1.bstep,
+		t1.bIndent,
+		t1.thumbnail
+		from board t1, bcategory t2, member t3, headid t4
+		where t1.bcategory = t2.catnum and t1.ucode = t3.ucode and
+		t1.hidcategory =
+		t4.hidnum
+
+		<if test="catnum != 0">
+			and t1.bcategory = #{catnum}
+		</if>
+		<if test="searchType != null">
+			and
+			<choose>
+				<!--전체 -->
+				<when test="searchType == 'A'.toString() ">
+					(btitle like '%'||#{searchKeyword}||'%' or
+					tcontent
+					like '%'||#{searchKeyword}||'%' or
+					nickname like
+					'%'||#{searchKeyword}||'%')
+				</when>
+
+				<!--제목+ 내용 -->
+				<when test="searchType == 'TC'.toString() ">
+					(btitle like '%'||#{searchKeyword}||'%' or
+					tcontent
+					like '%'||#{searchKeyword}||'%')
+				</when>
+
+
+				<!--제목 -->
+				<when test="searchType == 'T'.toString() ">
+					btitle like '%'||#{searchKeyword}||'%'
+				</when>
+
+				<!--내용 -->
+				<when test="searchType == 'C'.toString() ">
+					tcontent like '%'||#{searchKeyword}||'%'
+				</when>
+
+				<!--작성자 -->
+				<when test="searchType == 'N'.toString() ">
+					nickname like '%'||#{searchKeyword}||'%'
+				</when>
+			</choose>
+		</if>
+
+		)
+		where dbrownum between #{recFrom} and #{recTo}
+		order by dbrownum asc
+
+	</select>
+	
+<!--갤러리게시판(catnum:2) 썸네일 첨부파일 정보 불러오기 -->	
+	<!-- <select id="selectArticlesWithKey_Album_old" parameterType="map"
+		resultType="com.my.maintest.board.vo.BoardVO">
+		select
+		dbrownum,
+		bnum,
+		catname as "bcategory.catname" ,
+		catnum as
+		"bcategory.catnum",
+		hidname as "hidcategory.hidname",
+		hidnum as
+		"hidcategory.hidnum",
+		nickname as "bnickname",
+		btitle,
+		bcontent,
+		thumbnail,
+		bHits,
+		bcdate,
+		budate,
+		ftype as "thumbnailVO.thumbftype",
+		thumbfname as "thumbnailVO.thumbfname",
+		thumbfdata as
+		"thumbnailVO.thumbfdata",
+		thumbfsize as "thumbnailVO.thumbfsize"
+		from
+		(select row_number() over(order by bgroup desc, bstep asc) as
+		dbrownum,
+		t1.bnum,
+		t2.catname,
+		t2.catnum,
+		t4.hidname,
+		t4.hidnum,
+		t3.nickname,
+		t1.ucode,
+		t1.bhits,
+		t1.btitle,
+		t1.bcontent,
+		t1.thumbnail,
+		t1.bcdate,
+		t1.budate,
+		t5.ftype,
+		t5.thumbfname,
+		t5.thumbfdata,
+		t5.thumbfsize
+		from board t1, bcategory t2, member t3, headid t4,
+		board_upload_file t5
+		where t1.bcategory = t2.catnum and t1.ucode =
+		t3.ucode and
+		t1.hidcategory = t4.hidnum and t1.bnum = t5.bnum
+		and t5.thumbfname != 'null'
+		<if test="catnum != 0">
+			and t1.bcategory = #{catnum}
+		</if>
+		<if test="searchType != null">
+			and
+			<choose>
+				전체
+				<when test="searchType == 'A'.toString() ">
+					(btitle like '%'||#{searchKeyword}||'%' or
+					bcontent
+					like '%'||#{searchKeyword}||'%' or
+					nickname like
+					'%'||#{searchKeyword}||'%')
+				</when>
+				제목+ 내용
+				<when test="searchType =='TC'.toString() ">
+					(btitle like '%'||#{searchKeyword}||'%' or
+					bcontent
+					like '%'||#{searchKeyword}||'%')
+				</when>
+				제목
+				<when test="searchType == 'T'.toString() ">
+					btitle like '%'||#{searchKeyword}||'%'
+				</when>
+				내용
+				<when test="searchType == 'C'.toString() ">
+					bcontent like '%'||#{searchKeyword}||'%'
+				</when>
+				작성자
+				<when test="searchType == 'N'.toString() ">
+					nickname like '%'||#{searchKeyword}||'%'
+				</when>
+			</choose>
+		</if>
+		)
+		where dbrownum between #{recFrom} and #{recTo}
+		order by dbrownum desc
+	</select> -->
+
+
+<!--갤러리게시판(catnum:2) 썸네일 첨부파일 정보 불러오기 -->
+	<select id="selectArticlesWithKey_Album" parameterType="map"
+		resultType="com.my.maintest.board.vo.BoardVO">
+	    select
+		dbrownum,
+		bnum,
+		catname as "bcategory.catname" ,
+		catnum as
+		"bcategory.catnum",
+		hidname as "hidcategory.hidname",
+		hidnum as
+		"hidcategory.hidnum",
+		nickname as "bnickname",
+		btitle,
+		bcontent,
+		tcontent,
+		thumbnail,
+		bHits,
+		bcdate,
+		budate
+		from
+		(select row_number() over(order by bgroup desc, bstep asc) as
+		dbrownum,
+		t1.bnum,
+		t2.catname,
+		t2.catnum,
+		t4.hidname,
+		t4.hidnum,
+		t3.nickname,
+		t1.ucode,
+		t1.bhits,
+		t1.btitle,
+		t1.bcontent,
+		t1.tcontent,
+		t1.thumbnail,
+		t1.bcdate,
+		t1.budate
+		from board t1, bcategory t2, member t3, headid t4
+		where t1.bcategory = t2.catnum and t1.ucode = t3.ucode and
+		t1.hidcategory = t4.hidnum 
+		<if test="catnum != 0">
+			and t1.bcategory = #{catnum}
+		</if>
+		<if test="searchType != null">
+			and
+			<choose>
+				<!--전체 -->
+				<when test="searchType == 'A'.toString() ">
+					(btitle like '%'||#{searchKeyword}||'%' or
+					tcontent
+					like '%'||#{searchKeyword}||'%' or
+					nickname like
+					'%'||#{searchKeyword}||'%')
+				</when>
+
+				<!--제목+ 내용 -->
+				<when test="searchType =='TC'.toString() ">
+					(btitle like '%'||#{searchKeyword}||'%' or
+					tcontent
+					like '%'||#{searchKeyword}||'%')
+				</when>
+
+
+				<!--제목 -->
+				<when test="searchType == 'T'.toString() ">
+					btitle like '%'||#{searchKeyword}||'%'
+				</when>
+
+				<!--내용 -->
+				<when test="searchType == 'C'.toString() ">
+					tcontent like '%'||#{searchKeyword}||'%'
+				</when>
+
+				<!--작성자 -->
+				<when test="searchType == 'N'.toString() ">
+					nickname like '%'||#{searchKeyword}||'%'
+				</when>
+			</choose>
+		</if>
+		)
+		where dbrownum between #{recFrom} and #{recTo}
+				order by dbrownum asc
+
+	</select>
+
+<!-- 리스트 등록 -->
+<insert id="insertBlisting" parameterType="listingVO">
+insert into blisting(blinum, bnum,i_num, iname, icount, ca_num)
+values(b_l_num_seq.nextval, #{bnum},#{i_num}, #{i_name}, #{icount}, #{ca_num})
+</insert>
+
+
+	<!-- 게시글 등록 -->
+
+	<insert id="insertArticle"
+		parameterType="com.my.maintest.board.vo.BoardVO">
+		insert into board(
+		bnum,
+		bcategory,
+		hidcategory,
+		ucode,
+		btitle,
+		bcontent,
+		tcontent,
+		bgroup,
+		lname
+		)
+		values(
+		b_bnum_seq.nextVal,
+		#{bcategory.catnum},
+		#{hidcategory.hidnum},
+		#{ucode},
+		#{btitle},
+		#{bcontent},
+		#{tcontent},
+		b_bnum_seq.nextVal,
+		#{listVO.lname}
+		)
+
+		<selectKey keyProperty="bnum" resultType="int" order="AFTER">
+			select
+			b_bnum_seq.currVal from dual
+		</selectKey>
+	</insert>
+
+
+
+	<!-- 첨부파일 등록 -->
+	<insert id="insertFiles"
+		parameterType="com.my.maintest.board.vo.BoardFileVO">
+		insert into board_upload_file(
+		fid,
+		bnum,
+		fname,
+		fsize,
+		ftype,
+		fdata,
+		thumbfname,
+		thumbfsize,
+		thumbfdata,
+		cdate,
+		udate)
+		values(
+		UPLOAD_FILE_FID_SEQ.nextVal,
+		#{bnum},
+		#{fname},
+		#{fsize},
+		#{ftype},
+		#{fdata},
+		#{thumbnailVO.thumbfname},
+		#{thumbnailVO.thumbfsize},
+		#{thumbnailVO.thumbfdata},
+		systimestamp,
+		systimestamp)
+	</insert>
+
+
+	<!--이전답글의 bstep +1 처리 : 답글 등록보다 선행되어야 함. -->
+	<update id="updateBstep" parameterType="map">
+		update board set bstep =
+		bstep +1
+		where bgroup = #{bgroup} and bstep > #{bstep}
+	</update>
+
+	<!-- 답글 등록 -->
+	<insert id="insertRepliedArticle"
+		parameterType="com.my.maintest.board.vo.BoardVO">
+		insert into board(
+		bnum,
+		bcategory,
+		hidcategory,
+		ucode,
+		btitle,
+		bcontent,
+		tcontent,
+		bgroup,
+		bstep,
+		bindent
+		)
+		values(
+		b_bnum_seq.nextVal,
+		#{bcategory.catnum},
+		#{hidcategory.hidnum},
+		#{ucode},
+		#{btitle},
+		#{bcontent},
+		#{tcontent},
+		#{bgroup},
+		#{bstep}+1,
+		#{bindent}+1
+		)
+		
+		
+				<selectKey keyProperty="bnum" resultType="int" order="AFTER">
+			select
+			b_bnum_seq.currVal from dual
+		</selectKey>
+		
+	</insert>
+
+
+	<!-- 조회수 갱신 -->
+	<update id="updateBhits" parameterType="long">
+		update board set bhits =
+		bhits+1 where bnum = #{bnum}
+	</update>
+
+
+	<!-- // 글 열람 -->
+	<select id="selectArticle" parameterType="long"
+		resultType="com.my.maintest.board.vo.BoardVO">
+
+		select t1.bnum,
+		t2.catname as "bcategory.catname",
+		t2.catnum as "bcategory.catnum",
+		t4.hidname as "hidcategory.hidname",
+		t4.hidnum as	"hidcategory.hidnum",
+		t3.nickname as bnickname,
+		t1.ucode,
+		t1.bhits,
+		t1.btitle,
+		t1.bcontent,
+		t1.tcontent,
+		t1.bcdate,
+		t1.budate,
+		t1.bgroup,
+		t1.bstep,
+		t1.bIndent,
+		t1.lname as "listVO.lname"
+		from board t1, bcategory t2, member t3, headid t4
+		where
+		t1.bcategory = t2.catnum and t1.ucode = t3.ucode and t1.hidcategory =
+		t4.hidnum and
+		bnum = #{bnum}
+
+	</select>
+
+
+	<!--첨부파일 조회 -->
+	<select id="selectFiles" parameterType="long"
+		resultType="com.my.maintest.board.vo.BoardFileVO">
+		select
+		fid,
+		bnum,
+		fname,
+		fsize,
+		ftype,
+		fdata,
+		thumbfname,
+		thumbfsize,
+		thumbfdata,
+		cdate,
+		udate,
+		isThumb
+		from board_upload_file
+		where
+		bnum = #{bnum}
+	</select>
+
+
+
+	<!-- //게시글 수정 -->
+	<update id="updateArticle"
+		parameterType="com.my.maintest.board.vo.BoardVO">
+
+		update board set
+		bcategory= #{bcategory.catnum},
+		hidcategory= #{hidcategory.hidnum},
+		btitle= #{btitle},
+		bcontent=		#{bcontent},
+		tcontent = #{tcontent},
+		budate=systimestamp
+		where bnum = #{bnum}
+	</update>
+
+
+	<!-- 썸네일 경로 및 원본 파일 경로 변경 및 저장 -->
+
+	<update id="updateThumbPath"
+		parameterType="com.my.maintest.board.vo.BoardVO">
+
+		update board set
+		thumbnail = #{thumbnail},
+		bcontent =		#{bcontent},
+		tcontent = #{tcontent}
+		where bnum = #{bnum}
+
+	</update>
+
+
+
+	<!-- 첨부파일 일부 삭제 -->
+	<delete id="deleteFile" parameterType="map">
+		<!--<choose> <when test="isThumb == 'true'.toString()"> update board_upload_file 
+			set fname ='null', fsize='null', ftype='null', fdata='null' where fid = #{fid} 
+			</when> <otherwise> -->
+		delete from board_upload_file where fid = #{fid}
+		<!-- </otherwise> </choose> -->
+	</delete>
+
+
+	<!-- 첨부파일 다운로드 -->
+
+	<select id="selectFileToDwLoad" parameterType="long"
+		resultType="com.my.maintest.board.vo.BoardFileVO">
+
+		select fid, bnum, fname, fsize , ftype, fdata, cdate, udate
+		from
+		board_upload_file where fid = #{fid}
+
+	</select>
+
+	<!-- //글 삭제 -->
+	<delete id="deleteArticle" parameterType="long">
+		delete from board
+		where
+		bnum = #{bnum}
+	</delete>
+
+
+	<!-- 썸네일 가져오기 -->
+	<select id="getThumbnail"
+		resultType="com.my.maintest.board.vo.BoardFileVO">
+		select * from board_upload_file
+	</select>
+	
+	<!--리스트 불러오기 -->
+<select id="myList" parameterType="String" resultType="ListVO">
+select t3.LNUM, t3.UCODE, t3.LNAME, t3.CDATE, num,
+		NVL(total_item,0) as
+		total_item, NVL(checked_item,0) as checked_item
+		from(select LNUM ,
+		LNAME, CDATE, ucode,
+		row_number() over(
+		order by LNUM
+		ASC) as num from
+		list where
+		ucode=#{ucode}) t3 left
+		OUTER
+		join (select
+		t1.LNUM,count(*) as
+		total_item from list t1
+		,listing t2
+		where
+		t1.lnum=t2.lnum group by
+		t1.lnum) t2 on
+		t3.lnum=t2.lnum
+		left OUTER
+		join (
+		select t1.LNUM,count(*)
+		as checked_item from list t1,
+		listing t2
+		where
+		t1.lnum=t2.lnum and
+		t2.checked='true'
+        group by
+		t1.lnum) t4 on
+		t3.lnum=t4.lnum
+    where total_item not like 0
+</select>
+
+
+<select id="loadListing" parameterType="long" resultType="ListingVO">
+select i_num, iname as "i_name", icount, ca_num from blisting where bnum = #{bnum}
+
+</select>
+
+</mapper>

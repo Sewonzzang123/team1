@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.MypageDAO-mapper">
+
+	<!-- 회원정보수정 -->
+	<update id="modify" parameterType="MemberVO">
+		update member
+		set
+		nickname=#{nickname}, tel=#{tel}
+		where id = #{id}
+	</update>
+
+	<update id="changePW" parameterType="string">
+		update member set pw=#{pw}
+		where id = #{id}
+	</update>
+
+	<update id="withdraw" parameterType="string">
+		update member SET id='del', pw='del', name='del', tel='del',
+		sessionkey='del' where id = #{id}
+	</update>
+
+
+	<!-- 내 리스트 -->
+	<select id="mylist" parameterType="map" resultType="ListVO">
+		<!-- select * from(select LNUM , LNAME, CDATE, ucode, row_number() over( 
+			order by LNUM asc) as num from list where ucode=#{ucode}) where num between 
+			#{end_num} and #{str_num} order by num desc -->
+		select t3.LNUM, t3.UCODE, t3.LNAME, t3.CDATE, num,
+		NVL(total_item,0) as
+		total_item, NVL(checked_item,0) as checked_item
+		from(select LNUM ,
+		LNAME, CDATE, ucode,
+		row_number() over(
+		order by LNUM
+		ASC) as num from
+		list where
+		ucode=#{ucode}) t3 left
+		OUTER
+		join (select
+		t1.LNUM,count(*) as
+		total_item from list t1
+		,listing t2
+		where
+		t1.lnum=t2.lnum group by
+		t1.lnum) t2 on
+		t3.lnum=t2.lnum
+		left OUTER
+		join (
+		select t1.LNUM,count(*)
+		as checked_item from list t1,
+		listing t2
+		where
+		t1.lnum=t2.lnum and
+		t2.checked='true' group by
+		t1.lnum) t4 on
+		t3.lnum=t4.lnum
+		where num
+		between
+		#{end_num} and #{str_num} order by num
+		desc
+	</select>
+
+	<select id="total_list" parameterType="string" resultType="int">
+		select count(*) from list
+		where ucode=#{ucode}
+	</select>
+
+	<delete id="del_list" parameterType="string">
+		delete list where lnum =
+		#{lnum}
+	</delete>
+
+	<select id="get_category" resultType="ItemCategoryVO">
+		select * from I_CATEGORY
+	</select>
+
+	<select id="get_listing" parameterType="string"
+		resultType="ListingVO">
+		select * from listing t1, ITEM t2, I_CATEGORY t3 where
+		t1.I_NUM = t2.I_NUM and t2.ca_num = t3.ca_num and t1.lnum=#{lnum}
+	</select>
+
+	<update id="item_check" parameterType="string">
+		update listing set
+		checked='true' where linum = #{linum}
+	</update>
+
+	<update id="item_uncheck">
+		update listing set checked='false' where linum =
+		#{linum}
+	</update>
+
+	<!-- 내가 쓴 글 -->
+	<select id="total_post" parameterType="string" resultType="int">
+		select count(*) from board
+		where ucode=#{ucode}
+	</select>
+
+	<select id="mypost" parameterType="map" resultType="BoardVO">
+		select
+		t1.bnum,t1.btitle,t1.bcdate,t1.bhits, t2.catname as
+		"bcategory.catname", t2.catnum as
+		"bcategory.catnum" from(select
+		bnum ,
+		bcategory, btitle, bcdate,
+		bhits,
+		row_number()
+		over(
+		order by bnum
+		asc) as
+		num from board where
+		ucode=#{ucode}) t1,
+		bcategory t2 where
+		t1.bcategory
+		= t2.catnum and
+		num
+		between
+		#{end_num}
+		and #{str_num} order
+		by num
+		desc
+	</select>
+
+	<delete id="del_post" parameterType="string">
+		delete board where bnum =
+		#{bnum}
+	</delete>
+
+</mapper>

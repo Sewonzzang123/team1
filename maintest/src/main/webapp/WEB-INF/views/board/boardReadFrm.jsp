@@ -49,7 +49,7 @@
 									
 									
 							<c:if
-								test="${requestScope.boardVO.ucode == sessionScope.member.ucode}">
+								test="${requestScope.boardVO.ucode == sessionScope.member.ucode || sessionScope.member.ucode == 1}">
 								<input type="button" class="btn article_mod_btn article_btn"
 									value="수정"></input>
 								<input type="button" class="btn article_del_btn article_btn"

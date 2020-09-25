@@ -1,0 +1,32 @@
+@charset "UTF-8";
+
+#mypost_delete {
+	display: inline;
+	float: right;
+}
+
+.actionPost {
+	margin-top: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.checkbox {
+	display: flex;
+	align-items: center;
+}
+
+#mypost_delete>input {
+	width: 120px;
+	text-align: center;
+	padding: 0;
+}
+
+#member_table td {
+	vertical-align: middle;
+}
+
+#member_table .check {
+	margin: 3px;
+}
