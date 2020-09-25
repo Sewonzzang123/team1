@@ -5,6 +5,9 @@
         const catnumV = document.getElementById("catnum");
         const picsTag =  document.getElementById("pics")
 
+          window.scrollTo(1, 400);
+        
+        
         	//수정페이지 진입시 컨텐트영역에 img 태그 수 및 파일이름
         	const imgTags_ContentArea = document.querySelectorAll(".img_file");
         

@@ -9,6 +9,7 @@ const returnPage = document.getElementById("returnPage").value;
 const catnumV = document.getElementById("catnum").value;
 const picsTag =  document.getElementById("pics")
 
+  window.scrollTo(1, 400);
 
         const replyBtn = document.getElementById("replyBtn");
         const Frm = document.getElementById("Frm");

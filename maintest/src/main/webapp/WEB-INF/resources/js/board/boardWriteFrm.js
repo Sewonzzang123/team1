@@ -6,6 +6,8 @@
         const picsTag =  document.getElementById("pics")
         const returnPage = document.getElementById("returnPage").value;
         
+        window.scrollTo(1, 400);
+        
         /* 사진 추가 */
        const add_img_btn = document.querySelector('.add_img_btn');
     	const add_img = document.querySelector('.add_img');

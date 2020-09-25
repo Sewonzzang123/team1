@@ -1,8 +1,10 @@
 'use strict'
         
   const writeBtn = document.getElementById("writeBtn");   
-    
-    
+  window.scrollTo(1, 400);
+//    window.addEventListener("load",(e)=>{
+//    	
+//    })
   writeBtn.addEventListener("click",writeBtn_f);
     
   function writeBtn_f(e){

@@ -3,7 +3,7 @@
  */
  "use-strict"
 
-
+  window.scrollTo(1, 400);
 
 					
  	const saveBtn = document.getElementById('saveBtn');
