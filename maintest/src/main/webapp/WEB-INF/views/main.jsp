@@ -50,8 +50,8 @@
 	<!-- 햄버거 버튼 열면 뒤에 깔리는 반투명 검정 배경 -->
 	<div class="cover_close"></div>
 	<div class="main_img">
-		<span class="main_text"> Lorem ipsum dolor sit amet,
-			consectetur adipisicing </span>
+		<span class="main_text"> 여행을<br> 편하고
+		<br> 즐겁게 </span>
 	</div>
 		<a name="list_wrap"></a>
 	<main>

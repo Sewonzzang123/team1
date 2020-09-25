@@ -59,6 +59,7 @@ import lombok.extern.slf4j.Slf4j;
 // TODO 관리자 페이지 게시판 추가 구현
 // TODO 내가쓴글 클릭시 게시글 열람 가능하게 구현
 
+
 @Slf4j
 @Controller
 @RequestMapping("/board")
@@ -253,10 +254,10 @@ public class BoardController {
 		boolean toUphits = true;
 		// svc는 map 타입을 반환값으로 가짐
 		Map<String, Object> map = boardSVC.selectArticle(toUphits, bnum);
-		BoardVO boardVO = (BoardVO) map.get("boardVO");
+		BoardVO boardVO = (BoardVO) map.get("boardVO");		
 		if (boardVO.getBcontent() != null) {
 			boardVO.setTcontent(new String(boardVO.getBcontent(), "UTF-8"));// 정민
-		}
+		}		
 		// 파일 타입은 List<BoardFileVO>
 		List<BoardFileVO> files = ((List<BoardFileVO>) map.get("files"));
 		// inner댓글 리스트 불러오기
@@ -401,13 +402,23 @@ public class BoardController {
 	// 답글 등록
 	@PostMapping("/reply")
 	public String toReply(@Valid @ModelAttribute BoardVO boardVO, BindingResult result,
+			 @ModelAttribute("returnPage") String returnPage,
 			@RequestParam("bcategory.catnum") String catnum, HttpServletRequest request) {
+		
+		logger.info(boardVO.toString());
+		
+		
 		if (result.hasErrors()) {
+			
+			logger.info(""+	result.getAllErrors());
+		
 			return "/board/boardReplyFrm";
 		}
+		
 		MemberVO memberVO = (MemberVO) request.getSession().getAttribute("member");
 		boardVO.setUcode(Long.parseLong(memberVO.getUcode()));
 		boardSVC.insertRepliedArticle(boardVO);
+		
 		return "redirect:/board/" + catnum;
 	}
 

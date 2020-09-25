@@ -50,7 +50,7 @@
 									<li><input name="btitle" 
 										type="text"  placeholder="제목을 입력하세요."  value="${boardVO.btitle }"/> 								
 										 <form:errors
-											cssClass="bound_error" path="btitle" value="${boardVO.btitle }"></form:errors></li> 
+											cssClass="bound_error" path="btitle" >"${boardVO.btitle }</form:errors></li> 
 											
 													<li class="toolbar_box_li"><label for="btitle"></label>
 										<div class="toolbar_box">

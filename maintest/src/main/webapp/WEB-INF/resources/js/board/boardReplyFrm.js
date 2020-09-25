@@ -85,8 +85,13 @@ const picsTag =  document.getElementById("pics")
   
             }
       
-            tcontent_area.value =  content_area.innerHTML;
+            
+            tcontent_area.value =  content_area.innerHTML.trim();
+
+           
         
+            console.log( content_area.innerHTML);
+            
             console.log("답글등록 버튼 클릭");
          Frm.submit();
      }

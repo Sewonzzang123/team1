@@ -78,20 +78,24 @@
         }
 
         function writeBtn_f(e) {
-            e.preventDefault();        
-            thumbnail_name = document.querySelector('.img_file');
-            if (thumbnail_name != null) {  
-            	 const thumbnail = document.querySelector('.thumbnail');
-                thumbnail.value = thumbnail_name.getAttribute('name');
-          	   tcontent_area.value = content_area.innerHTML;
-                
-     }else{            	
-     	   tcontent_area.value = content_area.innerHTML;
-    }                   
-            if(confirm("저장하시겠습니까?")){            
-                writeFrm.submit();
-     }
-           
+        	  e.preventDefault();
+              const content_area = document.querySelector('.content_area');
+              const tcontent_area = document.querySelector('.tcontent_area');
+              const thumbnail_name = document.querySelector('.img_file');
+              const listBtn = document.querySelector('#listBtn');
+
+              if (thumbnail_name != null) {
+                  const thumbnail = document.querySelector('.thumbnail');
+                  thumbnail.value = thumbnail_name.getAttribute('name');
+              
+               
+              }
+        
+              tcontent_area.value =  content_area.innerHTML.trim();
+              
+              
+              
+              writeFrm.submit();
         }
 
         

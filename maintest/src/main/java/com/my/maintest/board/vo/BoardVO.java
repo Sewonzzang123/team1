@@ -25,7 +25,7 @@ private HeadIdCategoryVO hidcategory;							//hidNum catNum hidName													
 private long ucode;																																						  //ucode number NOT NULL, --사용자 코드 아이디
 @NotNull
 //(message="최소 2자 이상 기록하셔야 합니다.")
-@Size(min=2, max= 20, message="제목은최소 2자,  최대 20자까지 입력가능합니다.")
+@Size(min=2, max= 40, message="제목은최소 2자,  최대 20자까지 입력가능합니다.")
 private String btitle;																																						  //btitle varchar2(60) NOT NULL, --게시글 제목
 private byte[]  bcontent;																																  //bcontent varchar2(500) NOT NULL, -- 게시글 내용
 @NotNull
