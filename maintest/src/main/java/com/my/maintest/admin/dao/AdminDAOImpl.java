@@ -135,7 +135,7 @@ public class AdminDAOImpl implements AdminDAO {
 	@Override
 	public int exit_member(String ucode) {
 		// TODO Auto-generated method stub
-		return sqlSession.delete("mappers.AdminDAO-mapper.exit_member", ucode);
+		return sqlSession.update("mappers.AdminDAO-mapper.exit_member", ucode);
 	}
 
 }
