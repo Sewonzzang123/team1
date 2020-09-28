@@ -298,7 +298,6 @@ footer .footer_img img {
 	}
 	section .gallery_list ul .inner .li_img {
 		position: relative;
-		width: 100%;
 		background-color: blue;
 	}
 	section .gallery_list ul .inner .li_img:after {

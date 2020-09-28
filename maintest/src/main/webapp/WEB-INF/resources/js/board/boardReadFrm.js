@@ -9,7 +9,7 @@ const searchType = document.getElementById("searchType").value;
 const searchKeyword = document.getElementById("searchKeyword").value;   	   
 const catnum = document.getElementById("catnum").value;      
 
-window.scrollTo(1, 400);
+window.scrollTo(1, 300);
 
 console.log(bnum);
 acticle.addEventListener('click', (e) => {		

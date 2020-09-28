@@ -35,22 +35,25 @@ public class MemberDAOImplTest {
 
 	@Test
 	@DisplayName("회원가입")
-	@Disabled
+	//@Disabled
 	void signup() {
+		
+		for(int i = 1 ; i <=  10; i++) {
 		MemberVO memberVO = new MemberVO();
-		memberVO.setId("tel");
-		memberVO.setPw("tel");
+		memberVO.setId("tester" + i + "@gmail.com");
+		memberVO.setPw("qqaaqq");
 		memberVO.setTel("010-1111-1111");
-		memberVO.setName("tel");
-		memberVO.setNickname("tel");
-
+		memberVO.setName("홍길동"+i);
+		memberVO.setNickname("테스터" + (i+1));
 		memberDAO.singup(memberVO);
+		
+		}
 		logger.info(memberDAO.listOneMember("admin").toString());
 	}
 
 	@Test
 	@DisplayName("아이디 찾기")
-//	@Disabled
+	@Disabled
 	void findID() {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("name", "관리자");

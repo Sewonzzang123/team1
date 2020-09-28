@@ -55,8 +55,7 @@
 				<div class="b_content" id="b_content">
 					<c:forEach var="bcate" items="${requestScope.bcategoryVO }">
 						<table id="" class="set_box hide">
-							<input type="hidden" class="info" 
-								value="${bcate.catnum }" />
+							<input type="hidden" class="info" value="${bcate.catnum }" />
 							<!-- 카테고리 넘버 -->
 
 							<tr>
@@ -106,8 +105,8 @@
 				</div>
 			</div>
 			<div class="actionBtn">
-				<input type="button" id="saveBtn" value="저장"> <input
-					type="button" value="취소">
+				<input type="button" id="saveBtn" class="blue_btn" value="저장">
+				<input type="button" class="white_btn" value="취소">
 			</div>
 
 		</main>

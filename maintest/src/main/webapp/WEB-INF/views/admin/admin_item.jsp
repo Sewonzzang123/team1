@@ -94,8 +94,8 @@
 			</div>
 
 			<div class="actionBtn">
-				<input type="button" id="saveBtn" value="저장"> <input
-					type="button" value="취소">
+				<input type="button" id="saveBtn" class="blue_btn" value="저장">
+				<input type="button" class="white_btn" value="취소">
 			</div>
 
 		</main>

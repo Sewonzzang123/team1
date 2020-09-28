@@ -22,13 +22,20 @@
 }
 
 .b_sidebar button {
-	width: 180px;
+	width: 100%;
 	height: 35px;
 	text-align: left;
 	padding-left: 20px;
 	background-color: white;
 	border: 0px white solid;
 	outline: 0;
+	border-bottom: 1px #c5c5c5 solid;
+	border-right: 1px #c5c5c5 solid;
+	cursor: pointer;
+}
+
+.b_sidebar button:hover {
+	opacity: 0.5;
 }
 
 .b_listBtn {
@@ -37,16 +44,26 @@
 
 .b_listBtn input {
 	width: 100px;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	border-top: 1px #c5c5c5 solid;
+	border-right: 1px #c5c5c5 solid;
 }
 
 .b_container {
 	width: 620px;
-	border: 1px solid black;
+	border: 2px solid #c5c5c5;
 	border-collapse: collapse;
 	display: flex;
 	margin: auto;
 	border-radius: 3px;
-	box-shadow: 1px 1px 1px 1px grey;
+}
+
+.b_content input[type=text], #btype_input, #bmemo_input {
+	border: 2px solid #c5c5c5;
+	height: 30px;
+	padding-left: 10px;
 }
 
 .b_sidebar {
@@ -93,7 +110,6 @@
 }
 
 #caname_input, #bmemo_input {
-	height: 25px;
 	width: 250px;
 }
 
@@ -126,7 +142,7 @@
 }
 
 .actionBtn input {
-	display: inline-block;
+	/* 	display: inline-block;
 	height: 32px;
 	width: 80px;
 	background: url(https://cafe.pstatic.net/img/manage/sp_btn_141125.gif)
@@ -138,7 +154,8 @@
 	cursor: pointer;
 	letter-spacing: -1px;
 	font-weight: bold;
-	font-family: '돋움', Dotum, Helvetica, sans-serif;
+	font-family: '돋움', Dotum, Helvetica, sans-serif; */
+	
 }
 
 .on {
@@ -152,7 +169,7 @@
 }
 
 .sub_input {
-	width: 250px;
+	width: 230px;
 }
 
 .sub_input_box {
@@ -189,9 +206,21 @@
 #icategory_table .item_set {
 	display: flex;
 	justify-content: space-between;
-	border-bottom: 1px solid #979797;
+	border-bottom: 1px #E0E0E0 solid;
 	padding-bottom: 5px;
 	margin-bottom: 5px;
+	padding-bottom: 5px;
+}
+
+.item_del_btn, .delSubBtn {
+	width: 40px;
+	border: 1px solid #c5c5c5;
+	border-radius: 4px;
+}
+
+.delSubBtn {
+	margin-bottom: 3px;
+	margin-top: -3px;
 }
 
 .icategory_add_btn_area {
@@ -199,6 +228,102 @@
 	margin-bottom: 10px;
 }
 
+.icategory_add_btn {
+	width: 150px;
+	height: 40px;
+	border: 1px solid #c5c5c5;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+.b_subject_value input[type=button] {
+	width: 50px;
+	border: 1px solid #c5c5c5;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
 .hide {
 	display: none;
+}
+
+.blue_btn {
+	font-family: Helvetica Neue, Apple SD Gothic Neo, arial, '나눔고딕',
+		Nanum Gothic, '돋움', Dotum, Tahoma, Geneva, sans-serif;
+	letter-spacing: -.03em;
+	margin: 0;
+	padding: 0;
+	appearance: none;
+	border: 0;
+	box-shadow: none;
+	outline: 0;
+	text-decoration: none;
+	box-sizing: border-box;
+	border-radius: 4px;
+	font-weight: 700;
+	display: inline-block;
+	text-align: center;
+	cursor: pointer;
+	line-height: 1em;
+	vertical-align: baseline;
+	color: #fff;
+	background: #1f8ce6;
+	border: 1px solid #0077d9;
+	box-shadow: 0 1px 1px 0 rgba(31, 140, 230, .3);
+	font-size: 16px;
+	padding: 16px 34px;
+}
+
+.blue_btn_mini {
+	font-family: Helvetica Neue, Apple SD Gothic Neo, arial, '나눔고딕',
+		Nanum Gothic, '돋움', Dotum, Tahoma, Geneva, sans-serif;
+	letter-spacing: -.03em;
+	margin: 0;
+	padding: 0;
+	appearance: none;
+	border: 0;
+	box-shadow: none;
+	outline: 0;
+	text-decoration: none;
+	box-sizing: border-box;
+	border-radius: 4px;
+	font-weight: 35;
+	display: inline-block;
+	text-align: center;
+	cursor: pointer;
+	line-height: 1em;
+	vertical-align: baseline;
+	color: #fff;
+	background: #1f8ce6;
+	border: 1px solid #0077d9;
+	box-shadow: 0 1px 1px 0 rgba(31, 140, 230, .3);
+	font-size: 14px;
+	padding: 8px 17px;
+}
+
+.white_btn {
+	font-family: Helvetica Neue, Apple SD Gothic Neo, arial, '나눔고딕',
+		Nanum Gothic, '돋움', Dotum, Tahoma, Geneva, sans-serif;
+	letter-spacing: -.03em;
+	margin: 0;
+	padding: 0;
+	appearance: none;
+	border: 0;
+	box-shadow: none;
+	outline: 0;
+	text-decoration: none;
+	box-sizing: border-box;
+	border-radius: 4px;
+	font-weight: 700;
+	display: inline-block;
+	text-align: center;
+	cursor: pointer;
+	line-height: 1em;
+	vertical-align: baseline;
+	color: #808991;
+	background: #fff;
+	border: 1px solid #d1d5d9;
+	box-shadow: 0 1px 1px 0 rgba(209, 213, 217, .3);
+	font-size: 16px;
+	padding: 16px 34px;
 }
